@@ -48,7 +48,7 @@ class CustomButton extends StatelessWidget {
       switch (variant) {
         case ButtonVariant.primary:
           btnColor =
-              buttonColor ?? const Color(0xFF1976D2).withValues(alpha: 0.8);
+              buttonColor ?? const Color(0xFF1E88E5).withValues(alpha: 0.8);
           txtColor = textColor ?? Colors.white;
           brdColor = null;
           fontWeight = FontWeight.w800;
