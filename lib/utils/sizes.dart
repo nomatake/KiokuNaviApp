@@ -97,7 +97,11 @@ const double k30Double = 30.0;
 const double k35Double = 35.0;
 const double k40Double = 40.0;
 const double k50Double = 50.0;
+const double k60Double = 60.0;
 const double k80Double = 80.0;
+const double k85Double = 85.0;
+const double k90Double = 90.0;
+const double k100Double = 100.0;
 const double k145Double = 145.0;
 
 ///Negative doubles

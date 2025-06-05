@@ -1,6 +1,6 @@
 name: kioku_navi
 description: "Kioku Navi"
-publish_to: 'none'
+publish_to: "none"
 version: 1.0.0+1
 
 environment:
@@ -9,6 +9,8 @@ environment:
 dependencies:
   flutter:
     sdk: flutter
+  flutter_localizations:
+    sdk: flutter
   cupertino_icons: ^1.0.8
   get: ^4.7.2
   getwidget: ^6.0.0
@@ -16,6 +18,7 @@ dependencies:
   flutter_gen_runner: ^5.10.0
   animated_custom_dropdown: ^3.1.1
   dio: ^5.8.0+1
+  calendar_date_picker2: ^2.0.1
 
 dev_dependencies:
   flutter_test:

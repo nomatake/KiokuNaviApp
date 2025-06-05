@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_localizations/flutter_localizations.dart';
 import 'package:get/get.dart';
 import 'package:kioku_navi/utils/constants.dart';
 import 'package:kioku_navi/utils/sizes.dart';
@@ -21,6 +22,16 @@ class MyApp extends StatelessWidget {
       getPages: AppPages.routes,
       theme: _buildAppTheme(),
       defaultTransition: Transition.noTransition,
+      localizationsDelegates: const [
+        GlobalMaterialLocalizations.delegate,
+        GlobalWidgetsLocalizations.delegate,
+        GlobalCupertinoLocalizations.delegate,
+      ],
+      supportedLocales: const [
+        Locale('en', ''),
+        Locale('ja', ''),
+      ],
+      locale: const Locale('ja', ''),
     );
   }
 }

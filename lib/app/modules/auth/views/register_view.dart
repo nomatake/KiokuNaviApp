@@ -6,6 +6,7 @@ import 'package:kioku_navi/utils/constants.dart';
 import 'package:kioku_navi/utils/extensions.dart';
 import 'package:kioku_navi/utils/sizes.dart';
 import 'package:kioku_navi/widgets/custom_button.dart';
+import 'package:kioku_navi/widgets/custom_date_picker_form_field.dart';
 import 'package:kioku_navi/widgets/custom_text_form_field.dart';
 import 'package:kioku_navi/widgets/intrinsic_height_scroll_view.dart';
 import 'package:kioku_navi/widgets/padded_wrapper.dart';
@@ -41,16 +42,24 @@ class RegisterView extends GetView<AuthController> {
                       color: Color(0xFF212121),
                     ),
                   ),
-                  SizedBox(height: k2_5Double.hp),
+                  SizedBox(height: k3Double.hp),
 
                   // Date of Birth field
-                  CustomTextFormField(
+                  CustomDatePickerFormField(
                     textController: controller.dob,
+                    selectedDates: controller.selectedDates,
+                    onDateSelected: controller.onDateSelected,
                     labelText: '生年月日',
                     hintText: '例: 2000/01/01',
-                    keyboardType: TextInputType.datetime,
                     customValidators: [
                       FormBuilderValidators.required(errorText: kRequired),
+                      (value) {
+                        if (controller.selectedDates.isEmpty ||
+                            controller.selectedDates.first == null) {
+                          return kRequired;
+                        }
+                        return null;
+                      },
                     ],
                   ),
                   SizedBox(height: k1_5Double.hp),
@@ -103,7 +112,7 @@ class RegisterView extends GetView<AuthController> {
                   // Register button
                   CustomButton(
                     buttonText: 'アカウントを作成する',
-                    variant: ButtonVariant.ghost,
+                    disabled: true,
                     onPressed: () => controller.onRegister(),
                   ),
                 ],
