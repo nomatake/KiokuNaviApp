@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:kioku_navi/generated/assets.gen.dart';
 
 import '../controllers/login_controller.dart';
 
@@ -14,6 +15,12 @@ class LoginView extends GetView<LoginController> {
           child: Column(
             children: [
               const SizedBox(height: 40),
+
+              const SizedBox(height: 32),
+              // Dolphin Placeholder
+              Center(
+                child: Assets.images.logo.image(fit: BoxFit.contain),
+              ),
               // Title
               const Text(
                 'キオクナビ',
@@ -33,30 +40,6 @@ class LoginView extends GetView<LoginController> {
                   fontWeight: FontWeight.w500,
                   fontSize: 17,
                   color: Color(0xFFB1B1B1),
-                ),
-              ),
-              const SizedBox(height: 32),
-              // Dolphin Placeholder
-              Container(
-                width: 140,
-                height: 140,
-                decoration: BoxDecoration(
-                  color: Colors.white,
-                  borderRadius: BorderRadius.circular(70),
-                  boxShadow: [
-                    BoxShadow(
-                      color: Colors.black.withOpacity(0.08),
-                      blurRadius: 8,
-                      offset: const Offset(0, 4),
-                    ),
-                  ],
-                ),
-                child: const Center(
-                  child: Icon(
-                    Icons.image,
-                    size: 80,
-                    color: Color(0xFF2196F3),
-                  ),
                 ),
               ),
               const Spacer(),
