@@ -2,8 +2,16 @@ import 'package:get/get.dart';
 
 import '../modules/home/bindings/home_binding.dart';
 import '../modules/home/views/home_view.dart';
+import '../modules/login/bindings/login_binding.dart';
+import '../modules/login/views/login_view.dart';
+import '../modules/register/bindings/register_binding.dart';
+import '../modules/register/views/register_view.dart';
+import '../modules/login/views/parent_login_view.dart';
+import '../modules/login/views/student_login_view.dart';
+import '../modules/login/views/forgot_password_view.dart';
 import '../modules/root_screen/bindings/root_screen_binding.dart';
 import '../modules/root_screen/views/root_screen_view.dart';
+
 
 part 'app_routes.dart';
 
@@ -22,6 +30,25 @@ class AppPages {
       name: _Paths.ROOT_SCREEN,
       page: () => const RootScreenView(),
       binding: RootScreenBinding(),
+    ),
+    GetPage(
+      name: _Paths.REGISTER,
+      page: () => const RegisterView(),
+      binding: RegisterBinding(),
+    ),
+    GetPage(
+      name: _Paths.PARENT_LOGIN,
+      page: () => const ParentLoginView(),
+      binding: LoginBinding(),
+    ),
+    GetPage(
+      name: _Paths.STUDENT_LOGIN,
+      page: () => const StudentLoginView(),
+      binding: LoginBinding(),
+    ),
+    GetPage(
+      name: _Paths.FORGOT_PASSWORD,
+      page: () => const ForgotPasswordView(),
     ),
   ];
 }

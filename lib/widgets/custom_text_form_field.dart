@@ -10,7 +10,7 @@ class CustomTextFormField extends StatefulWidget {
     required this.textController,
     this.labelText,
     this.hintText,
-    this.borderRadius = k30Double,
+    this.borderRadius = k12Double,
     this.maxLines = k1,
     this.isPassword = false,
     this.isLabelLight = false,
@@ -56,77 +56,60 @@ class _CustomTextFormFieldState extends State<CustomTextFormField> {
 
   @override
   Widget build(BuildContext context) {
-    return Column(
-      crossAxisAlignment: CrossAxisAlignment.start,
-      children: [
-        if (widget.labelText != null) ...[
-          Padding(
-            padding: EdgeInsets.only(left: k2Double.wp),
-            child: Text(
-              widget.labelText!,
-              style: TextStyle(
-                fontSize: k10Double.sp,
-                color: widget.isLabelLight ? Colors.white : Colors.black,
-              ),
+    return ValueListenableBuilder<bool>(
+      valueListenable: _isPasswordVisible,
+      builder: (context, isVisible, _) {
+        return TextFormField(
+          style: const TextStyle(fontSize: k16Double),
+          textInputAction: widget.textInputAction,
+          maxLines: widget.maxLines,
+          obscureText: widget.isPassword && !isVisible,
+          controller: widget.textController,
+          inputFormatters: widget.inputFormatters,
+          keyboardType: widget.keyboardType,
+          decoration: InputDecoration(
+            floatingLabelBehavior: FloatingLabelBehavior.auto,
+            labelText: widget.labelText,
+            labelStyle: TextStyle(
+              color: widget.isLabelLight ? Colors.white : Colors.black,
+              fontSize: k14Double,
             ),
+            contentPadding: const EdgeInsets.symmetric(horizontal: k16Double, vertical: k0Double),
+            focusedBorder: _borderStyle(Colors.grey.shade500),
+            border: _borderStyle(Colors.grey.shade400),
+            enabledBorder: _borderStyle(Colors.grey.shade300),
+            filled: true,
+            fillColor: Colors.grey.shade50,
+            hintText: null,
+            errorStyle: const TextStyle(fontSize: k12Double),
+            suffixText: widget.suffixText,
+            suffixIcon: widget.isPassword
+                ? ValueListenableBuilder<bool>(
+                    valueListenable: _isPasswordVisible,
+                    builder: (context, isVisible, _) {
+                      return IconButton(
+                        icon: Icon(
+                          isVisible
+                              ? Icons.remove_red_eye_outlined
+                              : Icons.visibility_off_outlined,
+                          color: Colors.black,
+                          size: k20Double,
+                        ),
+                        onPressed: () => _isPasswordVisible.value = !isVisible,
+                      );
+                    },
+                  )
+                : null,
           ),
-          SizedBox(height: k0_2Double.hp),
-        ],
-        ValueListenableBuilder<bool>(
-          valueListenable: _isPasswordVisible,
-          builder: (context, isVisible, _) {
-            return TextFormField(
-              style: TextStyle(fontSize: k11Double.sp),
-              textInputAction: widget.textInputAction,
-              maxLines: widget.maxLines,
-              obscureText: widget.isPassword && !isVisible,
-              controller: widget.textController,
-              inputFormatters: widget.inputFormatters,
-              keyboardType: widget.keyboardType,
-              decoration: InputDecoration(
-                  floatingLabelBehavior: FloatingLabelBehavior.always,
-                  contentPadding: EdgeInsets.symmetric(
-                      horizontal: k4Double.wp, vertical: k0Double.hp),
-                  focusedBorder: _borderStyle(Colors.grey.shade500),
-                  border: _borderStyle(Colors.grey.shade400),
-                  enabledBorder: _borderStyle(Colors.grey.shade300),
-                  filled: true,
-                  fillColor: Colors.grey.shade50,
-                  hintText: widget.hintText,
-                  hintStyle:
-                      TextStyle(color: Colors.grey, fontSize: k11Double.sp),
-                  errorStyle: TextStyle(fontSize: k9Double.sp),
-                  suffixText: widget.suffixText,
-                  suffixIcon: widget.isPassword
-                      ? ValueListenableBuilder<bool>(
-                          valueListenable: _isPasswordVisible,
-                          builder: (context, isVisible, _) {
-                            return IconButton(
-                              icon: Icon(
-                                isVisible
-                                    ? Icons.remove_red_eye_outlined
-                                    : Icons.visibility_off_outlined,
-                                color: Colors.black,
-                                size: k16Double.sp,
-                              ),
-                              onPressed: () =>
-                                  _isPasswordVisible.value = !isVisible,
-                            );
-                          },
-                        )
-                      : null),
-              autovalidateMode: AutovalidateMode.onUserInteraction,
-              validator: FormBuilderValidators.compose(widget.customValidators),
-              onChanged: (value) {
-                widget.isValid?.value = widget.customValidators
-                    .every((validator) => validator(value) == null);
-
-                widget.checkFormValidity?.call();
-              },
-            );
+          autovalidateMode: AutovalidateMode.onUserInteraction,
+          validator: FormBuilderValidators.compose(widget.customValidators),
+          onChanged: (value) {
+            widget.isValid?.value = widget.customValidators
+                .every((validator) => validator(value) == null);
+            widget.checkFormValidity?.call();
           },
-        ),
-      ],
+        );
+      },
     );
   }
 
