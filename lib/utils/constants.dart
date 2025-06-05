@@ -1,3 +1,5 @@
+///Basic Constants
+const String kAppName = "Kioku Navi";
 
 ///API
 const String kBaseUrl = "";
