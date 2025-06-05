@@ -1,3 +1,4 @@
+import "package:flutter/cupertino.dart";
 import "package:flutter/material.dart";
 import "package:flutter/services.dart";
 import "package:get/get.dart";
@@ -19,7 +20,7 @@ class CustomAppbar extends StatelessWidget implements PreferredSizeWidget {
     this.onTap,
     this.backgroundColor,
     this.actions,
-    this.isHasBorder = true,
+    this.isHasBorder = false,
   });
   @override
   Size get preferredSize => const Size.fromHeight(kToolbarHeight);
@@ -58,13 +59,18 @@ class CustomAppbar extends StatelessWidget implements PreferredSizeWidget {
         titleSpacing: k0Double,
         systemOverlayStyle: SystemUiOverlayStyle.dark,
         title: titleWidget,
+        titleTextStyle: TextStyle(
+          fontWeight: FontWeight.w500,
+          fontSize: k16Double.sp,
+          color: Color(0xFF616161).withValues(alpha: 0.2),
+        ),
         leading: isHasLeading
             ? IconButton(
                 splashColor: Colors.transparent,
                 highlightColor: Colors.transparent,
                 iconSize: k20Double.sp,
                 icon: Icon(
-                  Icons.chevron_left,
+                  CupertinoIcons.arrow_left,
                   color: iconColor ?? Colors.black,
                 ),
                 onPressed: onBackPressed ?? Get.back,
