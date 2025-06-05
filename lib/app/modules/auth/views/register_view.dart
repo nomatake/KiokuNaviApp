@@ -1,12 +1,11 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-import 'package:kioku_navi/widgets/custom_text_form_field.dart';
+import 'package:kioku_navi/app/modules/auth/controllers/auth_controller.dart';
 import 'package:kioku_navi/utils/constants.dart';
-import '../controllers/register_controller.dart';
-import 'package:kioku_navi/widgets/register_progress_bar.dart';
+import 'package:kioku_navi/widgets/custom_text_form_field.dart';
 import 'package:kioku_navi/widgets/register_app_bar.dart';
 
-class RegisterView extends GetView<RegisterController> {
+class RegisterView extends GetView<AuthController> {
   const RegisterView({super.key});
 
   @override

@@ -1,14 +1,14 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:kioku_navi/app/modules/auth/controllers/auth_controller.dart';
 import 'package:kioku_navi/generated/assets.gen.dart';
 import 'package:kioku_navi/utils/extensions.dart';
 import 'package:kioku_navi/utils/sizes.dart';
 import 'package:kioku_navi/widgets/custom_button.dart';
 import 'package:kioku_navi/widgets/padded_wrapper.dart';
 
-import '../controllers/root_screen_controller.dart';
 
-class RootScreenView extends GetView<RootScreenController> {
+class RootScreenView extends GetView<AuthController> {
   const RootScreenView({super.key});
   @override
   Widget build(BuildContext context) {

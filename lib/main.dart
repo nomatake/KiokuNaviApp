@@ -34,7 +34,7 @@ ThemeData _buildAppTheme() {
     visualDensity: VisualDensity.adaptivePlatformDensity,
 
     // Configure app bar appearance
-    appBarTheme: const AppBarTheme(
+    appBarTheme: AppBarTheme(
       backgroundColor: Colors.white70,
       scrolledUnderElevation: k0Double,
       elevation: k0Double,

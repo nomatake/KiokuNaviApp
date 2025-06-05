@@ -2,7 +2,6 @@ import "package:flutter/material.dart";
 import "package:flutter/services.dart";
 import "package:form_builder_validators/form_builder_validators.dart";
 import "package:get/get.dart";
-import "package:kioku_navi/utils/extensions.dart";
 import "package:kioku_navi/utils/sizes.dart";
 
 class CustomTextFormField extends StatefulWidget {

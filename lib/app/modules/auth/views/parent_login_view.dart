@@ -1,11 +1,11 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-import 'package:kioku_navi/app/modules/login/controllers/login_controller.dart';
+import 'package:kioku_navi/app/modules/auth/controllers/auth_controller.dart';
 import 'package:kioku_navi/widgets/custom_text_form_field.dart';
 import 'package:kioku_navi/utils/constants.dart';
 
-class StudentLoginView extends GetView<LoginController> {
-  const StudentLoginView({super.key});
+class ParentLoginView extends GetView<AuthController> {
+  const ParentLoginView({super.key});
 
   @override
   Widget build(BuildContext context) {
@@ -30,7 +30,7 @@ class StudentLoginView extends GetView<LoginController> {
           onPressed: () => Get.back(),
         ),
         title: const Text(
-          '生徒ログイン',
+          '保護者ログイン',
           style: TextStyle(
             fontWeight: FontWeight.w600,
             fontSize: 22,
@@ -124,19 +124,15 @@ class StudentLoginView extends GetView<LoginController> {
                 ),
                 const SizedBox(height: 32),
                 Row(
+                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
                   children: [
-                    Expanded(
-                      child: _SocialLoginButton(
-                        label: 'Facebook',
-                        onTap: () {},
-                      ),
+                    _SocialLoginButton(
+                      label: 'Facebook',
+                      onTap: () {},
                     ),
-                    const SizedBox(width: 16),
-                    Expanded(
-                      child: _SocialLoginButton(
-                        label: 'Google',
-                        onTap: () {},
-                      ),
+                    _SocialLoginButton(
+                      label: 'Google',
+                      onTap: () {},
                     ),
                   ],
                 ),
@@ -158,6 +154,7 @@ class _SocialLoginButton extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return SizedBox(
+      width: 140,
       height: 48,
       child: ElevatedButton(
         style: ElevatedButton.styleFrom(

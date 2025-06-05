@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
 import 'package:kioku_navi/widgets/register_progress_bar.dart';
-import 'package:kioku_navi/utils/constants.dart';
 
 class RegisterAppBar extends StatelessWidget implements PreferredSizeWidget {
   final double progress;
@@ -8,11 +7,11 @@ class RegisterAppBar extends StatelessWidget implements PreferredSizeWidget {
   final Color backgroundColor;
 
   const RegisterAppBar({
-    Key? key,
+    super.key,
     required this.progress,
     this.onBack,
     this.backgroundColor = Colors.transparent,
-  }) : super(key: key);
+  });
 
   @override
   Size get preferredSize => const Size.fromHeight(56);
