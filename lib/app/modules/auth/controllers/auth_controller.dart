@@ -4,6 +4,9 @@ import 'package:get/get.dart';
 class AuthController extends GetxController {
   /// Form key for the registration form in RegisterView. Used to validate and manage form state.
   final registerFormKey = GlobalKey<FormState>();
+  final parentLoginFormKey = GlobalKey<FormState>();
+  final studentLoginFormKey = GlobalKey<FormState>();
+
   final email = TextEditingController();
   final dob = TextEditingController();
   final password = TextEditingController();

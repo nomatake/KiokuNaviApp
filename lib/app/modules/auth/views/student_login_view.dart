@@ -27,87 +27,90 @@ class StudentLoginView extends GetView<AuthController> {
       body: SafeArea(
         child: IntrinsicHeightScrollView(
           child: PaddedWrapper(
-            child: Column(
-              crossAxisAlignment: CrossAxisAlignment.start,
-              children: [
-                SizedBox(height: k2_5Double.hp),
-                Text(
-                  'ログインしてください',
-                  style: TextStyle(
-                    fontWeight: FontWeight.w600,
-                    fontSize: k16Double.sp,
-                    color: Color(0xFF212121),
+            child: Form(
+              key: controller.studentLoginFormKey,
+              child: Column(
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: [
+                  SizedBox(height: k2_5Double.hp),
+                  Text(
+                    'ログインしてください',
+                    style: TextStyle(
+                      fontWeight: FontWeight.w600,
+                      fontSize: k16Double.sp,
+                      color: Color(0xFF212121),
+                    ),
                   ),
-                ),
-                SizedBox(height: k3Double.hp),
-                CustomTextFormField(
-                  textController: controller.email,
-                  labelText: 'メールアドレスまたはユーザー名',
-                  hintText: 'メールアドレスまたはユーザー名を入力',
-                  keyboardType: TextInputType.emailAddress,
-                  customValidators: [
-                    FormBuilderValidators.required(errorText: kRequired),
-                    FormBuilderValidators.email(errorText: "Invalid email"),
-                  ],
-                ),
-                SizedBox(height: k1_5Double.hp),
-                CustomTextFormField(
-                  textController: controller.password,
-                  labelText: 'パスワード',
-                  hintText: 'パスワードを入力',
-                  isPassword: true,
-                  textInputAction: TextInputAction.done,
-                  customValidators: [
-                    FormBuilderValidators.required(errorText: kRequired),
-                    FormBuilderValidators.minLength(6,
-                        errorText: "Password must be at least 6 characters"),
-                  ],
-                ),
-                SizedBox(height: k3Double.hp),
-
-                // Login button
-                CustomButton(
-                  buttonText: 'ログイン',
-                  disabled: true,
-                  onPressed: () {},
-                ),
-                SizedBox(height: k3Double.hp),
-
-                Center(
-                  child: TextButton(
+                  SizedBox(height: k3Double.hp),
+                  CustomTextFormField(
+                    textController: controller.email,
+                    labelText: 'メールアドレスまたはユーザー名',
+                    hintText: 'メールアドレスまたはユーザー名を入力',
+                    keyboardType: TextInputType.emailAddress,
+                    customValidators: [
+                      FormBuilderValidators.required(errorText: kRequired),
+                      FormBuilderValidators.email(errorText: "Invalid email"),
+                    ],
+                  ),
+                  SizedBox(height: k1_5Double.hp),
+                  CustomTextFormField(
+                    textController: controller.password,
+                    labelText: 'パスワード',
+                    hintText: 'パスワードを入力',
+                    isPassword: true,
+                    textInputAction: TextInputAction.done,
+                    customValidators: [
+                      FormBuilderValidators.required(errorText: kRequired),
+                      FormBuilderValidators.minLength(6,
+                          errorText: "Password must be at least 6 characters"),
+                    ],
+                  ),
+                  SizedBox(height: k3Double.hp),
+              
+                  // Login button
+                  CustomButton(
+                    buttonText: 'ログイン',
+                    disabled: true,
                     onPressed: () {},
-                    child: const Text(
-                      'パスワードを忘れた場合',
-                      style: TextStyle(
-                        fontWeight: FontWeight.w600,
-                        fontSize: 16,
-                        color: Color(0xFF23AEEF),
-                        fontFamily: 'Hiragino Sans',
+                  ),
+                  SizedBox(height: k3Double.hp),
+              
+                  Center(
+                    child: TextButton(
+                      onPressed: () {},
+                      child: const Text(
+                        'パスワードを忘れた場合',
+                        style: TextStyle(
+                          fontWeight: FontWeight.w600,
+                          fontSize: 16,
+                          color: Color(0xFF23AEEF),
+                          fontFamily: 'Hiragino Sans',
+                        ),
                       ),
                     ),
                   ),
-                ),
-                SizedBox(height: k3Double.hp),
-                Row(
-                  children: [
-                    Expanded(
-                      child: CustomButton(
-                        buttonText: 'Facebook',
-                        variant: ButtonVariant.outline,
-                        onPressed: () {},
+                  SizedBox(height: k3Double.hp),
+                  Row(
+                    children: [
+                      Expanded(
+                        child: CustomButton(
+                          buttonText: 'Facebook',
+                          variant: ButtonVariant.outline,
+                          onPressed: () {},
+                        ),
                       ),
-                    ),
-                    SizedBox(width: k4Double.wp),
-                    Expanded(
-                      child: CustomButton(
-                        buttonText: 'Google',
-                        variant: ButtonVariant.outline,
-                        onPressed: () {},
+                      SizedBox(width: k4Double.wp),
+                      Expanded(
+                        child: CustomButton(
+                          buttonText: 'Google',
+                          variant: ButtonVariant.outline,
+                          onPressed: () {},
+                        ),
                       ),
-                    ),
-                  ],
-                ),
-              ],
+                    ],
+                  ),
+                ],
+              ),
             ),
           ),
         ),
