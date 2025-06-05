@@ -1,6 +1,9 @@
 ///Basic Constants
 const String kAppName = "Kioku Navi";
 
+///Colors
+const kScaffoldBackgroundColor = 0xFFF7F9FC;
+
 ///API
 const String kBaseUrl = "";
 
