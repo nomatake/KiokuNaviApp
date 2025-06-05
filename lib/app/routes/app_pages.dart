@@ -9,13 +9,16 @@ import '../modules/register/views/register_view.dart';
 import '../modules/login/views/parent_login_view.dart';
 import '../modules/login/views/student_login_view.dart';
 import '../modules/login/views/forgot_password_view.dart';
+import '../modules/root_screen/bindings/root_screen_binding.dart';
+import '../modules/root_screen/views/root_screen_view.dart';
+
 
 part 'app_routes.dart';
 
 class AppPages {
   AppPages._();
 
-  static const INITIAL = Routes.HOME;
+  static const INITIAL = Routes.ROOT_SCREEN;
 
   static final routes = [
     GetPage(
@@ -24,9 +27,9 @@ class AppPages {
       binding: HomeBinding(),
     ),
     GetPage(
-      name: _Paths.LOGIN,
-      page: () => const LoginView(),
-      binding: LoginBinding(),
+      name: _Paths.ROOT_SCREEN,
+      page: () => const RootScreenView(),
+      binding: RootScreenBinding(),
     ),
     GetPage(
       name: _Paths.REGISTER,
