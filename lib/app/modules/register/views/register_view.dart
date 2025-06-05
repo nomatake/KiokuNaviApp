@@ -3,6 +3,8 @@ import 'package:get/get.dart';
 import 'package:kioku_navi/widgets/custom_text_form_field.dart';
 import 'package:kioku_navi/utils/constants.dart';
 import '../controllers/register_controller.dart';
+import 'package:kioku_navi/widgets/register_progress_bar.dart';
+import 'package:kioku_navi/widgets/register_app_bar.dart';
 
 class RegisterView extends GetView<RegisterController> {
   const RegisterView({super.key});
@@ -11,13 +13,9 @@ class RegisterView extends GetView<RegisterController> {
   Widget build(BuildContext context) {
     return Scaffold(
       backgroundColor: const Color(0xFFF7F9FC),
-      appBar: AppBar(
-        backgroundColor: Colors.transparent,
-        elevation: 0,
-        leading: IconButton(
-          icon: const Icon(Icons.arrow_back_rounded, color: Colors.black),
-          onPressed: () => Get.back(),
-        ),
+      appBar: RegisterAppBar(
+        progress: 0.5,
+        onBack: () => Get.back(),
       ),
       body: SafeArea(
         child: SingleChildScrollView(
@@ -26,7 +24,7 @@ class RegisterView extends GetView<RegisterController> {
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
-                const SizedBox(height: kGapTitleToFirstInput),
+                SizedBox(height: kGapAppBarToHeader),
                 const Text(
                   '保護者アカウントの作成',
                   style: TextStyle(

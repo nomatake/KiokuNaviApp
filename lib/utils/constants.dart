@@ -1,3 +1,5 @@
+import 'package:flutter/material.dart';
+
 ///Basic Constants
 const String kAppName = "Kioku Navi";
 
@@ -82,9 +84,20 @@ const double kGapInputsToButton = 105.0;
 const double kGapButtonToTerms = 24.0;
 const double kGapInputToTerms = 24.0;
 const double kGapTermsToButton = 40.0;
+const double kGapAppBarToHeader = 24.0;
 
 /// Horizontal padding for register view (from Figma)
 const double kRegisterHorizontalPadding = 16.0;
 
 /// Horizontal padding for terms text in register view (from Figma)
 const double kRegisterTermsHorizontalPadding = 67.5;
+
+// Progress bar constants (from Figma)
+const double kRegisterProgressBarWidth = 286.0;
+const double kRegisterProgressBarHeight = 15.0;
+const double kRegisterProgressBarOverlayHeight = 4.0;
+const double kRegisterProgressBarOverlayLeft = 4.0;
+const double kRegisterProgressBarOverlayTop = 3.0;
+const Color kRegisterProgressBarBgColor = Color(0xFFCFD8DC);
+const Color kRegisterProgressBarProgressColor = Color(0xFF1976D2);
+const Color kRegisterProgressBarOverlayColor = Color.fromRGBO(255, 255, 255, 0.2);
