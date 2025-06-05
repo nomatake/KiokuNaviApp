@@ -75,7 +75,6 @@ class RootScreenView extends GetView<RootScreenController> {
                 variant: ButtonVariant.outline,
                 onPressed: () {},
               ),
-              SizedBox(height: k2Double.hp),
             ],
           ),
         ),
