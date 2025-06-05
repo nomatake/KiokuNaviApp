@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:kioku_navi/app/modules/auth/controllers/auth_controller.dart';
+import 'package:kioku_navi/app/routes/app_pages.dart';
 import 'package:kioku_navi/generated/assets.gen.dart';
 import 'package:kioku_navi/utils/extensions.dart';
 import 'package:kioku_navi/utils/sizes.dart';
@@ -57,7 +58,7 @@ class RootScreenView extends GetView<AuthController> {
               // Sign Up Button
               CustomButton(
                 buttonText: '新規登録',
-                onPressed: () {},
+                onPressed: () => Get.toNamed(Routes.REGISTER),
               ),
               SizedBox(height: k2Double.hp),
 
@@ -65,7 +66,7 @@ class RootScreenView extends GetView<AuthController> {
               CustomButton(
                 buttonText: '生徒としてログイン',
                 variant: ButtonVariant.outline,
-                onPressed: () {},
+                onPressed: () => Get.toNamed(Routes.STUDENT_LOGIN),
               ),
               SizedBox(height: k2Double.hp),
 
@@ -73,7 +74,7 @@ class RootScreenView extends GetView<AuthController> {
               CustomButton(
                 buttonText: '保護者としてログイン',
                 variant: ButtonVariant.outline,
-                onPressed: () {},
+                onPressed: () => Get.toNamed(Routes.PARENT_LOGIN),
               ),
             ],
           ),

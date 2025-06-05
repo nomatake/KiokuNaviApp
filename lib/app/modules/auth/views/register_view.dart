@@ -1,8 +1,14 @@
 import 'package:flutter/material.dart';
+import 'package:form_builder_validators/form_builder_validators.dart';
 import 'package:get/get.dart';
 import 'package:kioku_navi/app/modules/auth/controllers/auth_controller.dart';
 import 'package:kioku_navi/utils/constants.dart';
+import 'package:kioku_navi/utils/extensions.dart';
+import 'package:kioku_navi/utils/sizes.dart';
+import 'package:kioku_navi/widgets/custom_button.dart';
 import 'package:kioku_navi/widgets/custom_text_form_field.dart';
+import 'package:kioku_navi/widgets/intrinsic_height_scroll_view.dart';
+import 'package:kioku_navi/widgets/padded_wrapper.dart';
 import 'package:kioku_navi/widgets/register_app_bar.dart';
 
 class RegisterView extends GetView<AuthController> {
@@ -17,92 +23,91 @@ class RegisterView extends GetView<AuthController> {
         onBack: () => Get.back(),
       ),
       body: SafeArea(
-        child: SingleChildScrollView(
-          child: Padding(
-            padding: const EdgeInsets.symmetric(horizontal: kRegisterHorizontalPadding),
-            child: Column(
-              crossAxisAlignment: CrossAxisAlignment.start,
-              children: [
-                SizedBox(height: kGapAppBarToHeader),
-                const Text(
-                  '保護者アカウントの作成',
-                  style: TextStyle(
-                    fontWeight: FontWeight.w600,
-                    fontSize: 22,
-                    color: Color(0xFF212121),
+        child: IntrinsicHeightScrollView(
+          child: PaddedWrapper(
+            child: Form(
+              key: controller.registerFormKey,
+              child: Column(
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: [
+                  SizedBox(height: k2_5Double.hp),
+
+                  // Title
+                  Text(
+                    '保護者アカウントの作成',
+                    style: TextStyle(
+                      fontWeight: FontWeight.w600,
+                      fontSize: k16Double.sp,
+                      color: Color(0xFF212121),
+                    ),
                   ),
-                ),
-                const SizedBox(height: kGapBetweenInputs),
-                CustomTextFormField(
-                  textController: controller.emailController,
-                  labelText: '保護者の方のメールアドレス',
-                  hintText: 'メールアドレスを入力',
-                  keyboardType: TextInputType.emailAddress,
-                  customValidators: [
-                    (value) => value == null || value.isEmpty ? '必須項目です' : null,
-                    (value) => value != null && !value.contains('@') ? '有効なメールアドレスを入力してください' : null,
-                  ],
-                ),
-                const SizedBox(height: kGapBetweenInputs),
-                CustomTextFormField(
-                  textController: controller.birthdayController,
-                  labelText: '生年月日',
-                  hintText: '例: 2000/01/01',
-                  keyboardType: TextInputType.datetime,
-                  customValidators: [
-                    (value) => value == null || value.isEmpty ? '必須項目です' : null,
-                  ],
-                ),
-                const SizedBox(height: kGapBetweenInputs),
-                CustomTextFormField(
-                  textController: controller.passwordController,
-                  labelText: 'パスワード',
-                  hintText: 'パスワードを入力',
-                  isPassword: true,
-                  customValidators: [
-                    (value) => value == null || value.isEmpty ? '必須項目です' : null,
-                    (value) => value != null && value.length < 6 ? '6文字以上で入力してください' : null,
-                  ],
-                ),
-                const SizedBox(height: kGapInputToTerms),
-                const Center(
-                  child: Padding(
-                    padding: EdgeInsets.symmetric(horizontal: kRegisterTermsHorizontalPadding),
-                    child: Text(
-                      '新規登録をすることにより、キオクナビのサービス利用規約とプライバシーポリシーに同意したものと見なされます',
-                      textAlign: TextAlign.center,
-                      style: TextStyle(
-                        fontWeight: FontWeight.w600,
-                        fontSize: 12,
-                        color: Color(0xFF5A637B),
+                  SizedBox(height: k2_5Double.hp),
+
+                  // Date of Birth field
+                  CustomTextFormField(
+                    textController: controller.dob,
+                    labelText: '生年月日',
+                    hintText: '例: 2000/01/01',
+                    keyboardType: TextInputType.datetime,
+                    customValidators: [
+                      FormBuilderValidators.required(errorText: kRequired),
+                    ],
+                  ),
+                  SizedBox(height: k1_5Double.hp),
+
+                  // Email field
+                  CustomTextFormField(
+                    textController: controller.email,
+                    labelText: '保護者の方のメールアドレス',
+                    hintText: 'メールアドレスを入力',
+                    keyboardType: TextInputType.emailAddress,
+                    customValidators: [
+                      FormBuilderValidators.required(errorText: kRequired),
+                      FormBuilderValidators.email(errorText: "Invalid email"),
+                    ],
+                  ),
+                  SizedBox(height: k1_5Double.hp),
+
+                  // Password field
+                  CustomTextFormField(
+                    textController: controller.password,
+                    labelText: 'パスワード',
+                    hintText: 'パスワードを入力',
+                    isPassword: true,
+                    textInputAction: TextInputAction.done,
+                    customValidators: [
+                      FormBuilderValidators.required(errorText: kRequired),
+                      FormBuilderValidators.minLength(6,
+                          errorText: "Password must be at least 6 characters"),
+                    ],
+                  ),
+                  SizedBox(height: k3Double.hp),
+
+                  // Terms and privacy policy notice
+                  Center(
+                    child: Padding(
+                      padding: EdgeInsets.symmetric(horizontal: k12Double.wp),
+                      child: Text(
+                        '新規登録をすることにより、キオクナビのサービス利用規約とプライバシーポリシーに同意したものと見なされます',
+                        textAlign: TextAlign.center,
+                        style: TextStyle(
+                          fontWeight: FontWeight.w600,
+                          fontSize: k9Double.sp,
+                          color: Color(0xFF5A637B),
+                        ),
                       ),
                     ),
                   ),
-                ),
-                const SizedBox(height: kGapTermsToButton),
-                SizedBox(
-                  width: double.infinity,
-                  height: 48,
-                  child: ElevatedButton(
-                    style: ElevatedButton.styleFrom(
-                      backgroundColor: const Color(0xFFAFAFAF),
-                      shape: RoundedRectangleBorder(
-                        borderRadius: BorderRadius.circular(12),
-                      ),
-                      elevation: 0,
-                    ),
-                    onPressed: controller.onRegister,
-                    child: const Text(
-                      'アカウントを作成する',
-                      style: TextStyle(
-                        fontWeight: FontWeight.w500,
-                        fontSize: 18,
-                        color: Colors.white,
-                      ),
-                    ),
+                  SizedBox(height: k3Double.hp),
+
+                  // Register button
+                  CustomButton(
+                    buttonText: 'アカウントを作成する',
+                    variant: ButtonVariant.ghost,
+                    onPressed: () => controller.onRegister(),
                   ),
-                ),
-              ],
+                ],
+              ),
             ),
           ),
         ),

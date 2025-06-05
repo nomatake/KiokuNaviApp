@@ -14,7 +14,7 @@ class CustomTextFormField extends StatefulWidget {
     this.isPassword = false,
     this.isLabelLight = false,
     this.isValid,
-    this.keyboardType = TextInputType.number,
+    this.keyboardType = TextInputType.text,
     this.validator,
     this.customValidators = const [],
     this.checkFormValidity,
@@ -73,7 +73,8 @@ class _CustomTextFormFieldState extends State<CustomTextFormField> {
               color: widget.isLabelLight ? Colors.white : Colors.black,
               fontSize: k14Double,
             ),
-            contentPadding: const EdgeInsets.symmetric(horizontal: k16Double, vertical: k0Double),
+            contentPadding: const EdgeInsets.symmetric(
+                horizontal: k16Double, vertical: k0Double),
             focusedBorder: _borderStyle(Colors.grey.shade500),
             border: _borderStyle(Colors.grey.shade400),
             enabledBorder: _borderStyle(Colors.grey.shade300),
@@ -113,7 +114,7 @@ class _CustomTextFormFieldState extends State<CustomTextFormField> {
   }
 
   OutlineInputBorder _borderStyle(Color color) => OutlineInputBorder(
-        borderSide: BorderSide(color: color),
+        borderSide: BorderSide(color: color, width: k1_5Double),
         borderRadius: BorderRadius.all(Radius.circular(widget.borderRadius)),
       );
 }
