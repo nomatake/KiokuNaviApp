@@ -8,6 +8,7 @@ import '../modules/register/bindings/register_binding.dart';
 import '../modules/register/views/register_view.dart';
 import '../modules/login/views/parent_login_view.dart';
 import '../modules/login/views/student_login_view.dart';
+import '../modules/login/views/forgot_password_view.dart';
 
 part 'app_routes.dart';
 
@@ -41,6 +42,10 @@ class AppPages {
       name: _Paths.STUDENT_LOGIN,
       page: () => const StudentLoginView(),
       binding: LoginBinding(),
+    ),
+    GetPage(
+      name: _Paths.FORGOT_PASSWORD,
+      page: () => const ForgotPasswordView(),
     ),
   ];
 }
