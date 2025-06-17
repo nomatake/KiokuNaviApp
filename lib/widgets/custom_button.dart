@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:kioku_navi/utils/extensions.dart';
 import 'package:kioku_navi/utils/sizes.dart';
 
-enum ButtonVariant { primary, outline }
+enum ButtonVariant { primary, outline, secondary }
 
 class CustomButton extends StatelessWidget {
   const CustomButton({
@@ -82,6 +82,26 @@ class CustomButton extends StatelessWidget {
             const BoxShadow(
               color: Color(0xFF1E88E5),
               offset: Offset(0, 3),
+              blurRadius: 0,
+              spreadRadius: 0,
+            ),
+          ];
+          break;
+        case ButtonVariant.secondary:
+          btnColor = buttonColor ?? Colors.white;
+          txtColor = textColor ?? const Color(0xFF424242);
+          brdColor = borderColor ?? const Color(0xFFB0BEC5);
+          fontWeight = FontWeight.w500;
+          letterSpacing = 0;
+          shadows = [
+            const BoxShadow(
+              color: Color(0x14000000),
+              blurRadius: 2,
+              offset: Offset(0, 1),
+            ),
+            BoxShadow(
+              color: const Color(0xFFB0BEC5),
+              offset: const Offset(0, 3),
               blurRadius: 0,
               spreadRadius: 0,
             ),
