@@ -9,6 +9,7 @@ import 'package:kioku_navi/widgets/padded_wrapper.dart';
 import 'package:kioku_navi/utils/sizes.dart';
 import 'package:kioku_navi/utils/extensions.dart';
 import 'package:kioku_navi/widgets/custom_tooltip.dart';
+import 'package:kioku_navi/widgets/custom_appbar.dart';
 
 class TutorialView extends GetView<TutorialController> {
   const TutorialView({super.key});
@@ -16,20 +17,14 @@ class TutorialView extends GetView<TutorialController> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      backgroundColor: const Color(0xFFF7F9FC),
+      appBar: CustomAppbar(
+        onBackPressed: () => Get.back(),
+        color: Colors.white,
+      ),
       body: SafeArea(
         child: PaddedWrapper(
           child: Column(
             children: [
-              const SizedBox(height: 40),
-              // Back arrow
-              Align(
-                alignment: Alignment.centerLeft,
-                child: IconButton(
-                  icon: const Icon(Icons.arrow_back_rounded, color: Color(0xFFA6A6A6)),
-                  onPressed: () => Get.back(),
-                ),
-              ),
               const SizedBox(height: 30),
               // CustomTooltip for greeting message (Figma style, always visible)
               CustomTooltip(
