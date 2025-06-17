@@ -1,6 +1,13 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import '../controllers/child_home_controller.dart';
+import 'package:kioku_navi/widgets/custom_button.dart';
+import 'package:kioku_navi/widgets/padded_wrapper.dart';
+import 'package:kioku_navi/widgets/custom_title_text.dart';
+import 'package:kioku_navi/utils/extensions.dart';
+import 'package:kioku_navi/utils/sizes.dart';
+import 'package:kioku_navi/widgets/child/child_bottom_nav_bar.dart';
+import 'package:kioku_navi/widgets/child/child_app_bar.dart';
 
 class ChildHomeView extends GetView<ChildHomeController> {
   const ChildHomeView({super.key});
@@ -8,82 +15,31 @@ class ChildHomeView extends GetView<ChildHomeController> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      backgroundColor: const Color(0xFFF7F9FC),
+      backgroundColor: Colors.white,
+      appBar: const ChildAppBar(
+        fireCount: 2,
+        gemCount: 1180,
+      ),
       body: Column(
         children: [
           Expanded(
-            child: SafeArea(
-              bottom: false,
+            child: PaddedWrapper(
+              bottom: true,
               child: Column(
                 children: [
                   // Top Section: Profile, Progress, Dolphin Logo
-                  Padding(
-                    padding: const EdgeInsets.symmetric(
-                        horizontal: 16, vertical: 16),
-                    child: Row(
-                      crossAxisAlignment: CrossAxisAlignment.start,
-                      children: [
-                        // Profile/Progress Card (left)
-                        Expanded(
-                          child: Container(
-                            height: 76,
-                            decoration: BoxDecoration(
-                              color: const Color(0xFF57CC02),
-                              borderRadius: const BorderRadius.only(
-                                topLeft: Radius.circular(20),
-                                bottomLeft: Radius.circular(20),
-                              ),
-                              boxShadow: [
-                                BoxShadow(
-                                  color: Colors.black.withOpacity(0.08),
-                                  offset: const Offset(0, 1),
-                                  blurRadius: 2,
-                                ),
-                                const BoxShadow(
-                                  color: Color(0xFF47A302),
-                                  offset: Offset(0, -4),
-                                  blurRadius: 0,
-                                  spreadRadius: 0,
-                                ),
-                              ],
-                            ),
-                            child: Padding(
-                              padding: const EdgeInsets.all(12.0),
-                              child: Column(
-                                crossAxisAlignment: CrossAxisAlignment.start,
-                                mainAxisAlignment: MainAxisAlignment.center,
-                                children: const [
-                                  Text(
-                                    '5年下・第18回',
-                                    style: TextStyle(
-                                      color: Color(0xBFFFFFFF),
-                                      fontWeight: FontWeight.w600,
-                                      fontSize: 15,
-                                    ),
-                                  ),
-                                  SizedBox(height: 4),
-                                  Text(
-                                    '日本のおもな都市・地形図の読み方',
-                                    style: TextStyle(
-                                      color: Color(0xFF2196F3),
-                                      fontWeight: FontWeight.w600,
-                                      fontSize: 17,
-                                    ),
-                                  ),
-                                ],
-                              ),
-                            ),
-                          ),
-                        ),
-                        // Progress/Score Card (right)
-                        Container(
-                          height: 76,
-                          width: 68,
+                  Row(
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    children: [
+                      // Profile/Progress Card (left)
+                      Expanded(
+                        child: Container(
+                          height: k20Double.hp,
                           decoration: BoxDecoration(
-                            color: const Color(0xFF57CC02).withOpacity(0.2),
-                            borderRadius: const BorderRadius.only(
-                              topRight: Radius.circular(20),
-                              bottomRight: Radius.circular(20),
+                            color: const Color(0xFF57CC02),
+                            borderRadius: BorderRadius.only(
+                              topLeft: Radius.circular(k4Double.wp),
+                              bottomLeft: Radius.circular(k4Double.wp),
                             ),
                             boxShadow: [
                               BoxShadow(
@@ -99,62 +55,89 @@ class ChildHomeView extends GetView<ChildHomeController> {
                               ),
                             ],
                           ),
-                          child: Column(
-                            mainAxisAlignment: MainAxisAlignment.center,
-                            children: const [
-                              Text(
-                                '1180',
-                                style: TextStyle(
-                                  color: Color(0xFF1CB0F6),
-                                  fontWeight: FontWeight.bold,
-                                  fontSize: 17,
+                          child: Padding(
+                            padding: EdgeInsets.all(k3Double.wp),
+                            child: Column(
+                              crossAxisAlignment: CrossAxisAlignment.start,
+                              mainAxisAlignment: MainAxisAlignment.center,
+                              children: const [
+                                CustomTitleText(
+                                  text: '5年下・第18回',
+                                  fontSize: k15Double,
+                                  textColor: Color(0xBFFFFFFF),
+                                  fontWeight: FontWeight.w600,
+                                  textAlign: TextAlign.left,
                                 ),
-                              ),
-                              SizedBox(height: 4),
-                              Text(
-                                '2',
-                                style: TextStyle(
-                                  color: Color(0xFFFF9600),
-                                  fontWeight: FontWeight.bold,
-                                  fontSize: 17,
+                                SizedBox(height: 4),
+                                CustomTitleText(
+                                  text: '日本のおもな都市・地形図の読み方',
+                                  fontSize: k17Double,
+                                  textColor: Color(0xFF2196F3),
+                                  fontWeight: FontWeight.w600,
+                                  textAlign: TextAlign.left,
                                 ),
-                              ),
-                            ],
+                              ],
+                            ),
                           ),
                         ),
-                      ],
-                    ),
+                      ),
+                      // Progress/Score Card (right)
+                      Container(
+                        height: k20Double.hp,
+                        width: k18Double.wp,
+                        decoration: BoxDecoration(
+                          color: const Color(0xFF57CC02).withOpacity(0.2),
+                          borderRadius: BorderRadius.only(
+                            topRight: Radius.circular(k4Double.wp),
+                            bottomRight: Radius.circular(k4Double.wp),
+                          ),
+                          boxShadow: [
+                            BoxShadow(
+                              color: Colors.black.withOpacity(0.08),
+                              offset: const Offset(0, 1),
+                              blurRadius: 2,
+                            ),
+                            const BoxShadow(
+                              color: Color(0xFF47A302),
+                              offset: Offset(0, -4),
+                              blurRadius: 0,
+                              spreadRadius: 0,
+                            ),
+                          ],
+                        ),
+                        child: Column(
+                          mainAxisAlignment: MainAxisAlignment.center,
+                          children: const [
+                            CustomTitleText(
+                              text: '1180',
+                              fontSize: k17Double,
+                              textColor: Color(0xFF1CB0F6),
+                              fontWeight: FontWeight.bold,
+                            ),
+                            SizedBox(height: 4),
+                            CustomTitleText(
+                              text: '2',
+                              fontSize: k17Double,
+                              textColor: Color(0xFFFF9600),
+                              fontWeight: FontWeight.bold,
+                            ),
+                          ],
+                        ),
+                      ),
+                    ],
                   ),
+                  SizedBox(height: k4Double.hp),
                   // Dolphin Logo (centered)
-                  Padding(
-                    padding: const EdgeInsets.symmetric(vertical: 16),
-                    child: SizedBox(
-                      height: 130,
-                      width: 130,
-                      child: Image.asset('assets/images/logo.png'),
-                    ),
+                  SizedBox(
+                    height: k35Double.wp,
+                    width: k35Double.wp,
+                    child: Image.asset('assets/images/logo.png'),
                   ),
+                  SizedBox(height: k4Double.hp),
                   // Start Button
-                  Padding(
-                    padding:
-                        const EdgeInsets.symmetric(horizontal: 32, vertical: 8),
-                    child: ElevatedButton(
-                      style: ElevatedButton.styleFrom(
-                        backgroundColor: const Color(0xFF4BA0EA),
-                        minimumSize: const Size.fromHeight(48),
-                        shape: RoundedRectangleBorder(
-                          borderRadius: BorderRadius.circular(12),
-                        ),
-                      ),
-                      onPressed: () {},
-                      child: const Text(
-                        'スタート',
-                        style: TextStyle(
-                          fontWeight: FontWeight.w600,
-                          fontSize: 18,
-                        ),
-                      ),
-                    ),
+                  CustomButton(
+                    buttonText: 'スタート',
+                    onPressed: () {},
                   ),
                   const Spacer(),
                 ],
@@ -162,66 +145,9 @@ class ChildHomeView extends GetView<ChildHomeController> {
             ),
           ),
           // Bottom Navigation Bar (custom)
-          SafeArea(
-            top: false,
-            child: Container(
-              height: 80,
-              width: double.infinity,
-              decoration: const BoxDecoration(
-                color: Colors.white,
-                boxShadow: [
-                  BoxShadow(
-                    color: Color(0x08000000),
-                    offset: Offset(0, -4),
-                    blurRadius: 4,
-                  ),
-                ],
-              ),
-              child: Row(
-                mainAxisAlignment: MainAxisAlignment.spaceAround,
-                children: const [
-                  _NavBarItem(label: 'ホーム', icon: Icons.home, selected: true),
-                  _NavBarItem(label: 'トレーニング', icon: Icons.fitness_center),
-                  _NavBarItem(label: 'ランキング', icon: Icons.emoji_events),
-                  _NavBarItem(label: 'コース', icon: Icons.school),
-                  _NavBarItem(label: 'その他', icon: Icons.settings),
-                ],
-              ),
-            ),
-          ),
+          const ChildBottomNavBar(),
         ],
       ),
-    );
-  }
-}
-
-class _NavBarItem extends StatelessWidget {
-  final String label;
-  final IconData icon;
-  final bool selected;
-  const _NavBarItem(
-      {required this.label,
-      required this.icon,
-      this.selected = false,
-      Key? key})
-      : super(key: key);
-
-  @override
-  Widget build(BuildContext context) {
-    return Column(
-      mainAxisAlignment: MainAxisAlignment.center,
-      children: [
-        Icon(icon, color: selected ? Color(0xFF1976D2) : Color(0xFF7F7F7F)),
-        const SizedBox(height: 4),
-        Text(
-          label,
-          style: TextStyle(
-            color: selected ? Color(0xFF1976D2) : Color(0xFF7F7F7F),
-            fontWeight: selected ? FontWeight.bold : FontWeight.normal,
-            fontSize: 12,
-          ),
-        ),
-      ],
     );
   }
 }

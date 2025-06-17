@@ -56,8 +56,7 @@ const String kMessageNotFound = "Resource not found";
 const String kMessageServerError = "Server error occurred";
 const String kMessageNetworkError = "Network error occurred";
 const String kMessageTimeout = "Request timed out";
-const String kMessageValidationError =
-    "Invalid credentials";
+const String kMessageValidationError = "Invalid credentials";
 const String kMessageConnectionTimeout = "Connection timeout";
 const String kMessageSendTimeout = "Send timeout";
 const String kMessageReceiveTimeout = "Receive timeout";
@@ -86,4 +85,7 @@ const double kRegisterProgressBarOverlayLeft = 4.0;
 const double kRegisterProgressBarOverlayTop = 3.0;
 const Color kRegisterProgressBarBgColor = Color(0xFFCFD8DC);
 const Color kRegisterProgressBarProgressColor = Color(0xFF1976D2);
-const Color kRegisterProgressBarOverlayColor = Color.fromRGBO(255, 255, 255, 0.2);
+const Color kRegisterProgressBarOverlayColor =
+    Color.fromRGBO(255, 255, 255, 0.2);
+
+const double kBottomNavBarHeight = 80.0;

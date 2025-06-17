@@ -16,6 +16,8 @@ alwaysApply: false
 - Do not add a d of a `Column`; instead, set `bottom: true` in `PaddedWrapper`.
 - If a back arrow isuse `AppBar` (preferably `CustomAppbar`).
 
+For images and icons (fire, gem, dolphin, etc.), always use the generated `Assets.images.<name>` getters from `assets.gen.dart` for image usage in widgets and views. Do not use `Image.asset` directly. This ensures consistency and leverages FlutterGen asset management. Always check `assets/images/` before adding new assets.
+
 When creating new UI components or pages, always prefer reusing existing components to ensure consistency and reduce code duplication. For example:
 
 - Use [custom_appbar.dart](mdc:KiokuNaviApp/lib/widgets/custom_appbar.dart) for all app bars ers instead of manual back arrow implementations.
