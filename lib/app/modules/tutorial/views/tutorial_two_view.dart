@@ -41,7 +41,7 @@ class TutorialTwoView extends StatelessWidget {
               ),
               // Next button
               CustomButton(
-                buttonText: '次へ',
+                text: '次へ',
                 onPressed: () {
                   // TODO: Implement navigation to next tutorial step
                 },

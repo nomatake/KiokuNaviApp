@@ -40,7 +40,7 @@ class TutorialView extends GetView<TutorialController> {
               ),
               // Bottom button (already present as CustomButton, reused as per instruction)
               CustomButton(
-                buttonText: '次へ',
+                text: '次へ',
                 onPressed: () {
                   // TODO: Implement navigation or logic for next tutorial step
                 },

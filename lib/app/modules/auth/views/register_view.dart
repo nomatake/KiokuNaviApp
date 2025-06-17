@@ -111,7 +111,7 @@ class RegisterView extends GetView<AuthController> {
 
                   // Register button
                   CustomButton(
-                    buttonText: 'アカウントを作成する',
+                    text: 'アカウントを作成する',
                     disabled: true,
                     onPressed: () => controller.onRegister(),
                   ),

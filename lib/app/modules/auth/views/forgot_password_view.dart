@@ -59,7 +59,7 @@ class ForgotPasswordView extends GetView<AuthController> {
                 SizedBox(height: k2Double.hp),
                 CustomButton(
                   disabled: true,
-                  buttonText: '次へ',
+                  text: '次へ',
                   onPressed: () {},
                 ),
               ],

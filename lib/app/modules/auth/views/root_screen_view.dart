@@ -56,21 +56,21 @@ class RootScreenView extends GetView<AuthController> {
 
               // Sign Up Button
               CustomButton.primary(
-                buttonText: '新規登録',
+                text: '新規登録',
                 onPressed: () => Get.toNamed(Routes.REGISTER),
               ),
               SizedBox(height: k2Double.hp),
 
               // Login as Student
               CustomButton.outline(
-                buttonText: '生徒としてログイン',
+                text: '生徒としてログイン',
                 onPressed: () => Get.toNamed(Routes.STUDENT_LOGIN),
               ),
               SizedBox(height: k2Double.hp),
 
               // Login as Guardian
               CustomButton.outline(
-                buttonText: '保護者としてログイン',
+                text: '保護者としてログイン',
                 onPressed: () => Get.toNamed(Routes.PARENT_LOGIN),
               ),
             ],
