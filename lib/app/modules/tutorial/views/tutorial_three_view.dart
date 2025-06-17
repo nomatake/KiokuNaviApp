@@ -1,3 +1,4 @@
+import 'package:bubble/bubble.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:kioku_navi/generated/assets.gen.dart';
@@ -25,24 +26,39 @@ class TutorialThreeView extends StatelessWidget {
             children: [
               SizedBox(height: k4Double.hp),
               Row(
-                crossAxisAlignment: CrossAxisAlignment.center,
+                crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
                   Assets.images.logo.image(
                     height: k35Double.wp,
                     width: k35Double.wp,
                     fit: BoxFit.contain,
                   ),
-                  SizedBox(width: k4Double.wp),
                   Expanded(
-                    child: Text(
-                      'あなたの状況を教えてください',
-                      style: TextStyle(
-                        fontFamily: 'Hiragino Sans',
-                        fontWeight: FontWeight.w400,
-                        fontSize: k18Double.sp,
-                        color: const Color(0xFF212121),
+                    child: Bubble(
+                      style: BubbleStyle(
+                        margin: BubbleEdges.only(top: k10Double),
+                        elevation: k10Double,
+                        color: const Color(0xFFF7F7F7),
+                        borderColor: const Color(0xFFD8D8D8),
+                        borderWidth: k2_5Double,
+                        padding: BubbleEdges.all(k10Double),
+                        alignment: Alignment.topLeft,
+                        nip: BubbleNip.leftBottom,
+                        nipWidth: k4Double.wp,
+                        nipHeight: k5Double.wp,
+                        nipOffset: k25Double,
+                        radius: Radius.circular(k14Double),
                       ),
-                      textAlign: TextAlign.center,
+                      child: Text(
+                        'あなたの状況を教えてください',
+                        style: TextStyle(
+                          fontFamily: 'Hiragino Sans',
+                          fontWeight: FontWeight.w400,
+                          fontSize: k15Double.sp,
+                          color: const Color(0xFF212121),
+                        ),
+                        textAlign: TextAlign.left,
+                      ),
                     ),
                   ),
                 ],
