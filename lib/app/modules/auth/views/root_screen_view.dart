@@ -8,7 +8,6 @@ import 'package:kioku_navi/utils/sizes.dart';
 import 'package:kioku_navi/widgets/custom_button.dart';
 import 'package:kioku_navi/widgets/padded_wrapper.dart';
 
-
 class RootScreenView extends GetView<AuthController> {
   const RootScreenView({super.key});
   @override
@@ -56,24 +55,22 @@ class RootScreenView extends GetView<AuthController> {
               const Spacer(),
 
               // Sign Up Button
-              CustomButton(
+              CustomButton.primary(
                 buttonText: '新規登録',
                 onPressed: () => Get.toNamed(Routes.REGISTER),
               ),
               SizedBox(height: k2Double.hp),
 
               // Login as Student
-              CustomButton(
+              CustomButton.outline(
                 buttonText: '生徒としてログイン',
-                variant: ButtonVariant.outline,
                 onPressed: () => Get.toNamed(Routes.STUDENT_LOGIN),
               ),
               SizedBox(height: k2Double.hp),
 
               // Login as Guardian
-              CustomButton(
+              CustomButton.outline(
                 buttonText: '保護者としてログイン',
-                variant: ButtonVariant.outline,
                 onPressed: () => Get.toNamed(Routes.PARENT_LOGIN),
               ),
             ],

@@ -26,5 +26,6 @@ abstract class _Paths {
   static const FORGOT_PASSWORD = '/auth/forgot-password';
   static const TUTORIAL = '/tutorial';
   static const TUTORIAL_TWO = '/tutorial/two';
+  static const CHILD_HOME = '/home/child';
   static const TUTORIAL_THREE = '/tutorial/three';
 }
