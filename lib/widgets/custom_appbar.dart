@@ -71,7 +71,7 @@ class CustomAppbar extends StatelessWidget implements PreferredSizeWidget {
                 iconSize: k20Double.sp,
                 icon: Icon(
                   CupertinoIcons.arrow_left,
-                  color: iconColor ?? Colors.black,
+                  color: iconColor ?? const Color(0xFFA6A6A6),
                 ),
                 onPressed: onBackPressed ?? Get.back,
               )
