@@ -1,16 +1,17 @@
 import 'package:get/get.dart';
 
 import '../modules/auth/bindings/auth_binding.dart';
-import '../modules/home/bindings/home_binding.dart';
-import '../modules/home/views/home_view.dart';
 import '../modules/auth/views/forgot_password_view.dart';
 import '../modules/auth/views/parent_login_view.dart';
-import '../modules/auth/views/student_login_view.dart';
 import '../modules/auth/views/register_view.dart';
 import '../modules/auth/views/root_screen_view.dart';
+import '../modules/auth/views/student_login_view.dart';
+import '../modules/home/bindings/home_binding.dart';
+import '../modules/home/views/home_view.dart';
 import '../modules/tutorial/bindings/tutorial_binding.dart';
-import '../modules/tutorial/views/tutorial_view.dart';
+import '../modules/tutorial/views/tutorial_three_view.dart';
 import '../modules/tutorial/views/tutorial_two_view.dart';
+import '../modules/tutorial/views/tutorial_view.dart';
 
 part 'app_routes.dart';
 
@@ -58,6 +59,11 @@ class AppPages {
     GetPage(
       name: _Paths.TUTORIAL_TWO,
       page: () => const TutorialTwoView(),
+      binding: TutorialBinding(),
+    ),
+    GetPage(
+      name: _Paths.TUTORIAL_THREE,
+      page: () => const TutorialThreeView(),
       binding: TutorialBinding(),
     ),
   ];
