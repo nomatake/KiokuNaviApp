@@ -11,9 +11,9 @@ import '../modules/home/views/home_view.dart';
 import '../modules/tutorial/bindings/tutorial_binding.dart';
 import '../modules/tutorial/views/tutorial_three_view.dart';
 import '../modules/tutorial/views/tutorial_two_view.dart';
-import '../modules/tutorial/views/tutorial_view.dart';
 import '../modules/home/bindings/child_home_binding.dart';
 import '../modules/home/views/child_home_view.dart';
+import '../modules/tutorial/views/tutorial_view.dart';
 
 part 'app_routes.dart';
 
@@ -62,6 +62,11 @@ class AppPages {
       name: _Paths.TUTORIAL_TWO,
       page: () => const TutorialTwoView(),
       binding: TutorialBinding(),
+    ),
+    GetPage(
+      name: _Paths.CHILD_HOME,
+      page: () => const ChildHomeView(),
+      binding: ChildHomeBinding(),
     ),
     GetPage(
       name: _Paths.TUTORIAL_THREE,
