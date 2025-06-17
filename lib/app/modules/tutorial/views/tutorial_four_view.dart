@@ -8,14 +8,14 @@ import 'package:kioku_navi/widgets/custom_button.dart';
 import 'package:kioku_navi/widgets/padded_wrapper.dart';
 import 'package:kioku_navi/widgets/register_app_bar.dart';
 
-class TutorialThreeView extends StatelessWidget {
-  const TutorialThreeView({super.key});
+class TutorialFourView extends StatelessWidget {
+  const TutorialFourView({super.key});
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: RegisterAppBar(
-        progress: 0.6,
+        progress: 0.8,
         onBack: () => Get.back(),
       ),
       body: SafeArea(
@@ -50,7 +50,7 @@ class TutorialThreeView extends StatelessWidget {
                         radius: Radius.circular(k14Double),
                       ),
                       child: Text(
-                        'あなたの状況を教えてください',
+                        'お子様の学年を教えてください',
                         style: TextStyle(
                           fontFamily: 'Hiragino Sans',
                           fontWeight: FontWeight.w400,
@@ -65,7 +65,7 @@ class TutorialThreeView extends StatelessWidget {
               ),
               SizedBox(height: k4Double.hp),
               CustomButton.secondary(
-                buttonText: '保護者',
+                buttonText: '小学３年生',
                 textAlignment: ButtonTextAlignment.centerLeft,
                 onPressed: () {
                   // TODO: Handle selection
@@ -73,7 +73,7 @@ class TutorialThreeView extends StatelessWidget {
               ),
               SizedBox(height: k2Double.hp),
               CustomButton.secondary(
-                buttonText: '児童',
+                buttonText: '小学４年生',
                 textAlignment: ButtonTextAlignment.centerLeft,
                 onPressed: () {
                   // TODO: Handle selection
@@ -81,7 +81,31 @@ class TutorialThreeView extends StatelessWidget {
               ),
               SizedBox(height: k2Double.hp),
               CustomButton.secondary(
-                buttonText: '教師',
+                buttonText: '小学５年生',
+                textAlignment: ButtonTextAlignment.centerLeft,
+                onPressed: () {
+                  // TODO: Handle selection
+                },
+              ),
+              SizedBox(height: k2Double.hp),
+              CustomButton.secondary(
+                buttonText: '小学６年生',
+                textAlignment: ButtonTextAlignment.centerLeft,
+                onPressed: () {
+                  // TODO: Handle selection
+                },
+              ),
+              SizedBox(height: k2Double.hp),
+              CustomButton.secondary(
+                buttonText: '中学１年生',
+                textAlignment: ButtonTextAlignment.centerLeft,
+                onPressed: () {
+                  // TODO: Handle selection
+                },
+              ),
+              SizedBox(height: k2Double.hp),
+              CustomButton.secondary(
+                buttonText: '中学２年生',
                 textAlignment: ButtonTextAlignment.centerLeft,
                 onPressed: () {
                   // TODO: Handle selection
@@ -91,7 +115,7 @@ class TutorialThreeView extends StatelessWidget {
               CustomButton.primary(
                 buttonText: '次へ',
                 onPressed: () {
-                  // TODO: Handle selection
+                  // TODO: Handle next action
                 },
               ),
             ],

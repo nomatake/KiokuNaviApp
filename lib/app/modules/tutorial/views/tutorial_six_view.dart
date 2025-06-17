@@ -8,14 +8,14 @@ import 'package:kioku_navi/widgets/custom_button.dart';
 import 'package:kioku_navi/widgets/padded_wrapper.dart';
 import 'package:kioku_navi/widgets/register_app_bar.dart';
 
-class TutorialThreeView extends StatelessWidget {
-  const TutorialThreeView({super.key});
+class TutorialSixView extends StatelessWidget {
+  const TutorialSixView({super.key});
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: RegisterAppBar(
-        progress: 0.6,
+        progress: 0.5,
         onBack: () => Get.back(),
       ),
       body: SafeArea(
@@ -50,7 +50,7 @@ class TutorialThreeView extends StatelessWidget {
                         radius: Radius.circular(k14Double),
                       ),
                       child: Text(
-                        'あなたの状況を教えてください',
+                        '学習を習慣づける一歩 を踏み出そう！',
                         style: TextStyle(
                           fontFamily: 'Hiragino Sans',
                           fontWeight: FontWeight.w400,
@@ -63,35 +63,11 @@ class TutorialThreeView extends StatelessWidget {
                   ),
                 ],
               ),
-              SizedBox(height: k4Double.hp),
-              CustomButton.secondary(
-                buttonText: '保護者',
-                textAlignment: ButtonTextAlignment.centerLeft,
-                onPressed: () {
-                  // TODO: Handle selection
-                },
-              ),
-              SizedBox(height: k2Double.hp),
-              CustomButton.secondary(
-                buttonText: '児童',
-                textAlignment: ButtonTextAlignment.centerLeft,
-                onPressed: () {
-                  // TODO: Handle selection
-                },
-              ),
-              SizedBox(height: k2Double.hp),
-              CustomButton.secondary(
-                buttonText: '教師',
-                textAlignment: ButtonTextAlignment.centerLeft,
-                onPressed: () {
-                  // TODO: Handle selection
-                },
-              ),
               const Spacer(),
               CustomButton.primary(
                 buttonText: '次へ',
                 onPressed: () {
-                  // TODO: Handle selection
+                  // TODO: Handle completion
                 },
               ),
             ],
