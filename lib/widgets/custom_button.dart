@@ -2,7 +2,9 @@ import 'package:flutter/material.dart';
 import 'package:kioku_navi/utils/extensions.dart';
 import 'package:kioku_navi/utils/sizes.dart';
 
-enum ButtonVariant { primary, outline }
+enum ButtonVariant { primary, outline, secondary }
+
+enum ButtonTextAlignment { start, centerLeft, center, centerRight, end }
 
 class CustomButton extends StatelessWidget {
   const CustomButton({
@@ -15,6 +17,7 @@ class CustomButton extends StatelessWidget {
     this.textColor,
     this.borderColor,
     this.disabled = false,
+    this.textAlignment = ButtonTextAlignment.center,
   });
 
   final String buttonText;
@@ -25,6 +28,7 @@ class CustomButton extends StatelessWidget {
   final Color? textColor;
   final Color? borderColor;
   final bool disabled;
+  final ButtonTextAlignment textAlignment;
 
   @override
   Widget build(context) {
@@ -71,7 +75,7 @@ class CustomButton extends StatelessWidget {
           btnColor = buttonColor ?? Colors.transparent;
           txtColor = textColor ?? const Color(0xFF1976D2);
           brdColor = borderColor ?? const Color(0xFF1E88E5);
-          fontWeight = FontWeight.w700;
+          fontWeight = FontWeight.w800;
           letterSpacing = 0;
           shadows = [
             const BoxShadow(
@@ -87,7 +91,89 @@ class CustomButton extends StatelessWidget {
             ),
           ];
           break;
+        case ButtonVariant.secondary:
+          btnColor = buttonColor ?? Colors.white;
+          txtColor = textColor ?? const Color(0xFF424242);
+          brdColor = borderColor ?? const Color(0xFFB0BEC5);
+          fontWeight = FontWeight.w800;
+          letterSpacing = 0;
+          shadows = [
+            const BoxShadow(
+              color: Color(0x14000000),
+              blurRadius: 2,
+              offset: Offset(0, 1),
+            ),
+            BoxShadow(
+              color: const Color(0xFFB0BEC5),
+              offset: const Offset(0, 3),
+              blurRadius: 0,
+              spreadRadius: 0,
+            ),
+          ];
+          break;
       }
+    }
+
+    Alignment getTextAlignment(ButtonTextAlignment alignment) {
+      switch (alignment) {
+        case ButtonTextAlignment.start:
+          return Alignment.centerLeft;
+        case ButtonTextAlignment.centerLeft:
+          return Alignment(-0.65, 0); // 25% from left
+        case ButtonTextAlignment.center:
+          return Alignment.center;
+        case ButtonTextAlignment.centerRight:
+          return Alignment(0.65, 0); // 75% from left
+        case ButtonTextAlignment.end:
+          return Alignment.centerRight;
+      }
+    }
+
+    Widget buildRow() {
+      List<Widget> children = [
+        if (icon != null) ...[
+          icon!,
+          SizedBox(width: k1Double.wp),
+        ],
+      ];
+      EdgeInsets textPadding;
+      switch (textAlignment) {
+        case ButtonTextAlignment.start:
+          textPadding = EdgeInsets.only(left: k4Double.wp);
+          break;
+        case ButtonTextAlignment.centerLeft:
+          textPadding = EdgeInsets.only(left: k4Double.wp);
+          break;
+        case ButtonTextAlignment.centerRight:
+        case ButtonTextAlignment.end:
+          textPadding = EdgeInsets.only(right: k4Double.wp);
+          break;
+        case ButtonTextAlignment.center:
+          textPadding = EdgeInsets.zero;
+      }
+      children.add(
+        Expanded(
+          child: Align(
+            alignment: getTextAlignment(textAlignment),
+            child: Padding(
+              padding: textPadding,
+              child: Text(
+                buttonText,
+                style: TextStyle(
+                  fontFamily: 'Hiragino Sans',
+                  fontWeight: fontWeight,
+                  fontSize: k12Double.sp,
+                  color: txtColor,
+                  letterSpacing: letterSpacing,
+                ),
+              ),
+            ),
+          ),
+        ),
+      );
+      return Row(
+        children: children,
+      );
     }
 
     return SizedBox(
@@ -114,25 +200,7 @@ class CustomButton extends StatelessWidget {
                   borderRadius: BorderRadius.circular(12),
                 ),
                 child: Center(
-                  child: Row(
-                    mainAxisAlignment: MainAxisAlignment.center,
-                    children: [
-                      if (icon != null) ...[
-                        icon!,
-                        SizedBox(width: k1Double.wp),
-                      ],
-                      Text(
-                        buttonText,
-                        style: TextStyle(
-                          fontFamily: 'Hiragino Sans',
-                          fontWeight: fontWeight,
-                          fontSize: k12Double.sp,
-                          color: txtColor,
-                          letterSpacing: letterSpacing,
-                        ),
-                      ),
-                    ],
-                  ),
+                  child: buildRow(),
                 ),
               ),
             )
@@ -157,25 +225,7 @@ class CustomButton extends StatelessWidget {
                   padding: EdgeInsets.zero,
                 ),
                 onPressed: onPressed,
-                child: Row(
-                  mainAxisAlignment: MainAxisAlignment.center,
-                  children: [
-                    if (icon != null) ...[
-                      icon!,
-                      SizedBox(width: k1Double.wp),
-                    ],
-                    Text(
-                      buttonText,
-                      style: TextStyle(
-                        fontFamily: 'Hiragino Sans',
-                        fontWeight: fontWeight,
-                        fontSize: k12Double.sp,
-                        color: txtColor,
-                        letterSpacing: letterSpacing,
-                      ),
-                    ),
-                  ],
-                ),
+                child: buildRow(),
               ),
             ),
     );

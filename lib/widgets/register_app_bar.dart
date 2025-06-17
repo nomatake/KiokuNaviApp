@@ -1,4 +1,6 @@
 import 'package:flutter/material.dart';
+import 'package:kioku_navi/utils/extensions.dart';
+import 'package:kioku_navi/utils/sizes.dart';
 import 'package:kioku_navi/widgets/register_progress_bar.dart';
 
 class RegisterAppBar extends StatelessWidget implements PreferredSizeWidget {
@@ -27,7 +29,9 @@ class RegisterAppBar extends StatelessWidget implements PreferredSizeWidget {
           crossAxisAlignment: CrossAxisAlignment.center,
           children: [
             IconButton(
-              icon: const Icon(Icons.arrow_back_rounded, color: Colors.black),
+              icon: const Icon(Icons.arrow_back_rounded,
+                  color: Color(0xFFA6A6A6)),
+                  iconSize: k20Double.sp,
               onPressed: onBack ?? () => Navigator.of(context).maybePop(),
               splashRadius: 24,
             ),
@@ -38,4 +42,4 @@ class RegisterAppBar extends StatelessWidget implements PreferredSizeWidget {
       ),
     );
   }
-} 
+}
