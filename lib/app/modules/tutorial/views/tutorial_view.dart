@@ -2,14 +2,15 @@
 // Dolphin icon and bottom button are reused from existing assets/widgets.
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-import '../controllers/tutorial_controller.dart';
 import 'package:kioku_navi/generated/assets.gen.dart';
-import 'package:kioku_navi/widgets/custom_button.dart';
-import 'package:kioku_navi/widgets/padded_wrapper.dart';
-import 'package:kioku_navi/utils/sizes.dart';
 import 'package:kioku_navi/utils/extensions.dart';
-import 'package:kioku_navi/widgets/custom_tooltip.dart';
+import 'package:kioku_navi/utils/sizes.dart';
 import 'package:kioku_navi/widgets/custom_appbar.dart';
+import 'package:kioku_navi/widgets/custom_button.dart';
+import 'package:kioku_navi/widgets/custom_tooltip.dart';
+import 'package:kioku_navi/widgets/padded_wrapper.dart';
+
+import '../controllers/tutorial_controller.dart';
 
 class TutorialView extends GetView<TutorialController> {
   const TutorialView({super.key});
@@ -19,25 +20,24 @@ class TutorialView extends GetView<TutorialController> {
     return Scaffold(
       appBar: CustomAppbar(
         onBackPressed: () => Get.back(),
-        color: Colors.white,
       ),
       body: SafeArea(
         child: PaddedWrapper(
+          bottom: true,
           child: Column(
             children: [
-              const SizedBox(height: 30),
-              // CustomTooltip for greeting message (Figma style, always visible)
-              CustomTooltip(
-                message: 'こんにちは！キオだよ！',
+              Expanded(
                 child: Center(
-                  child: Assets.images.logo.image(
-                    height: 130,
-                    width: 130,
-                    fit: BoxFit.contain,
+                  child: CustomTooltip(
+                    message: 'こんにちは！キオだよ！',
+                    child: Assets.images.logo.image(
+                      height: k35Double.wp,
+                      width: k35Double.wp,
+                      fit: BoxFit.contain,
+                    ),
                   ),
                 ),
               ),
-              const Spacer(),
               // Bottom button (already present as CustomButton, reused as per instruction)
               CustomButton(
                 buttonText: '次へ',
@@ -46,11 +46,10 @@ class TutorialView extends GetView<TutorialController> {
                 },
                 // You can add variant or style if needed
               ),
-              SizedBox(height: k3Double.hp),
             ],
           ),
         ),
       ),
     );
   }
-} 
+}
