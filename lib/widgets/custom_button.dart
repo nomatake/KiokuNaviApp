@@ -2,97 +2,169 @@ import 'package:flutter/material.dart';
 import 'package:kioku_navi/utils/extensions.dart';
 import 'package:kioku_navi/utils/sizes.dart';
 
-enum ButtonVariant { primary, outline }
-
 class CustomButton extends StatelessWidget {
   const CustomButton({
     required this.buttonText,
     super.key,
     this.onPressed,
-    this.variant = ButtonVariant.primary,
     this.icon,
     this.buttonColor,
     this.textColor,
     this.borderColor,
+    this.shadowColor,
+    this.contentPadding,
+    this.height,
     this.disabled = false,
+    this.fontWeight,
+    this.letterSpacing,
+    this.shadows,
+    this.borderWidth,
   });
+
+  // Factory constructor for primary variant
+  factory CustomButton.primary({
+    required String buttonText,
+    Key? key,
+    VoidCallback? onPressed,
+    Widget? icon,
+    Color? buttonColor,
+    Color? textColor,
+    Color? shadowColor,
+    EdgeInsetsGeometry? contentPadding,
+    double? height,
+    bool disabled = false,
+  }) {
+    return CustomButton(
+      buttonText: buttonText,
+      key: key,
+      onPressed: onPressed,
+      icon: icon,
+      buttonColor:
+          buttonColor ?? const Color(0xFF1E88E5).withValues(alpha: 0.8),
+      textColor: textColor ?? Colors.white,
+      shadowColor: shadowColor ?? const Color(0xFF1E88E5),
+      contentPadding: contentPadding,
+      height: height,
+      disabled: disabled,
+      fontWeight: FontWeight.w800,
+      letterSpacing: k1Double.sp,
+      shadows: [
+        const BoxShadow(
+          color: Color(0x1A000000),
+          blurRadius: 2,
+          offset: Offset(0, 1),
+        ),
+        BoxShadow(
+          color: shadowColor ?? const Color(0xFF1E88E5),
+          offset: const Offset(0, 5),
+          blurRadius: 0,
+          spreadRadius: 0,
+        ),
+      ],
+    );
+  }
+
+  // Factory constructor for outline variant
+  factory CustomButton.outline({
+    required String buttonText,
+    Key? key,
+    VoidCallback? onPressed,
+    Widget? icon,
+    Color? buttonColor,
+    Color? textColor,
+    Color? borderColor,
+    Color? shadowColor,
+    EdgeInsetsGeometry? contentPadding,
+    double? height,
+    bool disabled = false,
+    double? borderWidth,
+  }) {
+    return CustomButton(
+      buttonText: buttonText,
+      key: key,
+      onPressed: onPressed,
+      icon: icon,
+      buttonColor: buttonColor ?? Colors.transparent,
+      textColor: textColor ?? const Color(0xFF1976D2),
+      borderColor: borderColor ?? const Color(0xFF1E88E5),
+      shadowColor: shadowColor ?? const Color(0xFF1E88E5),
+      contentPadding: contentPadding,
+      height: height,
+      disabled: disabled,
+      fontWeight: FontWeight.w700,
+      letterSpacing: 0,
+      borderWidth: borderWidth ?? 2,
+      shadows: [
+        const BoxShadow(
+          color: Color(0x1A000000),
+          blurRadius: 2,
+          offset: Offset(0, 1),
+        ),
+        BoxShadow(
+          color: shadowColor ?? const Color(0xFF1E88E5),
+          offset: const Offset(0, 3),
+          blurRadius: 0,
+          spreadRadius: 0,
+        ),
+      ],
+    );
+  }
+
+  // Factory constructor for ghost/disabled variant
+  factory CustomButton.ghost({
+    required String buttonText,
+    Key? key,
+    VoidCallback? onPressed,
+    Widget? icon,
+    Color? buttonColor,
+    Color? textColor,
+    EdgeInsetsGeometry? contentPadding,
+    double? height,
+  }) {
+    return CustomButton(
+      buttonText: buttonText,
+      key: key,
+      onPressed: onPressed,
+      icon: icon,
+      buttonColor: buttonColor ?? const Color(0xFFE5E5E5),
+      textColor: textColor ?? const Color(0xFFAFAFAF),
+      contentPadding: contentPadding,
+      height: height,
+      disabled: true,
+      fontWeight: FontWeight.w500,
+      letterSpacing: 0,
+      shadows: null,
+    );
+  }
 
   final String buttonText;
   final VoidCallback? onPressed;
-  final ButtonVariant variant;
   final Widget? icon;
   final Color? buttonColor;
   final Color? textColor;
   final Color? borderColor;
+  final Color? shadowColor;
+  final EdgeInsetsGeometry? contentPadding;
+  final double? height;
   final bool disabled;
+  final FontWeight? fontWeight;
+  final double? letterSpacing;
+  final List<BoxShadow>? shadows;
+  final double? borderWidth;
 
   @override
   Widget build(context) {
-    late Color btnColor;
-    late Color txtColor;
-    late Color? brdColor;
-    late FontWeight fontWeight;
-    late double letterSpacing;
-    late List<BoxShadow>? shadows;
-
-    if (disabled) {
-      // Ghost styling when disabled - matching Figma design
-      btnColor = buttonColor ?? const Color(0xFFE5E5E5);
-      txtColor = textColor ?? const Color(0xFFAFAFAF);
-      brdColor = null;
-      fontWeight = FontWeight.w500;
-      letterSpacing = 0;
-      shadows = null;
-    } else {
-      // Normal variant styling
-      switch (variant) {
-        case ButtonVariant.primary:
-          btnColor =
-              buttonColor ?? const Color(0xFF1E88E5).withValues(alpha: 0.8);
-          txtColor = textColor ?? Colors.white;
-          brdColor = null;
-          fontWeight = FontWeight.w800;
-          letterSpacing = k1Double.sp;
-          shadows = [
-            const BoxShadow(
-              color: Color(0x1A000000),
-              blurRadius: 2,
-              offset: Offset(0, 1),
-            ),
-            const BoxShadow(
-              color: Color(0xFF1E88E5),
-              offset: Offset(0, 5),
-              blurRadius: 0,
-              spreadRadius: 0,
-            ),
-          ];
-          break;
-        case ButtonVariant.outline:
-          btnColor = buttonColor ?? Colors.transparent;
-          txtColor = textColor ?? const Color(0xFF1976D2);
-          brdColor = borderColor ?? const Color(0xFF1E88E5);
-          fontWeight = FontWeight.w700;
-          letterSpacing = 0;
-          shadows = [
-            const BoxShadow(
-              color: Color(0x1A000000),
-              blurRadius: 2,
-              offset: Offset(0, 1),
-            ),
-            const BoxShadow(
-              color: Color(0xFF1E88E5),
-              offset: Offset(0, 3),
-              blurRadius: 0,
-              spreadRadius: 0,
-            ),
-          ];
-          break;
-      }
-    }
+    // Use provided values or defaults
+    final btnColor = buttonColor ?? Colors.blue;
+    final txtColor = textColor ?? Colors.white;
+    final brdColor = borderColor;
+    final weight = fontWeight ?? FontWeight.w500;
+    final spacing = letterSpacing ?? 0;
+    final btnShadows = shadows;
 
     return SizedBox(
       width: double.infinity,
-      height: 48,
+      height: height ?? 48,
       child: disabled
           ? Container(
               decoration: BoxDecoration(
@@ -121,14 +193,19 @@ class CustomButton extends StatelessWidget {
                         icon!,
                         SizedBox(width: k1Double.wp),
                       ],
-                      Text(
-                        buttonText,
-                        style: TextStyle(
-                          fontFamily: 'Hiragino Sans',
-                          fontWeight: fontWeight,
-                          fontSize: k12Double.sp,
-                          color: txtColor,
-                          letterSpacing: letterSpacing,
+                      Flexible(
+                        child: Text(
+                          buttonText,
+                          style: TextStyle(
+                            fontFamily: 'Hiragino Sans',
+                            fontWeight: weight,
+                            fontSize: k12Double.sp,
+                            color: txtColor,
+                            letterSpacing: spacing,
+                          ),
+                          textAlign: TextAlign.center,
+                          overflow: TextOverflow.visible,
+                          maxLines: null,
                         ),
                       ),
                     ],
@@ -141,9 +218,9 @@ class CustomButton extends StatelessWidget {
                 color: Colors.white,
                 borderRadius: BorderRadius.circular(12),
                 border: brdColor != null
-                    ? Border.all(color: brdColor, width: 2)
+                    ? Border.all(color: brdColor, width: borderWidth ?? 1)
                     : null,
-                boxShadow: shadows,
+                boxShadow: btnShadows,
               ),
               child: ElevatedButton(
                 style: ElevatedButton.styleFrom(
@@ -154,7 +231,7 @@ class CustomButton extends StatelessWidget {
                   shape: RoundedRectangleBorder(
                     borderRadius: BorderRadius.circular(12),
                   ),
-                  padding: EdgeInsets.zero,
+                  padding: contentPadding ?? EdgeInsets.zero,
                 ),
                 onPressed: onPressed,
                 child: Row(
@@ -164,14 +241,19 @@ class CustomButton extends StatelessWidget {
                       icon!,
                       SizedBox(width: k1Double.wp),
                     ],
-                    Text(
-                      buttonText,
-                      style: TextStyle(
-                        fontFamily: 'Hiragino Sans',
-                        fontWeight: fontWeight,
-                        fontSize: k12Double.sp,
-                        color: txtColor,
-                        letterSpacing: letterSpacing,
+                    Flexible(
+                      child: Text(
+                        buttonText,
+                        style: TextStyle(
+                          fontFamily: 'Hiragino Sans',
+                          fontWeight: weight,
+                          fontSize: k12Double.sp,
+                          color: txtColor,
+                          letterSpacing: spacing,
+                        ),
+                        textAlign: TextAlign.center,
+                        overflow: TextOverflow.visible,
+                        maxLines: null,
                       ),
                     ),
                   ],
