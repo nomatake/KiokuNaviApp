@@ -26,8 +26,8 @@ class ChildHomeView extends GetView<ChildHomeController> {
           Expanded(
             child: PaddedWrapper(
               bottom: false,
-              left: false,
-              right: false,
+              left: true,
+              right: true,
               child: Column(
                 children: [
                   // Split Button Section using CustomButton components
@@ -101,12 +101,11 @@ class ChildHomeView extends GetView<ChildHomeController> {
   }
 
   List<Widget> _buildCourseSections() {
-    return controller.courseSections.map((section) {
+    return controller.courseSections.map<Widget>((section) {
       return CourseSectionWidget(
         title: section.title,
         isAlignedRight: section.isAlignedRight,
-        totalDots: section.totalDots,
-        completedDots: section.completedDots,
+        nodes: section.nodes,
         showDolphin: section.showDolphin,
         onTap: () => controller.onSectionTapped(section),
       );
