@@ -143,7 +143,7 @@ class CustomButton extends StatelessWidget {
       contentPadding: contentPadding,
       height: height,
       disabled: disabled,
-      fontWeight: FontWeight.w800,
+      fontWeight: FontWeight.w700,
       letterSpacing: 0,
       borderWidth: borderWidth ?? 2,
       textAlignment: textAlignment,

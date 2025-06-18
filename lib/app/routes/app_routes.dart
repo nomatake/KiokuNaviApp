@@ -13,6 +13,12 @@ abstract class Routes {
   static const TUTORIAL = _Paths.TUTORIAL;
   static const TUTORIAL_TWO = _Paths.TUTORIAL_TWO;
   static const TUTORIAL_THREE = _Paths.TUTORIAL_THREE;
+  static const TUTORIAL_FOUR = _Paths.TUTORIAL_FOUR;
+  static const TUTORIAL_FIVE = _Paths.TUTORIAL_FIVE;
+  static const TUTORIAL_SIX = _Paths.TUTORIAL_SIX;
+  static const TUTORIAL_SEVEN = _Paths.TUTORIAL_SEVEN;
+  static const TUTORIAL_EIGHT = _Paths.TUTORIAL_EIGHT;
+  static const TUTORIAL_NINE = _Paths.TUTORIAL_NINE;
 }
 
 abstract class _Paths {
@@ -28,4 +34,10 @@ abstract class _Paths {
   static const TUTORIAL_TWO = '/tutorial/two';
   static const CHILD_HOME = '/home/child';
   static const TUTORIAL_THREE = '/tutorial/three';
+  static const TUTORIAL_FOUR = '/tutorial/four';
+  static const TUTORIAL_FIVE = '/tutorial/five';
+  static const TUTORIAL_SIX = '/tutorial/six';
+  static const TUTORIAL_SEVEN = '/tutorial/seven';
+  static const TUTORIAL_EIGHT = '/tutorial/eight';
+  static const TUTORIAL_NINE = '/tutorial/nine';
 }

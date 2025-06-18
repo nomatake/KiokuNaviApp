@@ -1,14 +1,14 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-import '../controllers/child_home_controller.dart';
-import 'package:kioku_navi/widgets/custom_button.dart';
-import 'package:kioku_navi/widgets/padded_wrapper.dart';
-import 'package:kioku_navi/widgets/custom_title_text.dart';
+import 'package:kioku_navi/generated/assets.gen.dart';
 import 'package:kioku_navi/utils/extensions.dart';
 import 'package:kioku_navi/utils/sizes.dart';
-import 'package:kioku_navi/widgets/child/child_bottom_nav_bar.dart';
 import 'package:kioku_navi/widgets/child/child_app_bar.dart';
-import 'package:kioku_navi/generated/assets.gen.dart';
+import 'package:kioku_navi/widgets/child/child_bottom_nav_bar.dart';
+import 'package:kioku_navi/widgets/custom_button.dart';
+import 'package:kioku_navi/widgets/padded_wrapper.dart';
+
+import '../controllers/child_home_controller.dart';
 
 class ChildHomeView extends GetView<ChildHomeController> {
   const ChildHomeView({super.key});
