@@ -7,6 +7,7 @@ import 'package:kioku_navi/utils/extensions.dart';
 import 'package:kioku_navi/utils/sizes.dart';
 import 'package:kioku_navi/widgets/child/child_bottom_nav_bar.dart';
 import 'package:kioku_navi/widgets/child/child_app_bar.dart';
+import 'package:kioku_navi/widgets/course_section_widget.dart';
 import 'package:kioku_navi/generated/assets.gen.dart';
 
 class ChildHomeView extends GetView<ChildHomeController> {
@@ -24,101 +25,71 @@ class ChildHomeView extends GetView<ChildHomeController> {
         children: [
           Expanded(
             child: PaddedWrapper(
-              bottom: true,
+              bottom: false,
               left: false,
               right: false,
-              child: Padding(
-                padding: EdgeInsets.symmetric(horizontal: k3Double.wp),
-                child: Column(
-                  children: [
-                    // Split Button Section using CustomButton components
-                    Row(
-                      children: [
-                        // Left part (dropdown-like) with comprehensive icon
-                        SizedBox(
-                          width: k18Double.wp, // ~68px from Figma
-                          child: CustomButton.primary(
-                            text: '',
-                            backgroundColor: const Color(0xFF57CC02),
-                            shadowColor: const Color(0xFF47A302),
-                            height: k19Double.wp, // 76px from Figma
-                            onPressed: () {
-                              // TODO: Add dropdown functionality
-                            },
-                            icon: SizedBox(
-                              height: k13Double.wp,
-                              width: k13Double.wp,
-                              child: Assets.images.comprehensive.image(),
-                            ),
-                            borderRadius: const BorderRadius.horizontal(
-                              left: Radius.circular(12),
-                              right: Radius.circular(0),
-                            ),
+              child: Column(
+                children: [
+                  // Split Button Section using CustomButton components
+                  Row(
+                    children: [
+                      // Left part (dropdown-like) with comprehensive icon
+                      SizedBox(
+                        width: k18Double.wp, // ~68px from Figma
+                        child: CustomButton.primary(
+                          text: '',
+                          backgroundColor: const Color(0xFF57CC02),
+                          shadowColor: const Color(0xFF47A302),
+                          height: k19Double.wp, // 76px from Figma
+                          onPressed: () {
+                            // TODO: Add dropdown functionality
+                          },
+                          icon: SizedBox(
+                            height: k13Double.wp,
+                            width: k13Double.wp,
+                            child: Assets.images.comprehensive.image(),
+                          ),
+                          borderRadius: const BorderRadius.horizontal(
+                            left: Radius.circular(12),
+                            right: Radius.circular(0),
                           ),
                         ),
-                        // Separator line
-                        Container(
-                          height: k12Double.wp,
-                          width: 1,
-                          color: const Color(0xFFF7F9FC),
-                        ),
-                        // Right part (label) with lesson information
-                        Expanded(
-                          child: CustomButton.primary(
-                            text: '5年下・第18回\n日本のおもな都市・地形図の読み方',
-                            backgroundColor: const Color(0xFF57CC02),
-                            shadowColor: const Color(0xFF47A302),
-                            textColor: Colors.white,
-                            height: k19Double.wp, // 76px from Figma
-                            onPressed: () {
-                              // TODO: Add lesson navigation
-                            },
-                            borderRadius: const BorderRadius.horizontal(
-                              left: Radius.circular(0),
-                              right: Radius.circular(12),
-                            ),
+                      ),
+                      // Separator line
+                      Container(
+                        height: k12Double.wp,
+                        width: 1,
+                        color: const Color(0xFFF7F9FC),
+                      ),
+                      // Right part (label) with lesson information
+                      Expanded(
+                        child: CustomButton.primary(
+                          text: '5年下・第18回\n日本のおもな都市・地形図の読み方',
+                          backgroundColor: const Color(0xFF57CC02),
+                          shadowColor: const Color(0xFF47A302),
+                          textColor: Colors.white,
+                          height: k19Double.wp, // 76px from Figma
+                          onPressed: () {
+                            // TODO: Add lesson navigation
+                          },
+                          borderRadius: const BorderRadius.horizontal(
+                            left: Radius.circular(0),
+                            right: Radius.circular(12),
                           ),
                         ),
-                      ],
-                    ),
-                    // Additional components will be added here later
-                    SizedBox(height: k2Double.hp),
-                    
-                    // Horizontal line with "スタート" text in the middle
-                    Row(
-                      children: [
-                        // Left line
-                        Expanded(
-                          child: Container(
-                            height: 2,
-                            color: const Color(0xFFE0E0E0),
+                      ),
+                    ],
+                  ),
+                  // Scrollable course sections
+                  SizedBox(height: k2Double.hp),
+                  Expanded(
+                    child: Obx(() => SingleChildScrollView(
+                          child: Column(
+                            children: _buildCourseSections(),
                           ),
-                        ),
-                        // Text in the middle
-                        Padding(
-                          padding: EdgeInsets.symmetric(horizontal: k4Double.wp),
-                          child: Text(
-                            'スタート',
-                            style: TextStyle(
-                              fontFamily: 'Hiragino Sans',
-                              fontWeight: FontWeight.w600,
-                              fontSize: k18Double.sp,
-                              color: const Color(0xFF4BA0EA),
-                              letterSpacing: -0.36,
-                            ),
-                          ),
-                        ),
-                        // Right line
-                        Expanded(
-                          child: Container(
-                            height: 2,
-                            color: const Color(0xFFE0E0E0),
-                          ),
-                        ),
-                      ],
-                    ),
-                  ],
-                ),
+                        )),
+                  ),
+                ],
               ),
             ),
           ),
@@ -127,5 +98,18 @@ class ChildHomeView extends GetView<ChildHomeController> {
         ],
       ),
     );
+  }
+
+  List<Widget> _buildCourseSections() {
+    return controller.courseSections.map((section) {
+      return CourseSectionWidget(
+        title: section.title,
+        isAlignedRight: section.isAlignedRight,
+        totalDots: section.totalDots,
+        completedDots: section.completedDots,
+        showDolphin: section.showDolphin,
+        onTap: () => controller.onSectionTapped(section),
+      );
+    }).toList();
   }
 }
