@@ -82,6 +82,41 @@ class ChildHomeView extends GetView<ChildHomeController> {
                       ],
                     ),
                     // Additional components will be added here later
+                    SizedBox(height: k2Double.hp),
+                    
+                    // Horizontal line with "スタート" text in the middle
+                    Row(
+                      children: [
+                        // Left line
+                        Expanded(
+                          child: Container(
+                            height: 2,
+                            color: const Color(0xFFE0E0E0),
+                          ),
+                        ),
+                        // Text in the middle
+                        Padding(
+                          padding: EdgeInsets.symmetric(horizontal: k4Double.wp),
+                          child: Text(
+                            'スタート',
+                            style: TextStyle(
+                              fontFamily: 'Hiragino Sans',
+                              fontWeight: FontWeight.w600,
+                              fontSize: k18Double.sp,
+                              color: const Color(0xFF4BA0EA),
+                              letterSpacing: -0.36,
+                            ),
+                          ),
+                        ),
+                        // Right line
+                        Expanded(
+                          child: Container(
+                            height: 2,
+                            color: const Color(0xFFE0E0E0),
+                          ),
+                        ),
+                      ],
+                    ),
                   ],
                 ),
               ),
