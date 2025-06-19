@@ -24,6 +24,96 @@ class CustomButton extends StatelessWidget {
     this.textAlignment = ButtonTextAlignment.center,
   });
 
+  // Factory constructor for orange variant
+  factory CustomButton.orange({
+    required String buttonText,
+    Key? key,
+    VoidCallback? onPressed,
+    Widget? icon,
+    Color? buttonColor,
+    Color? textColor,
+    Color? shadowColor,
+    EdgeInsetsGeometry? contentPadding,
+    double? height,
+    bool disabled = false,
+    ButtonTextAlignment textAlignment = ButtonTextAlignment.center,
+  }) {
+    return CustomButton(
+      buttonText: buttonText,
+      key: key,
+      onPressed: onPressed,
+      icon: icon,
+      buttonColor:
+          buttonColor ?? const Color(0xFFF57C00).withValues(alpha: 0.8),
+      textColor: textColor ?? Colors.white,
+      shadowColor: shadowColor ?? const Color(0xFF57C000),
+      contentPadding: contentPadding,
+      height: height,
+      disabled: disabled,
+      fontWeight: FontWeight.w800,
+      letterSpacing: k1Double.sp,
+      textAlignment: textAlignment,
+      shadows: [
+        const BoxShadow(
+          color: Color(0x1A000000),
+          blurRadius: 2,
+          offset: Offset(0, 1),
+        ),
+        BoxShadow(
+          color: shadowColor ?? const Color(0xFFF57C00),
+          offset: const Offset(0, 5),
+          blurRadius: 0,
+          spreadRadius: 0,
+        ),
+      ],
+    );
+  }
+
+  // Factory constructor for success variant
+  factory CustomButton.success({
+    required String buttonText,
+    Key? key,
+    VoidCallback? onPressed,
+    Widget? icon,
+    Color? buttonColor,
+    Color? textColor,
+    Color? shadowColor,
+    EdgeInsetsGeometry? contentPadding,
+    double? height,
+    bool disabled = false,
+    ButtonTextAlignment textAlignment = ButtonTextAlignment.center,
+  }) {
+    return CustomButton(
+      buttonText: buttonText,
+      key: key,
+      onPressed: onPressed,
+      icon: icon,
+      buttonColor:
+          buttonColor ?? const Color(0xFF15B440).withValues(alpha: 0.8),
+      textColor: textColor ?? Colors.white,
+      shadowColor: shadowColor ?? const Color(0xFF15B440),
+      contentPadding: contentPadding,
+      height: height,
+      disabled: disabled,
+      fontWeight: FontWeight.w800,
+      letterSpacing: k1Double.sp,
+      textAlignment: textAlignment,
+      shadows: [
+        const BoxShadow(
+          color: Color(0x1A000000),
+          blurRadius: 2,
+          offset: Offset(0, 1),
+        ),
+        BoxShadow(
+          color: shadowColor ?? const Color(0xFF4CAF50),
+          offset: const Offset(0, 5),
+          blurRadius: 0,
+          spreadRadius: 0,
+        ),
+      ],
+    );
+  }
+
   // Factory constructor for primary variant
   factory CustomButton.primary({
     required String buttonText,
