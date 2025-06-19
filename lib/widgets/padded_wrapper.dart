@@ -23,7 +23,7 @@ class PaddedWrapper extends StatelessWidget {
     return Padding(
       padding: EdgeInsets.only(
         top: top ? k4Double.hp : k0Double,
-        bottom: bottom ? k4Double.hp : k0Double,
+        bottom: bottom ? k2Double.hp : k0Double,
         left: left ? k6Double.wp : k0Double,
         right: right ? k6Double.wp : k0Double,
       ),
