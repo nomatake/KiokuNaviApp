@@ -23,7 +23,7 @@ class CustomTooltip extends StatelessWidget {
     this.height = 75.11,
     this.margin,
     this.borderRadius = 15,
-    this.borderWidth = 2,
+    this.borderWidth = 3,
     this.borderColor = const Color(0xFFE5E5E5),
     this.backgroundColor = Colors.white,
     this.arrowColor = Colors.white,
@@ -75,7 +75,7 @@ class CustomTooltip extends StatelessWidget {
             Align(
               alignment: Alignment.bottomCenter,
               child: Padding(
-                padding: EdgeInsets.only(top: height - 2),
+                padding: EdgeInsets.only(top: height - 3),
                 child: CustomPaint(
                   size: Size(arrowWidth, arrowHeight),
                   painter: _ArrowPainter(
@@ -132,4 +132,4 @@ class _ArrowPainter extends CustomPainter {
 
   @override
   bool shouldRepaint(covariant CustomPainter oldDelegate) => false;
-} 
+}

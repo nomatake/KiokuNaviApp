@@ -6,13 +6,19 @@ import '../modules/auth/views/parent_login_view.dart';
 import '../modules/auth/views/register_view.dart';
 import '../modules/auth/views/root_screen_view.dart';
 import '../modules/auth/views/student_login_view.dart';
+import '../modules/home/bindings/child_home_binding.dart';
 import '../modules/home/bindings/home_binding.dart';
+import '../modules/home/views/child_home_view.dart';
 import '../modules/home/views/home_view.dart';
 import '../modules/tutorial/bindings/tutorial_binding.dart';
+import '../modules/tutorial/views/tutorial_eight_view.dart';
+import '../modules/tutorial/views/tutorial_five_view.dart';
+import '../modules/tutorial/views/tutorial_four_view.dart';
+import '../modules/tutorial/views/tutorial_nine_view.dart';
+import '../modules/tutorial/views/tutorial_seven_view.dart';
+import '../modules/tutorial/views/tutorial_six_view.dart';
 import '../modules/tutorial/views/tutorial_three_view.dart';
 import '../modules/tutorial/views/tutorial_two_view.dart';
-import '../modules/home/bindings/child_home_binding.dart';
-import '../modules/home/views/child_home_view.dart';
 import '../modules/tutorial/views/tutorial_view.dart';
 
 part 'app_routes.dart';
@@ -71,6 +77,36 @@ class AppPages {
     GetPage(
       name: _Paths.TUTORIAL_THREE,
       page: () => const TutorialThreeView(),
+      binding: TutorialBinding(),
+    ),
+    GetPage(
+      name: _Paths.TUTORIAL_FOUR,
+      page: () => const TutorialFourView(),
+      binding: TutorialBinding(),
+    ),
+    GetPage(
+      name: _Paths.TUTORIAL_FIVE,
+      page: () => const TutorialFiveView(),
+      binding: TutorialBinding(),
+    ),
+    GetPage(
+      name: _Paths.TUTORIAL_SIX,
+      page: () => const TutorialSixView(),
+      binding: TutorialBinding(),
+    ),
+    GetPage(
+      name: _Paths.TUTORIAL_SEVEN,
+      page: () => const TutorialSevenView(),
+      binding: TutorialBinding(),
+    ),
+    GetPage(
+      name: _Paths.TUTORIAL_EIGHT,
+      page: () => const TutorialEightView(),
+      binding: TutorialBinding(),
+    ),
+    GetPage(
+      name: _Paths.TUTORIAL_NINE,
+      page: () => const TutorialNineView(),
       binding: TutorialBinding(),
     ),
   ];
