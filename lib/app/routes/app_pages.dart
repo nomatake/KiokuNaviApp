@@ -10,6 +10,9 @@ import '../modules/home/bindings/child_home_binding.dart';
 import '../modules/home/bindings/home_binding.dart';
 import '../modules/home/views/child_home_view.dart';
 import '../modules/home/views/home_view.dart';
+import '../modules/learning/bindings/learning_binding.dart';
+import '../modules/learning/views/learning_view.dart';
+import '../modules/learning/views/question_view.dart';
 import '../modules/tutorial/bindings/tutorial_binding.dart';
 import '../modules/tutorial/views/tutorial_eight_view.dart';
 import '../modules/tutorial/views/tutorial_five_view.dart';
@@ -108,6 +111,16 @@ class AppPages {
       name: _Paths.TUTORIAL_NINE,
       page: () => const TutorialNineView(),
       binding: TutorialBinding(),
+    ),
+    GetPage(
+      name: _Paths.LEARNING,
+      page: () => const LearningView(),
+      binding: LearningBinding(),
+    ),
+    GetPage(
+      name: _Paths.QUESTION,
+      page: () => const QuestionView(),
+      binding: LearningBinding(),
     ),
   ];
 }
