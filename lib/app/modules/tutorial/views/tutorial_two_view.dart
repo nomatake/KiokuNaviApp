@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:kioku_navi/app/routes/app_pages.dart';
 import 'package:kioku_navi/generated/assets.gen.dart';
 import 'package:kioku_navi/utils/extensions.dart';
 import 'package:kioku_navi/utils/sizes.dart';
@@ -30,8 +31,8 @@ class TutorialTwoView extends StatelessWidget {
                       CustomTooltip(
                         message: '最初のレッスンを始める前に、\nn個の簡単な質問に答えてね！',
                         child: Assets.images.logo.image(
-                          height: k35Double.wp,
-                          width: k35Double.wp,
+                          height: k30Double.wp,
+                          width: k30Double.wp,
                           fit: BoxFit.contain,
                         ),
                       ),
@@ -39,13 +40,9 @@ class TutorialTwoView extends StatelessWidget {
                   ),
                 ),
               ),
-              // Next button
-              CustomButton(
+              CustomButton.primary(
                 buttonText: '次へ',
-                onPressed: () {
-                  // TODO: Implement navigation to next tutorial step
-                },
-                // Use default color and textColor for consistency
+                onPressed: () => Get.toNamed(Routes.TUTORIAL_THREE),
               ),
             ],
           ),

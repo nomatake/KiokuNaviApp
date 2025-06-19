@@ -26,7 +26,8 @@ class RegisterAppBar extends StatelessWidget implements PreferredSizeWidget {
       bottom: false,
       child: Container(
         color: backgroundColor,
-        padding: const EdgeInsets.only(left: 14, right: 16, top: 8, bottom: 0),
+        padding:
+            EdgeInsets.only(left: 14, right: k6Double.wp, top: 8, bottom: 0),
         child: Row(
           crossAxisAlignment: CrossAxisAlignment.center,
           children: [
@@ -42,7 +43,7 @@ class RegisterAppBar extends StatelessWidget implements PreferredSizeWidget {
               splashRadius: 24,
             ),
             const SizedBox(width: 8),
-            RegisterProgressBar(progress: progress),
+            Expanded(child: RegisterProgressBar(progress: progress)),
           ],
         ),
       ),
