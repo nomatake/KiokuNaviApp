@@ -7,12 +7,14 @@ class RegisterAppBar extends StatelessWidget implements PreferredSizeWidget {
   final double progress;
   final VoidCallback? onBack;
   final Color backgroundColor;
+  final bool showCloseIcon;
 
   const RegisterAppBar({
     super.key,
     required this.progress,
     this.onBack,
     this.backgroundColor = Colors.transparent,
+    this.showCloseIcon = false,
   });
 
   @override
@@ -29,9 +31,11 @@ class RegisterAppBar extends StatelessWidget implements PreferredSizeWidget {
           crossAxisAlignment: CrossAxisAlignment.center,
           children: [
             IconButton(
-              icon: const Icon(Icons.arrow_back_rounded,
-                  color: Color(0xFFA6A6A6)),
-                  iconSize: k20Double.sp,
+              icon: Icon(
+                showCloseIcon ? Icons.close_rounded : Icons.arrow_back_rounded,
+                color: const Color(0xFFA6A6A6),
+              ),
+              iconSize: k20Double.sp,
               onPressed: onBack ?? () => Navigator.of(context).maybePop(),
               splashRadius: 24,
             ),
