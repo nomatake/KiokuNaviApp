@@ -18,7 +18,7 @@ class RegisterAppBar extends StatelessWidget implements PreferredSizeWidget {
   });
 
   @override
-  Size get preferredSize => const Size.fromHeight(56);
+  Size get preferredSize => const Size.fromHeight(kToolbarHeight);
 
   @override
   Widget build(BuildContext context) {
@@ -31,6 +31,8 @@ class RegisterAppBar extends StatelessWidget implements PreferredSizeWidget {
           crossAxisAlignment: CrossAxisAlignment.center,
           children: [
             IconButton(
+              splashColor: Colors.transparent,
+              highlightColor: Colors.transparent,
               icon: Icon(
                 showCloseIcon ? Icons.close_rounded : Icons.arrow_back_rounded,
                 color: const Color(0xFFA6A6A6),
