@@ -43,15 +43,14 @@ class CustomButton extends StatelessWidget {
       key: key,
       onPressed: onPressed,
       icon: icon,
-      buttonColor:
-          buttonColor ?? const Color(0xFFF57C00).withValues(alpha: 0.8),
+      buttonColor: buttonColor ?? const Color(0xFFF57C00),
       textColor: textColor ?? Colors.white,
-      shadowColor: shadowColor ?? const Color(0xFF57C000),
+      shadowColor: shadowColor ?? const Color(0xFFE56A00),
       contentPadding: contentPadding,
       height: height,
       disabled: disabled,
-      fontWeight: FontWeight.w800,
-      letterSpacing: k1Double.sp,
+      fontWeight: FontWeight.w700,
+      letterSpacing: 0,
       textAlignment: textAlignment,
       shadows: [
         const BoxShadow(
@@ -60,8 +59,8 @@ class CustomButton extends StatelessWidget {
           offset: Offset(0, 1),
         ),
         BoxShadow(
-          color: shadowColor ?? const Color(0xFFF57C00),
-          offset: const Offset(0, 5),
+          color: shadowColor ?? const Color(0xFFE56A00),
+          offset: const Offset(0, 4),
           blurRadius: 0,
           spreadRadius: 0,
         ),
@@ -88,15 +87,14 @@ class CustomButton extends StatelessWidget {
       key: key,
       onPressed: onPressed,
       icon: icon,
-      buttonColor:
-          buttonColor ?? const Color(0xFF15B440).withValues(alpha: 0.8),
+      buttonColor: buttonColor ?? const Color(0xFF29CC57),
       textColor: textColor ?? Colors.white,
       shadowColor: shadowColor ?? const Color(0xFF15B440),
       contentPadding: contentPadding,
       height: height,
       disabled: disabled,
-      fontWeight: FontWeight.w800,
-      letterSpacing: k1Double.sp,
+      fontWeight: FontWeight.w700,
+      letterSpacing: 0,
       textAlignment: textAlignment,
       shadows: [
         const BoxShadow(
@@ -105,8 +103,52 @@ class CustomButton extends StatelessWidget {
           offset: Offset(0, 1),
         ),
         BoxShadow(
-          color: shadowColor ?? const Color(0xFF4CAF50),
-          offset: const Offset(0, 5),
+          color: shadowColor ?? const Color(0xFF15B440),
+          offset: const Offset(0, 4),
+          blurRadius: 0,
+          spreadRadius: 0,
+        ),
+      ],
+    );
+  }
+
+  // Factory constructor for danger variant
+  factory CustomButton.danger({
+    required String buttonText,
+    Key? key,
+    VoidCallback? onPressed,
+    Widget? icon,
+    Color? buttonColor,
+    Color? textColor,
+    Color? shadowColor,
+    EdgeInsetsGeometry? contentPadding,
+    double? height,
+    bool disabled = false,
+    ButtonTextAlignment textAlignment = ButtonTextAlignment.center,
+  }) {
+    return CustomButton(
+      buttonText: buttonText,
+      key: key,
+      onPressed: onPressed,
+      icon: icon,
+      buttonColor: buttonColor ?? const Color(0xFFE53935),
+      textColor: textColor ?? Colors.white,
+      shadowColor: shadowColor ?? const Color(0xFFC62828),
+      contentPadding: contentPadding,
+      height: height,
+      disabled: disabled,
+      fontWeight: FontWeight.w700,
+      letterSpacing: 0,
+      textAlignment: textAlignment,
+      shadows: [
+        const BoxShadow(
+          color: Color(0x1A000000),
+          blurRadius: 2,
+          offset: Offset(0, 1),
+        ),
+        BoxShadow(
+          color: shadowColor ?? const Color(0xFFC62828),
+          offset: const Offset(0, 4),
           blurRadius: 0,
           spreadRadius: 0,
         ),

@@ -21,6 +21,7 @@ abstract class Routes {
   static const TUTORIAL_NINE = _Paths.TUTORIAL_NINE;
   static const LEARNING = _Paths.LEARNING;
   static const QUESTION = _Paths.QUESTION;
+  static const RESULT = _Paths.RESULT;
 }
 
 abstract class _Paths {
@@ -44,4 +45,5 @@ abstract class _Paths {
   static const TUTORIAL_NINE = '/tutorial/nine';
   static const LEARNING = '/learning';
   static const QUESTION = '/learning/question';
+  static const RESULT = '/learning/result';
 }
