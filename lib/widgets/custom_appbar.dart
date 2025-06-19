@@ -1,4 +1,3 @@
-import "package:flutter/cupertino.dart";
 import "package:flutter/material.dart";
 import "package:flutter/services.dart";
 import "package:get/get.dart";
@@ -21,6 +20,7 @@ class CustomAppbar extends StatelessWidget implements PreferredSizeWidget {
     this.backgroundColor,
     this.actions,
     this.isHasBorder = false,
+    this.showCloseIcon = false,
   });
   @override
   Size get preferredSize => const Size.fromHeight(kToolbarHeight);
@@ -38,6 +38,7 @@ class CustomAppbar extends StatelessWidget implements PreferredSizeWidget {
   final VoidCallback? onBackPressed;
   final List<Widget>? actions;
   final bool? isHasBorder;
+  final bool showCloseIcon;
 
   @override
   Widget build(BuildContext context) {
@@ -70,7 +71,9 @@ class CustomAppbar extends StatelessWidget implements PreferredSizeWidget {
                 highlightColor: Colors.transparent,
                 iconSize: k20Double.sp,
                 icon: Icon(
-                  CupertinoIcons.arrow_left,
+                  showCloseIcon
+                      ? Icons.close_rounded
+                      : Icons.arrow_back_rounded,
                   color: iconColor ?? const Color(0xFFA6A6A6),
                 ),
                 onPressed: onBackPressed ?? Get.back,

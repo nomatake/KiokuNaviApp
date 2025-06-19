@@ -29,6 +29,7 @@ const int k145 = 145;
 const int k255 = 255;
 const int k300 = 300;
 const int k365 = 365;
+const int k375 = 375;
 const int k1000 = 1000;
 const int k1500 = 1500;
 const int k1950 = 1950;
@@ -98,11 +99,14 @@ const double k35Double = 35.0;
 const double k40Double = 40.0;
 const double k50Double = 50.0;
 const double k60Double = 60.0;
+const double k69Double = 69.0;
+const double k31Double = 31.0;
 const double k80Double = 80.0;
 const double k85Double = 85.0;
 const double k90Double = 90.0;
 const double k100Double = 100.0;
 const double k145Double = 145.0;
+const double k375Double = 375.0;
 
 ///Negative doubles
 const double kNeg0_25Double = -0.25;

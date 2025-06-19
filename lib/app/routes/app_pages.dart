@@ -15,6 +15,7 @@ import '../modules/learning/views/continuous_play_record_view.dart';
 import '../modules/learning/views/learning_view.dart';
 import '../modules/learning/views/question_view.dart';
 import '../modules/learning/views/result_view.dart';
+import '../modules/learning/views/session_change_view.dart';
 import '../modules/tutorial/bindings/tutorial_binding.dart';
 import '../modules/tutorial/views/tutorial_eight_view.dart';
 import '../modules/tutorial/views/tutorial_five_view.dart';
@@ -132,6 +133,11 @@ class AppPages {
     GetPage(
       name: _Paths.CONTINUOUS_PLAY_RECORD,
       page: () => const ContinuousPlayRecordView(),
+      binding: LearningBinding(),
+    ),
+    GetPage(
+      name: _Paths.SESSION_CHANGE,
+      page: () => const SessionChangeView(),
       binding: LearningBinding(),
     ),
   ];
