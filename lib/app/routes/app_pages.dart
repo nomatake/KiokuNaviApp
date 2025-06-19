@@ -11,6 +11,7 @@ import '../modules/home/bindings/home_binding.dart';
 import '../modules/home/views/child_home_view.dart';
 import '../modules/home/views/home_view.dart';
 import '../modules/learning/bindings/learning_binding.dart';
+import '../modules/learning/views/continuous_play_record_view.dart';
 import '../modules/learning/views/learning_view.dart';
 import '../modules/learning/views/question_view.dart';
 import '../modules/learning/views/result_view.dart';
@@ -126,6 +127,11 @@ class AppPages {
     GetPage(
       name: _Paths.RESULT,
       page: () => const ResultView(),
+      binding: LearningBinding(),
+    ),
+    GetPage(
+      name: _Paths.CONTINUOUS_PLAY_RECORD,
+      page: () => const ContinuousPlayRecordView(),
       binding: LearningBinding(),
     ),
   ];

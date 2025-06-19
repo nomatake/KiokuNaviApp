@@ -22,6 +22,7 @@ abstract class Routes {
   static const LEARNING = _Paths.LEARNING;
   static const QUESTION = _Paths.QUESTION;
   static const RESULT = _Paths.RESULT;
+  static const CONTINUOUS_PLAY_RECORD = _Paths.CONTINUOUS_PLAY_RECORD;
 }
 
 abstract class _Paths {
@@ -46,4 +47,5 @@ abstract class _Paths {
   static const LEARNING = '/learning';
   static const QUESTION = '/learning/question';
   static const RESULT = '/learning/result';
+  static const CONTINUOUS_PLAY_RECORD = '/learning/continuous-play-record';
 }
