@@ -38,7 +38,7 @@ class ChildHomeView extends GetView<ChildHomeController> {
                         width: k18Double.wp, // ~68px from Figma
                         child: CustomButton.primary(
                           text: '',
-                          backgroundColor: const Color(0xFF57CC02),
+                          buttonColor: const Color(0xFF57CC02),
                           shadowColor: const Color(0xFF47A302),
                           height: k19Double.wp, // 76px from Figma
                           onPressed: () {
@@ -65,7 +65,7 @@ class ChildHomeView extends GetView<ChildHomeController> {
                       Expanded(
                         child: CustomButton.primary(
                           text: '5年下・第18回\n日本のおもな都市・地形図の読み方',
-                          backgroundColor: const Color(0xFF57CC02),
+                          buttonColor: const Color(0xFF57CC02),
                           shadowColor: const Color(0xFF47A302),
                           textColor: Colors.white,
                           height: k19Double.wp, // 76px from Figma

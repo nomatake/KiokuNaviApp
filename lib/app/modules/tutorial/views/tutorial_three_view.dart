@@ -67,7 +67,7 @@ class TutorialThreeView extends StatelessWidget {
               SizedBox(height: k4Double.hp),
               CustomButton.secondary(
                 text: '保護者',
-                alignment: MainAxisAlignment.start,
+                textAlignment: ButtonTextAlignment.start,
                 onPressed: () {
                   // TODO: Handle selection
                 },
@@ -75,7 +75,7 @@ class TutorialThreeView extends StatelessWidget {
               SizedBox(height: k2Double.hp),
               CustomButton.secondary(
                 text: '児童',
-                alignment: MainAxisAlignment.start,
+                textAlignment: ButtonTextAlignment.start,
                 onPressed: () {
                   // TODO: Handle selection
                 },
@@ -83,7 +83,7 @@ class TutorialThreeView extends StatelessWidget {
               SizedBox(height: k2Double.hp),
               CustomButton.secondary(
                 text: '教師',
-                alignment: MainAxisAlignment.start,
+                textAlignment: ButtonTextAlignment.start,
                 onPressed: () {
                   // TODO: Handle selection
                 },

@@ -10,391 +10,514 @@ class CustomButton extends StatelessWidget {
     super.key,
     this.onPressed,
     this.icon,
-    this.variant = ButtonVariant.primary,
-    this.alignment = MainAxisAlignment.center,
-    this.height,
-    this.borderRadius,
-    this.disabled = false,
-    // Override colors
-    this.backgroundColor,
+    this.buttonColor,
     this.textColor,
     this.borderColor,
     this.shadowColor,
+    this.contentPadding,
+    this.height,
+    this.disabled = false,
+    this.fontWeight,
+    this.letterSpacing,
+    this.shadows,
+    this.borderWidth,
+    this.textAlignment = ButtonTextAlignment.center,
+    this.borderRadius,
   });
+
+  // Common shadow configurations
+  static const _defaultTopShadow = BoxShadow(
+    color: Color(0x1A000000),
+    blurRadius: 2,
+    offset: Offset(0, 1),
+  );
+
+  static const _disabledShadow = BoxShadow(
+    color: Color(0x33000000),
+    offset: Offset(0, 4),
+    blurRadius: 0,
+    spreadRadius: 0,
+  );
+
+  // Button style configurations
+  static const _orangeConfig = _ButtonConfig(
+    buttonColor: Color(0xFFF57C00),
+    textColor: Colors.white,
+    shadowColor: Color(0xFFE56A00),
+    fontWeight: FontWeight.w700,
+    letterSpacing: 0,
+    shadowOffset: Offset(0, 4),
+  );
+
+  static const _successConfig = _ButtonConfig(
+    buttonColor: Color(0xFF29CC57),
+    textColor: Colors.white,
+    shadowColor: Color(0xFF15B440),
+    fontWeight: FontWeight.w700,
+    letterSpacing: 0,
+    shadowOffset: Offset(0, 4),
+  );
+
+  static const _dangerConfig = _ButtonConfig(
+    buttonColor: Color(0xFFE53935),
+    textColor: Colors.white,
+    shadowColor: Color(0xFFC62828),
+    fontWeight: FontWeight.w700,
+    letterSpacing: 0,
+    shadowOffset: Offset(0, 4),
+  );
+
+  static const _secondaryTopShadow = BoxShadow(
+    color: Color(0x14000000),
+    blurRadius: 2,
+    offset: Offset(0, 1),
+  );
+
+  static const _secondaryBottomShadow = BoxShadow(
+    color: Color(0xFFB0BEC5),
+    offset: Offset(0, 3),
+    blurRadius: 0,
+    spreadRadius: 0,
+  );
+
+  // Factory constructor helper method
+  static CustomButton _createButton({
+    required String text,
+    required _ButtonConfig config,
+    Key? key,
+    VoidCallback? onPressed,
+    Widget? icon,
+    Color? buttonColor,
+    Color? textColor,
+    Color? shadowColor,
+    EdgeInsetsGeometry? contentPadding,
+    double? height,
+    bool disabled = false,
+    ButtonTextAlignment textAlignment = ButtonTextAlignment.center,
+    BorderRadius? borderRadius,
+  }) {
+    final effectiveShadowColor = shadowColor ?? config.shadowColor;
+    return CustomButton(
+      text: text,
+      key: key,
+      onPressed: onPressed,
+      icon: icon,
+      buttonColor: buttonColor ?? config.buttonColor,
+      textColor: textColor ?? config.textColor,
+      shadowColor: effectiveShadowColor,
+      contentPadding: contentPadding,
+      height: height,
+      disabled: disabled,
+      fontWeight: config.fontWeight,
+      letterSpacing: config.letterSpacing,
+      textAlignment: textAlignment,
+      borderRadius: borderRadius,
+      shadows: [
+        _defaultTopShadow,
+        BoxShadow(
+          color: effectiveShadowColor,
+          offset: config.shadowOffset,
+          blurRadius: 0,
+          spreadRadius: 0,
+        ),
+      ],
+    );
+  }
+
+  // Factory constructors
+  factory CustomButton.orange({
+    required String text,
+    Key? key,
+    VoidCallback? onPressed,
+    Widget? icon,
+    Color? buttonColor,
+    Color? textColor,
+    Color? shadowColor,
+    EdgeInsetsGeometry? contentPadding,
+    double? height,
+    bool disabled = false,
+    ButtonTextAlignment textAlignment = ButtonTextAlignment.center,
+    BorderRadius? borderRadius,
+  }) =>
+      _createButton(
+        text: text,
+        config: _orangeConfig,
+        key: key,
+        onPressed: onPressed,
+        icon: icon,
+        buttonColor: buttonColor,
+        textColor: textColor,
+        shadowColor: shadowColor,
+        contentPadding: contentPadding,
+        height: height,
+        disabled: disabled,
+        textAlignment: textAlignment,
+        borderRadius: borderRadius,
+      );
+
+  factory CustomButton.success({
+    required String text,
+    Key? key,
+    VoidCallback? onPressed,
+    Widget? icon,
+    Color? buttonColor,
+    Color? textColor,
+    Color? shadowColor,
+    EdgeInsetsGeometry? contentPadding,
+    double? height,
+    bool disabled = false,
+    ButtonTextAlignment textAlignment = ButtonTextAlignment.center,
+    BorderRadius? borderRadius,
+  }) =>
+      _createButton(
+        text: text,
+        config: _successConfig,
+        key: key,
+        onPressed: onPressed,
+        icon: icon,
+        buttonColor: buttonColor,
+        textColor: textColor,
+        shadowColor: shadowColor,
+        contentPadding: contentPadding,
+        height: height,
+        disabled: disabled,
+        textAlignment: textAlignment,
+        borderRadius: borderRadius,
+      );
+
+  factory CustomButton.danger({
+    required String text,
+    Key? key,
+    VoidCallback? onPressed,
+    Widget? icon,
+    Color? buttonColor,
+    Color? textColor,
+    Color? shadowColor,
+    EdgeInsetsGeometry? contentPadding,
+    double? height,
+    bool disabled = false,
+    ButtonTextAlignment textAlignment = ButtonTextAlignment.center,
+    BorderRadius? borderRadius,
+  }) =>
+      _createButton(
+        text: text,
+        config: _dangerConfig,
+        key: key,
+        onPressed: onPressed,
+        icon: icon,
+        buttonColor: buttonColor,
+        textColor: textColor,
+        shadowColor: shadowColor,
+        contentPadding: contentPadding,
+        height: height,
+        disabled: disabled,
+        textAlignment: textAlignment,
+        borderRadius: borderRadius,
+      );
+
+  factory CustomButton.primary({
+    required String text,
+    Key? key,
+    VoidCallback? onPressed,
+    Widget? icon,
+    Color? buttonColor,
+    Color? textColor,
+    Color? shadowColor,
+    EdgeInsetsGeometry? contentPadding,
+    double? height,
+    bool disabled = false,
+    ButtonTextAlignment textAlignment = ButtonTextAlignment.center,
+    BorderRadius? borderRadius,
+  }) {
+    final effectiveShadowColor = shadowColor ?? const Color(0xFF1E88E5);
+    return CustomButton(
+      text: text,
+      key: key,
+      onPressed: onPressed,
+      icon: icon,
+      buttonColor:
+          buttonColor ?? const Color(0xFF1E88E5).withValues(alpha: 0.8),
+      textColor: textColor ?? Colors.white,
+      shadowColor: effectiveShadowColor,
+      contentPadding: contentPadding,
+      height: height,
+      disabled: disabled,
+      fontWeight: FontWeight.w800,
+      letterSpacing: k1Double.sp,
+      textAlignment: textAlignment,
+      borderRadius: borderRadius,
+      shadows: [
+        _defaultTopShadow,
+        BoxShadow(
+          color: effectiveShadowColor,
+          offset: const Offset(0, 5),
+          blurRadius: 0,
+          spreadRadius: 0,
+        ),
+      ],
+    );
+  }
+
+  factory CustomButton.outline({
+    required String text,
+    Key? key,
+    VoidCallback? onPressed,
+    Widget? icon,
+    Color? buttonColor,
+    Color? textColor,
+    Color? borderColor,
+    Color? shadowColor,
+    EdgeInsetsGeometry? contentPadding,
+    double? height,
+    bool disabled = false,
+    double? borderWidth,
+    ButtonTextAlignment textAlignment = ButtonTextAlignment.center,
+    BorderRadius? borderRadius,
+  }) {
+    final effectiveShadowColor = shadowColor ?? const Color(0xFF1E88E5);
+    return CustomButton(
+      text: text,
+      key: key,
+      onPressed: onPressed,
+      icon: icon,
+      buttonColor: buttonColor ?? Colors.transparent,
+      textColor: textColor ?? const Color(0xFF1976D2),
+      borderColor: borderColor ?? const Color(0xFF1E88E5),
+      shadowColor: effectiveShadowColor,
+      contentPadding: contentPadding,
+      height: height,
+      disabled: disabled,
+      fontWeight: FontWeight.w800,
+      letterSpacing: 0,
+      borderWidth: borderWidth ?? 2,
+      textAlignment: textAlignment,
+      borderRadius: borderRadius,
+      shadows: [
+        _defaultTopShadow,
+        BoxShadow(
+          color: effectiveShadowColor,
+          offset: const Offset(0, 3),
+          blurRadius: 0,
+          spreadRadius: 0,
+        ),
+      ],
+    );
+  }
+
+  factory CustomButton.secondary({
+    required String text,
+    Key? key,
+    VoidCallback? onPressed,
+    Widget? icon,
+    Color? buttonColor,
+    Color? textColor,
+    Color? borderColor,
+    EdgeInsetsGeometry? contentPadding,
+    double? height,
+    bool disabled = false,
+    double? borderWidth,
+    ButtonTextAlignment textAlignment = ButtonTextAlignment.center,
+    BorderRadius? borderRadius,
+  }) {
+    return CustomButton(
+      text: text,
+      key: key,
+      onPressed: onPressed,
+      icon: icon,
+      buttonColor: buttonColor ?? Colors.white,
+      textColor: textColor ?? const Color(0xFF424242),
+      borderColor: borderColor ?? const Color(0xFFB0BEC5),
+      contentPadding: contentPadding,
+      height: height,
+      disabled: disabled,
+      fontWeight: FontWeight.w700,
+      letterSpacing: 0,
+      borderWidth: borderWidth ?? 2,
+      textAlignment: textAlignment,
+      borderRadius: borderRadius,
+      shadows: const [_secondaryTopShadow, _secondaryBottomShadow],
+    );
+  }
+
+  factory CustomButton.ghost({
+    required String text,
+    Key? key,
+    VoidCallback? onPressed,
+    Widget? icon,
+    Color? buttonColor,
+    Color? textColor,
+    EdgeInsetsGeometry? contentPadding,
+    double? height,
+    ButtonTextAlignment textAlignment = ButtonTextAlignment.center,
+    BorderRadius? borderRadius,
+  }) {
+    return CustomButton(
+      text: text,
+      key: key,
+      onPressed: onPressed,
+      icon: icon,
+      buttonColor: buttonColor ?? const Color(0xFFE5E5E5),
+      textColor: textColor ?? const Color(0xFFAFAFAF),
+      contentPadding: contentPadding,
+      height: height,
+      disabled: true,
+      fontWeight: FontWeight.w500,
+      letterSpacing: 0,
+      textAlignment: textAlignment,
+      borderRadius: borderRadius,
+      shadows: null,
+    );
+  }
 
   final String text;
   final VoidCallback? onPressed;
   final Widget? icon;
-  final ButtonVariant variant;
-  final MainAxisAlignment alignment;
-  final double? height;
-  final BorderRadius? borderRadius;
-  final bool disabled;
-  final Color? backgroundColor;
+  final Color? buttonColor;
   final Color? textColor;
   final Color? borderColor;
   final Color? shadowColor;
+  final EdgeInsetsGeometry? contentPadding;
+  final double? height;
+  final bool disabled;
+  final FontWeight? fontWeight;
+  final double? letterSpacing;
+  final List<BoxShadow>? shadows;
+  final double? borderWidth;
+  final ButtonTextAlignment textAlignment;
+  final BorderRadius? borderRadius;
 
-  // Get variant-specific styling
-  ({
-    Color bg,
-    Color text,
-    Color? border,
-    Color shadow,
-    double borderWidth,
-    FontWeight weight
-  }) get _style {
-    return switch (variant) {
-      ButtonVariant.primary => (
-          bg: backgroundColor ?? const Color(0xFF1E88E5).withValues(alpha: 0.8),
-          text: textColor ?? Colors.white,
-          border: borderColor,
-          shadow: shadowColor ?? const Color(0xFF1E88E5),
-          borderWidth: 0.0,
-          weight: FontWeight.w800,
-        ),
-      ButtonVariant.outline => (
-          bg: backgroundColor ?? Colors.transparent,
-          text: textColor ?? const Color(0xFF1976D2),
-          border: borderColor ?? const Color(0xFF1E88E5),
-          shadow: shadowColor ?? const Color(0xFF1E88E5),
-          borderWidth: 2.0,
-          weight: FontWeight.w800,
-        ),
-      ButtonVariant.secondary => (
-          bg: backgroundColor ?? Colors.white,
-          text: textColor ?? const Color(0xFF424242),
-          border: borderColor ?? const Color(0xFFB0BEC5),
-          shadow: shadowColor ?? const Color(0xFFB0BEC5),
-          borderWidth: 2.0,
-          weight: FontWeight.w800,
-        ),
-      ButtonVariant.ghost => (
-          bg: backgroundColor ?? const Color(0xFFE5E5E5),
-          text: textColor ?? const Color(0xFFAFAFAF),
-          border: borderColor,
-          shadow: shadowColor ?? Colors.transparent,
-          borderWidth: 0.0,
-          weight: FontWeight.w500,
-        ),
-    };
-  }
+  static const _alignmentMap = {
+    ButtonTextAlignment.start: Alignment.centerLeft,
+    ButtonTextAlignment.centerLeft: Alignment(-0.65, 0),
+    ButtonTextAlignment.center: Alignment.center,
+    ButtonTextAlignment.centerRight: Alignment(0.65, 0),
+    ButtonTextAlignment.end: Alignment.centerRight,
+  };
 
-  List<BoxShadow> get _shadows {
-    if (disabled || variant == ButtonVariant.ghost) return [];
-
-    final style = _style;
-
-    return [
-      const BoxShadow(
-        color: Color(0x1A000000),
-        blurRadius: 2,
-        offset: Offset(0, 1),
-      ),
-      BoxShadow(
-        color: style.shadow,
-        offset: Offset(0, variant == ButtonVariant.outline ? 3 : 5),
-        blurRadius: 0,
-      ),
-    ];
+  EdgeInsets _getTextPadding() {
+    switch (textAlignment) {
+      case ButtonTextAlignment.start:
+      case ButtonTextAlignment.centerLeft:
+        return EdgeInsets.only(left: k4Double.wp);
+      case ButtonTextAlignment.centerRight:
+      case ButtonTextAlignment.end:
+        return EdgeInsets.only(right: k4Double.wp);
+      case ButtonTextAlignment.center:
+        return EdgeInsets.zero;
+    }
   }
 
   @override
   Widget build(BuildContext context) {
-    final style = _style;
-    final effectiveDisabled =
-        disabled || variant == ButtonVariant.ghost || onPressed == null;
-    final radius = borderRadius ?? BorderRadius.circular(12);
-    final buttonWidth = double.infinity;
+    final effectiveButtonColor = buttonColor ?? Colors.blue;
+    final effectiveTextColor = textColor ?? Colors.white;
+    final effectiveBorderColor = borderColor;
+    final effectiveHeight = height ?? 48;
+    final effectiveBorderRadius = borderRadius ?? BorderRadius.circular(12);
+
+    final textWidget = Text(
+      text,
+      style: TextStyle(
+        fontFamily: 'Hiragino Sans',
+        fontWeight: fontWeight ?? FontWeight.w500,
+        fontSize: k12Double.sp,
+        color: effectiveTextColor,
+        letterSpacing: letterSpacing ?? 0,
+      ),
+    );
+
+    final content = Row(
+      children: [
+        if (icon != null) ...[
+          icon!,
+          SizedBox(width: k1Double.wp),
+        ],
+        Expanded(
+          child: Align(
+            alignment: _alignmentMap[textAlignment]!,
+            child: Padding(
+              padding: _getTextPadding(),
+              child: textWidget,
+            ),
+          ),
+        ),
+      ],
+    );
+
+    if (disabled) {
+      return SizedBox(
+        width: double.infinity,
+        height: effectiveHeight,
+        child: Container(
+          decoration: BoxDecoration(
+            color: effectiveButtonColor,
+            borderRadius: effectiveBorderRadius,
+            boxShadow: const [_disabledShadow],
+          ),
+          child: Container(
+            margin: const EdgeInsets.only(bottom: 4),
+            decoration: BoxDecoration(
+              color: effectiveButtonColor,
+              borderRadius: effectiveBorderRadius,
+            ),
+            child: Center(child: content),
+          ),
+        ),
+      );
+    }
 
     return SizedBox(
-      width: buttonWidth,
-      height: height ?? 48,
+      width: double.infinity,
+      height: effectiveHeight,
       child: Container(
         decoration: BoxDecoration(
-          borderRadius: radius,
-          boxShadow: _shadows,
+          color: Colors.white,
+          borderRadius: effectiveBorderRadius,
+          border: effectiveBorderColor != null
+              ? Border.all(
+                  color: effectiveBorderColor,
+                  width: borderWidth ?? 1,
+                )
+              : null,
+          boxShadow: shadows,
         ),
-        child: ElevatedButton(
-          style: ElevatedButton.styleFrom(
-            backgroundColor: style.bg,
-            foregroundColor: style.text,
-            elevation: 0,
-            shadowColor: Colors.transparent,
-            shape: RoundedRectangleBorder(borderRadius: radius),
-            side: style.border != null
-                ? BorderSide(color: style.border!, width: style.borderWidth)
-                : null,
-            padding: EdgeInsets.zero,
-          ),
-          onPressed: effectiveDisabled ? null : onPressed,
-          child: Row(
-            mainAxisAlignment: alignment,
-            mainAxisSize: alignment == MainAxisAlignment.center
-                ? MainAxisSize.min
-                : MainAxisSize.max,
-            children: [
-              if (icon != null) ...[
-                icon!,
-                SizedBox(width: k1Double.wp),
-              ],
-              Text(
-                text,
-                style: TextStyle(
-                  fontFamily: 'Hiragino Sans',
-                  fontWeight: style.weight,
-                  fontSize: k12Double.sp,
-                  letterSpacing:
-                      variant == ButtonVariant.primary ? k1Double.sp : 0,
-                ),
+        child: Material(
+          color: Colors.transparent,
+          child: InkWell(
+            onTap: onPressed,
+            borderRadius: effectiveBorderRadius,
+            child: Ink(
+              decoration: BoxDecoration(
+                color: effectiveButtonColor,
+                borderRadius: effectiveBorderRadius,
               ),
-            ],
+              child: Padding(
+                padding: contentPadding ?? EdgeInsets.zero,
+                child: content,
+              ),
+            ),
           ),
         ),
       ),
     );
   }
+}
 
-  // Factory constructors for convenience
-  static CustomButton primary({
-    required String text,
-  // Factory constructor for orange variant
-  factory CustomButton.orange({
-    required String buttonText,
-    Key? key,
-    VoidCallback? onPressed,
-    Widget? icon,
-    Color? buttonColor,
-    Color? textColor,
-    Color? shadowColor,
-    EdgeInsetsGeometry? contentPadding,
-    double? height,
-    bool disabled = false,
-    ButtonTextAlignment textAlignment = ButtonTextAlignment.center,
-  }) {
-    return CustomButton(
-      buttonText: buttonText,
-      key: key,
-      onPressed: onPressed,
-      icon: icon,
-      buttonColor: buttonColor ?? const Color(0xFFF57C00),
-      textColor: textColor ?? Colors.white,
-      shadowColor: shadowColor ?? const Color(0xFFE56A00),
-      contentPadding: contentPadding,
-      height: height,
-      disabled: disabled,
-      fontWeight: FontWeight.w700,
-      letterSpacing: 0,
-      textAlignment: textAlignment,
-      shadows: [
-        const BoxShadow(
-          color: Color(0x1A000000),
-          blurRadius: 2,
-          offset: Offset(0, 1),
-        ),
-        BoxShadow(
-          color: shadowColor ?? const Color(0xFFE56A00),
-          offset: const Offset(0, 4),
-          blurRadius: 0,
-          spreadRadius: 0,
-        ),
-      ],
-    );
-  }
+// Helper class for button configurations
+class _ButtonConfig {
+  final Color buttonColor;
+  final Color textColor;
+  final Color shadowColor;
+  final FontWeight fontWeight;
+  final double letterSpacing;
+  final Offset shadowOffset;
 
-  // Factory constructor for success variant
-  factory CustomButton.success({
-    required String buttonText,
-    Key? key,
-    VoidCallback? onPressed,
-    Widget? icon,
-    Color? buttonColor,
-    Color? textColor,
-    Color? shadowColor,
-    EdgeInsetsGeometry? contentPadding,
-    double? height,
-    bool disabled = false,
-    ButtonTextAlignment textAlignment = ButtonTextAlignment.center,
-  }) {
-    return CustomButton(
-      buttonText: buttonText,
-      key: key,
-      onPressed: onPressed,
-      icon: icon,
-      buttonColor: buttonColor ?? const Color(0xFF29CC57),
-      textColor: textColor ?? Colors.white,
-      shadowColor: shadowColor ?? const Color(0xFF15B440),
-      contentPadding: contentPadding,
-      height: height,
-      disabled: disabled,
-      fontWeight: FontWeight.w700,
-      letterSpacing: 0,
-      textAlignment: textAlignment,
-      shadows: [
-        const BoxShadow(
-          color: Color(0x1A000000),
-          blurRadius: 2,
-          offset: Offset(0, 1),
-        ),
-        BoxShadow(
-          color: shadowColor ?? const Color(0xFF15B440),
-          offset: const Offset(0, 4),
-          blurRadius: 0,
-          spreadRadius: 0,
-        ),
-      ],
-    );
-  }
-
-  // Factory constructor for danger variant
-  factory CustomButton.danger({
-    required String buttonText,
-    Key? key,
-    VoidCallback? onPressed,
-    Widget? icon,
-    Color? buttonColor,
-    Color? textColor,
-    Color? shadowColor,
-    EdgeInsetsGeometry? contentPadding,
-    double? height,
-    bool disabled = false,
-    ButtonTextAlignment textAlignment = ButtonTextAlignment.center,
-  }) {
-    return CustomButton(
-      buttonText: buttonText,
-      key: key,
-      onPressed: onPressed,
-      icon: icon,
-      buttonColor: buttonColor ?? const Color(0xFFE53935),
-      textColor: textColor ?? Colors.white,
-      shadowColor: shadowColor ?? const Color(0xFFC62828),
-      contentPadding: contentPadding,
-      height: height,
-      disabled: disabled,
-      fontWeight: FontWeight.w700,
-      letterSpacing: 0,
-      textAlignment: textAlignment,
-      shadows: [
-        const BoxShadow(
-          color: Color(0x1A000000),
-          blurRadius: 2,
-          offset: Offset(0, 1),
-        ),
-        BoxShadow(
-          color: shadowColor ?? const Color(0xFFC62828),
-          offset: const Offset(0, 4),
-          blurRadius: 0,
-          spreadRadius: 0,
-        ),
-      ],
-    );
-  }
-
-  // Factory constructor for primary variant
-  factory CustomButton.primary({
-    required String buttonText,
-    Key? key,
-    VoidCallback? onPressed,
-    Widget? icon,
-    MainAxisAlignment alignment = MainAxisAlignment.center,
-    double? height,
-    BorderRadius? borderRadius,
-    bool disabled = false,
-    Color? backgroundColor,
-    Color? textColor,
-    Color? shadowColor,
-  }) =>
-      CustomButton(
-        text: text,
-        key: key,
-        onPressed: onPressed,
-        icon: icon,
-        variant: ButtonVariant.primary,
-        alignment: alignment,
-        height: height,
-        borderRadius: borderRadius,
-        disabled: disabled,
-        backgroundColor: backgroundColor,
-        textColor: textColor,
-        shadowColor: shadowColor,
-      );
-
-  static CustomButton outline({
-    required String text,
-    Key? key,
-    VoidCallback? onPressed,
-    Widget? icon,
-    MainAxisAlignment alignment = MainAxisAlignment.center,
-    double? height,
-    BorderRadius? borderRadius,
-    bool disabled = false,
-    Color? backgroundColor,
-    Color? textColor,
-    Color? borderColor,
-    Color? shadowColor,
-  }) =>
-      CustomButton(
-        text: text,
-        key: key,
-        onPressed: onPressed,
-        icon: icon,
-        variant: ButtonVariant.outline,
-        alignment: alignment,
-        height: height,
-        borderRadius: borderRadius,
-        disabled: disabled,
-        backgroundColor: backgroundColor,
-        textColor: textColor,
-        borderColor: borderColor,
-        shadowColor: shadowColor,
-      );
-
-  static CustomButton secondary({
-    required String text,
-    Key? key,
-    VoidCallback? onPressed,
-    Widget? icon,
-    MainAxisAlignment alignment = MainAxisAlignment.center,
-    double? height,
-    BorderRadius? borderRadius,
-    bool disabled = false,
-    Color? backgroundColor,
-    Color? textColor,
-    Color? borderColor,
-  }) =>
-      CustomButton(
-        text: text,
-        key: key,
-        onPressed: onPressed,
-        icon: icon,
-        variant: ButtonVariant.secondary,
-        alignment: alignment,
-        height: height,
-        borderRadius: borderRadius,
-        disabled: disabled,
-        backgroundColor: backgroundColor,
-        textColor: textColor,
-        borderColor: borderColor,
-      );
-
-  static CustomButton ghost({
-    required String text,
-    Key? key,
-    VoidCallback? onPressed,
-    Widget? icon,
-    MainAxisAlignment alignment = MainAxisAlignment.center,
-    double? height,
-    BorderRadius? borderRadius,
-  }) =>
-      CustomButton(
-        text: text,
-        key: key,
-        onPressed: onPressed,
-        icon: icon,
-        variant: ButtonVariant.ghost,
-        alignment: alignment,
-        height: height,
-        borderRadius: borderRadius,
-        disabled: true,
-      );
+  const _ButtonConfig({
+    required this.buttonColor,
+    required this.textColor,
+    required this.shadowColor,
+    required this.fontWeight,
+    required this.letterSpacing,
+    required this.shadowOffset,
+  });
 }

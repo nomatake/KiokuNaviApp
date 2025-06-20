@@ -67,7 +67,7 @@ class TutorialFiveView extends StatelessWidget {
               SizedBox(height: k4Double.hp),
               CustomButton.secondary(
                 text: '早稲田アカデミー',
-                alignment: MainAxisAlignment.start,
+                textAlignment: ButtonTextAlignment.start,
                 onPressed: () {
                   // TODO: Handle selection
                 },
@@ -75,7 +75,7 @@ class TutorialFiveView extends StatelessWidget {
               SizedBox(height: k2Double.hp),
               CustomButton.secondary(
                 text: '四谷大塚',
-                alignment: MainAxisAlignment.start,
+                textAlignment: ButtonTextAlignment.start,
                 onPressed: () {
                   // TODO: Handle selection
                 },
@@ -83,7 +83,7 @@ class TutorialFiveView extends StatelessWidget {
               SizedBox(height: k2Double.hp),
               CustomButton.secondary(
                 text: 'SAPIX',
-                alignment: MainAxisAlignment.start,
+                textAlignment: ButtonTextAlignment.start,
                 onPressed: () {
                   // TODO: Handle selection
                 },
@@ -91,7 +91,7 @@ class TutorialFiveView extends StatelessWidget {
               SizedBox(height: k2Double.hp),
               CustomButton.secondary(
                 text: '日能研',
-                alignment: MainAxisAlignment.start,
+                textAlignment: ButtonTextAlignment.start,
                 onPressed: () {
                   // TODO: Handle selection
                 },
@@ -99,7 +99,7 @@ class TutorialFiveView extends StatelessWidget {
               SizedBox(height: k2Double.hp),
               CustomButton.secondary(
                 text: 'それ以外',
-                alignment: MainAxisAlignment.start,
+                textAlignment: ButtonTextAlignment.start,
                 onPressed: () {
                   // TODO: Handle selection
                 },

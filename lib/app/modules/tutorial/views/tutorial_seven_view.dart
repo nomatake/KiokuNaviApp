@@ -67,7 +67,7 @@ class TutorialSevenView extends StatelessWidget {
               SizedBox(height: k4Double.hp),
               CustomButton.secondary(
                 text: '5分 / 日',
-                alignment: MainAxisAlignment.start,
+                textAlignment: ButtonTextAlignment.start,
                 onPressed: () {
                   // TODO: Handle selection
                 },
@@ -75,7 +75,7 @@ class TutorialSevenView extends StatelessWidget {
               SizedBox(height: k2Double.hp),
               CustomButton.secondary(
                 text: '10分 / 日',
-                alignment: MainAxisAlignment.start,
+                textAlignment: ButtonTextAlignment.start,
                 onPressed: () {
                   // TODO: Handle selection
                 },
@@ -83,7 +83,7 @@ class TutorialSevenView extends StatelessWidget {
               SizedBox(height: k2Double.hp),
               CustomButton.secondary(
                 text: '15分 / 日',
-                alignment: MainAxisAlignment.start,
+                textAlignment: ButtonTextAlignment.start,
                 onPressed: () {
                   // TODO: Handle selection
                 },
@@ -91,7 +91,7 @@ class TutorialSevenView extends StatelessWidget {
               SizedBox(height: k2Double.hp),
               CustomButton.secondary(
                 text: '30分 / 日',
-                alignment: MainAxisAlignment.start,
+                textAlignment: ButtonTextAlignment.start,
                 onPressed: () {
                   // TODO: Handle selection
                 },

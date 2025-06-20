@@ -51,12 +51,25 @@ class TutorialSixView extends StatelessWidget {
                         nipOffset: k25Double,
                         radius: Radius.circular(k14Double),
                       ),
-                      child: CustomTextFormField.primary(
-                        hintText: '入力してください',
+                      child: Text(
+                        'お子様のお名前を入力してください',
+                        style: TextStyle(
+                          fontFamily: 'Hiragino Sans',
+                          fontWeight: FontWeight.w400,
+                          fontSize: k14Double.sp,
+                          color: const Color(0xFF212121),
+                        ),
+                        textAlign: TextAlign.left,
                       ),
                     ),
                   ),
                 ],
+              ),
+              SizedBox(height: k4Double.hp),
+              CustomTextFormField(
+                textController: TextEditingController(),
+                hintText: '入力してください',
+                labelText: 'お子様のお名前',
               ),
               const Spacer(),
               CustomButton.primary(

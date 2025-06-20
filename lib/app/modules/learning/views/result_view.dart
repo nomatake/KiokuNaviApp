@@ -68,7 +68,7 @@ class ResultView extends GetView<LearningController> {
 
               // Get XP button
               CustomButton.orange(
-                buttonText: 'XPを受け取る',
+                text: 'XPを受け取る',
                 onPressed: () {
                   // TODO: Handle get XP action
                 },
