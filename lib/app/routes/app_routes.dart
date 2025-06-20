@@ -9,6 +9,7 @@ abstract class Routes {
   static const PARENT_LOGIN = _Paths.PARENT_LOGIN;
   static const STUDENT_LOGIN = _Paths.STUDENT_LOGIN;
   static const FORGOT_PASSWORD = _Paths.FORGOT_PASSWORD;
+  static const CHILD_HOME = _Paths.CHILD_HOME;
   static const TUTORIAL = _Paths.TUTORIAL;
   static const TUTORIAL_TWO = _Paths.TUTORIAL_TWO;
   static const TUTORIAL_THREE = _Paths.TUTORIAL_THREE;

@@ -146,7 +146,7 @@ class QuestionView extends GetView<LearningController> {
             textColor: const Color(0xFF019B2B),
             buttonText: '次へ',
             buttonBuilder: (text, onPressed) => CustomButton.success(
-              buttonText: text,
+              text: text,
               onPressed: onPressed,
             ),
             onButtonPressed: controller.nextQuestion,
@@ -159,7 +159,7 @@ class QuestionView extends GetView<LearningController> {
             textColor: const Color(0xFFB71C1C),
             buttonText: 'もう一度',
             buttonBuilder: (text, onPressed) => CustomButton.danger(
-              buttonText: text,
+              text: text,
               onPressed: onPressed,
             ),
             onButtonPressed: controller.resetQuestion,
@@ -217,13 +217,13 @@ class QuestionView extends GetView<LearningController> {
 
       if (!hasSelected) {
         return CustomButton.ghost(
-          buttonText: '答えを見る',
+          text: '答えを見る',
           onPressed: null,
         );
       }
 
       return CustomButton.primary(
-        buttonText: '答えを見る',
+        text: '答えを見る',
         onPressed: controller.submitAnswer,
       );
     });

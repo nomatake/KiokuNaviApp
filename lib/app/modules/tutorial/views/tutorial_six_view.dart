@@ -8,6 +8,7 @@ import 'package:kioku_navi/utils/sizes.dart';
 import 'package:kioku_navi/widgets/custom_button.dart';
 import 'package:kioku_navi/widgets/padded_wrapper.dart';
 import 'package:kioku_navi/widgets/register_app_bar.dart';
+import 'package:kioku_navi/widgets/custom_text_form_field.dart';
 
 class TutorialSixView extends StatelessWidget {
   const TutorialSixView({super.key});
@@ -51,7 +52,7 @@ class TutorialSixView extends StatelessWidget {
                         radius: Radius.circular(k14Double),
                       ),
                       child: Text(
-                        '学習を習慣づける一歩 を踏み出そう！',
+                        'お子様のお名前を入力してください',
                         style: TextStyle(
                           fontFamily: 'Hiragino Sans',
                           fontWeight: FontWeight.w400,
@@ -64,9 +65,15 @@ class TutorialSixView extends StatelessWidget {
                   ),
                 ],
               ),
+              SizedBox(height: k4Double.hp),
+              CustomTextFormField(
+                textController: TextEditingController(),
+                hintText: '入力してください',
+                labelText: 'お子様のお名前',
+              ),
               const Spacer(),
               CustomButton.primary(
-                buttonText: '次へ',
+                text: '次へ',
                 onPressed: () => Get.toNamed(Routes.TUTORIAL_SEVEN),
               ),
             ],

@@ -19,7 +19,6 @@ class ChildAppBar extends StatelessWidget implements PreferredSizeWidget {
   @override
   Widget build(BuildContext context) {
     return AppBar(
-      backgroundColor: const Color(0xFFF7F9FC),
       elevation: 0,
       automaticallyImplyLeading: false,
       title: Row(

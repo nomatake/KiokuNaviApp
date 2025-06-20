@@ -24,11 +24,31 @@ class $AssetsImagesGen {
   AssetGenImage get gemIcon =>
       const AssetGenImage('assets/images/gem_icon.png');
 
+  /// File path: assets/images/japan_icon.png
+  AssetGenImage get japanIcon =>
+      const AssetGenImage('assets/images/japan_icon.png');
+
+  /// File path: assets/images/language_icon.png
+  AssetGenImage get languageIcon =>
+      const AssetGenImage('assets/images/language_icon.png');
+
   /// File path: assets/images/logo.png
   AssetGenImage get logo => const AssetGenImage('assets/images/logo.png');
 
+  /// File path: assets/images/science_icon.png
+  AssetGenImage get scienceIcon =>
+      const AssetGenImage('assets/images/science_icon.png');
+
   /// List of all assets
-  List<AssetGenImage> get values => [comprehensive, fireIcon, gemIcon, logo];
+  List<AssetGenImage> get values => [
+    comprehensive,
+    fireIcon,
+    gemIcon,
+    japanIcon,
+    languageIcon,
+    logo,
+    scienceIcon,
+  ];
 }
 
 class Assets {

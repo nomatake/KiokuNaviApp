@@ -40,7 +40,7 @@ class TutorialView extends GetView<TutorialController> {
                 ),
               ),
               CustomButton.primary(
-                buttonText: '次へ',
+                text: '次へ',
                 onPressed: () => Get.toNamed(Routes.TUTORIAL_TWO),
               ),
             ],

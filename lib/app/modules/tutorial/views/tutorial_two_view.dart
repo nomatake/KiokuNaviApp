@@ -41,7 +41,7 @@ class TutorialTwoView extends StatelessWidget {
                 ),
               ),
               CustomButton.primary(
-                buttonText: '次へ',
+                text: '次へ',
                 onPressed: () => Get.toNamed(Routes.TUTORIAL_THREE),
               ),
             ],

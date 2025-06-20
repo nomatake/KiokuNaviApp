@@ -110,8 +110,9 @@ class RegisterView extends GetView<AuthController> {
                   SizedBox(height: k3Double.hp),
 
                   // Register button
-                  CustomButton.ghost(
-                    buttonText: 'アカウントを作成する',
+                  CustomButton(
+                    text: 'アカウントを作成する',
+                    disabled: true,
                     onPressed: () => controller.onRegister(),
                   ),
                 ],

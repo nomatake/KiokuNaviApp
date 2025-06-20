@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:kioku_navi/utils/constants.dart';
 import 'package:kioku_navi/utils/extensions.dart';
 import 'package:kioku_navi/utils/sizes.dart';
 
@@ -6,7 +7,7 @@ enum ButtonTextAlignment { start, centerLeft, center, centerRight, end }
 
 class CustomButton extends StatelessWidget {
   const CustomButton({
-    required this.buttonText,
+    required this.text,
     super.key,
     this.onPressed,
     this.icon,
@@ -22,11 +23,111 @@ class CustomButton extends StatelessWidget {
     this.shadows,
     this.borderWidth,
     this.textAlignment = ButtonTextAlignment.center,
+    this.borderRadius,
   });
 
-  // Factory constructor for orange variant
+  // Common shadow configurations
+  static const _defaultTopShadow = BoxShadow(
+    color: kButtonDefaultTopShadowColor,
+    blurRadius: 2,
+    offset: Offset(0, 1),
+  );
+
+  static const _disabledShadow = BoxShadow(
+    color: kButtonDisabledShadowColor,
+    offset: Offset(0, 4),
+    blurRadius: 0,
+    spreadRadius: 0,
+  );
+
+  // Button style configurations
+  static const _orangeConfig = _ButtonConfig(
+    buttonColor: kButtonOrangeColor,
+    textColor: Colors.white,
+    shadowColor: kButtonOrangeShadowColor,
+    fontWeight: FontWeight.w700,
+    letterSpacing: 0,
+    shadowOffset: Offset(0, 4),
+  );
+
+  static const _successConfig = _ButtonConfig(
+    buttonColor: kButtonSuccessColor,
+    textColor: Colors.white,
+    shadowColor: kButtonSuccessShadowColor,
+    fontWeight: FontWeight.w700,
+    letterSpacing: 0,
+    shadowOffset: Offset(0, 4),
+  );
+
+  static const _dangerConfig = _ButtonConfig(
+    buttonColor: kButtonDangerColor,
+    textColor: Colors.white,
+    shadowColor: kButtonDangerShadowColor,
+    fontWeight: FontWeight.w700,
+    letterSpacing: 0,
+    shadowOffset: Offset(0, 4),
+  );
+
+  static const _secondaryTopShadow = BoxShadow(
+    color: kButtonSecondaryTopShadowColor,
+    blurRadius: 2,
+    offset: Offset(0, 1),
+  );
+
+  static const _secondaryBottomShadow = BoxShadow(
+    color: kButtonSecondaryBottomShadowColor,
+    offset: Offset(0, 3),
+    blurRadius: 0,
+    spreadRadius: 0,
+  );
+
+  // Factory constructor helper method
+  static CustomButton _createButton({
+    required String text,
+    required _ButtonConfig config,
+    Key? key,
+    VoidCallback? onPressed,
+    Widget? icon,
+    Color? buttonColor,
+    Color? textColor,
+    Color? shadowColor,
+    EdgeInsetsGeometry? contentPadding,
+    double? height,
+    bool disabled = false,
+    ButtonTextAlignment textAlignment = ButtonTextAlignment.center,
+    BorderRadius? borderRadius,
+  }) {
+    final effectiveShadowColor = shadowColor ?? config.shadowColor;
+    return CustomButton(
+      text: text,
+      key: key,
+      onPressed: onPressed,
+      icon: icon,
+      buttonColor: buttonColor ?? config.buttonColor,
+      textColor: textColor ?? config.textColor,
+      shadowColor: effectiveShadowColor,
+      contentPadding: contentPadding,
+      height: height,
+      disabled: disabled,
+      fontWeight: config.fontWeight,
+      letterSpacing: config.letterSpacing,
+      textAlignment: textAlignment,
+      borderRadius: borderRadius,
+      shadows: [
+        _defaultTopShadow,
+        BoxShadow(
+          color: effectiveShadowColor,
+          offset: config.shadowOffset,
+          blurRadius: 0,
+          spreadRadius: 0,
+        ),
+      ],
+    );
+  }
+
+  // Factory constructors
   factory CustomButton.orange({
-    required String buttonText,
+    required String text,
     Key? key,
     VoidCallback? onPressed,
     Widget? icon,
@@ -37,40 +138,26 @@ class CustomButton extends StatelessWidget {
     double? height,
     bool disabled = false,
     ButtonTextAlignment textAlignment = ButtonTextAlignment.center,
-  }) {
-    return CustomButton(
-      buttonText: buttonText,
-      key: key,
-      onPressed: onPressed,
-      icon: icon,
-      buttonColor: buttonColor ?? const Color(0xFFF57C00),
-      textColor: textColor ?? Colors.white,
-      shadowColor: shadowColor ?? const Color(0xFFE56A00),
-      contentPadding: contentPadding,
-      height: height,
-      disabled: disabled,
-      fontWeight: FontWeight.w700,
-      letterSpacing: 0,
-      textAlignment: textAlignment,
-      shadows: [
-        const BoxShadow(
-          color: Color(0x1A000000),
-          blurRadius: 2,
-          offset: Offset(0, 1),
-        ),
-        BoxShadow(
-          color: shadowColor ?? const Color(0xFFE56A00),
-          offset: const Offset(0, 4),
-          blurRadius: 0,
-          spreadRadius: 0,
-        ),
-      ],
-    );
-  }
+    BorderRadius? borderRadius,
+  }) =>
+      _createButton(
+        text: text,
+        config: _orangeConfig,
+        key: key,
+        onPressed: onPressed,
+        icon: icon,
+        buttonColor: buttonColor,
+        textColor: textColor,
+        shadowColor: shadowColor,
+        contentPadding: contentPadding,
+        height: height,
+        disabled: disabled,
+        textAlignment: textAlignment,
+        borderRadius: borderRadius,
+      );
 
-  // Factory constructor for success variant
   factory CustomButton.success({
-    required String buttonText,
+    required String text,
     Key? key,
     VoidCallback? onPressed,
     Widget? icon,
@@ -81,40 +168,26 @@ class CustomButton extends StatelessWidget {
     double? height,
     bool disabled = false,
     ButtonTextAlignment textAlignment = ButtonTextAlignment.center,
-  }) {
-    return CustomButton(
-      buttonText: buttonText,
-      key: key,
-      onPressed: onPressed,
-      icon: icon,
-      buttonColor: buttonColor ?? const Color(0xFF29CC57),
-      textColor: textColor ?? Colors.white,
-      shadowColor: shadowColor ?? const Color(0xFF15B440),
-      contentPadding: contentPadding,
-      height: height,
-      disabled: disabled,
-      fontWeight: FontWeight.w700,
-      letterSpacing: 0,
-      textAlignment: textAlignment,
-      shadows: [
-        const BoxShadow(
-          color: Color(0x1A000000),
-          blurRadius: 2,
-          offset: Offset(0, 1),
-        ),
-        BoxShadow(
-          color: shadowColor ?? const Color(0xFF15B440),
-          offset: const Offset(0, 4),
-          blurRadius: 0,
-          spreadRadius: 0,
-        ),
-      ],
-    );
-  }
+    BorderRadius? borderRadius,
+  }) =>
+      _createButton(
+        text: text,
+        config: _successConfig,
+        key: key,
+        onPressed: onPressed,
+        icon: icon,
+        buttonColor: buttonColor,
+        textColor: textColor,
+        shadowColor: shadowColor,
+        contentPadding: contentPadding,
+        height: height,
+        disabled: disabled,
+        textAlignment: textAlignment,
+        borderRadius: borderRadius,
+      );
 
-  // Factory constructor for danger variant
   factory CustomButton.danger({
-    required String buttonText,
+    required String text,
     Key? key,
     VoidCallback? onPressed,
     Widget? icon,
@@ -125,40 +198,26 @@ class CustomButton extends StatelessWidget {
     double? height,
     bool disabled = false,
     ButtonTextAlignment textAlignment = ButtonTextAlignment.center,
-  }) {
-    return CustomButton(
-      buttonText: buttonText,
-      key: key,
-      onPressed: onPressed,
-      icon: icon,
-      buttonColor: buttonColor ?? const Color(0xFFE53935),
-      textColor: textColor ?? Colors.white,
-      shadowColor: shadowColor ?? const Color(0xFFC62828),
-      contentPadding: contentPadding,
-      height: height,
-      disabled: disabled,
-      fontWeight: FontWeight.w700,
-      letterSpacing: 0,
-      textAlignment: textAlignment,
-      shadows: [
-        const BoxShadow(
-          color: Color(0x1A000000),
-          blurRadius: 2,
-          offset: Offset(0, 1),
-        ),
-        BoxShadow(
-          color: shadowColor ?? const Color(0xFFC62828),
-          offset: const Offset(0, 4),
-          blurRadius: 0,
-          spreadRadius: 0,
-        ),
-      ],
-    );
-  }
+    BorderRadius? borderRadius,
+  }) =>
+      _createButton(
+        text: text,
+        config: _dangerConfig,
+        key: key,
+        onPressed: onPressed,
+        icon: icon,
+        buttonColor: buttonColor,
+        textColor: textColor,
+        shadowColor: shadowColor,
+        contentPadding: contentPadding,
+        height: height,
+        disabled: disabled,
+        textAlignment: textAlignment,
+        borderRadius: borderRadius,
+      );
 
-  // Factory constructor for primary variant
   factory CustomButton.primary({
-    required String buttonText,
+    required String text,
     Key? key,
     VoidCallback? onPressed,
     Widget? icon,
@@ -169,30 +228,28 @@ class CustomButton extends StatelessWidget {
     double? height,
     bool disabled = false,
     ButtonTextAlignment textAlignment = ButtonTextAlignment.center,
+    BorderRadius? borderRadius,
   }) {
+    final effectiveShadowColor = shadowColor ?? kButtonPrimaryColor;
     return CustomButton(
-      buttonText: buttonText,
+      text: text,
       key: key,
       onPressed: onPressed,
       icon: icon,
-      buttonColor:
-          buttonColor ?? const Color(0xFF1E88E5).withValues(alpha: 0.8),
+      buttonColor: buttonColor ?? kButtonPrimaryColor.withValues(alpha: 0.8),
       textColor: textColor ?? Colors.white,
-      shadowColor: shadowColor ?? const Color(0xFF1E88E5),
+      shadowColor: effectiveShadowColor,
       contentPadding: contentPadding,
       height: height,
       disabled: disabled,
       fontWeight: FontWeight.w800,
       letterSpacing: k1Double.sp,
       textAlignment: textAlignment,
+      borderRadius: borderRadius,
       shadows: [
-        const BoxShadow(
-          color: Color(0x1A000000),
-          blurRadius: 2,
-          offset: Offset(0, 1),
-        ),
+        _defaultTopShadow,
         BoxShadow(
-          color: shadowColor ?? const Color(0xFF1E88E5),
+          color: effectiveShadowColor,
           offset: const Offset(0, 5),
           blurRadius: 0,
           spreadRadius: 0,
@@ -201,9 +258,8 @@ class CustomButton extends StatelessWidget {
     );
   }
 
-  // Factory constructor for outline variant
   factory CustomButton.outline({
-    required String buttonText,
+    required String text,
     Key? key,
     VoidCallback? onPressed,
     Widget? icon,
@@ -216,16 +272,18 @@ class CustomButton extends StatelessWidget {
     bool disabled = false,
     double? borderWidth,
     ButtonTextAlignment textAlignment = ButtonTextAlignment.center,
+    BorderRadius? borderRadius,
   }) {
+    final effectiveShadowColor = shadowColor ?? kButtonPrimaryColor;
     return CustomButton(
-      buttonText: buttonText,
+      text: text,
       key: key,
       onPressed: onPressed,
       icon: icon,
       buttonColor: buttonColor ?? Colors.transparent,
-      textColor: textColor ?? const Color(0xFF1976D2),
-      borderColor: borderColor ?? const Color(0xFF1E88E5),
-      shadowColor: shadowColor ?? const Color(0xFF1E88E5),
+      textColor: textColor ?? kButtonOutlineTextColor,
+      borderColor: borderColor ?? kButtonPrimaryColor,
+      shadowColor: effectiveShadowColor,
       contentPadding: contentPadding,
       height: height,
       disabled: disabled,
@@ -233,14 +291,11 @@ class CustomButton extends StatelessWidget {
       letterSpacing: 0,
       borderWidth: borderWidth ?? 2,
       textAlignment: textAlignment,
+      borderRadius: borderRadius,
       shadows: [
-        const BoxShadow(
-          color: Color(0x1A000000),
-          blurRadius: 2,
-          offset: Offset(0, 1),
-        ),
+        _defaultTopShadow,
         BoxShadow(
-          color: shadowColor ?? const Color(0xFF1E88E5),
+          color: effectiveShadowColor,
           offset: const Offset(0, 3),
           blurRadius: 0,
           spreadRadius: 0,
@@ -249,9 +304,8 @@ class CustomButton extends StatelessWidget {
     );
   }
 
-  // Factory constructor for secondary variant
   factory CustomButton.secondary({
-    required String buttonText,
+    required String text,
     Key? key,
     VoidCallback? onPressed,
     Widget? icon,
@@ -263,15 +317,16 @@ class CustomButton extends StatelessWidget {
     bool disabled = false,
     double? borderWidth,
     ButtonTextAlignment textAlignment = ButtonTextAlignment.center,
+    BorderRadius? borderRadius,
   }) {
     return CustomButton(
-      buttonText: buttonText,
+      text: text,
       key: key,
       onPressed: onPressed,
       icon: icon,
       buttonColor: buttonColor ?? Colors.white,
-      textColor: textColor ?? const Color(0xFF424242),
-      borderColor: borderColor ?? const Color(0xFFB0BEC5),
+      textColor: textColor ?? kButtonSecondaryTextColor,
+      borderColor: borderColor ?? kButtonSecondaryBorderColor,
       contentPadding: contentPadding,
       height: height,
       disabled: disabled,
@@ -279,25 +334,13 @@ class CustomButton extends StatelessWidget {
       letterSpacing: 0,
       borderWidth: borderWidth ?? 2,
       textAlignment: textAlignment,
-      shadows: [
-        const BoxShadow(
-          color: Color(0x14000000),
-          blurRadius: 2,
-          offset: Offset(0, 1),
-        ),
-        const BoxShadow(
-          color: Color(0xFFB0BEC5),
-          offset: Offset(0, 3),
-          blurRadius: 0,
-          spreadRadius: 0,
-        ),
-      ],
+      borderRadius: borderRadius,
+      shadows: const [_secondaryTopShadow, _secondaryBottomShadow],
     );
   }
 
-  // Factory constructor for ghost/disabled variant
   factory CustomButton.ghost({
-    required String buttonText,
+    required String text,
     Key? key,
     VoidCallback? onPressed,
     Widget? icon,
@@ -306,25 +349,27 @@ class CustomButton extends StatelessWidget {
     EdgeInsetsGeometry? contentPadding,
     double? height,
     ButtonTextAlignment textAlignment = ButtonTextAlignment.center,
+    BorderRadius? borderRadius,
   }) {
     return CustomButton(
-      buttonText: buttonText,
+      text: text,
       key: key,
       onPressed: onPressed,
       icon: icon,
-      buttonColor: buttonColor ?? const Color(0xFFE5E5E5),
-      textColor: textColor ?? const Color(0xFFAFAFAF),
+      buttonColor: buttonColor ?? kButtonDisabledColor,
+      textColor: textColor ?? kButtonDisabledTextColor,
       contentPadding: contentPadding,
       height: height,
       disabled: true,
       fontWeight: FontWeight.w500,
       letterSpacing: 0,
       textAlignment: textAlignment,
+      borderRadius: borderRadius,
       shadows: null,
     );
   }
 
-  final String buttonText;
+  final String text;
   final VoidCallback? onPressed;
   final Widget? icon;
   final Color? buttonColor;
@@ -339,130 +384,146 @@ class CustomButton extends StatelessWidget {
   final List<BoxShadow>? shadows;
   final double? borderWidth;
   final ButtonTextAlignment textAlignment;
+  final BorderRadius? borderRadius;
 
-  Alignment getTextAlignment(ButtonTextAlignment alignment) {
-    switch (alignment) {
+  static const _alignmentMap = {
+    ButtonTextAlignment.start: Alignment.centerLeft,
+    ButtonTextAlignment.centerLeft: Alignment(-0.65, 0),
+    ButtonTextAlignment.center: Alignment.center,
+    ButtonTextAlignment.centerRight: Alignment(0.65, 0),
+    ButtonTextAlignment.end: Alignment.centerRight,
+  };
+
+  EdgeInsets _getTextPadding() {
+    switch (textAlignment) {
       case ButtonTextAlignment.start:
-        return Alignment.centerLeft;
       case ButtonTextAlignment.centerLeft:
-        return const Alignment(-0.65, 0); // 25% from left
-      case ButtonTextAlignment.center:
-        return Alignment.center;
+        return EdgeInsets.only(left: k4Double.wp);
       case ButtonTextAlignment.centerRight:
-        return const Alignment(0.65, 0); // 75% from left
       case ButtonTextAlignment.end:
-        return Alignment.centerRight;
+        return EdgeInsets.only(right: k4Double.wp);
+      case ButtonTextAlignment.center:
+        return EdgeInsets.zero;
     }
   }
 
-  Widget buildRow() {
-    List<Widget> children = [
-      if (icon != null) ...[
-        icon!,
-        SizedBox(width: k1Double.wp),
-      ],
-    ];
+  @override
+  Widget build(BuildContext context) {
+    final effectiveButtonColor = buttonColor ?? Colors.blue;
+    final effectiveTextColor =
+        disabled ? kButtonDisabledTextColor : (textColor ?? Colors.white);
+    final effectiveBorderColor = borderColor;
+    final effectiveHeight = height ?? 48;
+    final effectiveBorderRadius = borderRadius ?? BorderRadius.circular(12);
 
-    EdgeInsets textPadding;
-    switch (textAlignment) {
-      case ButtonTextAlignment.start:
-        textPadding = EdgeInsets.only(left: k4Double.wp);
-        break;
-      case ButtonTextAlignment.centerLeft:
-        textPadding = EdgeInsets.only(left: k4Double.wp);
-        break;
-      case ButtonTextAlignment.centerRight:
-      case ButtonTextAlignment.end:
-        textPadding = EdgeInsets.only(right: k4Double.wp);
-        break;
-      case ButtonTextAlignment.center:
-        textPadding = EdgeInsets.zero;
+    final textWidget = Text(
+      text,
+      style: TextStyle(
+        fontFamily: 'Hiragino Sans',
+        fontWeight: fontWeight ?? FontWeight.w500,
+        fontSize: k12Double.sp,
+        color: effectiveTextColor,
+        letterSpacing: letterSpacing ?? 0,
+      ),
+    );
+
+    final content = Row(
+      children: [
+        if (icon != null) ...[
+          icon!,
+          if (text.isNotEmpty) SizedBox(width: k1Double.wp),
+        ],
+        if (text.isNotEmpty)
+          Expanded(
+            child: Align(
+              alignment: _alignmentMap[textAlignment]!,
+              child: Padding(
+                padding: _getTextPadding(),
+                child: textWidget,
+              ),
+            ),
+          ),
+      ],
+    );
+
+    // For icon-only buttons, center the icon
+    final finalContent =
+        (icon != null && text.isEmpty) ? Center(child: icon) : content;
+
+    if (disabled) {
+      return SizedBox(
+        width: double.infinity,
+        height: effectiveHeight,
+        child: Container(
+          decoration: BoxDecoration(
+            color: kButtonDisabledColor,
+            borderRadius: effectiveBorderRadius,
+            boxShadow: const [_disabledShadow],
+          ),
+          child: Container(
+            margin: const EdgeInsets.only(bottom: 4),
+            decoration: BoxDecoration(
+              color: kButtonDisabledColor,
+              borderRadius: effectiveBorderRadius,
+            ),
+            child: Center(child: finalContent),
+          ),
+        ),
+      );
     }
 
-    children.add(
-      Expanded(
-        child: Align(
-          alignment: getTextAlignment(textAlignment),
-          child: Padding(
-            padding: textPadding,
-            child: Text(
-              buttonText,
-              style: TextStyle(
-                fontFamily: 'Hiragino Sans',
-                fontWeight: fontWeight ?? FontWeight.w500,
-                fontSize: k12Double.sp,
-                color: textColor ?? Colors.white,
-                letterSpacing: letterSpacing ?? 0,
+    return SizedBox(
+      width: double.infinity,
+      height: effectiveHeight,
+      child: Container(
+        decoration: BoxDecoration(
+          color: Colors.white,
+          borderRadius: effectiveBorderRadius,
+          border: effectiveBorderColor != null
+              ? Border.all(
+                  color: effectiveBorderColor,
+                  width: borderWidth ?? 1,
+                )
+              : null,
+          boxShadow: shadows,
+        ),
+        child: Material(
+          color: Colors.transparent,
+          child: InkWell(
+            onTap: onPressed,
+            borderRadius: effectiveBorderRadius,
+            child: Ink(
+              decoration: BoxDecoration(
+                color: effectiveButtonColor,
+                borderRadius: effectiveBorderRadius,
+              ),
+              child: Padding(
+                padding: contentPadding ?? EdgeInsets.zero,
+                child: finalContent,
               ),
             ),
           ),
         ),
       ),
     );
-
-    return Row(children: children);
   }
+}
 
-  @override
-  Widget build(context) {
-    // Use provided values or defaults
-    final btnColor = buttonColor ?? Colors.blue;
-    final txtColor = textColor ?? Colors.white;
-    final brdColor = borderColor;
-    final btnShadows = shadows;
+// Helper class for button configurations
+class _ButtonConfig {
+  final Color buttonColor;
+  final Color textColor;
+  final Color shadowColor;
+  final FontWeight fontWeight;
+  final double letterSpacing;
+  final Offset shadowOffset;
 
-    return SizedBox(
-      width: double.infinity,
-      height: height ?? 48,
-      child: disabled
-          ? Container(
-              decoration: BoxDecoration(
-                color: btnColor,
-                borderRadius: BorderRadius.circular(12),
-                boxShadow: const [
-                  BoxShadow(
-                    color: Color(0x33000000),
-                    offset: Offset(0, 4),
-                    blurRadius: 0,
-                    spreadRadius: 0,
-                  ),
-                ],
-              ),
-              child: Container(
-                margin: const EdgeInsets.only(bottom: 4),
-                decoration: BoxDecoration(
-                  color: btnColor,
-                  borderRadius: BorderRadius.circular(12),
-                ),
-                child: Center(
-                  child: buildRow(),
-                ),
-              ),
-            )
-          : Container(
-              decoration: BoxDecoration(
-                color: Colors.white,
-                borderRadius: BorderRadius.circular(12),
-                border: brdColor != null
-                    ? Border.all(color: brdColor, width: borderWidth ?? 1)
-                    : null,
-                boxShadow: btnShadows,
-              ),
-              child: ElevatedButton(
-                style: ElevatedButton.styleFrom(
-                  backgroundColor: btnColor,
-                  shadowColor: Colors.transparent,
-                  foregroundColor: txtColor,
-                  elevation: 0,
-                  shape: RoundedRectangleBorder(
-                    borderRadius: BorderRadius.circular(12),
-                  ),
-                  padding: contentPadding ?? EdgeInsets.zero,
-                ),
-                onPressed: onPressed,
-                child: buildRow(),
-              ),
-            ),
-    );
-  }
+  const _ButtonConfig({
+    required this.buttonColor,
+    required this.textColor,
+    required this.shadowColor,
+    required this.fontWeight,
+    required this.letterSpacing,
+    required this.shadowOffset,
+  });
 }

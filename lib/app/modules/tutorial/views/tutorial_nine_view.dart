@@ -81,7 +81,7 @@ class TutorialNineView extends StatelessWidget {
 
               // Bottom button
               CustomButton.primary(
-                buttonText: 'レッスンリマインダーを受け取る',
+                text: 'レッスンリマインダーを受け取る',
                 onPressed: () {
                   // TODO: Handle reminder setup
                 },

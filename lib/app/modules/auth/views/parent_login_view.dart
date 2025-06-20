@@ -70,7 +70,7 @@ class ParentLoginView extends GetView<AuthController> {
 
                   // Login button
                   CustomButton.ghost(
-                    buttonText: 'ログイン',
+                    text: 'ログイン',
                     onPressed: () {},
                   ),
                   SizedBox(height: k3Double.hp),
@@ -94,14 +94,14 @@ class ParentLoginView extends GetView<AuthController> {
                     children: [
                       Expanded(
                         child: CustomButton.outline(
-                          buttonText: 'Facebook',
+                          text: 'Facebook',
                           onPressed: () {},
                         ),
                       ),
                       SizedBox(width: k4Double.wp),
                       Expanded(
                         child: CustomButton.outline(
-                          buttonText: 'Google',
+                          text: 'Google',
                           onPressed: () {},
                         ),
                       ),

@@ -66,39 +66,39 @@ class TutorialSevenView extends StatelessWidget {
               ),
               SizedBox(height: k4Double.hp),
               CustomButton.secondary(
-                buttonText: '5分 / 日',
-                textAlignment: ButtonTextAlignment.centerLeft,
+                text: '5分 / 日',
+                textAlignment: ButtonTextAlignment.start,
                 onPressed: () {
                   // TODO: Handle selection
                 },
               ),
               SizedBox(height: k2Double.hp),
               CustomButton.secondary(
-                buttonText: '10分 / 日',
-                textAlignment: ButtonTextAlignment.centerLeft,
+                text: '10分 / 日',
+                textAlignment: ButtonTextAlignment.start,
                 onPressed: () {
                   // TODO: Handle selection
                 },
               ),
               SizedBox(height: k2Double.hp),
               CustomButton.secondary(
-                buttonText: '15分 / 日',
-                textAlignment: ButtonTextAlignment.centerLeft,
+                text: '15分 / 日',
+                textAlignment: ButtonTextAlignment.start,
                 onPressed: () {
                   // TODO: Handle selection
                 },
               ),
               SizedBox(height: k2Double.hp),
               CustomButton.secondary(
-                buttonText: '30分 / 日',
-                textAlignment: ButtonTextAlignment.centerLeft,
+                text: '30分 / 日',
+                textAlignment: ButtonTextAlignment.start,
                 onPressed: () {
                   // TODO: Handle selection
                 },
               ),
               const Spacer(),
               CustomButton.primary(
-                buttonText: '次へ',
+                text: '次へ',
                 onPressed: () => Get.toNamed(Routes.TUTORIAL_EIGHT),
               ),
             ],
