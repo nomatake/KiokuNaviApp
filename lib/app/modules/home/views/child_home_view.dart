@@ -9,6 +9,7 @@ import 'package:kioku_navi/widgets/child/child_bottom_nav_bar.dart';
 import 'package:kioku_navi/widgets/child/child_app_bar.dart';
 import 'package:kioku_navi/widgets/course_section_widget.dart';
 import 'package:kioku_navi/generated/assets.gen.dart';
+import 'package:kioku_navi/widgets/subject_selection_dialog.dart';
 
 class ChildHomeView extends GetView<ChildHomeController> {
   const ChildHomeView({super.key});
@@ -26,59 +27,68 @@ class ChildHomeView extends GetView<ChildHomeController> {
           Expanded(
             child: PaddedWrapper(
               bottom: false,
-              left: true,
-              right: true,
+              left: false,
+              right: false,
               child: Column(
                 children: [
                   // Split Button Section using CustomButton components
-                  Row(
-                    children: [
-                      // Left part (dropdown-like) with comprehensive icon
-                      SizedBox(
-                        width: k18Double.wp, // ~68px from Figma
-                        child: CustomButton.primary(
-                          text: '',
-                          buttonColor: const Color(0xFF57CC02),
-                          shadowColor: const Color(0xFF47A302),
-                          height: k19Double.wp, // 76px from Figma
-                          onPressed: () {
-                            // TODO: Add dropdown functionality
-                          },
-                          icon: SizedBox(
-                            height: k13Double.wp,
-                            width: k13Double.wp,
-                            child: Assets.images.comprehensive.image(),
-                          ),
-                          borderRadius: const BorderRadius.horizontal(
-                            left: Radius.circular(12),
-                            right: Radius.circular(0),
-                          ),
-                        ),
-                      ),
-                      // Separator line
-                      Container(
-                        height: k12Double.wp,
-                        width: 1,
-                        color: const Color(0xFFF7F9FC),
-                      ),
-                      // Right part (label) with lesson information
-                      Expanded(
-                        child: CustomButton.primary(
-                          text: '5年下・第18回\n日本のおもな都市・地形図の読み方',
-                          buttonColor: const Color(0xFF57CC02),
-                          shadowColor: const Color(0xFF47A302),
-                          textColor: Colors.white,
-                          height: k19Double.wp, // 76px from Figma
-                          onPressed: () {
-                            // TODO: Add lesson navigation
-                          },
-                          borderRadius: const BorderRadius.horizontal(
-                            left: Radius.circular(0),
-                            right: Radius.circular(12),
+                  Padding(
+                    padding: EdgeInsets.symmetric(horizontal: k4Double.wp),
+                    child: Row(
+                      children: [
+                        // Left part (dropdown-like) with comprehensive icon
+                        SizedBox(
+                          width: k18Double.wp, // ~68px from Figma
+                          child: CustomButton.primary(
+                            text: '',
+                            buttonColor: const Color(0xFF57CC02),
+                            shadowColor: const Color(0xFF47A302),
+                            height: k19Double.wp, // 76px from Figma
+                            onPressed: () {
+                              SubjectSelectionDialog.show(
+                                context,
+                                onSubjectSelected: (subject) {
+                                  controller.onSubjectSelected(subject);
+                                },
+                              );
+                            },
+                            icon: Obx(() => SizedBox(
+                                  height: k13Double.wp,
+                                  width: k13Double.wp,
+                                  child: _getSubjectIcon(
+                                      controller.selectedSubject.value),
+                                )),
+                            borderRadius: const BorderRadius.horizontal(
+                              left: Radius.circular(12),
+                              right: Radius.circular(0),
+                            ),
                           ),
                         ),
-                      ),
-                    ],
+                        // Separator line
+                        Container(
+                          height: k12Double.wp,
+                          width: 1,
+                          color: const Color(0xFFF7F9FC),
+                        ),
+                        // Right part (label) with lesson information
+                        Expanded(
+                          child: CustomButton.primary(
+                            text: '5年下・第18回\n日本のおもな都市・地形図の読み方',
+                            buttonColor: const Color(0xFF57CC02),
+                            shadowColor: const Color(0xFF47A302),
+                            textColor: Colors.white,
+                            height: k19Double.wp, // 76px from Figma
+                            onPressed: () {
+                              // TODO: Add lesson navigation
+                            },
+                            borderRadius: const BorderRadius.horizontal(
+                              left: Radius.circular(0),
+                              right: Radius.circular(12),
+                            ),
+                          ),
+                        ),
+                      ],
+                    ),
                   ),
                   // Scrollable course sections
                   SizedBox(height: k2Double.hp),
@@ -110,5 +120,18 @@ class ChildHomeView extends GetView<ChildHomeController> {
         onTap: () => controller.onSectionTapped(section),
       );
     }).toList();
+  }
+
+  Widget _getSubjectIcon(Subject subject) {
+    switch (subject) {
+      case Subject.comprehensive:
+        return Assets.images.comprehensive.image();
+      case Subject.socialStudies:
+        return Assets.images.japanIcon.image();
+      case Subject.science:
+        return Assets.images.scienceIcon.image();
+      case Subject.japanese:
+        return Assets.images.languageIcon.image();
+    }
   }
 }

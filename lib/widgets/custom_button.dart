@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:kioku_navi/utils/constants.dart';
 import 'package:kioku_navi/utils/extensions.dart';
 import 'package:kioku_navi/utils/sizes.dart';
 
@@ -27,13 +28,13 @@ class CustomButton extends StatelessWidget {
 
   // Common shadow configurations
   static const _defaultTopShadow = BoxShadow(
-    color: Color(0x1A000000),
+    color: kButtonDefaultTopShadowColor,
     blurRadius: 2,
     offset: Offset(0, 1),
   );
 
   static const _disabledShadow = BoxShadow(
-    color: Color(0x33000000),
+    color: kButtonDisabledShadowColor,
     offset: Offset(0, 4),
     blurRadius: 0,
     spreadRadius: 0,
@@ -41,40 +42,40 @@ class CustomButton extends StatelessWidget {
 
   // Button style configurations
   static const _orangeConfig = _ButtonConfig(
-    buttonColor: Color(0xFFF57C00),
+    buttonColor: kButtonOrangeColor,
     textColor: Colors.white,
-    shadowColor: Color(0xFFE56A00),
+    shadowColor: kButtonOrangeShadowColor,
     fontWeight: FontWeight.w700,
     letterSpacing: 0,
     shadowOffset: Offset(0, 4),
   );
 
   static const _successConfig = _ButtonConfig(
-    buttonColor: Color(0xFF29CC57),
+    buttonColor: kButtonSuccessColor,
     textColor: Colors.white,
-    shadowColor: Color(0xFF15B440),
+    shadowColor: kButtonSuccessShadowColor,
     fontWeight: FontWeight.w700,
     letterSpacing: 0,
     shadowOffset: Offset(0, 4),
   );
 
   static const _dangerConfig = _ButtonConfig(
-    buttonColor: Color(0xFFE53935),
+    buttonColor: kButtonDangerColor,
     textColor: Colors.white,
-    shadowColor: Color(0xFFC62828),
+    shadowColor: kButtonDangerShadowColor,
     fontWeight: FontWeight.w700,
     letterSpacing: 0,
     shadowOffset: Offset(0, 4),
   );
 
   static const _secondaryTopShadow = BoxShadow(
-    color: Color(0x14000000),
+    color: kButtonSecondaryTopShadowColor,
     blurRadius: 2,
     offset: Offset(0, 1),
   );
 
   static const _secondaryBottomShadow = BoxShadow(
-    color: Color(0xFFB0BEC5),
+    color: kButtonSecondaryBottomShadowColor,
     offset: Offset(0, 3),
     blurRadius: 0,
     spreadRadius: 0,
@@ -229,14 +230,13 @@ class CustomButton extends StatelessWidget {
     ButtonTextAlignment textAlignment = ButtonTextAlignment.center,
     BorderRadius? borderRadius,
   }) {
-    final effectiveShadowColor = shadowColor ?? const Color(0xFF1E88E5);
+    final effectiveShadowColor = shadowColor ?? kButtonPrimaryColor;
     return CustomButton(
       text: text,
       key: key,
       onPressed: onPressed,
       icon: icon,
-      buttonColor:
-          buttonColor ?? const Color(0xFF1E88E5).withValues(alpha: 0.8),
+      buttonColor: buttonColor ?? kButtonPrimaryColor.withValues(alpha: 0.8),
       textColor: textColor ?? Colors.white,
       shadowColor: effectiveShadowColor,
       contentPadding: contentPadding,
@@ -274,15 +274,15 @@ class CustomButton extends StatelessWidget {
     ButtonTextAlignment textAlignment = ButtonTextAlignment.center,
     BorderRadius? borderRadius,
   }) {
-    final effectiveShadowColor = shadowColor ?? const Color(0xFF1E88E5);
+    final effectiveShadowColor = shadowColor ?? kButtonPrimaryColor;
     return CustomButton(
       text: text,
       key: key,
       onPressed: onPressed,
       icon: icon,
       buttonColor: buttonColor ?? Colors.transparent,
-      textColor: textColor ?? const Color(0xFF1976D2),
-      borderColor: borderColor ?? const Color(0xFF1E88E5),
+      textColor: textColor ?? kButtonOutlineTextColor,
+      borderColor: borderColor ?? kButtonPrimaryColor,
       shadowColor: effectiveShadowColor,
       contentPadding: contentPadding,
       height: height,
@@ -325,8 +325,8 @@ class CustomButton extends StatelessWidget {
       onPressed: onPressed,
       icon: icon,
       buttonColor: buttonColor ?? Colors.white,
-      textColor: textColor ?? const Color(0xFF424242),
-      borderColor: borderColor ?? const Color(0xFFB0BEC5),
+      textColor: textColor ?? kButtonSecondaryTextColor,
+      borderColor: borderColor ?? kButtonSecondaryBorderColor,
       contentPadding: contentPadding,
       height: height,
       disabled: disabled,
@@ -356,8 +356,8 @@ class CustomButton extends StatelessWidget {
       key: key,
       onPressed: onPressed,
       icon: icon,
-      buttonColor: buttonColor ?? const Color(0xFFE5E5E5),
-      textColor: textColor ?? const Color(0xFFAFAFAF),
+      buttonColor: buttonColor ?? kButtonDisabledColor,
+      textColor: textColor ?? kButtonDisabledTextColor,
       contentPadding: contentPadding,
       height: height,
       disabled: true,
@@ -410,7 +410,8 @@ class CustomButton extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final effectiveButtonColor = buttonColor ?? Colors.blue;
-    final effectiveTextColor = textColor ?? Colors.white;
+    final effectiveTextColor =
+        disabled ? kButtonDisabledTextColor : (textColor ?? Colors.white);
     final effectiveBorderColor = borderColor;
     final effectiveHeight = height ?? 48;
     final effectiveBorderRadius = borderRadius ?? BorderRadius.circular(12);
@@ -430,19 +431,24 @@ class CustomButton extends StatelessWidget {
       children: [
         if (icon != null) ...[
           icon!,
-          SizedBox(width: k1Double.wp),
+          if (text.isNotEmpty) SizedBox(width: k1Double.wp),
         ],
-        Expanded(
-          child: Align(
-            alignment: _alignmentMap[textAlignment]!,
-            child: Padding(
-              padding: _getTextPadding(),
-              child: textWidget,
+        if (text.isNotEmpty)
+          Expanded(
+            child: Align(
+              alignment: _alignmentMap[textAlignment]!,
+              child: Padding(
+                padding: _getTextPadding(),
+                child: textWidget,
+              ),
             ),
           ),
-        ),
       ],
     );
+
+    // For icon-only buttons, center the icon
+    final finalContent =
+        (icon != null && text.isEmpty) ? Center(child: icon) : content;
 
     if (disabled) {
       return SizedBox(
@@ -450,17 +456,17 @@ class CustomButton extends StatelessWidget {
         height: effectiveHeight,
         child: Container(
           decoration: BoxDecoration(
-            color: effectiveButtonColor,
+            color: kButtonDisabledColor,
             borderRadius: effectiveBorderRadius,
             boxShadow: const [_disabledShadow],
           ),
           child: Container(
             margin: const EdgeInsets.only(bottom: 4),
             decoration: BoxDecoration(
-              color: effectiveButtonColor,
+              color: kButtonDisabledColor,
               borderRadius: effectiveBorderRadius,
             ),
-            child: Center(child: content),
+            child: Center(child: finalContent),
           ),
         ),
       );
@@ -493,7 +499,7 @@ class CustomButton extends StatelessWidget {
               ),
               child: Padding(
                 padding: contentPadding ?? EdgeInsets.zero,
-                child: content,
+                child: finalContent,
               ),
             ),
           ),
