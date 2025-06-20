@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:kioku_navi/app/modules/learning/controllers/learning_controller.dart';
+import 'package:kioku_navi/app/routes/app_pages.dart';
 import 'package:kioku_navi/generated/assets.gen.dart';
 import 'package:kioku_navi/utils/extensions.dart';
 import 'package:kioku_navi/utils/sizes.dart';
@@ -70,7 +71,7 @@ class ResultView extends GetView<LearningController> {
               CustomButton.orange(
                 text: 'XPを受け取る',
                 onPressed: () {
-                  // TODO: Handle get XP action
+                  Get.toNamed(Routes.CONTINUOUS_PLAY_RECORD);
                 },
               ),
             ],
