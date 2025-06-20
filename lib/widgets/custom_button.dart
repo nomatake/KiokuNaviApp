@@ -430,19 +430,24 @@ class CustomButton extends StatelessWidget {
       children: [
         if (icon != null) ...[
           icon!,
-          SizedBox(width: k1Double.wp),
+          if (text.isNotEmpty) SizedBox(width: k1Double.wp),
         ],
-        Expanded(
-          child: Align(
-            alignment: _alignmentMap[textAlignment]!,
-            child: Padding(
-              padding: _getTextPadding(),
-              child: textWidget,
+        if (text.isNotEmpty)
+          Expanded(
+            child: Align(
+              alignment: _alignmentMap[textAlignment]!,
+              child: Padding(
+                padding: _getTextPadding(),
+                child: textWidget,
+              ),
             ),
           ),
-        ),
       ],
     );
+
+    // For icon-only buttons, center the icon
+    final finalContent =
+        (icon != null && text.isEmpty) ? Center(child: icon) : content;
 
     if (disabled) {
       return SizedBox(
@@ -460,7 +465,7 @@ class CustomButton extends StatelessWidget {
               color: effectiveButtonColor,
               borderRadius: effectiveBorderRadius,
             ),
-            child: Center(child: content),
+            child: Center(child: finalContent),
           ),
         ),
       );
@@ -493,7 +498,7 @@ class CustomButton extends StatelessWidget {
               ),
               child: Padding(
                 padding: contentPadding ?? EdgeInsets.zero,
-                child: content,
+                child: finalContent,
               ),
             ),
           ),

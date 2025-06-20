@@ -1,10 +1,14 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:kioku_navi/widgets/course_section_widget.dart';
+import 'package:kioku_navi/widgets/subject_selection_dialog.dart';
 
 class ChildHomeController extends GetxController {
   // Observable list of course sections
   final RxList<CourseSection> courseSections = <CourseSection>[].obs;
+
+  // Currently selected subject
+  final Rx<Subject> selectedSubject = Subject.comprehensive.obs;
 
   @override
   void onInit() {
@@ -209,6 +213,14 @@ class ChildHomeController extends GetxController {
     // Handle section tap
     print('Tapped on ${section.title}');
     // TODO: Navigate to section or show section details
+  }
+
+  void onSubjectSelected(Subject subject) {
+    selectedSubject.value = subject;
+    print('Selected subject: ${subject.title}');
+    // TODO: Update the course sections based on selected subject
+    // For now, just refresh the current sections
+    _initializeCourseSections();
   }
 
   /// Updates the progress of a specific node in a course section
