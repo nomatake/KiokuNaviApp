@@ -65,55 +65,55 @@ class TutorialFourView extends StatelessWidget {
               ),
               SizedBox(height: k4Double.hp),
               CustomButton.secondary(
-                buttonText: '小学３年生',
-                textAlignment: ButtonTextAlignment.centerLeft,
+                text: '小学３年生',
+                alignment: MainAxisAlignment.start,
                 onPressed: () {
                   // TODO: Handle selection
                 },
               ),
               SizedBox(height: k2Double.hp),
               CustomButton.secondary(
-                buttonText: '小学４年生',
-                textAlignment: ButtonTextAlignment.centerLeft,
+                text: '小学４年生',
+                alignment: MainAxisAlignment.start,
                 onPressed: () {
                   // TODO: Handle selection
                 },
               ),
               SizedBox(height: k2Double.hp),
               CustomButton.secondary(
-                buttonText: '小学５年生',
-                textAlignment: ButtonTextAlignment.centerLeft,
+                text: '小学５年生',
+                alignment: MainAxisAlignment.start,
                 onPressed: () {
                   // TODO: Handle selection
                 },
               ),
               SizedBox(height: k2Double.hp),
               CustomButton.secondary(
-                buttonText: '小学６年生',
-                textAlignment: ButtonTextAlignment.centerLeft,
+                text: '小学６年生',
+                alignment: MainAxisAlignment.start,
                 onPressed: () {
                   // TODO: Handle selection
                 },
               ),
               SizedBox(height: k2Double.hp),
               CustomButton.secondary(
-                buttonText: '中学１年生',
-                textAlignment: ButtonTextAlignment.centerLeft,
+                text: '中学１年生',
+                alignment: MainAxisAlignment.start,
                 onPressed: () {
                   // TODO: Handle selection
                 },
               ),
               SizedBox(height: k2Double.hp),
               CustomButton.secondary(
-                buttonText: '中学２年生',
-                textAlignment: ButtonTextAlignment.centerLeft,
+                text: '中学２年生',
+                alignment: MainAxisAlignment.start,
                 onPressed: () {
                   // TODO: Handle selection
                 },
               ),
               const Spacer(),
               CustomButton.primary(
-                buttonText: '次へ',
+                text: '次へ',
                 onPressed: () {
                   // TODO: Handle next action
                 },

@@ -65,7 +65,7 @@ class TutorialEightView extends StatelessWidget {
               ),
               const Spacer(),
               CustomButton.primary(
-                buttonText: '次へ',
+                text: '次へ',
                 onPressed: () {
                   // TODO: Handle completion
                 },

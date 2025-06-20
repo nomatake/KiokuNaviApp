@@ -7,6 +7,7 @@ import 'package:kioku_navi/utils/sizes.dart';
 import 'package:kioku_navi/widgets/custom_button.dart';
 import 'package:kioku_navi/widgets/padded_wrapper.dart';
 import 'package:kioku_navi/widgets/register_app_bar.dart';
+import 'package:kioku_navi/widgets/custom_text_form_field.dart';
 
 class TutorialSixView extends StatelessWidget {
   const TutorialSixView({super.key});
@@ -49,15 +50,8 @@ class TutorialSixView extends StatelessWidget {
                         nipOffset: k25Double,
                         radius: Radius.circular(k14Double),
                       ),
-                      child: Text(
-                        '学習を習慣づける一歩 を踏み出そう！',
-                        style: TextStyle(
-                          fontFamily: 'Hiragino Sans',
-                          fontWeight: FontWeight.w400,
-                          fontSize: k14Double.sp,
-                          color: const Color(0xFF212121),
-                        ),
-                        textAlign: TextAlign.left,
+                      child: CustomTextFormField.primary(
+                        hintText: '入力してください',
                       ),
                     ),
                   ),
@@ -65,9 +59,9 @@ class TutorialSixView extends StatelessWidget {
               ),
               const Spacer(),
               CustomButton.primary(
-                buttonText: '次へ',
+                text: '次へ',
                 onPressed: () {
-                  // TODO: Handle completion
+                  // TODO: Handle next action
                 },
               ),
             ],

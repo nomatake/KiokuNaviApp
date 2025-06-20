@@ -65,47 +65,47 @@ class TutorialFiveView extends StatelessWidget {
               ),
               SizedBox(height: k4Double.hp),
               CustomButton.secondary(
-                buttonText: '早稲田アカデミー',
-                textAlignment: ButtonTextAlignment.centerLeft,
+                text: '早稲田アカデミー',
+                alignment: MainAxisAlignment.start,
                 onPressed: () {
                   // TODO: Handle selection
                 },
               ),
               SizedBox(height: k2Double.hp),
               CustomButton.secondary(
-                buttonText: '四谷大塚',
-                textAlignment: ButtonTextAlignment.centerLeft,
+                text: '四谷大塚',
+                alignment: MainAxisAlignment.start,
                 onPressed: () {
                   // TODO: Handle selection
                 },
               ),
               SizedBox(height: k2Double.hp),
               CustomButton.secondary(
-                buttonText: 'SAPIX',
-                textAlignment: ButtonTextAlignment.centerLeft,
+                text: 'SAPIX',
+                alignment: MainAxisAlignment.start,
                 onPressed: () {
                   // TODO: Handle selection
                 },
               ),
               SizedBox(height: k2Double.hp),
               CustomButton.secondary(
-                buttonText: '日能研',
-                textAlignment: ButtonTextAlignment.centerLeft,
+                text: '日能研',
+                alignment: MainAxisAlignment.start,
                 onPressed: () {
                   // TODO: Handle selection
                 },
               ),
               SizedBox(height: k2Double.hp),
               CustomButton.secondary(
-                buttonText: 'それ以外',
-                textAlignment: ButtonTextAlignment.centerLeft,
+                text: 'それ以外',
+                alignment: MainAxisAlignment.start,
                 onPressed: () {
                   // TODO: Handle selection
                 },
               ),
               const Spacer(),
               CustomButton.primary(
-                buttonText: '次へ',
+                text: '次へ',
                 onPressed: () {
                   // TODO: Handle next action
                 },
