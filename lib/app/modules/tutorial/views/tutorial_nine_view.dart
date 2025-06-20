@@ -21,7 +21,7 @@ class TutorialNineView extends StatelessWidget {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: RegisterAppBar(
-        progress: 0.9,
+        progress: 1,
         onBack: () => Get.back(),
       ),
       body: SafeArea(
@@ -37,8 +37,8 @@ class TutorialNineView extends StatelessWidget {
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
                   Assets.images.logo.image(
-                    height: k35Double.wp,
-                    width: k35Double.wp,
+                    height: k25Double.wp,
+                    width: k25Double.wp,
                     fit: BoxFit.contain,
                   ),
                   Expanded(

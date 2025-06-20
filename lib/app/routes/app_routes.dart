@@ -6,7 +6,6 @@ abstract class Routes {
   static const HOME = _Paths.HOME;
   static const ROOT_SCREEN = _Paths.ROOT_SCREEN;
   static const REGISTER = _Paths.REGISTER;
-  static const LOGIN = _Paths.LOGIN;
   static const PARENT_LOGIN = _Paths.PARENT_LOGIN;
   static const STUDENT_LOGIN = _Paths.STUDENT_LOGIN;
   static const FORGOT_PASSWORD = _Paths.FORGOT_PASSWORD;
@@ -20,6 +19,11 @@ abstract class Routes {
   static const TUTORIAL_SEVEN = _Paths.TUTORIAL_SEVEN;
   static const TUTORIAL_EIGHT = _Paths.TUTORIAL_EIGHT;
   static const TUTORIAL_NINE = _Paths.TUTORIAL_NINE;
+  static const LEARNING = _Paths.LEARNING;
+  static const QUESTION = _Paths.QUESTION;
+  static const RESULT = _Paths.RESULT;
+  static const CONTINUOUS_PLAY_RECORD = _Paths.CONTINUOUS_PLAY_RECORD;
+  static const SESSION_CHANGE = _Paths.SESSION_CHANGE;
 }
 
 abstract class _Paths {
@@ -27,7 +31,6 @@ abstract class _Paths {
   static const HOME = '/home';
   static const ROOT_SCREEN = '/auth/root-screen';
   static const REGISTER = '/auth/register';
-  static const LOGIN = '/auth/login';
   static const PARENT_LOGIN = '/auth/parent-login';
   static const STUDENT_LOGIN = '/auth/student-login';
   static const FORGOT_PASSWORD = '/auth/forgot-password';
@@ -41,4 +44,9 @@ abstract class _Paths {
   static const TUTORIAL_SEVEN = '/tutorial/seven';
   static const TUTORIAL_EIGHT = '/tutorial/eight';
   static const TUTORIAL_NINE = '/tutorial/nine';
+  static const LEARNING = '/learning';
+  static const QUESTION = '/learning/question';
+  static const RESULT = '/learning/result';
+  static const CONTINUOUS_PLAY_RECORD = '/learning/continuous-play-record';
+  static const SESSION_CHANGE = '/learning/session-change';
 }

@@ -2,6 +2,7 @@
 // Dolphin icon and bottom button are reused from existing assets/widgets.
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:kioku_navi/app/routes/app_pages.dart';
 import 'package:kioku_navi/generated/assets.gen.dart';
 import 'package:kioku_navi/utils/extensions.dart';
 import 'package:kioku_navi/utils/sizes.dart';
@@ -31,20 +32,16 @@ class TutorialView extends GetView<TutorialController> {
                   child: CustomTooltip(
                     message: 'こんにちは！キオだよ！',
                     child: Assets.images.logo.image(
-                      height: k35Double.wp,
-                      width: k35Double.wp,
+                      height: k30Double.wp,
+                      width: k30Double.wp,
                       fit: BoxFit.contain,
                     ),
                   ),
                 ),
               ),
-              // Bottom button (already present as CustomButton, reused as per instruction)
-              CustomButton(
+              CustomButton.primary(
                 text: '次へ',
-                onPressed: () {
-                  // TODO: Implement navigation or logic for next tutorial step
-                },
-                // You can add variant or style if needed
+                onPressed: () => Get.toNamed(Routes.TUTORIAL_TWO),
               ),
             ],
           ),

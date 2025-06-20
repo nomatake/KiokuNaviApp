@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:kioku_navi/utils/extensions.dart';
 import 'package:kioku_navi/utils/sizes.dart';
 
-enum ButtonVariant { primary, outline, secondary, ghost }
+enum ButtonTextAlignment { start, centerLeft, center, centerRight, end }
 
 class CustomButton extends StatelessWidget {
   const CustomButton({
@@ -158,6 +158,141 @@ class CustomButton extends StatelessWidget {
   // Factory constructors for convenience
   static CustomButton primary({
     required String text,
+  // Factory constructor for orange variant
+  factory CustomButton.orange({
+    required String buttonText,
+    Key? key,
+    VoidCallback? onPressed,
+    Widget? icon,
+    Color? buttonColor,
+    Color? textColor,
+    Color? shadowColor,
+    EdgeInsetsGeometry? contentPadding,
+    double? height,
+    bool disabled = false,
+    ButtonTextAlignment textAlignment = ButtonTextAlignment.center,
+  }) {
+    return CustomButton(
+      buttonText: buttonText,
+      key: key,
+      onPressed: onPressed,
+      icon: icon,
+      buttonColor: buttonColor ?? const Color(0xFFF57C00),
+      textColor: textColor ?? Colors.white,
+      shadowColor: shadowColor ?? const Color(0xFFE56A00),
+      contentPadding: contentPadding,
+      height: height,
+      disabled: disabled,
+      fontWeight: FontWeight.w700,
+      letterSpacing: 0,
+      textAlignment: textAlignment,
+      shadows: [
+        const BoxShadow(
+          color: Color(0x1A000000),
+          blurRadius: 2,
+          offset: Offset(0, 1),
+        ),
+        BoxShadow(
+          color: shadowColor ?? const Color(0xFFE56A00),
+          offset: const Offset(0, 4),
+          blurRadius: 0,
+          spreadRadius: 0,
+        ),
+      ],
+    );
+  }
+
+  // Factory constructor for success variant
+  factory CustomButton.success({
+    required String buttonText,
+    Key? key,
+    VoidCallback? onPressed,
+    Widget? icon,
+    Color? buttonColor,
+    Color? textColor,
+    Color? shadowColor,
+    EdgeInsetsGeometry? contentPadding,
+    double? height,
+    bool disabled = false,
+    ButtonTextAlignment textAlignment = ButtonTextAlignment.center,
+  }) {
+    return CustomButton(
+      buttonText: buttonText,
+      key: key,
+      onPressed: onPressed,
+      icon: icon,
+      buttonColor: buttonColor ?? const Color(0xFF29CC57),
+      textColor: textColor ?? Colors.white,
+      shadowColor: shadowColor ?? const Color(0xFF15B440),
+      contentPadding: contentPadding,
+      height: height,
+      disabled: disabled,
+      fontWeight: FontWeight.w700,
+      letterSpacing: 0,
+      textAlignment: textAlignment,
+      shadows: [
+        const BoxShadow(
+          color: Color(0x1A000000),
+          blurRadius: 2,
+          offset: Offset(0, 1),
+        ),
+        BoxShadow(
+          color: shadowColor ?? const Color(0xFF15B440),
+          offset: const Offset(0, 4),
+          blurRadius: 0,
+          spreadRadius: 0,
+        ),
+      ],
+    );
+  }
+
+  // Factory constructor for danger variant
+  factory CustomButton.danger({
+    required String buttonText,
+    Key? key,
+    VoidCallback? onPressed,
+    Widget? icon,
+    Color? buttonColor,
+    Color? textColor,
+    Color? shadowColor,
+    EdgeInsetsGeometry? contentPadding,
+    double? height,
+    bool disabled = false,
+    ButtonTextAlignment textAlignment = ButtonTextAlignment.center,
+  }) {
+    return CustomButton(
+      buttonText: buttonText,
+      key: key,
+      onPressed: onPressed,
+      icon: icon,
+      buttonColor: buttonColor ?? const Color(0xFFE53935),
+      textColor: textColor ?? Colors.white,
+      shadowColor: shadowColor ?? const Color(0xFFC62828),
+      contentPadding: contentPadding,
+      height: height,
+      disabled: disabled,
+      fontWeight: FontWeight.w700,
+      letterSpacing: 0,
+      textAlignment: textAlignment,
+      shadows: [
+        const BoxShadow(
+          color: Color(0x1A000000),
+          blurRadius: 2,
+          offset: Offset(0, 1),
+        ),
+        BoxShadow(
+          color: shadowColor ?? const Color(0xFFC62828),
+          offset: const Offset(0, 4),
+          blurRadius: 0,
+          spreadRadius: 0,
+        ),
+      ],
+    );
+  }
+
+  // Factory constructor for primary variant
+  factory CustomButton.primary({
+    required String buttonText,
     Key? key,
     VoidCallback? onPressed,
     Widget? icon,

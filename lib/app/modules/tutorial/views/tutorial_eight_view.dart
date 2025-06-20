@@ -1,6 +1,7 @@
 import 'package:bubble/bubble.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:kioku_navi/app/routes/app_pages.dart';
 import 'package:kioku_navi/generated/assets.gen.dart';
 import 'package:kioku_navi/utils/extensions.dart';
 import 'package:kioku_navi/utils/sizes.dart';
@@ -15,7 +16,7 @@ class TutorialEightView extends StatelessWidget {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: RegisterAppBar(
-        progress: 1.0,
+        progress: 0.857,
         onBack: () => Get.back(),
       ),
       body: SafeArea(
@@ -29,8 +30,8 @@ class TutorialEightView extends StatelessWidget {
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
                   Assets.images.logo.image(
-                    height: k35Double.wp,
-                    width: k35Double.wp,
+                    height: k25Double.wp,
+                    width: k25Double.wp,
                     fit: BoxFit.contain,
                   ),
                   Expanded(
@@ -66,9 +67,7 @@ class TutorialEightView extends StatelessWidget {
               const Spacer(),
               CustomButton.primary(
                 text: '次へ',
-                onPressed: () {
-                  // TODO: Handle completion
-                },
+                onPressed: () => Get.toNamed(Routes.TUTORIAL_NINE),
               ),
             ],
           ),

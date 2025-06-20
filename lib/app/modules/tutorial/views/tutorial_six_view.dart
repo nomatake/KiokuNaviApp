@@ -1,6 +1,7 @@
 import 'package:bubble/bubble.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:kioku_navi/app/routes/app_pages.dart';
 import 'package:kioku_navi/generated/assets.gen.dart';
 import 'package:kioku_navi/utils/extensions.dart';
 import 'package:kioku_navi/utils/sizes.dart';
@@ -16,7 +17,7 @@ class TutorialSixView extends StatelessWidget {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: RegisterAppBar(
-        progress: 0.5,
+        progress: 0.571,
         onBack: () => Get.back(),
       ),
       body: SafeArea(
@@ -30,8 +31,8 @@ class TutorialSixView extends StatelessWidget {
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
                   Assets.images.logo.image(
-                    height: k35Double.wp,
-                    width: k35Double.wp,
+                    height: k25Double.wp,
+                    width: k25Double.wp,
                     fit: BoxFit.contain,
                   ),
                   Expanded(
@@ -60,9 +61,7 @@ class TutorialSixView extends StatelessWidget {
               const Spacer(),
               CustomButton.primary(
                 text: '次へ',
-                onPressed: () {
-                  // TODO: Handle next action
-                },
+                onPressed: () => Get.toNamed(Routes.TUTORIAL_SEVEN),
               ),
             ],
           ),
