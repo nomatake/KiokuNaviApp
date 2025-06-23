@@ -89,23 +89,10 @@ class StudentLoginView extends GetView<AuthController> {
                     ),
                   ),
                   SizedBox(height: k3Double.hp),
-                  Row(
-                    children: [
-                      Expanded(
-                        child: CustomButton.outline(
-                          text: 'Facebook',
-                          onPressed: () {},
-                        ),
-                      ),
-                      SizedBox(width: k4Double.wp),
-                      Expanded(
-                        child: CustomButton.outline(
-                          text: 'Google',
-                          onPressed: () {},
-                        ),
-                      ),
-                    ],
-                  ),
+                  CustomButton.outline(
+                    text: 'Google',
+                    onPressed: () {},
+                  )
                 ],
               ),
             ),

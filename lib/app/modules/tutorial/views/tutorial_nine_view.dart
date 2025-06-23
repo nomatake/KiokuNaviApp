@@ -1,6 +1,7 @@
 import 'package:bubble/bubble.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:kioku_navi/app/routes/app_pages.dart';
 import 'package:kioku_navi/generated/assets.gen.dart';
 import 'package:kioku_navi/utils/extensions.dart';
 import 'package:kioku_navi/utils/sizes.dart';
@@ -82,9 +83,7 @@ class TutorialNineView extends StatelessWidget {
               // Bottom button
               CustomButton.primary(
                 text: 'レッスンリマインダーを受け取る',
-                onPressed: () {
-                  // TODO: Handle reminder setup
-                },
+                onPressed: () => Get.toNamed(Routes.CHILD_HOME),
               ),
             ],
           ),

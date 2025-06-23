@@ -2,12 +2,12 @@ import 'package:flutter/material.dart';
 import 'package:form_builder_validators/form_builder_validators.dart';
 import 'package:get/get.dart';
 import 'package:kioku_navi/app/modules/auth/controllers/auth_controller.dart';
+import 'package:kioku_navi/utils/constants.dart';
 import 'package:kioku_navi/utils/extensions.dart';
 import 'package:kioku_navi/utils/sizes.dart';
 import 'package:kioku_navi/widgets/custom_appbar.dart';
 import 'package:kioku_navi/widgets/custom_button.dart';
 import 'package:kioku_navi/widgets/custom_text_form_field.dart';
-import 'package:kioku_navi/utils/constants.dart';
 import 'package:kioku_navi/widgets/custom_title_text.dart';
 import 'package:kioku_navi/widgets/intrinsic_height_scroll_view.dart';
 import 'package:kioku_navi/widgets/padded_wrapper.dart';
@@ -90,23 +90,10 @@ class ParentLoginView extends GetView<AuthController> {
                     ),
                   ),
                   SizedBox(height: k3Double.hp),
-                  Row(
-                    children: [
-                      Expanded(
-                        child: CustomButton.outline(
-                          text: 'Facebook',
-                          onPressed: () {},
-                        ),
-                      ),
-                      SizedBox(width: k4Double.wp),
-                      Expanded(
-                        child: CustomButton.outline(
-                          text: 'Google',
-                          onPressed: () {},
-                        ),
-                      ),
-                    ],
-                  ),
+                  CustomButton.outline(
+                    text: 'Google',
+                    onPressed: () {},
+                  )
                 ],
               ),
             ),

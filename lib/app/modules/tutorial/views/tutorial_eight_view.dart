@@ -37,7 +37,7 @@ class TutorialEightView extends StatelessWidget {
                   Expanded(
                     child: Bubble(
                       style: BubbleStyle(
-                        margin: BubbleEdges.only(top: k10Double),
+                        // margin: BubbleEdges.only(top: k10Double),
                         elevation: k10Double,
                         color: const Color(0xFFF7F7F7),
                         borderColor: const Color(0xFFD8D8D8),

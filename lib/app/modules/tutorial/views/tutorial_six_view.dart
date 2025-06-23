@@ -8,7 +8,6 @@ import 'package:kioku_navi/utils/sizes.dart';
 import 'package:kioku_navi/widgets/custom_button.dart';
 import 'package:kioku_navi/widgets/padded_wrapper.dart';
 import 'package:kioku_navi/widgets/register_app_bar.dart';
-import 'package:kioku_navi/widgets/custom_text_form_field.dart';
 
 class TutorialSixView extends StatelessWidget {
   const TutorialSixView({super.key});
@@ -64,12 +63,6 @@ class TutorialSixView extends StatelessWidget {
                     ),
                   ),
                 ],
-              ),
-              SizedBox(height: k4Double.hp),
-              CustomTextFormField(
-                textController: TextEditingController(),
-                hintText: '入力してください',
-                labelText: 'お子様のお名前',
               ),
               const Spacer(),
               CustomButton.primary(
