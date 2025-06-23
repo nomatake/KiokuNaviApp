@@ -44,7 +44,7 @@ ThemeData _buildAppTheme() {
     scaffoldBackgroundColor: const Color(kScaffoldBackgroundColor),
     visualDensity: VisualDensity.adaptivePlatformDensity,
 
-    // Configure app bar appearance
+    // Configure app bar appearance.
     appBarTheme: AppBarTheme(
       backgroundColor: Colors.white70,
       scrolledUnderElevation: k0Double,
