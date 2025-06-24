@@ -31,8 +31,8 @@ class TutorialTwoView extends StatelessWidget {
                       CustomTooltip(
                         message: '最初のレッスンを始める前に、\nn個の簡単な質問に答えてね！',
                         child: Assets.images.logo.image(
-                          height: k30Double.wp,
-                          width: k30Double.wp,
+                          height: k100Double.sp,
+                          width: k100Double.sp,
                           fit: BoxFit.contain,
                         ),
                       ),
