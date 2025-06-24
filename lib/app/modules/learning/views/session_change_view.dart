@@ -27,39 +27,46 @@ class SessionChangeView extends GetView<LearningController> {
             // Session cards list
             Expanded(
               child: PaddedWrapper(
-                child: ListView(
-                  padding: EdgeInsets.symmetric(vertical: k2Double.hp),
-                  children: [
-                    SessionCard(
-                      title: '5年下　第16回',
-                      subtitle: '総合 第16回',
-                      progress: 1.0, // 100% complete
-                      showTrophy: true,
-                      onTap: () {
-                        // Handle tap
-                      },
+                child: Center(
+                  child: ConstrainedBox(
+                    constraints: BoxConstraints(
+                      maxWidth: k350Double.sp, // Maximum width for iPad layouts
                     ),
-                    SizedBox(height: k2Double.hp),
-                    SessionCard(
-                      title: '5年下　第17回',
-                      subtitle: '総合 第17回',
-                      progress: 0.965, // ~96.5% complete
-                      showTrophy: true,
-                      onTap: () {
-                        // Handle tap
-                      },
+                    child: ListView(
+                      padding: EdgeInsets.symmetric(vertical: k2Double.hp),
+                      children: [
+                        SessionCard(
+                          title: '5年下　第16回',
+                          subtitle: '総合 第16回',
+                          progress: 1.0, // 100% complete
+                          showTrophy: true,
+                          onTap: () {
+                            // Handle tap
+                          },
+                        ),
+                        SizedBox(height: k2Double.hp),
+                        SessionCard(
+                          title: '5年下　第17回',
+                          subtitle: '総合 第17回',
+                          progress: 0.965, // ~96.5% complete
+                          showTrophy: true,
+                          onTap: () {
+                            // Handle tap
+                          },
+                        ),
+                        SizedBox(height: k2Double.hp),
+                        SessionCard(
+                          title: '5年下　第18回',
+                          subtitle: '総合 第18回',
+                          progress: 0.486, // ~48.6% complete
+                          showTrophy: true,
+                          onTap: () {
+                            // Handle tap
+                          },
+                        ),
+                      ],
                     ),
-                    SizedBox(height: k2Double.hp),
-                    SessionCard(
-                      title: '5年下　第18回',
-                      subtitle: '総合 第18回',
-                      progress: 0.486, // ~48.6% complete
-                      showTrophy: true,
-                      onTap: () {
-                        // Handle tap
-                      },
-                    ),
-                  ],
+                  ),
                 ),
               ),
             ),
