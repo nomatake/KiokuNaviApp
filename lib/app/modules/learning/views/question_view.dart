@@ -8,6 +8,7 @@ import 'package:kioku_navi/utils/extensions.dart';
 import 'package:kioku_navi/utils/sizes.dart';
 import 'package:kioku_navi/widgets/answer_option_button.dart';
 import 'package:kioku_navi/widgets/custom_button.dart';
+import 'package:kioku_navi/widgets/intrinsic_height_scroll_view.dart';
 import 'package:kioku_navi/widgets/padded_wrapper.dart';
 import 'package:kioku_navi/widgets/register_app_bar.dart';
 
@@ -25,24 +26,34 @@ class QuestionView extends GetView<LearningController> {
       body: SafeArea(
         child: PaddedWrapper(
           bottom: true,
-          child: Column(
-            children: [
-              Expanded(
-                child: Column(
-                  crossAxisAlignment: CrossAxisAlignment.center,
-                  children: [
-                    SizedBox(height: k1Double.hp),
-                    _buildQuestionHeader(),
-                    SizedBox(height: k5Double.hp),
-                    _buildQuestionBubble(),
-                    const Spacer(flex: 3),
-                    _buildAnswerOptions(),
-                    const Spacer(),
-                  ],
+          child: IntrinsicHeightScrollView(
+            child: Column(
+              children: [
+                Expanded(
+                  child: Column(
+                    crossAxisAlignment: CrossAxisAlignment.center,
+                    children: [
+                      SizedBox(height: k1Double.hp),
+                      _buildQuestionHeader(),
+                      SizedBox(height: k5Double.hp),
+                      _buildQuestionBubble(),
+                      Expanded(
+                        child: SizedBox(
+                          height: k10Double.hp,
+                        ),
+                      ),
+                      _buildAnswerOptions(),
+                      Expanded(
+                        child: SizedBox(
+                          height: k10Double.hp,
+                        ),
+                      ),
+                    ],
+                  ),
                 ),
-              ),
-              _buildBottomSection(),
-            ],
+                _buildBottomSection(),
+              ],
+            ),
           ),
         ),
       ),
@@ -69,8 +80,8 @@ class QuestionView extends GetView<LearningController> {
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
         Assets.images.logo.image(
-          height: k20Double.wp,
-          width: k20Double.wp,
+          height: k80Double.sp,
+          width: k80Double.sp,
           fit: BoxFit.contain,
         ),
         Expanded(
@@ -81,12 +92,12 @@ class QuestionView extends GetView<LearningController> {
               color: const Color(0xFFF7F7F7),
               borderColor: const Color(0xFFD8D8D8),
               borderWidth: k2_5Double,
-              padding: BubbleEdges.all(k10Double),
+              padding: BubbleEdges.all(k10Double.sp),
               alignment: Alignment.topLeft,
               nip: BubbleNip.leftBottom,
-              nipWidth: k3Double.wp,
-              nipHeight: k3Double.wp,
-              nipOffset: k15Double,
+              nipWidth: k10Double.sp,
+              nipHeight: k10Double.sp,
+              nipOffset: k10Double.sp,
               radius: Radius.circular(k14Double),
             ),
             child: Text(
@@ -165,9 +176,15 @@ class QuestionView extends GetView<LearningController> {
             onButtonPressed: controller.resetQuestion,
           );
 
+    // Calculate responsive container height
+    final width = Get.width;
+    final containerHeight = width <= 428
+        ? k15Double.hp
+        : (width <= 768 ? k16Double.hp : k18Double.hp);
+
     return Container(
       width: double.infinity,
-      height: k15Double.hp,
+      height: containerHeight,
       decoration: BoxDecoration(
         color: config.backgroundColor,
         borderRadius: BorderRadius.circular(k15Double),
