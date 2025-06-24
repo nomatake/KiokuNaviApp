@@ -254,35 +254,45 @@ class AdaptiveSizes {
 
     switch (getDeviceType(context)) {
       case DeviceType.largeTablet:
-        return landscape ? 200.0 : 180.0; // Reduced portrait height
+        return landscape
+            ? 200.0 // Reduced from 240.0 for more compact landscape view
+            : 180.0; // Reduced from 220.0 for compact portrait view
       case DeviceType.tablet:
-        return landscape ? 190.0 : 170.0; // Reduced portrait height
+        return landscape
+            ? 180.0 // Reduced from 220.0 for more compact landscape view
+            : 150.0; // Reduced from 170.0 for compact portrait view
       case DeviceType.phone:
-        return 126.0; // Original size
+        return landscape
+            ? 140.0 // Reduced from 150.0 for more compact landscape view
+            : 126.0; // Original size for phones in portrait
     }
   }
 
   /// Dialog icon size
   static double getDialogIconSize(BuildContext context) {
+    final bool landscape = isLandscape(context);
+
     switch (getDeviceType(context)) {
       case DeviceType.largeTablet:
-        return 90.0;
+        return landscape ? 85.0 : 75.0; // Reduced from 100.0 for landscape
       case DeviceType.tablet:
-        return 80.0;
+        return landscape ? 75.0 : 65.0; // Reduced from 90.0 for landscape
       case DeviceType.phone:
-        return 56.0; // Original size
+        return landscape ? 60.0 : 56.0; // Reduced from 65.0 for landscape
     }
   }
 
   /// Dialog icon image size (inside the icon container)
   static double getDialogIconImageSize(BuildContext context) {
+    final bool landscape = isLandscape(context);
+
     switch (getDeviceType(context)) {
       case DeviceType.largeTablet:
-        return 64.0;
+        return landscape ? 62.0 : 54.0; // Reduced from 72.0 for landscape
       case DeviceType.tablet:
-        return 56.0;
+        return landscape ? 54.0 : 46.0; // Reduced from 64.0 for landscape
       case DeviceType.phone:
-        return 40.0; // Original size
+        return landscape ? 42.0 : 40.0; // Reduced from 46.0 for landscape
     }
   }
 
@@ -300,13 +310,21 @@ class AdaptiveSizes {
 
   /// Gap between button and dialog
   static double getDialogButtonGap(BuildContext context) {
+    final bool landscape = isLandscape(context);
+
     switch (getDeviceType(context)) {
       case DeviceType.largeTablet:
-        return -10.0; // Less overlap for iPad Pro
+        return landscape
+            ? -20.0 // More overlap to ensure triangle is visible
+            : -25.0; // More overlap in portrait to remove the gap
       case DeviceType.tablet:
-        return -12.0; // Less overlap for iPad mini
+        return landscape
+            ? -20.0 // More overlap to ensure triangle is visible
+            : -20.0; // More overlap to remove the gap
       case DeviceType.phone:
-        return -50.0; // Extreme overlap to bring dialog much higher on phones
+        return landscape
+            ? -30.0 // More overlap in landscape
+            : -50.0; // Extreme overlap to bring dialog much higher on phones in portrait
     }
   }
 

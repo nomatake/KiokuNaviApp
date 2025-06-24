@@ -138,11 +138,8 @@ class SubjectSelectionDialog extends StatelessWidget {
     }
 
     // Calculate triangle position based on button position
-    // Adaptive overlap based on device type
-    final double triangleDialogOverlap =
-        isTablet ? 2 : 5; // Less overlap for tablets
-    double triangleTopPosition =
-        dialogTopPosition - kTriangleHeight + triangleDialogOverlap;
+    // Start with a default position
+    double triangleTopPosition = dialogTopPosition - kTriangleHeight;
 
     // If we have button position, place triangle right at button bottom
     if (buttonKey != null && buttonKey!.currentContext != null) {
@@ -155,21 +152,18 @@ class SubjectSelectionDialog extends StatelessWidget {
         // Get adaptive gap for this device
         final double adaptiveGap = AdaptiveSizes.getDialogButtonGap(context);
 
-        // With large negative gaps, position triangle to be visible
-        // Triangle should start where dialog starts, minus most of its height
-        if (adaptiveGap < -15) {
-          // For extreme overlaps (phones), position triangle at dialog top
-          triangleTopPosition = dialogTopPosition - kTriangleHeight + 3;
-        } else if (adaptiveGap < -10) {
-          // For moderate overlaps (tablets), adjust triangle position with minimal overlap
-          triangleTopPosition =
-              dialogTopPosition - kTriangleHeight + 1; // Reduced from 5 to 1
-        } else {
-          // Normal positioning for smaller overlaps
-          triangleTopPosition = buttonPosition.dy +
-              buttonSize.height -
-              (kTriangleHeight + adaptiveGap);
-        }
+        // Debug print for triangle positioning
+        debugPrint('Adaptive gap: $adaptiveGap');
+        debugPrint('Dialog top position: $dialogTopPosition');
+
+        // Position triangle at the top edge of the dialog, slightly overlapping
+        // This ensures it's always visible regardless of the gap
+        triangleTopPosition =
+            dialogTopPosition - kTriangleHeight + 3; // 3px overlap into dialog
+
+        // Debug print triangle position
+        debugPrint('Triangle top position: $triangleTopPosition');
+        debugPrint('Triangle left position: $triangleLeftPosition');
       }
     }
 
@@ -213,8 +207,10 @@ class SubjectSelectionDialog extends StatelessWidget {
                           : k4Double.wp, // More horizontal padding on tablets
                       vertical: isTablet
                           ? (AdaptiveSizes.isLandscape(context)
-                              ? k3Double.hp
-                              : k1Double.hp) // Minimal padding in portrait
+                              ? k2Double
+                                  .hp // More padding in landscape with more height
+                              : k0_5Double
+                                  .hp) // Very minimal padding in portrait with reduced height
                           : k1Double.hp, // Original padding for phones
                     ),
                     child: Row(
@@ -305,8 +301,8 @@ class _SubjectOption extends StatelessWidget {
               SizedBox(
                 height: isTablet
                     ? (AdaptiveSizes.isLandscape(context)
-                        ? 10.0
-                        : 6.0) // Less spacing in portrait
+                        ? 12.0 // More spacing in landscape with taller dialog
+                        : 4.0) // Minimal spacing in portrait with shorter dialog
                     : kIconTextSpacing,
               ),
               Text(
