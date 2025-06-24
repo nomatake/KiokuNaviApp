@@ -176,11 +176,7 @@ class QuestionView extends GetView<LearningController> {
             onButtonPressed: controller.resetQuestion,
           );
 
-    // Calculate responsive container height
-    final width = Get.width;
-    final containerHeight = width <= 428
-        ? k15Double.hp
-        : (width <= 768 ? k16Double.hp : k18Double.hp);
+    final containerHeight = k17Double.hp;
 
     return Container(
       width: double.infinity,
