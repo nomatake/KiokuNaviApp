@@ -44,11 +44,13 @@ class AdaptiveSizes {
 
   /// Adaptive node size for course progress indicators
   static double getNodeSize(BuildContext context) {
+    final bool landscape = isLandscape(context);
+
     switch (getDeviceType(context)) {
       case DeviceType.largeTablet:
-        return k14Double.wp; // 14% of width
+        return landscape ? k12Double.wp : k14Double.wp; // Smaller in landscape
       case DeviceType.tablet:
-        return k15Double.wp; // 15% of width
+        return landscape ? k13Double.wp : k15Double.wp; // Smaller in landscape
       case DeviceType.phone:
         return k18Double.wp; // 18% of width
     }
@@ -56,10 +58,12 @@ class AdaptiveSizes {
 
   /// Progress indicator stroke width
   static double getProgressStrokeWidth(BuildContext context) {
+    final bool landscape = isLandscape(context);
+
     switch (getDeviceType(context)) {
       case DeviceType.largeTablet:
       case DeviceType.tablet:
-        return 8.0; // Slightly thicker for tablets
+        return landscape ? 14.0 : 8.0; // Much thicker in landscape
       case DeviceType.phone:
         return 6.0; // Original thickness
     }
@@ -67,12 +71,31 @@ class AdaptiveSizes {
 
   /// Padding between progress indicator and button
   static double getProgressPadding(BuildContext context, double nodeSize) {
+    final bool landscape = isLandscape(context);
+
     switch (getDeviceType(context)) {
       case DeviceType.largeTablet:
       case DeviceType.tablet:
-        return nodeSize * 0.025; // 2.5% of node size
+        return landscape
+            ? nodeSize * 0.012 // 1.2% in landscape (even more reduced)
+            : nodeSize * 0.025; // 2.5% in portrait
       case DeviceType.phone:
         return nodeSize * 0.03; // 3% of node size
+    }
+  }
+
+  /// Vertical spacing between course nodes
+  static double getNodeVerticalSpacing(BuildContext context) {
+    final bool landscape = isLandscape(context);
+
+    switch (getDeviceType(context)) {
+      case DeviceType.largeTablet:
+      case DeviceType.tablet:
+        return landscape
+            ? k22Double.hp
+            : k12Double.hp; // More spacing in landscape
+      case DeviceType.phone:
+        return k12Double.hp; // Original spacing
     }
   }
 

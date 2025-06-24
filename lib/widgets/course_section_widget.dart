@@ -116,7 +116,7 @@ class CourseSectionWidget extends StatelessWidget {
             SizedBox(
                 height: k2Double
                     .hp), // Add space between header and progress section
-            _buildProgressSection(nodeCount),
+            _buildProgressSection(nodeCount, context),
           ],
         ),
       ),
@@ -176,8 +176,9 @@ class CourseSectionWidget extends StatelessWidget {
   ///
   /// Calculates the required height based on node count and spacing,
   /// then creates a stack with dotted background, progress icons and dolphins.
-  Widget _buildProgressSection(int nodeCount) {
-    final double sectionHeight = _calculateProgressSectionHeight(nodeCount);
+  Widget _buildProgressSection(int nodeCount, BuildContext context) {
+    final double sectionHeight =
+        _calculateProgressSectionHeight(nodeCount, context);
 
     return SizedBox(
       height: sectionHeight,
@@ -197,8 +198,8 @@ class CourseSectionWidget extends StatelessWidget {
   /// Calculates the height needed for the progress section.
   ///
   /// Formula: (nodeCount - 1) * spacingY + nodeSize
-  double _calculateProgressSectionHeight(int nodeCount) {
-    final double spacingY = k12Double.hp; // Match the increased spacing
+  double _calculateProgressSectionHeight(int nodeCount, BuildContext context) {
+    final double spacingY = AdaptiveSizes.getNodeVerticalSpacing(context);
     final double nodeSize = getAdaptiveNodeSize();
     return (nodeCount - 1) * spacingY + nodeSize;
   }
@@ -399,10 +400,16 @@ class ZigzagCalculator {
 
   ZigzagCalculator(this._isAlignedRight)
       : _spacingX = k16Double.wp,
-        _spacingY = k12Double.hp, // Increased from k10Double.hp
+        _spacingY = _calculateVerticalSpacing(),
         _availableWidth = _calculateAvailableWidth(),
         _centerX = _calculateCenterX(),
         _topPadding = 0;
+
+  static double _calculateVerticalSpacing() {
+    final context = Get.context;
+    if (context == null) return k12Double.hp; // fallback
+    return AdaptiveSizes.getNodeVerticalSpacing(context);
+  }
 
   static double _calculateAvailableWidth() {
     final context = Get.context;

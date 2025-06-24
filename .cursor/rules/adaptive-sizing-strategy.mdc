@@ -27,15 +27,21 @@ The app uses adaptive sizing to provide optimal UI experiences across different 
 ### 1. Course Progress Nodes
 Located in [lib/widgets/progress_node_widget.dart](mdc:lib/widgets/progress_node_widget.dart)
 - **Node Size**:
-  - Large Tablet: 14% of width (k14Double.wp)
-  - Tablet: 15% of width (k15Double.wp)
+  - Large Tablet: 14% portrait / 12% landscape
+  - Tablet: 15% portrait / 13% landscape
   - Phone: 18% of width (k18Double.wp)
 - **Progress Stroke Width**:
-  - Tablets: 8px
+  - Tablets Portrait: 8px
+  - Tablets Landscape: 10px (thicker)
   - Phones: 6px
 - **Progress Padding**: 
-  - Tablets: 2.5% of node size
+  - Tablets Portrait: 2.5% of node size
+  - Tablets Landscape: 1.2% of node size (reduced)
   - Phones: 3% of node size
+- **Vertical Node Spacing**:
+  - Tablets Portrait: k12Double.hp
+  - Tablets Landscape: k20Double.hp (significantly increased)
+  - Phones: k12Double.hp
 
 ### 2. Green Subject Buttons
 Located in [lib/app/modules/home/views/child_home_view.dart](mdc:lib/app/modules/home/views/child_home_view.dart)
