@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:kioku_navi/utils/extensions.dart';
 import 'package:kioku_navi/utils/sizes.dart';
+import 'package:kioku_navi/utils/adaptive_sizes.dart';
 import 'package:kioku_navi/widgets/dotted_background.dart';
 
 /// A widget that creates an adaptive dotted background pattern.
@@ -31,99 +32,36 @@ class AdaptiveDottedBackground extends StatelessWidget {
   /// to ensure dots appear on both edges of the available width.
   const AdaptiveDottedBackground({
     super.key,
-    this.desiredHorizontalSpacing = 45.0,
+    this.desiredHorizontalSpacing = 60.0, // Increased from 45.0
     this.verticalSpacingMultiplier = 1.1,
-    this.dotSize = 10.0,
+    this.dotSize = 16.0, // Increased from 10.0
     this.dotColor = const Color.fromRGBO(71, 145, 219, 0.07),
     this.maxDotsPerRow,
   });
 
   @override
   Widget build(BuildContext context) {
-    // Calculate dots configuration to fill the available width uniformly
-    final double availableWidth = Get.width - (k6Double.wp * 2);
+    // Use MediaQuery to get the current width - this will update on orientation change
+    final double screenWidth = MediaQuery.of(context).size.width;
+    // Calculate padding based on current screen width
+    final double padding = screenWidth * 0.06; // 6% of screen width
+    final double availableWidth = screenWidth - (padding * 2);
 
-    // Determine device type based on shortest side
-    // Better detection for tablets including iPad mini
-    final context = Get.context;
-    if (context == null) {
-      return DottedBackground(
-        leftPadding: dotSize / 2,
-        dotsPerRow: 8,
-        horizontalSpacing: desiredHorizontalSpacing,
-        verticalSpacing: desiredHorizontalSpacing * verticalSpacingMultiplier,
-        dotSize: dotSize,
-        dotColor: dotColor,
-      );
-    }
+    // Get adaptive sizes from centralized configuration
+    final double adaptiveDotSize = AdaptiveSizes.getDotSize(context);
+    final double spacingMultiplier =
+        AdaptiveSizes.getDotSpacingMultiplier(context);
+    final double adaptiveHorizontalSpacing =
+        desiredHorizontalSpacing * spacingMultiplier;
 
-    final double shortestSide = MediaQuery.of(context).size.shortestSide;
-    final bool isTablet = shortestSide >= 550;
-    final bool isLargeTablet = shortestSide >= 768;
-
-    // Adaptive dot size based on device type
-    final double adaptiveDotSize;
-    if (isLargeTablet) {
-      adaptiveDotSize = dotSize * 1.5; // 15px for large tablets
-    } else if (isTablet) {
-      adaptiveDotSize = dotSize * 1.3; // 13px for regular tablets
-    } else {
-      adaptiveDotSize = dotSize; // 10px for phones
-    }
-
-    // Adaptive spacing based on device type
-    final double adaptiveHorizontalSpacing;
-    if (isLargeTablet) {
-      adaptiveHorizontalSpacing =
-          desiredHorizontalSpacing * 2.0; // 90px for large tablets
-    } else if (isTablet) {
-      adaptiveHorizontalSpacing =
-          desiredHorizontalSpacing * 1.5; // 67.5px for regular tablets
-    } else {
-      adaptiveHorizontalSpacing = desiredHorizontalSpacing; // 45px for phones
-    }
-
-    // For tablets, we might want to limit the number of dots or use fixed spacing
-    double horizontalSpacing;
-    int targetDotsPerRow;
-    double dotStartPadding;
-
-    if (isTablet) {
-      // For tablets, use fixed spacing and center the dot pattern
-      horizontalSpacing = adaptiveHorizontalSpacing;
-      targetDotsPerRow =
-          ((availableWidth - adaptiveDotSize) / horizontalSpacing).floor() + 1;
-
-      // Apply max dots per row limit if specified
-      final int effectiveMaxDots = maxDotsPerRow ?? (isLargeTablet ? 15 : 12);
-      if (targetDotsPerRow > effectiveMaxDots) {
-        targetDotsPerRow = effectiveMaxDots;
-      }
-
-      // Calculate the actual width of the dot pattern
-      final double patternWidth =
-          (targetDotsPerRow - 1) * horizontalSpacing + adaptiveDotSize;
-
-      // Center the pattern if it doesn't fill the entire width
-      if (patternWidth < availableWidth) {
-        dotStartPadding =
-            (availableWidth - patternWidth) / 2 + adaptiveDotSize / 2;
-      } else {
-        // If pattern is wider, recalculate to fit edge to edge
-        horizontalSpacing =
-            (availableWidth - adaptiveDotSize) / (targetDotsPerRow - 1);
-        dotStartPadding = adaptiveDotSize / 2;
-      }
-    } else {
-      // For phones, fill edge to edge as before
-      targetDotsPerRow =
-          ((availableWidth - adaptiveDotSize) / adaptiveHorizontalSpacing)
-                  .floor() +
-              1;
-      horizontalSpacing =
-          (availableWidth - adaptiveDotSize) / (targetDotsPerRow - 1);
-      dotStartPadding = adaptiveDotSize / 2;
-    }
+    // Simple calculation to fill edge to edge
+    final int targetDotsPerRow =
+        ((availableWidth - adaptiveDotSize) / adaptiveHorizontalSpacing)
+                .floor() +
+            1;
+    final double horizontalSpacing =
+        (availableWidth - adaptiveDotSize) / (targetDotsPerRow - 1);
+    final double dotStartPadding = adaptiveDotSize / 2;
 
     // Calculate vertical spacing to match the horizontal pattern
     final double verticalSpacing =

@@ -5,6 +5,7 @@ import 'package:kioku_navi/widgets/custom_button.dart';
 import 'package:kioku_navi/widgets/padded_wrapper.dart';
 import 'package:kioku_navi/utils/extensions.dart';
 import 'package:kioku_navi/utils/sizes.dart';
+import 'package:kioku_navi/utils/adaptive_sizes.dart';
 import 'package:kioku_navi/widgets/child/child_bottom_nav_bar.dart';
 import 'package:kioku_navi/widgets/child/child_app_bar.dart';
 import 'package:kioku_navi/widgets/course_section_widget.dart';
@@ -12,45 +13,21 @@ import 'package:kioku_navi/generated/assets.gen.dart';
 import 'package:kioku_navi/widgets/subject_selection_dialog.dart';
 
 class ChildHomeView extends GetView<ChildHomeController> {
-  const ChildHomeView({super.key});
+  ChildHomeView({super.key});
+
+  final GlobalKey _subjectButtonKey = GlobalKey();
 
   @override
   Widget build(BuildContext context) {
-    // Adaptive sizing based on screen width
-    final double screenWidth = MediaQuery.of(context).size.width;
-    final double screenHeight = MediaQuery.of(context).size.height;
-    final double shortestSide = MediaQuery.of(context).size.shortestSide;
+    // Debug logging (can be removed in production)
+    AdaptiveSizes.logDeviceInfo(context);
 
-    print(
-        'Screen width: $screenWidth, height: $screenHeight, shortest: $shortestSide'); // Debug log
-
-    // Use shortestSide for better tablet detection
-    // iPad mini has ~744 logical pixels on shortest side
-    final bool isTablet = shortestSide >= 550;
-    final bool isLargeTablet = shortestSide >= 768;
-
-    // Adaptive button dimensions
-    final double buttonWidth = isLargeTablet
-        ? k14Double.wp // Smaller for iPad Pro
-        : isTablet
-            ? k15Double.wp // Smaller for iPad
-            : k18Double.wp; // Original for phones
-
-    final double buttonHeight = isLargeTablet
-        ? k15Double.wp // Smaller for iPad Pro
-        : isTablet
-            ? k16Double.wp // Smaller for iPad
-            : k19Double.wp; // Original for phones
-
-    final double iconSize = isLargeTablet
-        ? k9Double.wp // Much smaller for iPad Pro
-        : isTablet
-            ? k10Double.wp // Much smaller for iPad
-            : k13Double.wp; // Original for phones
-
-    final double separatorHeight = isTablet
-        ? k10Double.wp // Proportional for tablets
-        : k12Double.wp; // Original for phones
+    // Get adaptive sizes
+    final double buttonWidth = AdaptiveSizes.getGreenButtonWidth(context);
+    final double buttonHeight = AdaptiveSizes.getGreenButtonHeight(context);
+    final double iconSize = AdaptiveSizes.getGreenButtonIconSize(context);
+    final double separatorHeight =
+        AdaptiveSizes.getGreenButtonSeparatorHeight(context);
 
     return Scaffold(
       backgroundColor: Colors.white,
@@ -70,6 +47,7 @@ class ChildHomeView extends GetView<ChildHomeController> {
                   Row(children: [
                     // Left part (dropdown-like) with comprehensive icon
                     SizedBox(
+                      key: _subjectButtonKey,
                       width: buttonWidth,
                       child: CustomButton.primary(
                         text: '',
@@ -81,6 +59,7 @@ class ChildHomeView extends GetView<ChildHomeController> {
                         onPressed: () {
                           SubjectSelectionDialog.show(
                             context,
+                            buttonKey: _subjectButtonKey,
                             onSubjectSelected: (subject) {
                               controller.onSubjectSelected(subject);
                             },

@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
+import 'package:get/get.dart';
 import 'package:kioku_navi/utils/sizes.dart';
+import 'package:kioku_navi/utils/adaptive_sizes.dart';
 import 'package:kioku_navi/widgets/rounded_button.dart';
 
 /// Represents the state of a progress node.
@@ -66,30 +68,22 @@ class ProgressNodeWidget extends StatelessWidget {
 
   /// Gets the adaptive stroke width based on node size
   static double getAdaptiveStrokeWidth(double nodeSize) {
-    if (nodeSize <= 50) {
-      // Extra thick for very small nodes (iPad Pro)
-      return 22;
-    } else if (nodeSize <= 60) {
-      // Very thick for small nodes (iPad)
-      return 20;
-    } else {
-      // Original for phones
-      return 6;
+    final context = Get.context;
+    if (context != null) {
+      return AdaptiveSizes.getProgressStrokeWidth(context);
     }
+    // Fallback for when context is not available
+    return 6.0;
   }
 
   /// Gets the adaptive padding between progress and button based on node size
   static double getAdaptivePadding(double nodeSize) {
-    if (nodeSize <= 50) {
-      // No padding for iPad Pro - progress touches the button
-      return 0;
-    } else if (nodeSize <= 60) {
-      // Minimal padding for iPad
-      return nodeSize * 0.005; // Half of previous value
-    } else {
-      // Original padding for phones
-      return nodeSize * 0.03;
+    final context = Get.context;
+    if (context != null) {
+      return AdaptiveSizes.getProgressPadding(context, nodeSize);
     }
+    // Fallback for when context is not available
+    return nodeSize * 0.03;
   }
 
   @override

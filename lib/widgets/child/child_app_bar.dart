@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:kioku_navi/utils/sizes.dart';
 import 'package:kioku_navi/utils/extensions.dart';
+import 'package:kioku_navi/utils/adaptive_sizes.dart';
 import 'package:kioku_navi/generated/assets.gen.dart';
 
 class ChildAppBar extends StatelessWidget implements PreferredSizeWidget {
@@ -16,34 +17,19 @@ class ChildAppBar extends StatelessWidget implements PreferredSizeWidget {
 
   @override
   Size get preferredSize {
-    // Adaptive app bar height based on device type
     final context = Get.context;
     if (context != null) {
-      final double shortestSide = MediaQuery.of(context).size.shortestSide;
-      final bool isTablet = shortestSide >= 550; // Includes iPad mini
-
-      if (isTablet) {
-        // Add extra height for padding on tablets
-        return const Size.fromHeight(kToolbarHeight + 20);
-      }
+      final double extraHeight = AdaptiveSizes.getAppBarExtraHeight(context);
+      return Size.fromHeight(kToolbarHeight + extraHeight);
     }
     return const Size.fromHeight(kToolbarHeight);
   }
 
   @override
   Widget build(BuildContext context) {
-    final double shortestSide = MediaQuery.of(context).size.shortestSide;
-    final bool isTablet = shortestSide >= 550; // Includes iPad mini
-    final bool isLargeTablet = shortestSide >= 768; // iPad Pro
-
-    // Adaptive padding for tablets
-    final double topPadding = isLargeTablet
-        ? 12.0 // Extra padding for iPad Pro
-        : isTablet
-            ? 8.0 // Moderate padding for iPad
-            : 0.0; // No extra padding for phones (safe area handles it)
-
-    final double bottomPadding = isTablet ? 8.0 : 0.0;
+    final bool isTablet = AdaptiveSizes.isTablet(context);
+    final double topPadding = AdaptiveSizes.getAppBarTopPadding(context);
+    final double bottomPadding = AdaptiveSizes.getAppBarBottomPadding(context);
 
     return AppBar(
       elevation: 0,
@@ -112,8 +98,8 @@ class IconCountComponent extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     // Adaptive sizing for tablets
-    final double iconSize = isTablet ? k5Double.wp : k6Double.wp;
-    final double fontSize = isTablet ? k14Double.sp : k16Double.sp;
+    final double iconSize = AdaptiveSizes.getAppBarIconSize(context);
+    final double fontSize = AdaptiveSizes.getAppBarFontSize(context);
 
     return Row(
       mainAxisSize: MainAxisSize.min,

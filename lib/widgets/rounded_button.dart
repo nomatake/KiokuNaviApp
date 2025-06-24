@@ -3,6 +3,7 @@ import 'package:flutter_inner_shadow/flutter_inner_shadow.dart';
 import 'package:get/get.dart';
 import 'package:kioku_navi/utils/extensions.dart';
 import 'package:kioku_navi/utils/sizes.dart';
+import 'package:kioku_navi/utils/adaptive_sizes.dart';
 
 class RoundedButton extends StatelessWidget {
   const RoundedButton({
@@ -36,11 +37,8 @@ class RoundedButton extends StatelessWidget {
     final effectiveDisabled = disabled || onPressed == null;
 
     // Adaptive shadow offset based on device type and node size
-    final double shortestSide = MediaQuery.of(context).size.shortestSide;
-    final bool isTablet = shortestSide >= 550; // Includes iPad mini
-    final double shadowOffset = isTablet && size <= 60
-        ? -3.0 // Smaller shadow for smaller nodes on tablets
-        : -6.0; // Original shadow for phones and larger nodes
+    final double shadowOffset =
+        AdaptiveSizes.getRoundedButtonShadowOffset(context, size);
 
     return SizedBox(
       width: size,

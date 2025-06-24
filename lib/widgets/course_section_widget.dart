@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:kioku_navi/utils/sizes.dart';
 import 'package:kioku_navi/utils/extensions.dart';
+import 'package:kioku_navi/utils/adaptive_sizes.dart';
 import 'package:kioku_navi/generated/assets.gen.dart';
 import 'package:kioku_navi/widgets/progress_node_widget.dart';
 import 'package:kioku_navi/widgets/adaptive_dotted_background.dart';
@@ -94,21 +95,10 @@ class CourseSectionWidget extends StatelessWidget {
 
   /// Gets the adaptive node size based on screen width
   static double getAdaptiveNodeSize() {
-    // Use Get.context to access MediaQuery
     final context = Get.context;
     if (context == null) return k18Double.wp;
 
-    final double shortestSide = MediaQuery.of(context).size.shortestSide;
-    if (shortestSide >= 768) {
-      // Large tablets (iPad Pro)
-      return k14Double.wp; // Smaller for large tablets
-    } else if (shortestSide >= 550) {
-      // Regular tablets (iPad, iPad mini)
-      return k15Double.wp; // Smaller for tablets
-    } else {
-      // Phones
-      return k18Double.wp; // Original size for phones
-    }
+    return AdaptiveSizes.getNodeSize(context);
   }
 
   @override
@@ -332,8 +322,11 @@ class CourseSectionWidget extends StatelessWidget {
 
   /// Calculates the position for a dolphin based on the corresponding node position.
   DolphinPosition _calculateDolphinPosition(NodePosition nodePosition) {
+    final context = Get.context!;
+    final double screenWidth = MediaQuery.of(context).size.width;
+    final double padding = screenWidth * 0.06; // 6% of screen width
     final double availableWidth =
-        Get.width - (k6Double.wp * 2); // Account for PaddedWrapper padding
+        screenWidth - (padding * 2); // Account for PaddedWrapper padding
     final double nodeSize = getAdaptiveNodeSize();
     final double centerX = availableWidth / 2 - nodeSize / 2;
     final double dolphinSize = k28Double.wp;
@@ -407,12 +400,22 @@ class ZigzagCalculator {
   ZigzagCalculator(this._isAlignedRight)
       : _spacingX = k16Double.wp,
         _spacingY = k12Double.hp, // Increased from k10Double.hp
-        _availableWidth =
-            Get.width - (k6Double.wp * 2), // Account for PaddedWrapper padding
-        _centerX = (Get.width - (k6Double.wp * 2)) / 2 -
-            CourseSectionWidget.getAdaptiveNodeSize() /
-                2, // Center within available width
+        _availableWidth = _calculateAvailableWidth(),
+        _centerX = _calculateCenterX(),
         _topPadding = 0;
+
+  static double _calculateAvailableWidth() {
+    final context = Get.context;
+    if (context == null) return 300; // fallback
+    final double screenWidth = MediaQuery.of(context).size.width;
+    final double padding = screenWidth * 0.06; // 6% of screen width
+    return screenWidth - (padding * 2); // Account for PaddedWrapper padding
+  }
+
+  static double _calculateCenterX() {
+    final double availableWidth = _calculateAvailableWidth();
+    return availableWidth / 2 - CourseSectionWidget.getAdaptiveNodeSize() / 2;
+  }
 
   /// Calculates the position of a node at the given index in the zigzag pattern.
   NodePosition calculatePosition(int index) {

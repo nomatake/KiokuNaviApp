@@ -1,0 +1,137 @@
+---
+description: 
+globs: 
+alwaysApply: false
+---
+# Adaptive Sizing Strategy for KiokuNavi App
+
+## Overview
+The app uses adaptive sizing to provide optimal UI experiences across different devices and orientations. All adaptive sizing logic is centralized in [lib/utils/adaptive_sizes.dart](mdc:lib/utils/adaptive_sizes.dart).
+
+## Device Detection Strategy
+- Detection is based on `MediaQuery.shortestSide` (not width)
+- This ensures consistent detection regardless of orientation
+- Thresholds:
+  - Phone: < 550px
+  - Tablet: ≥ 550px (includes iPad mini)
+  - Large Tablet: ≥ 768px (iPad Pro)
+
+## Known Device Resolutions
+### iPad Mini A17 Pro
+- Portrait: 744 x 1133 (shortest: 744)
+- Landscape: 1133 x 744 (shortest: 744)
+- Device Type: Tablet
+
+## Component-Specific Adaptations
+
+### 1. Course Progress Nodes
+Located in [lib/widgets/progress_node_widget.dart](mdc:lib/widgets/progress_node_widget.dart)
+- **Node Size**:
+  - Large Tablet: 14% of width (k14Double.wp)
+  - Tablet: 15% of width (k15Double.wp)
+  - Phone: 18% of width (k18Double.wp)
+- **Progress Stroke Width**:
+  - Tablets: 8px
+  - Phones: 6px
+- **Progress Padding**: 
+  - Tablets: 2.5% of node size
+  - Phones: 3% of node size
+
+### 2. Green Subject Buttons
+Located in [lib/app/modules/home/views/child_home_view.dart](mdc:lib/app/modules/home/views/child_home_view.dart)
+- **Button Width**:
+  - Large Tablet: 12% portrait / 9% landscape
+  - Tablet: 13% portrait / 10% landscape
+  - Phone: 16% portrait / 14% landscape
+- **Button Height**:
+  - Large Tablet: 13% portrait / 10% landscape
+  - Tablet: 14% portrait / 11% landscape
+  - Phone: 17% portrait / 15% landscape
+- **Icon Size**:
+  - Large Tablet: 8% portrait / 6% landscape
+  - Tablet: 9% portrait / 7% landscape
+  - Phone: 11% portrait / 10% landscape
+- **Separator Height**:
+  - Tablets: 10% portrait / 6% landscape
+  - Phones: 12% portrait / 8% landscape
+
+### 3. Child App Bar
+Located in [lib/widgets/child/child_app_bar.dart](mdc:lib/widgets/child/child_app_bar.dart)
+- **Extra Height**: 
+  - Tablets Portrait: +30px
+  - Tablets Landscape: +40px
+  - Phones: 0px
+- **Top Padding**:
+  - Large Tablet Portrait: 20px
+  - Large Tablet Landscape: 24px
+  - Tablet Portrait: 16px
+  - Tablet Landscape: 20px
+  - Phone: 0px (SafeArea handles it)
+- **Bottom Padding**: 
+  - Tablets Portrait: 16px
+  - Tablets Landscape: 20px
+  - Phones: 0px
+- **Icon Size**: k5Double.wp for tablets, k6Double.wp for phones
+- **Font Size**: k14Double.sp for tablets, k16Double.sp for phones
+
+### 4. Dotted Background
+Located in [lib/widgets/adaptive_dotted_background.dart](mdc:lib/widgets/adaptive_dotted_background.dart)
+- **Dot Size**:
+  - Large Tablet: 16px
+  - Tablet: 14px
+  - Phone: 10px (original size)
+- **Spacing** (base 60px):
+  - Large Tablet: 80px (1.33x multiplier)
+  - Tablet: 70px (1.17x multiplier)
+  - Phone: 45px (0.75x multiplier - original spacing)
+- **Pattern**: Automatically calculates dots to fill edge-to-edge
+- **Note**: Device-specific adaptations for optimal visual balance
+
+### 5. Rounded Button Shadows
+Located in [lib/widgets/rounded_button.dart](mdc:lib/widgets/rounded_button.dart)
+- **Shadow Offset**:
+  - Large Tablet: -4px (small nodes) / -8px (large nodes)
+  - Tablet: -5px (small nodes) / -10px (large nodes)
+  - Phone: -6px (all sizes)
+
+## Landscape Mode Considerations
+When implementing landscape adaptations:
+1. Use `MediaQuery.of(context).orientation` to detect orientation
+2. Consider aspect ratio changes for spacing
+3. Adjust vertical spacing/padding for reduced height
+4. May need to limit vertical elements or use horizontal scrolling
+
+## Implementation Guidelines
+1. Always use the centralized `AdaptiveSizes` class for consistency
+2. Test on actual devices, not just simulators
+3. Use `AdaptiveSizes.logDeviceInfo(context)` for debugging
+4. Consider both shortest side AND orientation for complex layouts
+5. Maintain visual hierarchy across all device sizes
+
+### 6. Subject Selection Dialog
+Located in [lib/widgets/subject_selection_dialog.dart](mdc:lib/widgets/subject_selection_dialog.dart)
+- **Dialog Height**:
+  - Large Tablet: 200px portrait / 160px landscape
+  - Tablet: 180px portrait / 150px landscape
+  - Phone: 126px (fixed)
+- **Icon Size**:
+  - Large Tablet: 90px
+  - Tablet: 80px
+  - Phone: 56px
+- **Icon Image Size**:
+  - Large Tablet: 64px
+  - Tablet: 56px
+  - Phone: 40px
+- **Text Size**:
+  - Large Tablet: k22Double.sp
+  - Tablet: k20Double.sp
+  - Phone: k16Double.sp
+- **Dynamic Positioning**: Dialog arrow automatically positions below the button using GlobalKey
+
+## Adding New Adaptive Elements
+When adding new UI components that need adaptation:
+1. Add sizing methods to `AdaptiveSizes` class
+2. Use the established `DeviceType` enum pattern
+3. Document the sizing rationale
+4. Test on all device categories
+5. Consider orientation changes if relevant
