@@ -125,31 +125,35 @@ class _CustomDatePickerFormFieldState extends State<CustomDatePickerFormField> {
 
   @override
   Widget build(BuildContext context) {
+    final width = Get.width;
+    final verticalPadding =
+        width <= 428 ? k12Double : (width <= 768 ? k14Double : k16Double);
+
     return TextFormField(
       controller: widget.textController,
       readOnly: true,
-      style: const TextStyle(fontSize: k16Double),
+      style:  TextStyle(fontSize: k10Double.sp),
       textInputAction: widget.textInputAction,
       decoration: InputDecoration(
         floatingLabelBehavior: FloatingLabelBehavior.auto,
         labelText: widget.labelText,
         labelStyle: TextStyle(
           color: widget.isLabelLight ? Colors.white : Colors.black,
-          fontSize: k14Double,
+          fontSize: k10Double.sp,
         ),
-        contentPadding: const EdgeInsets.symmetric(
-            horizontal: k16Double, vertical: k0Double),
+        contentPadding: EdgeInsets.symmetric(
+                horizontal: k16Double.sp, vertical: verticalPadding),
         focusedBorder: _borderStyle(Colors.grey.shade500),
         border: _borderStyle(Colors.grey.shade400),
         enabledBorder: _borderStyle(Colors.grey.shade300),
         filled: true,
         fillColor: Colors.grey.shade50,
         hintText: widget.hintText,
-        errorStyle: const TextStyle(fontSize: k12Double),
+        errorStyle: TextStyle(fontSize: k9Double.sp),
         suffixIcon: Icon(
           Icons.calendar_today,
           color: Colors.grey.shade600,
-          size: k20Double,
+          size: k14Double.sp,
         ),
       ),
       onTap: () => _showDatePicker(context),
