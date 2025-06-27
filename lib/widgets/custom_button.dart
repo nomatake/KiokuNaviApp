@@ -26,6 +26,22 @@ class CustomButton extends StatelessWidget {
     this.borderRadius,
   });
 
+  // Helper method to calculate dynamic height based on screen size
+  static double getResponsiveHeight(BuildContext context) {
+    final width = MediaQuery.of(context).size.width;
+
+    if (width <= 428) {
+      // iPhone and small devices
+      return 48;
+    } else if (width <= 768) {
+      // Small tablets
+      return 56;
+    } else {
+      // iPads and larger tablets
+      return 64;
+    }
+  }
+
   // Common shadow configurations
   static const _defaultTopShadow = BoxShadow(
     color: kButtonDefaultTopShadowColor,
@@ -287,7 +303,7 @@ class CustomButton extends StatelessWidget {
       contentPadding: contentPadding,
       height: height,
       disabled: disabled,
-      fontWeight: FontWeight.w800,
+      fontWeight: FontWeight.w700,
       letterSpacing: 0,
       borderWidth: borderWidth ?? 2,
       textAlignment: textAlignment,
@@ -413,15 +429,21 @@ class CustomButton extends StatelessWidget {
     final effectiveTextColor =
         disabled ? kButtonDisabledTextColor : (textColor ?? Colors.white);
     final effectiveBorderColor = borderColor;
-    final effectiveHeight = height ?? 48;
+    final effectiveHeight = height ?? getResponsiveHeight(context);
     final effectiveBorderRadius = borderRadius ?? BorderRadius.circular(12);
+
+    // Also scale font size based on screen size
+    final width = MediaQuery.of(context).size.width;
+    final baseFontSize = width <= 428
+        ? k12Double.sp
+        : (width <= 768 ? k13Double.sp : k14Double.sp);
 
     final textWidget = Text(
       text,
       style: TextStyle(
         fontFamily: 'Hiragino Sans',
         fontWeight: fontWeight ?? FontWeight.w500,
-        fontSize: k12Double.sp,
+        fontSize: baseFontSize,
         color: effectiveTextColor,
         letterSpacing: letterSpacing ?? 0,
       ),

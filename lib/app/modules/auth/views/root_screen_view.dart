@@ -24,8 +24,8 @@ class RootScreenView extends GetView<AuthController> {
               Center(
                 child: Assets.images.logo.image(
                   fit: BoxFit.contain,
-                  height: k35Double.wp,
-                  width: k35Double.wp,
+                  height: k100Double.sp,
+                  width: k100Double.sp,
                 ),
               ),
               SizedBox(height: k2Double.hp),

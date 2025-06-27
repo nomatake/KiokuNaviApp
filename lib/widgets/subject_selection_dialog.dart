@@ -2,12 +2,20 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:kioku_navi/utils/sizes.dart';
 import 'package:kioku_navi/utils/extensions.dart';
+import 'package:kioku_navi/utils/adaptive_sizes.dart';
 import 'package:kioku_navi/generated/assets.gen.dart';
 
 // Dialog positioning constants
 const double kTriangleTopPosition = 120.0;
 const double kDialogTopPosition = 134.0;
 const double kDialogHeight = 126.0;
+
+// DEFAULT SPACING (now using adaptive values from AdaptiveSizes)
+// This constant is kept for reference but actual values are:
+// - Phone: -50px (dialog appears much higher, extreme overlap)
+// - iPad mini: -12px (moderate connection)
+// - iPad Pro: -10px (looser connection)
+const double kMasterButtonDialogGap = -50.0; // Default for phones
 
 // Triangle dimensions
 const double kTriangleWidth = 30.0;
@@ -70,25 +78,95 @@ enum Subject {
 /// A dialog widget that displays subject selection options
 class SubjectSelectionDialog extends StatelessWidget {
   final Function(Subject)? onSubjectSelected;
+  final GlobalKey? buttonKey;
 
   const SubjectSelectionDialog({
     super.key,
     this.onSubjectSelected,
+    this.buttonKey,
   });
 
   static void show(BuildContext context,
-      {Function(Subject)? onSubjectSelected}) {
+      {Function(Subject)? onSubjectSelected, GlobalKey? buttonKey}) {
     showDialog(
       context: context,
       barrierColor: kBarrierColor,
       builder: (_) => SubjectSelectionDialog(
         onSubjectSelected: onSubjectSelected,
+        buttonKey: buttonKey,
       ),
     );
   }
 
   @override
   Widget build(BuildContext context) {
+    // Get adaptive sizing
+    final bool isTablet = AdaptiveSizes.isTablet(context);
+
+    // Adaptive dialog dimensions from centralized config
+    final double dialogHeight = AdaptiveSizes.getDialogHeight(context);
+    final double iconSize = AdaptiveSizes.getDialogIconSize(context);
+    final double iconImageSize = AdaptiveSizes.getDialogIconImageSize(context);
+
+    // Calculate button position if buttonKey is provided
+    double triangleLeftPosition = k4Double.wp +
+        (AdaptiveSizes.getGreenButtonWidth(context) / 2) -
+        kTriangleHalfWidth;
+    double dialogTopPosition = kDialogTopPosition;
+
+    if (buttonKey != null && buttonKey!.currentContext != null) {
+      final RenderBox? buttonBox =
+          buttonKey!.currentContext!.findRenderObject() as RenderBox?;
+      if (buttonBox != null) {
+        final buttonPosition = buttonBox.localToGlobal(Offset.zero);
+        final buttonSize = buttonBox.size;
+
+        // Debug print button information
+        debugPrint('Button position: ${buttonPosition.dy}');
+        debugPrint('Button height: ${buttonSize.height}');
+        debugPrint('Button bottom: ${buttonPosition.dy + buttonSize.height}');
+
+        // Position dialog based on adaptive gap
+        final double buttonBottom = buttonPosition.dy + buttonSize.height;
+        final double adaptiveGap = AdaptiveSizes.getDialogButtonGap(context);
+        dialogTopPosition = buttonBottom + adaptiveGap;
+
+        // Center triangle with button
+        triangleLeftPosition =
+            buttonPosition.dx + (buttonSize.width / 2) - kTriangleHalfWidth;
+      }
+    }
+
+    // Calculate triangle position based on button position
+    // Start with a default position
+    double triangleTopPosition = dialogTopPosition - kTriangleHeight;
+
+    // If we have button position, place triangle right at button bottom
+    if (buttonKey != null && buttonKey!.currentContext != null) {
+      final RenderBox? buttonBox =
+          buttonKey!.currentContext!.findRenderObject() as RenderBox?;
+      if (buttonBox != null) {
+        final buttonPosition = buttonBox.localToGlobal(Offset.zero);
+        final buttonSize = buttonBox.size;
+
+        // Get adaptive gap for this device
+        final double adaptiveGap = AdaptiveSizes.getDialogButtonGap(context);
+
+        // Debug print for triangle positioning
+        debugPrint('Adaptive gap: $adaptiveGap');
+        debugPrint('Dialog top position: $dialogTopPosition');
+
+        // Position triangle at the top edge of the dialog, slightly overlapping
+        // This ensures it's always visible regardless of the gap
+        triangleTopPosition =
+            dialogTopPosition - kTriangleHeight + 3; // 3px overlap into dialog
+
+        // Debug print triangle position
+        debugPrint('Triangle top position: $triangleTopPosition');
+        debugPrint('Triangle left position: $triangleLeftPosition');
+      }
+    }
+
     return GestureDetector(
       onTap: Get.back, // Close dialog when tapping outside
       child: Dialog(
@@ -100,22 +178,18 @@ class SubjectSelectionDialog extends StatelessWidget {
             clipBehavior: Clip.none, // Allow triangle to overflow
             alignment: Alignment.topCenter,
             children: [
-              // Triangle pointer (placed first so it appears behind the dialog)
+              // Main dialog content (placed first so triangle appears on top)
               Positioned(
-                top: kTriangleTopPosition,
-                left: k4Double.wp + (k18Double.wp / 2) - kTriangleHalfWidth,
-                child: const CustomPaint(
-                  size: Size(kTriangleWidth, kTriangleHeight),
-                  painter: TrianglePainter(),
-                ),
-              ),
-              // Main dialog content
-              Positioned(
-                top: kDialogTopPosition,
-                left: 0,
-                right: 0,
+                top: dialogTopPosition,
+                left: isTablet ? -20 : 0, // Extend dialog width on tablets
+                right: isTablet ? -20 : 0, // Extend dialog width on tablets
                 child: Container(
-                  height: kDialogHeight,
+                  height: dialogHeight,
+                  margin: EdgeInsets.symmetric(
+                    horizontal: isTablet
+                        ? 20
+                        : 0, // Compensate for negative positioning
+                  ),
                   decoration: const BoxDecoration(
                     color: Colors.white,
                     boxShadow: [
@@ -128,14 +202,25 @@ class SubjectSelectionDialog extends StatelessWidget {
                   ),
                   child: Padding(
                     padding: EdgeInsets.symmetric(
-                      horizontal: k4Double.wp,
-                      vertical: k1Double.hp,
+                      horizontal: isTablet
+                          ? k6Double.wp
+                          : k4Double.wp, // More horizontal padding on tablets
+                      vertical: isTablet
+                          ? (AdaptiveSizes.isLandscape(context)
+                              ? k2Double
+                                  .hp // More padding in landscape with more height
+                              : k0_5Double
+                                  .hp) // Very minimal padding in portrait with reduced height
+                          : k1Double.hp, // Original padding for phones
                     ),
                     child: Row(
                       mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                       children: Subject.values
                           .map((subject) => _SubjectOption(
                                 subject: subject,
+                                iconSize: iconSize,
+                                iconImageSize: iconImageSize,
+                                isTablet: isTablet,
                                 onTap: () {
                                   onSubjectSelected?.call(subject);
                                   Get.back();
@@ -144,6 +229,15 @@ class SubjectSelectionDialog extends StatelessWidget {
                           .toList(),
                     ),
                   ),
+                ),
+              ),
+              // Triangle pointer (placed last so it appears on top)
+              Positioned(
+                top: triangleTopPosition,
+                left: triangleLeftPosition,
+                child: const CustomPaint(
+                  size: Size(kTriangleWidth, kTriangleHeight),
+                  painter: TrianglePainter(),
                 ),
               ),
             ],
@@ -158,28 +252,38 @@ class SubjectSelectionDialog extends StatelessWidget {
 class _SubjectOption extends StatelessWidget {
   final Subject subject;
   final VoidCallback onTap;
+  final double iconSize;
+  final double iconImageSize;
+  final bool isTablet;
 
   const _SubjectOption({
     required this.subject,
     required this.onTap,
+    required this.iconSize,
+    required this.iconImageSize,
+    required this.isTablet,
   });
 
   @override
   Widget build(BuildContext context) {
     final isComprehensive = subject == Subject.comprehensive;
+    final double fontSize = AdaptiveSizes.getDialogTextSize(context);
+    final double borderRadius = isTablet ? 20.0 : kIconBorderRadius;
+    final double innerBorderRadius = isTablet ? 16.0 : kIconInnerBorderRadius;
 
     return Expanded(
       child: GestureDetector(
         behavior: HitTestBehavior.opaque,
         onTap: onTap,
         child: Padding(
-          padding: const EdgeInsets.symmetric(horizontal: kHorizontalPadding),
+          padding: EdgeInsets.symmetric(
+              horizontal: isTablet ? 8.0 : kHorizontalPadding),
           child: Column(
             mainAxisAlignment: MainAxisAlignment.center,
             children: [
               Container(
-                width: kIconSize,
-                height: kIconSize,
+                width: iconSize,
+                height: iconSize,
                 decoration: BoxDecoration(
                   border: isComprehensive
                       ? Border.all(
@@ -187,17 +291,23 @@ class _SubjectOption extends StatelessWidget {
                           width: kIconBorderWidth,
                         )
                       : null,
-                  borderRadius: BorderRadius.circular(kIconBorderRadius),
+                  borderRadius: BorderRadius.circular(borderRadius),
                 ),
                 child: ClipRRect(
-                  borderRadius: BorderRadius.circular(kIconInnerBorderRadius),
+                  borderRadius: BorderRadius.circular(innerBorderRadius),
                   child: _getSubjectIcon(),
                 ),
               ),
-              const SizedBox(height: kIconTextSpacing),
+              SizedBox(
+                height: isTablet
+                    ? (AdaptiveSizes.isLandscape(context)
+                        ? 12.0 // More spacing in landscape with taller dialog
+                        : 4.0) // Minimal spacing in portrait with shorter dialog
+                    : kIconTextSpacing,
+              ),
               Text(
                 subject.title,
-                style: kSubjectTextStyle.copyWith(fontSize: k16Double.sp),
+                style: kSubjectTextStyle.copyWith(fontSize: fontSize),
               ),
             ],
           ),
@@ -213,8 +323,8 @@ class _SubjectOption extends StatelessWidget {
           color: kComprehensiveIconBgColor,
           child: Center(
             child: Assets.images.comprehensive.image(
-              width: kIconImageSize,
-              height: kIconImageSize,
+              width: iconImageSize,
+              height: iconImageSize,
               fit: BoxFit.contain,
             ),
           ),

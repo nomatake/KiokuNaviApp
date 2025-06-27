@@ -6,6 +6,7 @@ import 'package:kioku_navi/generated/assets.gen.dart';
 import 'package:kioku_navi/utils/extensions.dart';
 import 'package:kioku_navi/utils/sizes.dart';
 import 'package:kioku_navi/widgets/custom_button.dart';
+import 'package:kioku_navi/widgets/intrinsic_height_scroll_view.dart';
 import 'package:kioku_navi/widgets/padded_wrapper.dart';
 import 'package:kioku_navi/widgets/register_app_bar.dart';
 
@@ -28,64 +29,74 @@ class TutorialNineView extends StatelessWidget {
       body: SafeArea(
         child: PaddedWrapper(
           bottom: true,
-          child: Column(
-            crossAxisAlignment: CrossAxisAlignment.center,
-            children: [
-              SizedBox(height: k4Double.hp),
+          child: IntrinsicHeightScrollView(
+            child: Column(
+              crossAxisAlignment: CrossAxisAlignment.center,
+              children: [
+                SizedBox(height: k4Double.hp),
 
-              // Chat bubble section
-              Row(
-                crossAxisAlignment: CrossAxisAlignment.start,
-                children: [
-                  Assets.images.logo.image(
-                    height: k25Double.wp,
-                    width: k25Double.wp,
-                    fit: BoxFit.contain,
-                  ),
-                  Expanded(
-                    child: Bubble(
-                      style: BubbleStyle(
-                        margin: BubbleEdges.only(top: k10Double),
-                        elevation: k10Double,
-                        color: bubbleBackgroundColor,
-                        borderColor: bubbleBorderColor,
-                        borderWidth: k2_5Double,
-                        padding: BubbleEdges.all(k10Double),
-                        alignment: Alignment.topLeft,
-                        nip: BubbleNip.leftBottom,
-                        nipWidth: k4Double.wp,
-                        nipHeight: k5Double.wp,
-                        nipOffset: k25Double,
-                        radius: Radius.circular(k14Double),
-                      ),
-                      child: Text(
-                        'レッスンが習慣になるように通知を送るよ！',
-                        style: TextStyle(
-                          fontFamily: 'Hiragino Sans',
-                          fontWeight: FontWeight.w400,
-                          fontSize: k14Double.sp,
-                          color: textColor,
+                // Chat bubble section
+                Row(
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: [
+                    Assets.images.logo.image(
+                      height: k80Double.sp,
+                      width: k80Double.sp,
+                      fit: BoxFit.contain,
+                    ),
+                    Expanded(
+                      child: Bubble(
+                        style: BubbleStyle(
+                          margin: BubbleEdges.only(top: k10Double),
+                          elevation: k10Double,
+                          color: bubbleBackgroundColor,
+                          borderColor: bubbleBorderColor,
+                          borderWidth: k2_5Double,
+                          padding: BubbleEdges.all(k10Double.sp),
+                          alignment: Alignment.topLeft,
+                          nip: BubbleNip.leftBottom,
+                          nipWidth: k10Double.sp,
+                          nipHeight: k10Double.sp,
+                          nipOffset: k10Double.sp,
+                          radius: Radius.circular(k14Double),
                         ),
-                        textAlign: TextAlign.left,
+                        child: Text(
+                          'レッスンが習慣になるように通知を送るよ！',
+                          style: TextStyle(
+                            fontFamily: 'Hiragino Sans',
+                            fontWeight: FontWeight.w400,
+                            fontSize: k14Double.sp,
+                            color: textColor,
+                          ),
+                          textAlign: TextAlign.left,
+                        ),
                       ),
                     ),
+                  ],
+                ),
+
+                Expanded(
+                  child: SizedBox(
+                    height: k10Double.hp,
                   ),
-                ],
-              ),
+                ),
 
-              SizedBox(height: k10Double.hp),
+                // Notification permission dialog
+                _buildNotificationDialog(),
 
-              // Notification permission dialog
-              _buildNotificationDialog(),
+                Expanded(
+                  child: SizedBox(
+                    height: k10Double.hp,
+                  ),
+                ),
 
-              const Spacer(),
-
-              // Bottom button
-              CustomButton.primary(
-                text: 'レッスンリマインダーを受け取る',
-                onPressed: () => Get.toNamed(Routes.CHILD_HOME),
-              ),
-            ],
+                // Bottom button
+                CustomButton.primary(
+                  text: 'レッスンリマインダーを受け取る',
+                  onPressed: () => Get.toNamed(Routes.CHILD_HOME),
+                ),
+              ],
+            ),
           ),
         ),
       ),
@@ -95,7 +106,10 @@ class TutorialNineView extends StatelessWidget {
   Widget _buildNotificationDialog() {
     return Center(
       child: Container(
-        padding: EdgeInsets.all(k5Double.wp),
+        constraints: BoxConstraints(
+          maxWidth: k300Double.sp,
+        ),
+        padding: EdgeInsets.all(k10Double.sp),
         decoration: BoxDecoration(
           color: Colors.white,
           borderRadius: BorderRadius.circular(k20Double),
@@ -110,7 +124,7 @@ class TutorialNineView extends StatelessWidget {
             // Notification icon
             Icon(
               Icons.notifications_active,
-              size: k9Double.wp,
+              size: k30Double.sp,
               color: const Color(0xFFAFAFAF),
             ),
 
@@ -133,7 +147,7 @@ class TutorialNineView extends StatelessWidget {
             // Allow button
             SizedBox(
               width: double.infinity,
-              height: k12Double.wp,
+              height: k30Double.sp,
               child: ElevatedButton(
                 onPressed: () {
                   // TODO: Handle allow permission
@@ -145,7 +159,6 @@ class TutorialNineView extends StatelessWidget {
                   shape: RoundedRectangleBorder(
                     borderRadius: BorderRadius.circular(k15Double),
                   ),
-                  elevation: k0Double,
                 ),
                 child: Text(
                   '許可する',
@@ -163,7 +176,7 @@ class TutorialNineView extends StatelessWidget {
             // Don't allow button
             SizedBox(
               width: double.infinity,
-              height: k12Double.wp,
+              height: k30Double.sp,
               child: ElevatedButton(
                 onPressed: () {
                   // TODO: Handle deny permission
@@ -175,7 +188,6 @@ class TutorialNineView extends StatelessWidget {
                   shape: RoundedRectangleBorder(
                     borderRadius: BorderRadius.circular(k15Double),
                   ),
-                  elevation: k0Double,
                 ),
                 child: Text(
                   '許可しない',

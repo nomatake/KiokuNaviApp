@@ -54,67 +54,90 @@ class ResultStatCard extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Container(
-      width: k25Double.wp,
-      height: k10Double.hp,
-      decoration: BoxDecoration(
-        color: backgroundColor,
-        borderRadius: BorderRadius.circular(k15Double),
+    return ConstrainedBox(
+      constraints: BoxConstraints(
+        maxWidth: k350Double.sp,
+        maxHeight: k80Double.sp,
       ),
-      child: Stack(
-        children: [
-          // White background for top part
-          Positioned(
-            top: k3Double,
-            left: k3Double,
-            right: k3Double,
-            bottom: k28Double,
-            child: Container(
-              decoration: BoxDecoration(
-                color: Colors.white,
-                borderRadius: BorderRadius.only(
-                  topLeft: Radius.circular(k13Double),
-                  topRight: Radius.circular(k13Double),
-                ),
-              ),
-            ),
+      child: AspectRatio(
+        aspectRatio: 1.2,
+        child: Container(
+          decoration: BoxDecoration(
+            color: backgroundColor,
+            borderRadius: BorderRadius.circular(k15Double),
           ),
-          // Content
-          Column(
+          child: Stack(
             children: [
-              // Value section
-              Expanded(
-                flex: 70,
-                child: Center(
-                  child: Text(
-                    value,
-                    style: TextStyle(
-                      fontFamily: 'Hiragino Sans',
-                      fontWeight: FontWeight.w700,
-                      fontSize: k17Double.sp,
-                      color: textColor,
+              // White background for top part
+              Positioned(
+                top: k3Double,
+                left: k3Double,
+                right: k3Double,
+                bottom: 0,
+                child: FractionallySizedBox(
+                  heightFactor: 0.7, // 70% of the card height for white area
+                  alignment: Alignment.topCenter,
+                  child: Container(
+                    decoration: BoxDecoration(
+                      color: Colors.white,
+                      borderRadius: BorderRadius.only(
+                        topLeft: Radius.circular(k13Double),
+                        topRight: Radius.circular(k13Double),
+                      ),
                     ),
                   ),
                 ),
               ),
-              // Label section
-              Expanded(
-                flex: 30,
-                child: Center(
-                  child: Text(
-                    label,
-                    style: TextStyle(
-                      fontFamily: 'Hiragino Sans',
-                      fontWeight: FontWeight.w600,
-                      fontSize: k12Double.sp,
-                      color: Colors.white,
+              // Content
+              Column(
+                children: [
+                  // Value section
+                  Expanded(
+                    flex: 70,
+                    child: Center(
+                      child: Padding(
+                        padding: EdgeInsets.symmetric(horizontal: k10Double),
+                        child: FittedBox(
+                          fit: BoxFit.scaleDown,
+                          child: Text(
+                            value,
+                            style: TextStyle(
+                              fontFamily: 'Hiragino Sans',
+                              fontWeight: FontWeight.w800,
+                              fontSize: k18Double.sp,
+                              color: textColor,
+                            ),
+                          ),
+                        ),
+                      ),
                     ),
                   ),
-                ),
+                  // Label section
+                  Expanded(
+                    flex: 30,
+                    child: Center(
+                      child: Padding(
+                        padding: EdgeInsets.symmetric(horizontal: k10Double),
+                        child: FittedBox(
+                          fit: BoxFit.scaleDown,
+                          child: Text(
+                            label,
+                            style: TextStyle(
+                              fontFamily: 'Hiragino Sans',
+                              fontWeight: FontWeight.w600,
+                              fontSize: k12Double.sp,
+                              color: Colors.white,
+                            ),
+                          ),
+                        ),
+                      ),
+                    ),
+                  ),
+                ],
               ),
             ],
           ),
-        ],
+        ),
       ),
     );
   }

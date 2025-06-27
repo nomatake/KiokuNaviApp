@@ -26,24 +26,36 @@ class RegisterAppBar extends StatelessWidget implements PreferredSizeWidget {
       bottom: false,
       child: Container(
         color: backgroundColor,
-        padding:
-            EdgeInsets.only(left: 14, right: k6Double.wp, top: 8, bottom: 0),
-        child: Row(
-          crossAxisAlignment: CrossAxisAlignment.center,
+        height: kToolbarHeight,
+        padding: EdgeInsets.only(right: k6Double.wp),
+        child: Stack(
           children: [
-            IconButton(
-              splashColor: Colors.transparent,
-              highlightColor: Colors.transparent,
-              icon: Icon(
-                showCloseIcon ? Icons.close_rounded : Icons.arrow_back_rounded,
-                color: const Color(0xFFA6A6A6),
+            // Center the entire row content vertically
+            Center(
+              child: Row(
+                spacing: k1Double.wp,
+                children: [
+                  // Icon button with consistent sizing
+                  IconButton(
+                    splashColor: Colors.transparent,
+                    highlightColor: Colors.transparent,
+                    icon: Icon(
+                      showCloseIcon
+                          ? Icons.close_rounded
+                          : Icons.arrow_back_rounded,
+                      color: const Color(0xFFA6A6A6),
+                    ),
+                    iconSize: k20Double.sp,
+                    onPressed: onBack ?? () => Navigator.of(context).maybePop(),
+                    padding: EdgeInsets.zero,
+                  ),
+                  // Progress bar with proper alignment
+                  Expanded(
+                    child: RegisterProgressBar(progress: progress),
+                  ),
+                ],
               ),
-              iconSize: k20Double.sp,
-              onPressed: onBack ?? () => Navigator.of(context).maybePop(),
-              splashRadius: 24,
             ),
-            const SizedBox(width: 8),
-            Expanded(child: RegisterProgressBar(progress: progress)),
           ],
         ),
       ),

@@ -2,9 +2,10 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:kioku_navi/utils/sizes.dart';
 import 'package:kioku_navi/utils/extensions.dart';
+import 'package:kioku_navi/utils/adaptive_sizes.dart';
 import 'package:kioku_navi/generated/assets.gen.dart';
 import 'package:kioku_navi/widgets/progress_node_widget.dart';
-import 'package:kioku_navi/widgets/dotted_background.dart';
+import 'package:kioku_navi/widgets/adaptive_dotted_background.dart';
 import 'dart:math';
 
 /// A widget that displays a course section with a zigzag progress pattern.
@@ -92,6 +93,14 @@ class CourseSectionWidget extends StatelessWidget {
     this.onTap,
   });
 
+  /// Gets the adaptive node size based on screen width
+  static double getAdaptiveNodeSize() {
+    final context = Get.context;
+    if (context == null) return k18Double.wp;
+
+    return AdaptiveSizes.getNodeSize(context);
+  }
+
   @override
   Widget build(BuildContext context) {
     final int nodeCount = _calculateNodeCount();
@@ -100,11 +109,14 @@ class CourseSectionWidget extends StatelessWidget {
       onTap: onTap,
       child: Container(
         margin: EdgeInsets.zero,
+        padding: EdgeInsets.only(bottom: k1Double.hp),
         child: Column(
           children: [
             _buildSectionHeader(),
-            _buildProgressSection(nodeCount),
-            SizedBox(height: k6Double.hp),
+            SizedBox(
+                height: k2Double
+                    .hp), // Add space between header and progress section
+            _buildProgressSection(nodeCount, context),
           ],
         ),
       ),
@@ -164,8 +176,9 @@ class CourseSectionWidget extends StatelessWidget {
   ///
   /// Calculates the required height based on node count and spacing,
   /// then creates a stack with dotted background, progress icons and dolphins.
-  Widget _buildProgressSection(int nodeCount) {
-    final double sectionHeight = _calculateProgressSectionHeight(nodeCount);
+  Widget _buildProgressSection(int nodeCount, BuildContext context) {
+    final double sectionHeight =
+        _calculateProgressSectionHeight(nodeCount, context);
 
     return SizedBox(
       height: sectionHeight,
@@ -173,7 +186,7 @@ class CourseSectionWidget extends StatelessWidget {
         children: [
           // Dotted background layer
           const Positioned.fill(
-            child: DottedBackground(),
+            child: AdaptiveDottedBackground(),
           ),
           _buildProgressIcons(nodeCount, sectionHeight),
           if (showDolphin) ..._buildDolphins(nodeCount),
@@ -184,12 +197,11 @@ class CourseSectionWidget extends StatelessWidget {
 
   /// Calculates the height needed for the progress section.
   ///
-  /// Formula: topPadding + (nodeCount - 1) * spacingY + nodeSize
-  double _calculateProgressSectionHeight(int nodeCount) {
-    final double topPadding = k6Double.hp;
-    final double spacingY = k10Double.hp;
-    final double nodeSize = k18Double.wp;
-    return topPadding + (nodeCount - 1) * spacingY + nodeSize;
+  /// Formula: (nodeCount - 1) * spacingY + nodeSize
+  double _calculateProgressSectionHeight(int nodeCount, BuildContext context) {
+    final double spacingY = AdaptiveSizes.getNodeVerticalSpacing(context);
+    final double nodeSize = getAdaptiveNodeSize();
+    return (nodeCount - 1) * spacingY + nodeSize;
   }
 
   /// Builds the container for progress icons with calculated height.
@@ -253,11 +265,12 @@ class CourseSectionWidget extends StatelessWidget {
   /// Creates a circular progress indicator using the ProgressNodeWidget.
   Widget _buildProgressNode(CourseNode node, int index) {
     final NodeState state = _determineNodeState(node, index);
+    final double nodeSize = getAdaptiveNodeSize();
 
     return ProgressNodeWidget(
       state: state,
       completionPercentage: node.completionPercentage,
-      size: k18Double.wp,
+      size: nodeSize,
       customIcon: node.customIcon,
       customText: node.customText,
     );
@@ -310,14 +323,16 @@ class CourseSectionWidget extends StatelessWidget {
 
   /// Calculates the position for a dolphin based on the corresponding node position.
   DolphinPosition _calculateDolphinPosition(NodePosition nodePosition) {
+    final context = Get.context!;
+    final double screenWidth = MediaQuery.of(context).size.width;
+    final double padding = screenWidth * 0.06; // 6% of screen width
     final double availableWidth =
-        Get.width - (k6Double.wp * 2); // Account for PaddedWrapper padding
-    final double centerX = availableWidth / 2 - k18Double.wp / 2;
+        screenWidth - (padding * 2); // Account for PaddedWrapper padding
+    final double nodeSize = getAdaptiveNodeSize();
+    final double centerX = availableWidth / 2 - nodeSize / 2;
     final double dolphinSize = k28Double.wp;
-    final double nodeSize = k18Double.wp;
-    final double rightMargin =
-        k10Double.wp; // Keep larger margin for right side
-    final double leftMargin = k2Double.wp; // Smaller margin for left side
+    final double rightMargin = 0; // Remove margin to place at edge
+    final double leftMargin = 0; // Remove margin to place at edge
 
     // Adjust vertical position to center dolphin with node
     final double adjustedY = nodePosition.y + (nodeSize - dolphinSize) / 2;
@@ -385,12 +400,29 @@ class ZigzagCalculator {
 
   ZigzagCalculator(this._isAlignedRight)
       : _spacingX = k16Double.wp,
-        _spacingY = k10Double.hp,
-        _availableWidth =
-            Get.width - (k6Double.wp * 2), // Account for PaddedWrapper padding
-        _centerX = (Get.width - (k6Double.wp * 2)) / 2 -
-            k18Double.wp / 2, // Center within available width
-        _topPadding = k6Double.hp;
+        _spacingY = _calculateVerticalSpacing(),
+        _availableWidth = _calculateAvailableWidth(),
+        _centerX = _calculateCenterX(),
+        _topPadding = 0;
+
+  static double _calculateVerticalSpacing() {
+    final context = Get.context;
+    if (context == null) return k12Double.hp; // fallback
+    return AdaptiveSizes.getNodeVerticalSpacing(context);
+  }
+
+  static double _calculateAvailableWidth() {
+    final context = Get.context;
+    if (context == null) return 300; // fallback
+    final double screenWidth = MediaQuery.of(context).size.width;
+    final double padding = screenWidth * 0.06; // 6% of screen width
+    return screenWidth - (padding * 2); // Account for PaddedWrapper padding
+  }
+
+  static double _calculateCenterX() {
+    final double availableWidth = _calculateAvailableWidth();
+    return availableWidth / 2 - CourseSectionWidget.getAdaptiveNodeSize() / 2;
+  }
 
   /// Calculates the position of a node at the given index in the zigzag pattern.
   NodePosition calculatePosition(int index) {
@@ -427,8 +459,8 @@ class ZigzagCalculator {
     }
 
     // Add boundary constraints to keep nodes within safe margins
-    final double nodeSize = k18Double.wp;
-    final double margin = k4Double.wp; // Small margin from edges
+    final double nodeSize = CourseSectionWidget.getAdaptiveNodeSize();
+    final double margin = 0; // Remove margin to prevent extra left padding
     final double minX = margin;
     final double maxX = _availableWidth - nodeSize - margin;
 
