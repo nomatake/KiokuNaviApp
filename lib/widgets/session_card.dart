@@ -23,15 +23,43 @@ class SessionCard extends StatelessWidget {
     final media = MediaQuery.of(context);
     // Use screen width to scale sizes
     final width = media.size.width;
-    final scale = width / k375Double; // 375 is a common base width (iPhone 11)
+
+    // Improved scaling logic for better iPad support
+    double scale;
+    if (width <= k375Double) {
+      // For small screens (iPhone SE, etc.), use the width directly
+      scale = width / k375Double;
+    } else if (width <= 428) {
+      // For regular phones (iPhone 11-14 Pro Max), scale normally
+      scale = width / k375Double;
+    } else if (width <= 768) {
+      // For small tablets and large phones in landscape, limit scaling
+      scale = 1.2; // Cap at 1.2x for these devices
+    } else {
+      // For iPads and larger screens, use a fixed scale
+      scale = 1.0; // Keep original size or even smaller
+    }
+
+    // Additional check: if the device is likely an iPad (aspect ratio check)
+    final aspectRatio = media.size.width / media.size.height;
+    if (aspectRatio < 0.75 || aspectRatio > 1.3) {
+      // Likely a tablet in portrait or landscape
+      scale = scale.clamp(0.8, 1.0); // Further limit scale for tablets
+    }
 
     return GestureDetector(
       onTap: onTap,
       child: LayoutBuilder(
         builder: (context, constraints) {
+          // Detect if this is likely an iPad
+          final isIPad =
+              width > 768 || (aspectRatio < 0.75 || aspectRatio > 1.3);
+
           final cardPadding = EdgeInsets.symmetric(
             horizontal: k23Double * scale,
-            vertical: k11Double * scale,
+            vertical: isIPad
+                ? k18Double * scale
+                : k10Double * scale, // Increased vertical padding for iPad
           );
           final borderRadius = BorderRadius.circular(k12Double * scale);
           final trophySize = k40Double * scale;
@@ -99,6 +127,8 @@ class SessionCard extends StatelessWidget {
                               maxLines: 1,
                               overflow: TextOverflow.ellipsis,
                             ),
+                            SizedBox(
+                                height: isIPad ? k4Double * scale : k0Double),
                             Text(
                               subtitle,
                               style: TextStyle(
@@ -110,7 +140,11 @@ class SessionCard extends StatelessWidget {
                               maxLines: 1,
                               overflow: TextOverflow.ellipsis,
                             ),
-                            SizedBox(height: k4Double * scale),
+                            SizedBox(
+                                height: isIPad
+                                    ? k8Double * scale
+                                    : k4Double *
+                                        scale), // More spacing for iPad
                             SizedBox(
                               width: double.infinity,
                               child: SessionProgressBar(

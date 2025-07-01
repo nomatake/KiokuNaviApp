@@ -6,6 +6,7 @@ import 'package:kioku_navi/generated/assets.gen.dart';
 import 'package:kioku_navi/utils/extensions.dart';
 import 'package:kioku_navi/utils/sizes.dart';
 import 'package:kioku_navi/widgets/custom_tooltip.dart';
+import 'package:kioku_navi/widgets/intrinsic_height_scroll_view.dart';
 import 'package:kioku_navi/widgets/padded_wrapper.dart';
 
 class ContinuousPlayRecordView extends GetView<LearningController> {
@@ -14,57 +15,60 @@ class ContinuousPlayRecordView extends GetView<LearningController> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      backgroundColor: const Color(0xFFF7F9FC),
       body: SafeArea(
         child: PaddedWrapper(
-          child: Center(
-            child: Column(
-              mainAxisAlignment: MainAxisAlignment.center,
-              children: [
-                // Tooltip with message
-                CustomTooltip(
-                  message: '新しい連続記録がスタートしたね！毎日レッスンして記録を更新し続けよう。',
-                  backgroundColor: const Color(0xFFFBFCEA),
-                  borderColor: const Color(0xFFD8E82F),
-                  child: const SizedBox.shrink(),
-                ),
-
-                // Dolphin logo
-                Assets.images.logo.image(
-                  height: k35Double.wp,
-                  width: k35Double.wp,
-                  fit: BoxFit.contain,
-                ),
-
-                SizedBox(height: k4Double.hp),
-
-                // Big number
-                Text(
-                  '1',
-                  style: TextStyle(
-                    fontFamily: 'Hiragino Sans',
-                    fontWeight: FontWeight.w800,
-                    fontSize: k80Double.sp,
-                    color: const Color(0xFFFF9600),
+          child: IntrinsicHeightScrollView(
+            child: Center(
+              child: Column(
+                mainAxisAlignment: MainAxisAlignment.center,
+                children: [
+                  // Landscape padding
+                  if (context.isLandscape) SizedBox(height: k5Double.hp),
+                  // Tooltip with message
+                  CustomTooltip(
+                    message: '新しい連続記録がスタートしたね！毎日レッスンして記録を更新し続けよう。',
+                    backgroundColor: const Color(0xFFFBFCEA),
+                    borderColor: const Color(0xFFD8E82F),
+                    child: const SizedBox.shrink(),
                   ),
-                ),
 
-                // Days streak text
-                Text(
-                  '日連続記録',
-                  style: TextStyle(
-                    fontFamily: 'Hiragino Sans',
-                    fontWeight: FontWeight.w800,
-                    fontSize: k24Double.sp,
-                    color: const Color(0xFFFF9600),
+                  // Dolphin logo
+                  Assets.images.logo.image(
+                    height: k100Double.sp,
+                    width: k100Double.sp,
+                    fit: BoxFit.contain,
                   ),
-                ),
 
-                SizedBox(height: k4Double.hp),
+                  SizedBox(height: k2_5Double.hp),
 
-                // Week days tracker
-                _buildWeekTracker(),
-              ],
+                  // Big number
+                  Text(
+                    '1',
+                    style: TextStyle(
+                      fontFamily: 'Hiragino Sans',
+                      fontWeight: FontWeight.w800,
+                      fontSize: k70Double.sp,
+                      color: const Color(0xFFFF9600),
+                    ),
+                  ),
+
+                  // Days streak text
+                  Text(
+                    '日連続記録',
+                    style: TextStyle(
+                      fontFamily: 'Hiragino Sans',
+                      fontWeight: FontWeight.w800,
+                      fontSize: k24Double.sp,
+                      color: const Color(0xFFFF9600),
+                    ),
+                  ),
+
+                  SizedBox(height: k4Double.hp),
+
+                  // Week days tracker
+                  _buildWeekTracker(),
+                ],
+              ),
             ),
           ),
         ),
@@ -77,9 +81,9 @@ class ContinuousPlayRecordView extends GetView<LearningController> {
     final activeDay = 4; // Friday is active (0-indexed)
 
     return Container(
-      padding: EdgeInsets.symmetric(
-        horizontal: k2Double.wp,
-        vertical: k2Double.hp,
+      padding: EdgeInsets.all(k10Double.sp),
+      constraints: BoxConstraints(
+        maxWidth: k350Double.sp,
       ),
       decoration: BoxDecoration(
         borderRadius: BorderRadius.circular(k15Double),
@@ -119,7 +123,7 @@ class ContinuousPlayRecordView extends GetView<LearningController> {
                     color: index == activeDay
                         ? const Color(0xFFFF9600)
                         : const Color(0xFFE5E5E5),
-                    size: k8Double.wp,
+                    size: k30Double.sp,
                   ),
                 ],
               ),

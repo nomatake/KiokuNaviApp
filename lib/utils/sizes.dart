@@ -97,15 +97,20 @@ const double k28Double = 28.0;
 const double k30Double = 30.0;
 const double k35Double = 35.0;
 const double k40Double = 40.0;
+const double k48Double = 48.0;
 const double k50Double = 50.0;
 const double k60Double = 60.0;
 const double k69Double = 69.0;
+const double k70Double = 70.0;
 const double k31Double = 31.0;
 const double k80Double = 80.0;
 const double k85Double = 85.0;
 const double k90Double = 90.0;
 const double k100Double = 100.0;
 const double k145Double = 145.0;
+const double k350Double = 350.0;
+const double k400Double = 400.0;
+const double k300Double = 300.0;
 const double k375Double = 375.0;
 
 ///Negative doubles

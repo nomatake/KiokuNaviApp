@@ -52,36 +52,185 @@ class _CustomDatePickerFormFieldState extends State<CustomDatePickerFormField> {
     '土'
   ];
 
-  // Text styles
-  static const TextStyle _primaryBoldTextStyle = TextStyle(
-    color: _primaryColor,
-    fontWeight: FontWeight.bold,
-  );
+  static double getResponsiveDialogWidth(BuildContext context) {
+    final width = MediaQuery.of(context).size.width;
 
-  static const TextStyle _selectedDayTextStyle = TextStyle(
-    color: Colors.white,
-    fontWeight: FontWeight.w700,
-  );
+    if (width <= 428) {
+      // iPhone and small devices
+      return 350;
+    } else if (width <= 768) {
+      // Small tablets - increase width for better spacing
+      return 580;
+    } else {
+      // iPads and larger tablets - increase width for better spacing
+      return 680;
+    }
+  }
 
-  static const TextStyle _dayTextStyle = TextStyle(
-    color: Colors.black87,
-    fontWeight: FontWeight.w400,
-  );
+  static double getResponsiveDialogHeight(BuildContext context) {
+    final width = MediaQuery.of(context).size.width;
 
-  static const TextStyle _disabledDayTextStyle = TextStyle(
-    color: Colors.grey,
-  );
+    if (width <= 428) {
+      // iPhone and small devices
+      return 400;
+    } else if (width <= 768) {
+      // Small tablets - increase height for better row spacing
+      return 540;
+    } else {
+      // iPads and larger tablets - increase height for better row spacing
+      return 640;
+    }
+  }
+
+  // Responsive text styles
+  static TextStyle _getPrimaryBoldTextStyle(BuildContext context) {
+    final width = MediaQuery.of(context).size.width;
+    final fontSize = width <= 428
+        ? 16.0
+        : width <= 768
+            ? 19.0
+            : 20.0;
+
+    return TextStyle(
+      color: _primaryColor,
+      fontWeight: FontWeight.bold,
+      fontSize: fontSize,
+    );
+  }
+
+  static TextStyle _getSelectedDayTextStyle(BuildContext context) {
+    final width = MediaQuery.of(context).size.width;
+    final fontSize = width <= 428
+        ? 16.0
+        : width <= 768
+            ? 19.0
+            : 20.0;
+
+    return TextStyle(
+      color: Colors.white,
+      fontWeight: FontWeight.w700,
+      fontSize: fontSize,
+    );
+  }
+
+  static TextStyle _getDayTextStyle(BuildContext context) {
+    final width = MediaQuery.of(context).size.width;
+    final fontSize = width <= 428
+        ? 16.0
+        : width <= 768
+            ? 19.0
+            : 20.0;
+
+    return TextStyle(
+      color: Colors.black87,
+      fontWeight: FontWeight.w400,
+      fontSize: fontSize,
+    );
+  }
+
+  static TextStyle _getDisabledDayTextStyle(BuildContext context) {
+    final width = MediaQuery.of(context).size.width;
+    final fontSize = width <= 428
+        ? 16.0
+        : width <= 768
+            ? 19.0
+            : 20.0;
+
+    return TextStyle(
+      color: Colors.grey,
+      fontSize: fontSize,
+    );
+  }
+
+  static TextStyle _getWeekdayTextStyle(BuildContext context) {
+    final width = MediaQuery.of(context).size.width;
+    final fontSize = width <= 428
+        ? 14.0
+        : width <= 768
+            ? 17.0
+            : 18.0;
+
+    return TextStyle(
+      color: _primaryColor,
+      fontWeight: FontWeight.bold,
+      fontSize: fontSize,
+    );
+  }
 
   /// Create calendar configuration
-  CalendarDatePicker2WithActionButtonsConfig _createCalendarConfig() {
+  CalendarDatePicker2WithActionButtonsConfig _createCalendarConfig(
+      BuildContext context) {
+    final width = MediaQuery.of(context).size.width;
+    final controlsHeight = width <= 428
+        ? 50.0
+        : width <= 768
+            ? 80.0
+            : 90.0;
+
+    // Responsive day max width for better row spacing on iPad
+    final dayMaxWidth = width <= 428
+        ? null // Use default for phones
+        : width <= 768
+            ? 44.0 // Larger spacing for small tablets
+            : 50.0; // Even larger spacing for iPads
+
+    // Responsive gap between calendar and buttons
+    final gapBetweenCalendarAndButtons = width <= 428
+        ? 16.0
+        : width <= 768
+            ? 20.0
+            : 24.0;
+
+    // Responsive button padding for proper horizontal alignment
+    final buttonPadding = width <= 428
+        ? const EdgeInsets.symmetric(horizontal: 16.0, vertical: 8.0)
+        : width <= 768
+            ? const EdgeInsets.symmetric(horizontal: 24.0, vertical: 12.0)
+            : const EdgeInsets.symmetric(horizontal: 32.0, vertical: 16.0);
+
+    // Responsive arrow padding for better touch targets
+    final arrowPadding = width <= 428
+        ? const EdgeInsets.all(4.0)
+        : width <= 768
+            ? const EdgeInsets.all(16.0)
+            : const EdgeInsets.all(20.0);
+
+    // Responsive arrow icon size
+    final arrowIconSize = width <= 428
+        ? 24.0
+        : width <= 768
+            ? 30.0
+            : 32.0;
+
     return CalendarDatePicker2WithActionButtonsConfig(
       calendarType: CalendarDatePicker2Type.single,
       firstDate: DateTime(1900),
       lastDate: DateTime.now(),
       firstDayOfWeek: 1, // Monday
-      controlsHeight: 50,
+      controlsHeight: controlsHeight,
       centerAlignModePicker: true,
       customModePickerIcon: const SizedBox(),
+
+      // Day spacing configuration for better row spacing
+      dayMaxWidth: dayMaxWidth,
+
+      // Custom navigation arrows with padding
+      lastMonthIcon: Padding(
+        padding: arrowPadding,
+        child: Icon(
+          Icons.chevron_left,
+          color: _primaryColor,
+          size: arrowIconSize,
+        ),
+      ),
+      nextMonthIcon: Padding(
+        padding: arrowPadding,
+        child: Icon(
+          Icons.chevron_right,
+          color: _primaryColor,
+          size: arrowIconSize,
+        ),
+      ),
 
       // Colors
       selectedDayHighlightColor: _primaryColor,
@@ -90,17 +239,24 @@ class _CustomDatePickerFormFieldState extends State<CustomDatePickerFormField> {
 
       // Weekday configuration
       weekdayLabels: _japaneseWeekdayLabels,
-      weekdayLabelTextStyle: _primaryBoldTextStyle,
+      weekdayLabelTextStyle: _getWeekdayTextStyle(context),
 
       // Text styles
-      controlsTextStyle: _primaryBoldTextStyle,
-      todayTextStyle: _primaryBoldTextStyle,
-      selectedDayTextStyle: _selectedDayTextStyle,
-      dayTextStyle: _dayTextStyle,
-      disabledDayTextStyle: _disabledDayTextStyle,
+      controlsTextStyle: _getPrimaryBoldTextStyle(context),
+      todayTextStyle: _getPrimaryBoldTextStyle(context),
+      selectedDayTextStyle: _getSelectedDayTextStyle(context),
+      dayTextStyle: _getDayTextStyle(context),
+      disabledDayTextStyle: _getDisabledDayTextStyle(context),
+
+      // Button configuration for proper horizontal padding
+      gapBetweenCalendarAndButtons: gapBetweenCalendarAndButtons,
+      buttonPadding: buttonPadding,
 
       // Custom OK button
-      okButton: const Text('確認', style: _primaryBoldTextStyle),
+      okButton: Text('確認', style: _getPrimaryBoldTextStyle(context)),
+
+      // Custom cancel button
+      cancelButton: Text('キャンセル', style: _getPrimaryBoldTextStyle(context)),
 
       // Date validation
       selectableDayPredicate: (day) => !day.isAfter(DateTime.now()),
@@ -111,8 +267,11 @@ class _CustomDatePickerFormFieldState extends State<CustomDatePickerFormField> {
   Future<void> _showDatePicker(BuildContext context) async {
     final results = await showCalendarDatePicker2Dialog(
       context: context,
-      config: _createCalendarConfig(),
-      dialogSize: Size(k90Double.wp, k50Double.wp),
+      config: _createCalendarConfig(context),
+      dialogSize: Size(
+        getResponsiveDialogWidth(context),
+        getResponsiveDialogHeight(context),
+      ),
       borderRadius: BorderRadius.circular(k12Double),
       dialogBackgroundColor: _dialogBackgroundColor,
       value: widget.selectedDates.toList(),
@@ -125,31 +284,35 @@ class _CustomDatePickerFormFieldState extends State<CustomDatePickerFormField> {
 
   @override
   Widget build(BuildContext context) {
+    final width = Get.width;
+    final verticalPadding =
+        width <= 428 ? k12Double : (width <= 768 ? k14Double : k16Double);
+
     return TextFormField(
       controller: widget.textController,
       readOnly: true,
-      style: const TextStyle(fontSize: k16Double),
+      style: TextStyle(fontSize: k10Double.sp),
       textInputAction: widget.textInputAction,
       decoration: InputDecoration(
         floatingLabelBehavior: FloatingLabelBehavior.auto,
         labelText: widget.labelText,
         labelStyle: TextStyle(
           color: widget.isLabelLight ? Colors.white : Colors.black,
-          fontSize: k14Double,
+          fontSize: k10Double.sp,
         ),
-        contentPadding: const EdgeInsets.symmetric(
-            horizontal: k16Double, vertical: k0Double),
+        contentPadding: EdgeInsets.symmetric(
+            horizontal: k16Double.sp, vertical: verticalPadding),
         focusedBorder: _borderStyle(Colors.grey.shade500),
         border: _borderStyle(Colors.grey.shade400),
         enabledBorder: _borderStyle(Colors.grey.shade300),
         filled: true,
         fillColor: Colors.grey.shade50,
         hintText: widget.hintText,
-        errorStyle: const TextStyle(fontSize: k12Double),
+        errorStyle: TextStyle(fontSize: k9Double.sp),
         suffixIcon: Icon(
           Icons.calendar_today,
           color: Colors.grey.shade600,
-          size: k20Double,
+          size: k14Double.sp,
         ),
       ),
       onTap: () => _showDatePicker(context),

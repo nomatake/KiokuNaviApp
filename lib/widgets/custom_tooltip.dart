@@ -73,9 +73,8 @@ class CustomTooltip extends StatelessWidget {
               ),
               child: Padding(
                 padding: padding ??
-                    EdgeInsets.symmetric(
-                      horizontal: k20Double,
-                      vertical: k15Double,
+                    EdgeInsets.all(
+                      k10Double.sp,
                     ),
                 child: Text(
                   message,

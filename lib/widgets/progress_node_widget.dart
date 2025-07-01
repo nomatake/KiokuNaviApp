@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
+import 'package:get/get.dart';
 import 'package:kioku_navi/utils/sizes.dart';
+import 'package:kioku_navi/utils/adaptive_sizes.dart';
 import 'package:kioku_navi/widgets/rounded_button.dart';
 
 /// Represents the state of a progress node.
@@ -64,17 +66,38 @@ class ProgressNodeWidget extends StatelessWidget {
     this.onPressed,
   }) : size = size ?? 18.0;
 
+  /// Gets the adaptive stroke width based on node size
+  static double getAdaptiveStrokeWidth(double nodeSize) {
+    final context = Get.context;
+    if (context != null) {
+      return AdaptiveSizes.getProgressStrokeWidth(context);
+    }
+    // Fallback for when context is not available
+    return 6.0;
+  }
+
+  /// Gets the adaptive padding between progress and button based on node size
+  static double getAdaptivePadding(double nodeSize) {
+    final context = Get.context;
+    if (context != null) {
+      return AdaptiveSizes.getProgressPadding(context, nodeSize);
+    }
+    // Fallback for when context is not available
+    return nodeSize * 0.03;
+  }
+
   @override
   Widget build(BuildContext context) {
     // If there's active progress, show progress indicator around the button
     if (state == NodeState.active && completionPercentage < 100.0) {
+      final double adaptivePadding = getAdaptivePadding(size);
+
       return Stack(
         alignment: Alignment.center,
         children: [
           _buildActiveNodeProgress(),
           Padding(
-            padding: EdgeInsets.all(
-                size * 0.03), // Add padding between progress and button
+            padding: EdgeInsets.all(adaptivePadding), // Adaptive padding
             child: _buildRoundedButton(),
           ),
         ],
@@ -188,17 +211,21 @@ class ProgressNodeWidget extends StatelessWidget {
   /// Creates a circular progress indicator for nodes with incomplete progress.
   Widget _buildActiveNodeProgress() {
     // Calculate progress size to wrap around the button + padding
-    final double paddingSize = size * 0.03 * 2; // padding on both sides
+    final double adaptivePadding = getAdaptivePadding(size);
+    final double paddingSize = adaptivePadding * 2; // padding on both sides
     final double progressSize =
         size + paddingSize + (size * 0.15); // extra space for progress ring
     final double progress = completionPercentage / 100.0;
+
+    // Get adaptive stroke width based on node size
+    final double strokeWidth = getAdaptiveStrokeWidth(size);
 
     return SizedBox(
       width: progressSize,
       height: progressSize,
       child: CircularProgressIndicator(
         value: progress,
-        strokeWidth: 6,
+        strokeWidth: strokeWidth,
         valueColor: const AlwaysStoppedAnimation<Color>(_primaryBlue),
         backgroundColor: _progressBackground,
       ),

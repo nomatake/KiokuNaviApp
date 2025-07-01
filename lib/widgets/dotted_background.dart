@@ -91,8 +91,11 @@ class _DottedBackgroundPainter extends CustomPainter {
     // Start dots from the specified left padding
     final startX = leftPadding;
 
+    // Start dots with a small vertical offset to align better with content
+    final startY = dotRadius;
+
     for (int row = 0; row < totalRows; row++) {
-      final y = row * verticalSpacing;
+      final y = startY + (row * verticalSpacing);
 
       // Skip if this row is below the visible area
       if (y - dotRadius > size.height) break;

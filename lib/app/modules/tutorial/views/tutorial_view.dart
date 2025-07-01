@@ -32,8 +32,8 @@ class TutorialView extends GetView<TutorialController> {
                   child: CustomTooltip(
                     message: 'こんにちは！キオだよ！',
                     child: Assets.images.logo.image(
-                      height: k30Double.wp,
-                      width: k30Double.wp,
+                      height: k100Double.sp,
+                      width: k100Double.sp,
                       fit: BoxFit.contain,
                     ),
                   ),

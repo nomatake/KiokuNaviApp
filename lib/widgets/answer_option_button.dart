@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:get/get.dart';
 import 'package:kioku_navi/utils/extensions.dart';
 import 'package:kioku_navi/utils/sizes.dart';
 
@@ -69,11 +70,26 @@ class AnswerOptionButton extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final width = Get.width;
+
+    // Dynamic height calculation for better iPad support
+    double buttonHeight;
+    if (width <= 428) {
+      // iPhone and small devices
+      buttonHeight = k50Double;
+    } else if (width <= 768) {
+      // Small tablets
+      buttonHeight = k60Double;
+    } else {
+      // iPads and larger tablets
+      buttonHeight = k70Double;
+    }
+
     return GestureDetector(
       onTap: onPressed,
       child: Container(
         width: double.infinity,
-        height: k50Double,
+        height: buttonHeight,
         decoration: BoxDecoration(
           color: _backgroundColor,
           borderRadius: BorderRadius.circular(k12Double),
@@ -83,15 +99,15 @@ class AnswerOptionButton extends StatelessWidget {
           ),
           boxShadow: [
             BoxShadow(
-              color: Colors.black.withOpacity(0.08),
-              blurRadius: 2,
-              offset: const Offset(0, 1),
+              color: Colors.black.withValues(alpha: 0.08),
+              blurRadius: k2Double,
+              offset: const Offset(k0Double, k1Double),
             ),
             BoxShadow(
               color: _shadowColor,
-              offset: const Offset(0, 3),
-              blurRadius: 0,
-              spreadRadius: 0,
+              offset: const Offset(k0Double, k3Double),
+              blurRadius: k0Double,
+              spreadRadius: k0Double,
             ),
           ],
         ),
@@ -101,7 +117,7 @@ class AnswerOptionButton extends StatelessWidget {
             style: TextStyle(
               fontFamily: 'Hiragino Sans',
               fontWeight: FontWeight.w700,
-              fontSize: k12Double.sp,
+              fontSize: width <= 428 ? k12Double.sp : k14Double.sp,
               color: _textColor,
             ),
           ),

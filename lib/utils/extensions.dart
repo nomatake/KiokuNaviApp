@@ -9,7 +9,33 @@ extension PercentSized on double {
 }
 
 extension ResponsiveText on double {
-  double get sp => Get.width / k100 * (this / k3);
+  double get sp {
+    double width = Get.width;
+    double divisor;
+    if (width < 360) {
+      // Small phones (e.g., iPhone SE)
+      divisor = 2.75;
+    } else if (width < 414) {
+      // Regular phones (e.g., iPhone 12/13)
+      divisor = 3.0;
+    } else if (width < 480) {
+      // Large phones (e.g., iPhone Pro Max)
+      divisor = 3.5;
+    } else if (width < 768) {
+      // Small tablets (e.g., iPad Mini)
+      divisor = 4;
+    } else if (width < 1024) {
+      // Regular tablets (e.g., iPad)
+      divisor = 4.5;
+    } else if (width < 1366) {
+      // Large tablets / small laptops
+      divisor = 5.0;
+    } else {
+      // Desktops
+      divisor = 7.0;
+    }
+    return width / k100 * (this / divisor);
+  }
 }
 
 extension HexColor on Color {
