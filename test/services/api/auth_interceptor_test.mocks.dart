@@ -96,6 +96,36 @@ class MockTokenManager extends _i1.Mock implements _i3.TokenManager {
         returnValue: _i4.Future<void>.value(),
         returnValueForMissingStub: _i4.Future<void>.value(),
       ) as _i4.Future<void>);
+
+  @override
+  _i4.Future<void> saveAccessToken(String? token) => (super.noSuchMethod(
+        Invocation.method(
+          #saveAccessToken,
+          [token],
+        ),
+        returnValue: _i4.Future<void>.value(),
+        returnValueForMissingStub: _i4.Future<void>.value(),
+      ) as _i4.Future<void>);
+
+  @override
+  _i4.Future<void> saveRefreshToken(String? token) => (super.noSuchMethod(
+        Invocation.method(
+          #saveRefreshToken,
+          [token],
+        ),
+        returnValue: _i4.Future<void>.value(),
+        returnValueForMissingStub: _i4.Future<void>.value(),
+      ) as _i4.Future<void>);
+
+  @override
+  _i4.Future<bool> isAuthenticated() => (super.noSuchMethod(
+        Invocation.method(
+          #isAuthenticated,
+          [],
+        ),
+        returnValue: _i4.Future<bool>.value(false),
+        returnValueForMissingStub: _i4.Future<bool>.value(false),
+      ) as _i4.Future<bool>);
 }
 
 /// A class which mocks [RequestInterceptorHandler].
