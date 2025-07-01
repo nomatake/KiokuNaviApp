@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-import 'package:kioku_navi/utils/sizes.dart';
 import 'package:kioku_navi/utils/adaptive_sizes.dart';
 import 'package:kioku_navi/widgets/rounded_button.dart';
 
@@ -159,8 +158,9 @@ class ProgressNodeWidget extends StatelessWidget {
 
   /// Gets the appropriate icon for the button based on state.
   Widget? _getButtonIcon() {
-    if (customText != null)
+    if (customText != null) {
       return null; // Don't use icon if custom text is provided
+    }
 
     final double iconSize = size * (10.0 / 18.0); // Bigger icons
 

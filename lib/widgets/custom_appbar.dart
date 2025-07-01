@@ -63,7 +63,7 @@ class CustomAppbar extends StatelessWidget implements PreferredSizeWidget {
         titleTextStyle: TextStyle(
           fontWeight: FontWeight.w500,
           fontSize: k16Double.sp,
-          color: Color(0xFF616161).withValues(alpha: 0.2),
+          color: Color(0xFF616161).withOpacity(0.2),
         ),
         leading: isHasLeading
             ? IconButton(

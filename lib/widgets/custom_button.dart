@@ -252,7 +252,7 @@ class CustomButton extends StatelessWidget {
       key: key,
       onPressed: onPressed,
       icon: icon,
-      buttonColor: buttonColor ?? kButtonPrimaryColor.withValues(alpha: 0.8),
+      buttonColor: buttonColor ?? kButtonPrimaryColor.withOpacity(0.8),
       textColor: textColor ?? Colors.white,
       shadowColor: effectiveShadowColor,
       contentPadding: contentPadding,

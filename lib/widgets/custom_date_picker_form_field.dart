@@ -234,8 +234,8 @@ class _CustomDatePickerFormFieldState extends State<CustomDatePickerFormField> {
 
       // Colors
       selectedDayHighlightColor: _primaryColor,
-      daySplashColor: _primaryColor.withValues(alpha: 0.3),
-      selectedRangeHighlightColor: _primaryColor.withValues(alpha: 0.2),
+      daySplashColor: _primaryColor.withOpacity(0.3),
+      selectedRangeHighlightColor: _primaryColor.withOpacity(0.2),
 
       // Weekday configuration
       weekdayLabels: _japaneseWeekdayLabels,

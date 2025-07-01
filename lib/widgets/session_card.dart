@@ -79,7 +79,7 @@ class SessionCard extends StatelessWidget {
               ),
               boxShadow: [
                 BoxShadow(
-                  color: Colors.black.withValues(alpha: 0.08),
+                  color: Colors.black.withOpacity(0.08),
                   blurRadius: k2Double * scale,
                   offset: Offset(k0Double, k1Double * scale),
                 ),
@@ -122,7 +122,7 @@ class SessionCard extends StatelessWidget {
                                 fontWeight: FontWeight.w600,
                                 fontSize: titleFontSize,
                                 color: const Color(0xFF424242)
-                                    .withValues(alpha: 0.75),
+                                    .withOpacity(0.75),
                               ),
                               maxLines: 1,
                               overflow: TextOverflow.ellipsis,
@@ -220,7 +220,7 @@ class SessionProgressBar extends StatelessWidget {
             child: Container(
               height: k4Double * scale,
               decoration: BoxDecoration(
-                color: Colors.white.withValues(alpha: 0.2),
+                color: Colors.white.withOpacity(0.2),
                 borderRadius: BorderRadius.circular(k100Double * scale),
               ),
             ),
@@ -236,7 +236,7 @@ class _StripePainter extends CustomPainter {
   @override
   void paint(Canvas canvas, Size size) {
     final paint = Paint()
-      ..color = const Color(0xFFF5F100).withValues(alpha: 0.1)
+      ..color = const Color(0xFFF5F100).withOpacity(0.1)
       ..style = PaintingStyle.fill;
 
     const stripeWidth = k69Double;

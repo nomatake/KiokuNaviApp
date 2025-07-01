@@ -33,7 +33,6 @@ class RegisterAppBar extends StatelessWidget implements PreferredSizeWidget {
             // Center the entire row content vertically
             Center(
               child: Row(
-                spacing: k1Double.wp,
                 children: [
                   // Icon button with consistent sizing
                   IconButton(
