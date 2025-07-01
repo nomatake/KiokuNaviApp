@@ -24,37 +24,42 @@ class QuestionView extends GetView<LearningController> {
         showCloseIcon: true,
       ),
       body: SafeArea(
-        child: PaddedWrapper(
-          bottom: true,
-          child: IntrinsicHeightScrollView(
-            child: Column(
-              children: [
-                Expanded(
-                  child: Column(
-                    crossAxisAlignment: CrossAxisAlignment.center,
-                    children: [
-                      SizedBox(height: k1Double.hp),
-                      _buildQuestionHeader(),
-                      SizedBox(height: k5Double.hp),
-                      _buildQuestionBubble(),
-                      Expanded(
-                        child: SizedBox(
-                          height: k10Double.hp,
-                        ),
+        child: Stack(
+          children: [
+            PaddedWrapper(
+              bottom: true,
+              child: IntrinsicHeightScrollView(
+                child: Column(
+                  children: [
+                    Expanded(
+                      child: Column(
+                        crossAxisAlignment: CrossAxisAlignment.center,
+                        children: [
+                          SizedBox(height: k1Double.hp),
+                          _buildQuestionHeader(),
+                          SizedBox(height: k5Double.hp),
+                          _buildQuestionBubble(),
+                          Expanded(
+                            child: SizedBox(
+                              height: k10Double.hp,
+                            ),
+                          ),
+                          _buildAnswerOptions(),
+                          Expanded(
+                            child: SizedBox(
+                              height: k10Double.hp,
+                            ),
+                          ),
+                        ],
                       ),
-                      _buildAnswerOptions(),
-                      Expanded(
-                        child: SizedBox(
-                          height: k10Double.hp,
-                        ),
-                      ),
-                    ],
-                  ),
+                    ),
+                    _buildSubmitButton(),
+                  ],
                 ),
-                _buildBottomSection(),
-              ],
+              ),
             ),
-          ),
+            _buildResultOverlayIfNeeded(),
+          ],
         ),
       ),
     );
@@ -136,45 +141,32 @@ class QuestionView extends GetView<LearningController> {
     });
   }
 
-  Widget _buildBottomSection() {
+  Widget _buildResultOverlayIfNeeded() {
     return Obx(() {
-      if (controller.hasSubmitted.value) {
-        return _buildResultOverlay(
-          isCorrect: controller.isCorrect.value,
-        );
+      if (!controller.hasSubmitted.value) {
+        return const SizedBox.shrink();
       }
-      return _buildSubmitButton();
+
+      return Positioned(
+        left: 0,
+        right: 0,
+        bottom: 0,
+        child: Container(
+          margin: EdgeInsets.only(
+            left: k4_5Double.wp,
+            right: k4_5Double.wp,
+            bottom: k4_5Double.wp,
+          ),
+          child: _buildResultOverlay(
+            isCorrect: controller.isCorrect.value,
+          ),
+        ),
+      );
     });
   }
 
   Widget _buildResultOverlay({required bool isCorrect}) {
-    final config = isCorrect
-        ? _ResultConfig(
-            backgroundColor: const Color(0xFFD3F5DD),
-            iconData: CupertinoIcons.checkmark_alt_circle_fill,
-            iconColor: const Color(0xFF019B2B),
-            text: '正解',
-            textColor: const Color(0xFF019B2B),
-            buttonText: '次へ',
-            buttonBuilder: (text, onPressed) => CustomButton.success(
-              text: text,
-              onPressed: onPressed,
-            ),
-            onButtonPressed: controller.nextQuestion,
-          )
-        : _ResultConfig(
-            backgroundColor: const Color(0xFFFEE5E5),
-            iconData: CupertinoIcons.xmark_circle_fill,
-            iconColor: const Color(0xFFB71C1C),
-            text: '不正解',
-            textColor: const Color(0xFFB71C1C),
-            buttonText: 'もう一度',
-            buttonBuilder: (text, onPressed) => CustomButton.danger(
-              text: text,
-              onPressed: onPressed,
-            ),
-            onButtonPressed: controller.resetQuestion,
-          );
+    final config = _getResultConfig(isCorrect);
 
     final containerHeight = k17Double.hp;
 
@@ -226,19 +218,26 @@ class QuestionView extends GetView<LearningController> {
 
   Widget _buildSubmitButton() {
     return Obx(() {
-      final hasSelected = controller.selectedOptionIndex.value != -1;
-
-      if (!hasSelected) {
-        return CustomButton.ghost(
-          text: '答えを見る',
-          onPressed: null,
+      if (controller.hasSubmitted.value) {
+        return Opacity(
+          opacity: 0.0,
+          child: CustomButton.primary(
+            text: '答えを見る',
+            onPressed: null,
+          ),
         );
       }
 
-      return CustomButton.primary(
-        text: '答えを見る',
-        onPressed: controller.submitAnswer,
-      );
+      final hasSelected = controller.selectedOptionIndex.value != -1;
+      return hasSelected
+          ? CustomButton.primary(
+              text: '答えを見る',
+              onPressed: controller.submitAnswer,
+            )
+          : CustomButton.ghost(
+              text: '答えを見る',
+              onPressed: null,
+            );
     });
   }
 
@@ -259,6 +258,36 @@ class QuestionView extends GetView<LearningController> {
     }
 
     return AnswerState.none;
+  }
+
+  _ResultConfig _getResultConfig(bool isCorrect) {
+    return isCorrect
+        ? _ResultConfig(
+            backgroundColor: const Color(0xFFD3F5DD),
+            iconData: CupertinoIcons.checkmark_alt_circle_fill,
+            iconColor: const Color(0xFF019B2B),
+            text: '正解',
+            textColor: const Color(0xFF019B2B),
+            buttonText: '次へ',
+            buttonBuilder: (text, onPressed) => CustomButton.success(
+              text: text,
+              onPressed: onPressed,
+            ),
+            onButtonPressed: controller.nextQuestion,
+          )
+        : _ResultConfig(
+            backgroundColor: const Color(0xFFFEE5E5),
+            iconData: CupertinoIcons.xmark_circle_fill,
+            iconColor: const Color(0xFFB71C1C),
+            text: '不正解',
+            textColor: const Color(0xFFB71C1C),
+            buttonText: 'もう一度',
+            buttonBuilder: (text, onPressed) => CustomButton.danger(
+              text: text,
+              onPressed: onPressed,
+            ),
+            onButtonPressed: controller.resetQuestion,
+          );
   }
 }
 
