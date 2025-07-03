@@ -17,6 +17,9 @@ class QuestionView extends GetView<LearningController> {
 
   @override
   Widget build(BuildContext context) {
+    // Set up navigation using helper
+    controller.setupNavigation();
+    
     return Scaffold(
       appBar: RegisterAppBar(
         progress: 0.6,

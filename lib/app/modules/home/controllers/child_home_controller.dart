@@ -3,8 +3,9 @@ import 'package:get/get.dart';
 import 'package:kioku_navi/app/routes/app_pages.dart';
 import 'package:kioku_navi/widgets/course_section_widget.dart';
 import 'package:kioku_navi/widgets/subject_selection_dialog.dart';
+import 'package:kioku_navi/utils/navigation_helper.dart';
 
-class ChildHomeController extends GetxController {
+class ChildHomeController extends BaseController {
   // Observable list of course sections
   final RxList<CourseSection> courseSections = <CourseSection>[].obs;
 
@@ -212,7 +213,7 @@ class ChildHomeController extends GetxController {
 
   void onSectionTapped(CourseSection section) {
     if (section.title == 'スタート') {
-      Get.toNamed(Routes.QUESTION);
+      requestNavigation(Routes.QUESTION);
     }
 
     // Handle section tap
