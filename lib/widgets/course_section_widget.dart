@@ -485,7 +485,7 @@ class CourseNode {
   ///
   /// The [completionPercentage] determines the visual state of the node.
   /// Either [customIcon] or [customText] can be provided for custom content.
-  CourseNode({
+  const CourseNode({
     this.completionPercentage = 0.0,
     this.customIcon,
     this.customText,
@@ -517,7 +517,7 @@ class CourseSection {
   ///
   /// The [title], [isAlignedRight], and [nodes] parameters are required.
   /// Other parameters have sensible defaults.
-  CourseSection({
+  const CourseSection({
     required this.title,
     required this.isAlignedRight,
     required this.nodes,

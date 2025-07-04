@@ -1,9 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_inner_shadow/flutter_inner_shadow.dart';
-import 'package:get/get.dart';
+import 'package:kioku_navi/utils/adaptive_sizes.dart';
 import 'package:kioku_navi/utils/extensions.dart';
 import 'package:kioku_navi/utils/sizes.dart';
-import 'package:kioku_navi/utils/adaptive_sizes.dart';
 
 class RoundedButton extends StatelessWidget {
   const RoundedButton({

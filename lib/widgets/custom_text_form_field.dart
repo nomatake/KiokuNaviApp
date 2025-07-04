@@ -3,15 +3,15 @@ import "package:flutter/services.dart";
 import "package:form_builder_validators/form_builder_validators.dart";
 import "package:get/get.dart";
 import "package:kioku_navi/utils/extensions.dart";
-import "package:kioku_navi/utils/sizes.dart";
+import "package:kioku_navi/utils/app_constants.dart";
 
 class CustomTextFormField extends StatefulWidget {
   const CustomTextFormField({
     required this.textController,
     this.labelText,
     this.hintText,
-    this.borderRadius = k12Double,
-    this.maxLines = k1,
+    this.borderRadius = AppBorderRadius.md,
+    this.maxLines = 1,
     this.isPassword = false,
     this.isLabelLight = false,
     this.isValid,
@@ -59,13 +59,13 @@ class _CustomTextFormFieldState extends State<CustomTextFormField> {
     // Calculate responsive vertical padding based on screen size
     final width = Get.width;
     final verticalPadding =
-        width <= 428 ? k12Double : (width <= 768 ? k14Double : k16Double);
+        width <= 428 ? AppSpacing.md : (width <= 768 ? AppSpacing.lg : AppSpacing.xl);
 
     return ValueListenableBuilder<bool>(
       valueListenable: _isPasswordVisible,
       builder: (context, isVisible, _) {
         return TextFormField(
-          style: TextStyle(fontSize: k10Double.sp),
+          style: TextStyle(fontSize: AppFontSize.caption.sp),
           textInputAction: widget.textInputAction,
           maxLines: widget.maxLines,
           obscureText: widget.isPassword && !isVisible,
@@ -77,17 +77,17 @@ class _CustomTextFormFieldState extends State<CustomTextFormField> {
             labelText: widget.labelText,
             labelStyle: TextStyle(
               color: widget.isLabelLight ? Colors.white : Colors.black,
-              fontSize: k10Double.sp,
+              fontSize: AppFontSize.caption.sp,
             ),
             contentPadding: EdgeInsets.symmetric(
-                horizontal: k16Double.sp, vertical: verticalPadding),
+                horizontal: AppSpacing.lg.sp, vertical: verticalPadding),
             focusedBorder: _borderStyle(Colors.grey.shade500),
             border: _borderStyle(Colors.grey.shade400),
             enabledBorder: _borderStyle(Colors.grey.shade300),
             filled: true,
             fillColor: Colors.grey.shade50,
             hintText: null,
-            errorStyle: TextStyle(fontSize: k9Double.sp),
+            errorStyle: TextStyle(fontSize: AppFontSize.caption.sp),
             suffixText: widget.suffixText,
             suffixIcon: widget.isPassword
                 ? ValueListenableBuilder<bool>(
@@ -99,7 +99,7 @@ class _CustomTextFormFieldState extends State<CustomTextFormField> {
                               ? Icons.remove_red_eye_outlined
                               : Icons.visibility_off_outlined,
                           color: Colors.black,
-                          size: k14Double.sp,
+                          size: AppIconSize.sm.sp,
                         ),
                         onPressed: () => _isPasswordVisible.value = !isVisible,
                       );
@@ -120,7 +120,7 @@ class _CustomTextFormFieldState extends State<CustomTextFormField> {
   }
 
   OutlineInputBorder _borderStyle(Color color) => OutlineInputBorder(
-        borderSide: BorderSide(color: color, width: k1_5Double),
+        borderSide: BorderSide(color: color, width: AppSpacing.xxxs),
         borderRadius: BorderRadius.all(Radius.circular(widget.borderRadius)),
       );
 }
