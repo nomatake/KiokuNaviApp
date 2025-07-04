@@ -3,6 +3,7 @@ import 'package:kioku_navi/utils/constants.dart';
 import 'package:kioku_navi/utils/extensions.dart';
 import 'package:kioku_navi/utils/app_constants.dart';
 import 'package:kioku_navi/utils/responsive_wrapper.dart';
+import 'package:kioku_navi/utils/accessibility_helper.dart';
 
 enum ButtonTextAlignment { start, centerLeft, center, centerRight, end }
 
@@ -25,6 +26,8 @@ class CustomButton extends StatelessWidget {
     this.borderWidth,
     this.textAlignment = ButtonTextAlignment.center,
     this.borderRadius,
+    this.semanticsLabel,
+    this.semanticsHint,
   });
 
   // Helper method to calculate dynamic height based on screen size
@@ -235,6 +238,8 @@ class CustomButton extends StatelessWidget {
     bool disabled = false,
     ButtonTextAlignment textAlignment = ButtonTextAlignment.center,
     BorderRadius? borderRadius,
+    String? semanticsLabel,
+    String? semanticsHint,
   }) {
     final effectiveShadowColor = shadowColor ?? kButtonPrimaryColor;
     return CustomButton(
@@ -252,6 +257,8 @@ class CustomButton extends StatelessWidget {
       letterSpacing: AppSpacing.xxxs.sp,
       textAlignment: textAlignment,
       borderRadius: borderRadius,
+      semanticsLabel: semanticsLabel,
+      semanticsHint: semanticsHint,
       shadows: [
         _defaultTopShadow,
         BoxShadow(
@@ -391,6 +398,8 @@ class CustomButton extends StatelessWidget {
   final double? borderWidth;
   final ButtonTextAlignment textAlignment;
   final BorderRadius? borderRadius;
+  final String? semanticsLabel;
+  final String? semanticsHint;
 
   static const _alignmentMap = {
     ButtonTextAlignment.start: Alignment.centerLeft,
@@ -424,7 +433,8 @@ class CustomButton extends StatelessWidget {
 
     // Also scale font size based on screen size
     final screenInfo = context.screenInfo;
-    final baseFontSize = ResponsivePatterns.bodyFontSize.getValue(screenInfo).sp;
+    final baseFontSize =
+        ResponsivePatterns.bodyFontSize.getValue(screenInfo).sp;
 
     final textWidget = Text(
       text,
@@ -460,56 +470,81 @@ class CustomButton extends StatelessWidget {
     final finalContent =
         (icon != null && text.isEmpty) ? Center(child: icon) : content;
 
+    final accessibleEffectiveHeight =
+        AccessibilityHelper.getMinimumTapTargetSize(
+                Size(double.infinity, effectiveHeight))
+            .height;
+
+    final buttonSemantics = AccessibilityHelper.getButtonSemanticLabel(
+      semanticsLabel ?? text,
+      hint: semanticsHint,
+    );
+
     if (disabled) {
-      return SizedBox(
-        width: double.infinity,
-        height: effectiveHeight,
-        child: Container(
-          decoration: BoxDecoration(
-            color: kButtonDisabledColor,
-            borderRadius: effectiveBorderRadius,
-            boxShadow: const [_disabledShadow],
-          ),
+      return Semantics(
+          label: buttonSemantics,
+          button: true,
+          enabled: false,
           child: Container(
-            margin: const EdgeInsets.only(bottom: 4),
+            width: double.infinity,
+            height: accessibleEffectiveHeight,
             decoration: BoxDecoration(
               color: kButtonDisabledColor,
               borderRadius: effectiveBorderRadius,
+              boxShadow: const [_disabledShadow],
             ),
-            child: Center(child: finalContent),
-          ),
-        ),
-      );
+            child: Padding(
+              padding: const EdgeInsets.only(bottom: 4),
+              child: Container(
+                decoration: BoxDecoration(
+                  color: kButtonDisabledColor,
+                  borderRadius: effectiveBorderRadius,
+                ),
+                child: Center(child: finalContent),
+              ),
+            ),
+          ));
     }
 
-    return SizedBox(
-      width: double.infinity,
-      height: effectiveHeight,
-      child: Container(
-        decoration: BoxDecoration(
-          color: Colors.white,
-          borderRadius: effectiveBorderRadius,
-          border: effectiveBorderColor != null
-              ? Border.all(
-                  color: effectiveBorderColor,
-                  width: borderWidth ?? 1,
-                )
-              : null,
-          boxShadow: shadows,
-        ),
-        child: Material(
-          color: Colors.transparent,
-          child: InkWell(
-            onTap: onPressed,
+    return Semantics(
+      label: buttonSemantics,
+      button: true,
+      enabled: onPressed != null,
+      child: GestureDetector(
+        onTap: onPressed != null
+            ? () {
+                AccessibilityHelper.provideTapFeedback();
+                onPressed!();
+              }
+            : null,
+        child: Container(
+          width: double.infinity,
+          height: accessibleEffectiveHeight,
+          decoration: BoxDecoration(
+            color: Colors.white,
             borderRadius: effectiveBorderRadius,
-            child: Ink(
-              decoration: BoxDecoration(
-                color: effectiveButtonColor,
-                borderRadius: effectiveBorderRadius,
-              ),
-              child: Padding(
-                padding: contentPadding ?? EdgeInsets.zero,
-                child: finalContent,
+            border: effectiveBorderColor != null
+                ? Border.all(
+                    color: effectiveBorderColor,
+                    width: borderWidth ?? 1,
+                  )
+                : null,
+            boxShadow: shadows,
+          ),
+          child: Material(
+            color: Colors.transparent,
+            child: InkWell(
+              onTap: onPressed,
+              borderRadius: effectiveBorderRadius,
+              child: Ink(
+                decoration: BoxDecoration(
+                  color: effectiveButtonColor,
+                  borderRadius: effectiveBorderRadius,
+                ),
+                child: Padding(
+                  padding: contentPadding ?? EdgeInsets.zero,
+                  child: finalContent,
+                ),
               ),
             ),
           ),
