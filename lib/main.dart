@@ -2,13 +2,17 @@ import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_localizations/flutter_localizations.dart';
 import 'package:get/get.dart';
+import 'package:kioku_navi/app/modules/auth/views/root_screen_view.dart';
 import 'package:kioku_navi/utils/constants.dart';
 import 'package:kioku_navi/utils/sizes.dart';
+import 'package:splash_master/splash_master.dart';
 
 import 'app/routes/app_pages.dart';
 
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
+  SplashMaster.initialize();
+
   await SystemChrome.setPreferredOrientations([DeviceOrientation.portraitUp]);
   runApp(const MyApp());
 }
@@ -42,9 +46,17 @@ class MyApp extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return GetMaterialApp(
+      home: SplashMaster.lottie(
+        source: AssetSource('assets/lottie/learning.json'),
+        nextScreen: const RootScreenView(),
+        backGroundColor: Colors.white,
+        lottieConfig: LottieConfig(
+          width: 50,
+          height: 50,
+        ),
+      ),
       title: kAppName,
       debugShowCheckedModeBanner: false,
-      initialRoute: AppPages.INITIAL,
       getPages: AppPages.routes,
       theme: _theme,
       defaultTransition: Transition.noTransition,
