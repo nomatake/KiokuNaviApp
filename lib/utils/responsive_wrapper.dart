@@ -209,4 +209,18 @@ class ResponsivePatterns {
     medium: 20.0,
     large: 24.0,
   );
+  
+  /// Bottom navigation bar height pattern
+  static ResponsiveValue<double> bottomNavHeight = const ResponsiveValue(
+    small: 75.0,
+    medium: 85.0,
+    large: 95.0,
+  );
+  
+  /// Caption font size pattern
+  static ResponsiveValue<double> captionFontSize = const ResponsiveValue(
+    small: 10.0,
+    medium: 12.0,
+    large: 14.0,
+  );
 }

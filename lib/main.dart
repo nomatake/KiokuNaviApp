@@ -3,6 +3,7 @@ import 'package:flutter/services.dart';
 import 'package:flutter_localizations/flutter_localizations.dart';
 import 'package:get/get.dart';
 import 'package:kioku_navi/utils/constants.dart';
+import 'package:kioku_navi/utils/error_manager.dart';
 import 'package:kioku_navi/utils/sizes.dart';
 
 import 'app/routes/app_pages.dart';
@@ -10,6 +11,10 @@ import 'app/routes/app_pages.dart';
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
   await SystemChrome.setPreferredOrientations([DeviceOrientation.portraitUp]);
+
+  // Initialize error manager
+  Get.put(ErrorManager());
+
   runApp(const MyApp());
 }
 

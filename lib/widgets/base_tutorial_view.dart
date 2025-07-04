@@ -5,8 +5,8 @@ import 'package:bubble/bubble.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:kioku_navi/generated/assets.gen.dart';
-import 'package:kioku_navi/utils/extensions.dart';
 import 'package:kioku_navi/utils/app_constants.dart';
+import 'package:kioku_navi/utils/extensions.dart';
 import 'package:kioku_navi/widgets/custom_appbar.dart';
 import 'package:kioku_navi/widgets/custom_button.dart';
 import 'package:kioku_navi/widgets/custom_tooltip.dart';
@@ -18,8 +18,10 @@ import 'package:kioku_navi/widgets/register_app_bar.dart';
 enum TutorialViewType {
   /// Simple view with logo and tooltip message
   simple,
+
   /// Interactive view with speech bubble and option buttons
   interactive,
+
   /// Custom view for specialized content
   custom,
 }
@@ -28,13 +30,13 @@ enum TutorialViewType {
 class TutorialOption {
   /// Text to display on the button
   final String text;
-  
+
   /// Callback when button is pressed
   final VoidCallback? onPressed;
-  
+
   /// Button text alignment
   final ButtonTextAlignment textAlignment;
-  
+
   /// Creates a tutorial option configuration
   const TutorialOption({
     required this.text,
@@ -47,34 +49,34 @@ class TutorialOption {
 class BaseTutorialView extends StatelessWidget {
   /// Type of tutorial view to render
   final TutorialViewType viewType;
-  
+
   /// Progress value for RegisterAppBar (0.0 - 1.0)
   final double? progress;
-  
+
   /// Message to display in bubble or tooltip
   final String message;
-  
+
   /// Route to navigate to when 'Next' button is pressed
   final String nextRoute;
-  
+
   /// List of option buttons for interactive views
   final List<TutorialOption> options;
-  
+
   /// Custom content widget for custom view type
   final Widget? customContent;
-  
+
   /// Whether to show back button in app bar
   final bool showBackButton;
-  
+
   /// Custom callback for back button
   final VoidCallback? onBack;
-  
+
   /// Text for the primary button (defaults to '次へ')
   final String primaryButtonText;
-  
+
   /// Whether to show the primary button
   final bool showPrimaryButton;
-  
+
   /// Creates a base tutorial view with the specified configuration
   const BaseTutorialView({
     super.key,
@@ -89,7 +91,7 @@ class BaseTutorialView extends StatelessWidget {
     this.primaryButtonText = '次へ',
     this.showPrimaryButton = true,
   });
-  
+
   /// Factory constructor for simple tutorial views
   factory BaseTutorialView.simple({
     Key? key,
@@ -109,7 +111,7 @@ class BaseTutorialView extends StatelessWidget {
       primaryButtonText: primaryButtonText,
     );
   }
-  
+
   /// Factory constructor for interactive tutorial views
   factory BaseTutorialView.interactive({
     Key? key,
@@ -133,7 +135,7 @@ class BaseTutorialView extends StatelessWidget {
       primaryButtonText: primaryButtonText,
     );
   }
-  
+
   /// Factory constructor for custom tutorial views
   factory BaseTutorialView.custom({
     Key? key,
@@ -171,7 +173,7 @@ class BaseTutorialView extends StatelessWidget {
       ),
     );
   }
-  
+
   /// Builds the appropriate app bar based on configuration
   PreferredSizeWidget _buildAppBar() {
     if (progress != null) {
@@ -185,7 +187,7 @@ class BaseTutorialView extends StatelessWidget {
       );
     }
   }
-  
+
   /// Builds the body content based on view type
   Widget _buildBody() {
     switch (viewType) {
@@ -197,7 +199,7 @@ class BaseTutorialView extends StatelessWidget {
         return _buildCustomView();
     }
   }
-  
+
   /// Builds simple tutorial view with tooltip
   Widget _buildSimpleView() {
     return Column(
@@ -227,7 +229,7 @@ class BaseTutorialView extends StatelessWidget {
       ],
     );
   }
-  
+
   /// Builds interactive tutorial view with speech bubble and options
   Widget _buildInteractiveView() {
     return IntrinsicHeightScrollView(
@@ -238,18 +240,16 @@ class BaseTutorialView extends StatelessWidget {
           _buildSpeechBubbleSection(),
           SizedBox(height: AppSpacing.xs.hp),
           ...options.map((option) => Column(
-            children: [
-              CustomButton.secondary(
-                text: option.text,
-                textAlignment: option.textAlignment,
-                onPressed: option.onPressed,
-              ),
-              SizedBox(height: AppSpacing.xxs.hp),
-            ],
-          )),
-          Expanded(
-            child: SizedBox(height: AppSpacing.buttonSpacing.hp),
-          ),
+                children: [
+                  CustomButton.secondary(
+                    text: option.text,
+                    textAlignment: option.textAlignment,
+                    onPressed: option.onPressed,
+                  ),
+                  SizedBox(height: AppSpacing.xxs.hp),
+                ],
+              )),
+          const Spacer(),
           if (showPrimaryButton)
             CustomButton.primary(
               text: primaryButtonText,
@@ -259,7 +259,7 @@ class BaseTutorialView extends StatelessWidget {
       ),
     );
   }
-  
+
   /// Builds custom tutorial view
   Widget _buildCustomView() {
     return Column(
@@ -275,7 +275,7 @@ class BaseTutorialView extends StatelessWidget {
       ],
     );
   }
-  
+
   /// Builds the speech bubble section with logo and message
   Widget _buildSpeechBubbleSection() {
     return Row(

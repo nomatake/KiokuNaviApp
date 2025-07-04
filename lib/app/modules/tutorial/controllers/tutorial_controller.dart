@@ -1,5 +1,5 @@
-import 'package:get/get.dart';
+import 'package:kioku_navi/controllers/base_controller.dart';
 
-class TutorialController extends GetxController {
+class TutorialController extends BaseController {
   //TODO: Implement TutorialController logic
 }

@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_inner_shadow/flutter_inner_shadow.dart';
 import 'package:kioku_navi/utils/adaptive_sizes.dart';
 import 'package:kioku_navi/utils/extensions.dart';
-import 'package:kioku_navi/utils/sizes.dart';
+import 'package:kioku_navi/utils/app_constants.dart';
 
 class RoundedButton extends StatelessWidget {
   const RoundedButton({
@@ -68,7 +68,7 @@ class RoundedButton extends StatelessWidget {
                       style: TextStyle(
                         fontFamily: 'Hiragino Sans',
                         fontWeight: FontWeight.w600,
-                        fontSize: k12Double.sp,
+                        fontSize: AppFontSize.caption.sp,
                         color: textClr,
                         letterSpacing: 0,
                       ),
