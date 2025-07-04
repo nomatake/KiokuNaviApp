@@ -9,16 +9,35 @@ import 'app/routes/app_pages.dart';
 
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
-  await SystemChrome.setPreferredOrientations(
-    [
-      DeviceOrientation.portraitUp,
-    ],
-  );
+  await SystemChrome.setPreferredOrientations([DeviceOrientation.portraitUp]);
   runApp(const MyApp());
 }
 
 class MyApp extends StatelessWidget {
   const MyApp({super.key});
+
+  static final _theme = ThemeData(
+    useMaterial3: true,
+    brightness: Brightness.light,
+    scaffoldBackgroundColor: const Color(kScaffoldBackgroundColor),
+    visualDensity: VisualDensity.adaptivePlatformDensity,
+    appBarTheme: AppBarTheme(
+      backgroundColor: Colors.white70,
+      scrolledUnderElevation: k0Double,
+      elevation: k0Double,
+    ),
+  );
+
+  static const _localizationsDelegates = [
+    GlobalMaterialLocalizations.delegate,
+    GlobalWidgetsLocalizations.delegate,
+    GlobalCupertinoLocalizations.delegate,
+  ];
+
+  static const _supportedLocales = [
+    Locale('en', ''),
+    Locale('ja', ''),
+  ];
 
   @override
   Widget build(BuildContext context) {
@@ -27,35 +46,11 @@ class MyApp extends StatelessWidget {
       debugShowCheckedModeBanner: false,
       initialRoute: AppPages.INITIAL,
       getPages: AppPages.routes,
-      theme: _buildAppTheme(),
+      theme: _theme,
       defaultTransition: Transition.noTransition,
-      localizationsDelegates: const [
-        GlobalMaterialLocalizations.delegate,
-        GlobalWidgetsLocalizations.delegate,
-        GlobalCupertinoLocalizations.delegate,
-      ],
-      supportedLocales: const [
-        Locale('en', ''),
-        Locale('ja', ''),
-      ],
+      localizationsDelegates: _localizationsDelegates,
+      supportedLocales: _supportedLocales,
       locale: const Locale('ja', ''),
     );
   }
-}
-
-/// Build the app-wide theme configuration
-ThemeData _buildAppTheme() {
-  return ThemeData(
-    useMaterial3: true,
-    brightness: Brightness.light,
-    scaffoldBackgroundColor: const Color(kScaffoldBackgroundColor),
-    visualDensity: VisualDensity.adaptivePlatformDensity,
-
-    // Configure app bar appearance.
-    appBarTheme: AppBarTheme(
-      backgroundColor: Colors.white70,
-      scrolledUnderElevation: k0Double,
-      elevation: k0Double,
-    ),
-  );
 }

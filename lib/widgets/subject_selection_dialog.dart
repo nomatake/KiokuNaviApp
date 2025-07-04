@@ -1,9 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-import 'package:kioku_navi/utils/sizes.dart';
-import 'package:kioku_navi/utils/extensions.dart';
-import 'package:kioku_navi/utils/adaptive_sizes.dart';
 import 'package:kioku_navi/generated/assets.gen.dart';
+import 'package:kioku_navi/utils/adaptive_sizes.dart';
+import 'package:kioku_navi/utils/extensions.dart';
+import 'package:kioku_navi/utils/sizes.dart';
 
 // Dialog positioning constants
 const double kTriangleTopPosition = 120.0;
@@ -115,9 +115,9 @@ class SubjectSelectionDialog extends StatelessWidget {
     double dialogTopPosition = kDialogTopPosition;
 
     if (buttonKey != null && buttonKey!.currentContext != null) {
-      final RenderBox? buttonBox =
-          buttonKey!.currentContext!.findRenderObject() as RenderBox?;
-      if (buttonBox != null) {
+      final renderObject = buttonKey!.currentContext!.findRenderObject();
+      if (renderObject is RenderBox) {
+        final buttonBox = renderObject;
         final buttonPosition = buttonBox.localToGlobal(Offset.zero);
         final buttonSize = buttonBox.size;
 
@@ -143,9 +143,9 @@ class SubjectSelectionDialog extends StatelessWidget {
 
     // If we have button position, place triangle right at button bottom
     if (buttonKey != null && buttonKey!.currentContext != null) {
-      final RenderBox? buttonBox =
-          buttonKey!.currentContext!.findRenderObject() as RenderBox?;
-      if (buttonBox != null) {
+      final renderObject = buttonKey!.currentContext!.findRenderObject();
+      if (renderObject is RenderBox) {
+        final buttonBox = renderObject;
         final buttonPosition = buttonBox.localToGlobal(Offset.zero);
         final buttonSize = buttonBox.size;
 

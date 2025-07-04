@@ -1,6 +1,8 @@
 import 'package:get/get.dart';
+import 'package:kioku_navi/app/routes/app_pages.dart';
+import 'package:kioku_navi/utils/navigation_helper.dart';
 
-class LearningController extends GetxController {
+class LearningController extends BaseController {
   // Current selected option index (-1 means no selection)
   final RxInt selectedOptionIndex = (-1).obs;
 
@@ -36,8 +38,8 @@ class LearningController extends GetxController {
   void nextQuestion() {
     if (hasSubmitted.value) {
       if (isCorrect.value) {
-        // Navigate to result or next question
-        Get.toNamed('/learning/result');
+        // Request navigation to result using helper
+        requestNavigation(Routes.RESULT);
       } else {
         // Reset for retry or show error
         resetQuestion();

@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:get/get.dart';
 import 'package:kioku_navi/utils/sizes.dart';
 import 'package:kioku_navi/utils/extensions.dart';
 import 'package:kioku_navi/utils/adaptive_sizes.dart';
@@ -94,10 +93,7 @@ class CourseSectionWidget extends StatelessWidget {
   });
 
   /// Gets the adaptive node size based on screen width
-  static double getAdaptiveNodeSize() {
-    final context = Get.context;
-    if (context == null) return k18Double.wp;
-
+  static double getAdaptiveNodeSize(BuildContext context) {
     return AdaptiveSizes.getNodeSize(context);
   }
 
@@ -188,8 +184,8 @@ class CourseSectionWidget extends StatelessWidget {
           const Positioned.fill(
             child: AdaptiveDottedBackground(),
           ),
-          _buildProgressIcons(nodeCount, sectionHeight),
-          if (showDolphin) ..._buildDolphins(nodeCount),
+          _buildProgressIcons(nodeCount, sectionHeight, context),
+          if (showDolphin) ..._buildDolphins(nodeCount, context),
         ],
       ),
     );
@@ -200,16 +196,16 @@ class CourseSectionWidget extends StatelessWidget {
   /// Formula: (nodeCount - 1) * spacingY + nodeSize
   double _calculateProgressSectionHeight(int nodeCount, BuildContext context) {
     final double spacingY = AdaptiveSizes.getNodeVerticalSpacing(context);
-    final double nodeSize = getAdaptiveNodeSize();
+    final double nodeSize = getAdaptiveNodeSize(context);
     return (nodeCount - 1) * spacingY + nodeSize;
   }
 
   /// Builds the container for progress icons with calculated height.
-  Widget _buildProgressIcons(int nodeCount, double height) {
+  Widget _buildProgressIcons(int nodeCount, double height, BuildContext context) {
     return SizedBox(
       height: height,
       child: Stack(
-        children: _buildZigzagProgressPattern(nodeCount),
+        children: _buildZigzagProgressPattern(nodeCount, context),
       ),
     );
   }
@@ -218,12 +214,12 @@ class CourseSectionWidget extends StatelessWidget {
   ///
   /// Generates a list of positioned widgets forming a zigzag pattern.
   /// The pattern alternates direction every [_nodesPerZigzag] nodes.
-  List<Widget> _buildZigzagProgressPattern(int nodeCount) {
+  List<Widget> _buildZigzagProgressPattern(int nodeCount, BuildContext context) {
     final List<Widget> icons = [];
-    final ZigzagCalculator calculator = ZigzagCalculator(isAlignedRight);
+    final ZigzagCalculator calculator = ZigzagCalculator(isAlignedRight, context);
 
     for (int i = 0; i < nodeCount; i++) {
-      final NodePosition position = calculator.calculatePosition(i);
+      final NodePosition position = calculator.calculatePosition(i, context);
 
       // Use the actual node data if available, otherwise create a default node
       final CourseNode node =
@@ -233,7 +229,7 @@ class CourseSectionWidget extends StatelessWidget {
         Positioned(
           left: position.x,
           top: position.y,
-          child: _buildProgressNode(node, i),
+          child: _buildProgressNode(node, i, context),
         ),
       );
     }
@@ -263,9 +259,9 @@ class CourseSectionWidget extends StatelessWidget {
   /// Builds a single progress node with the specified node data.
   ///
   /// Creates a circular progress indicator using the ProgressNodeWidget.
-  Widget _buildProgressNode(CourseNode node, int index) {
+  Widget _buildProgressNode(CourseNode node, int index, BuildContext context) {
     final NodeState state = _determineNodeState(node, index);
-    final double nodeSize = getAdaptiveNodeSize();
+    final double nodeSize = getAdaptiveNodeSize(context);
 
     return ProgressNodeWidget(
       state: state,
@@ -280,9 +276,9 @@ class CourseSectionWidget extends StatelessWidget {
   ///
   /// Places dolphins next to every 3rd node (index 2 in each group of 3).
   /// The number of dolphins is limited by [dolphinCount].
-  List<Widget> _buildDolphins(int nodeCount) {
+  List<Widget> _buildDolphins(int nodeCount, BuildContext context) {
     final List<Widget> dolphins = [];
-    final ZigzagCalculator calculator = ZigzagCalculator(isAlignedRight);
+    final ZigzagCalculator calculator = ZigzagCalculator(isAlignedRight, context);
     final int maxDolphins = _calculateMaxDolphins(nodeCount);
     final int dolphinsToPlace =
         dolphinCount < maxDolphins ? dolphinCount : maxDolphins;
@@ -291,9 +287,9 @@ class CourseSectionWidget extends StatelessWidget {
 
     for (int i = 0; i < nodeCount && dolphinsPlaced < dolphinsToPlace; i++) {
       if (_shouldPlaceDolphinAtIndex(i)) {
-        final NodePosition nodePosition = calculator.calculatePosition(i);
+        final NodePosition nodePosition = calculator.calculatePosition(i, context);
         final DolphinPosition dolphinPosition =
-            _calculateDolphinPosition(nodePosition);
+            _calculateDolphinPosition(nodePosition, context);
 
         dolphins.add(
           Positioned(
@@ -322,13 +318,12 @@ class CourseSectionWidget extends StatelessWidget {
   }
 
   /// Calculates the position for a dolphin based on the corresponding node position.
-  DolphinPosition _calculateDolphinPosition(NodePosition nodePosition) {
-    final context = Get.context!;
+  DolphinPosition _calculateDolphinPosition(NodePosition nodePosition, BuildContext context) {
     final double screenWidth = MediaQuery.of(context).size.width;
     final double padding = screenWidth * 0.06; // 6% of screen width
     final double availableWidth =
         screenWidth - (padding * 2); // Account for PaddedWrapper padding
-    final double nodeSize = getAdaptiveNodeSize();
+    final double nodeSize = getAdaptiveNodeSize(context);
     final double centerX = availableWidth / 2 - nodeSize / 2;
     final double dolphinSize = k28Double.wp;
     final double rightMargin = 0; // Remove margin to place at edge
@@ -398,34 +393,30 @@ class ZigzagCalculator {
   final double _topPadding;
   final double _availableWidth;
 
-  ZigzagCalculator(this._isAlignedRight)
+  ZigzagCalculator(this._isAlignedRight, BuildContext context)
       : _spacingX = k16Double.wp,
-        _spacingY = _calculateVerticalSpacing(),
-        _availableWidth = _calculateAvailableWidth(),
-        _centerX = _calculateCenterX(),
+        _spacingY = _calculateVerticalSpacing(context),
+        _availableWidth = _calculateAvailableWidth(context),
+        _centerX = _calculateCenterX(context),
         _topPadding = 0;
 
-  static double _calculateVerticalSpacing() {
-    final context = Get.context;
-    if (context == null) return k12Double.hp; // fallback
+  static double _calculateVerticalSpacing(BuildContext context) {
     return AdaptiveSizes.getNodeVerticalSpacing(context);
   }
 
-  static double _calculateAvailableWidth() {
-    final context = Get.context;
-    if (context == null) return 300; // fallback
+  static double _calculateAvailableWidth(BuildContext context) {
     final double screenWidth = MediaQuery.of(context).size.width;
     final double padding = screenWidth * 0.06; // 6% of screen width
     return screenWidth - (padding * 2); // Account for PaddedWrapper padding
   }
 
-  static double _calculateCenterX() {
-    final double availableWidth = _calculateAvailableWidth();
-    return availableWidth / 2 - CourseSectionWidget.getAdaptiveNodeSize() / 2;
+  static double _calculateCenterX(BuildContext context) {
+    final double availableWidth = _calculateAvailableWidth(context);
+    return availableWidth / 2 - CourseSectionWidget.getAdaptiveNodeSize(context) / 2;
   }
 
   /// Calculates the position of a node at the given index in the zigzag pattern.
-  NodePosition calculatePosition(int index) {
+  NodePosition calculatePosition(int index, BuildContext context) {
     double x = _centerX;
     bool isZig = _isAlignedRight;
 
@@ -459,7 +450,7 @@ class ZigzagCalculator {
     }
 
     // Add boundary constraints to keep nodes within safe margins
-    final double nodeSize = CourseSectionWidget.getAdaptiveNodeSize();
+    final double nodeSize = CourseSectionWidget.getAdaptiveNodeSize(context);
     final double margin = 0; // Remove margin to prevent extra left padding
     final double minX = margin;
     final double maxX = _availableWidth - nodeSize - margin;
