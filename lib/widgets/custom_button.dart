@@ -1,7 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:kioku_navi/utils/constants.dart';
 import 'package:kioku_navi/utils/extensions.dart';
-import 'package:kioku_navi/utils/sizes.dart';
+import 'package:kioku_navi/utils/app_constants.dart';
+import 'package:kioku_navi/utils/responsive_wrapper.dart';
 
 enum ButtonTextAlignment { start, centerLeft, center, centerRight, end }
 
@@ -28,18 +29,7 @@ class CustomButton extends StatelessWidget {
 
   // Helper method to calculate dynamic height based on screen size
   static double getResponsiveHeight(BuildContext context) {
-    final width = MediaQuery.of(context).size.width;
-
-    if (width <= 428) {
-      // iPhone and small devices
-      return 48;
-    } else if (width <= 768) {
-      // Small tablets
-      return 56;
-    } else {
-      // iPads and larger tablets
-      return 64;
-    }
+    return ResponsivePatterns.buttonHeight.getValueForContext(context);
   }
 
   // Common shadow configurations
@@ -259,7 +249,7 @@ class CustomButton extends StatelessWidget {
       height: height,
       disabled: disabled,
       fontWeight: FontWeight.w800,
-      letterSpacing: k1Double.sp,
+      letterSpacing: AppSpacing.xxxs.sp,
       textAlignment: textAlignment,
       borderRadius: borderRadius,
       shadows: [
@@ -414,10 +404,10 @@ class CustomButton extends StatelessWidget {
     switch (textAlignment) {
       case ButtonTextAlignment.start:
       case ButtonTextAlignment.centerLeft:
-        return EdgeInsets.only(left: k4Double.wp);
+        return EdgeInsets.only(left: AppSpacing.xs.wp);
       case ButtonTextAlignment.centerRight:
       case ButtonTextAlignment.end:
-        return EdgeInsets.only(right: k4Double.wp);
+        return EdgeInsets.only(right: AppSpacing.xs.wp);
       case ButtonTextAlignment.center:
         return EdgeInsets.zero;
     }
@@ -433,10 +423,8 @@ class CustomButton extends StatelessWidget {
     final effectiveBorderRadius = borderRadius ?? BorderRadius.circular(12);
 
     // Also scale font size based on screen size
-    final width = MediaQuery.of(context).size.width;
-    final baseFontSize = width <= 428
-        ? k12Double.sp
-        : (width <= 768 ? k13Double.sp : k14Double.sp);
+    final screenInfo = context.screenInfo;
+    final baseFontSize = ResponsivePatterns.bodyFontSize.getValue(screenInfo).sp;
 
     final textWidget = Text(
       text,
@@ -453,7 +441,7 @@ class CustomButton extends StatelessWidget {
       children: [
         if (icon != null) ...[
           icon!,
-          if (text.isNotEmpty) SizedBox(width: k1Double.wp),
+          if (text.isNotEmpty) SizedBox(width: AppSpacing.xxxs.wp),
         ],
         if (text.isNotEmpty)
           Expanded(

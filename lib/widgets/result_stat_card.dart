@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:kioku_navi/utils/extensions.dart';
 import 'package:kioku_navi/utils/sizes.dart';
+import 'package:kioku_navi/utils/app_constants.dart';
 
 class ResultStatCard extends StatelessWidget {
   final String value;
@@ -64,7 +65,7 @@ class ResultStatCard extends StatelessWidget {
         child: Container(
           decoration: BoxDecoration(
             color: backgroundColor,
-            borderRadius: BorderRadius.circular(k15Double),
+            borderRadius: BorderRadius.circular(AppBorderRadius.lg),
           ),
           child: Stack(
             children: [
@@ -80,9 +81,9 @@ class ResultStatCard extends StatelessWidget {
                   child: Container(
                     decoration: BoxDecoration(
                       color: Colors.white,
-                      borderRadius: BorderRadius.only(
-                        topLeft: Radius.circular(k13Double),
-                        topRight: Radius.circular(k13Double),
+                      borderRadius: const BorderRadius.only(
+                        topLeft: Radius.circular(AppBorderRadius.md),
+                        topRight: Radius.circular(AppBorderRadius.md),
                       ),
                     ),
                   ),
@@ -96,7 +97,7 @@ class ResultStatCard extends StatelessWidget {
                     flex: 70,
                     child: Center(
                       child: Padding(
-                        padding: EdgeInsets.symmetric(horizontal: k10Double),
+                        padding: const EdgeInsets.symmetric(horizontal: AppSpacing.buttonSpacing),
                         child: FittedBox(
                           fit: BoxFit.scaleDown,
                           child: Text(
@@ -117,7 +118,7 @@ class ResultStatCard extends StatelessWidget {
                     flex: 30,
                     child: Center(
                       child: Padding(
-                        padding: EdgeInsets.symmetric(horizontal: k10Double),
+                        padding: const EdgeInsets.symmetric(horizontal: AppSpacing.buttonSpacing),
                         child: FittedBox(
                           fit: BoxFit.scaleDown,
                           child: Text(

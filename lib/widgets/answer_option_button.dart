@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:kioku_navi/utils/extensions.dart';
-import 'package:kioku_navi/utils/sizes.dart';
+import 'package:kioku_navi/utils/app_constants.dart';
 
 enum AnswerState { none, selected, correct, incorrect }
 
@@ -76,13 +76,13 @@ class AnswerOptionButton extends StatelessWidget {
     double buttonHeight;
     if (width <= 428) {
       // iPhone and small devices
-      buttonHeight = k50Double;
+      buttonHeight = AppButtonSize.primary;
     } else if (width <= 768) {
       // Small tablets
-      buttonHeight = k60Double;
+      buttonHeight = AppButtonSize.xl;
     } else {
       // iPads and larger tablets
-      buttonHeight = k70Double;
+      buttonHeight = AppButtonSize.xl + 6;
     }
 
     return GestureDetector(
@@ -92,22 +92,22 @@ class AnswerOptionButton extends StatelessWidget {
         height: buttonHeight,
         decoration: BoxDecoration(
           color: _backgroundColor,
-          borderRadius: BorderRadius.circular(k12Double),
+          borderRadius: BorderRadius.circular(AppBorderRadius.md),
           border: Border.all(
             color: _borderColor,
-            width: k2Double,
+            width: AppSpacing.xxs,
           ),
           boxShadow: [
             BoxShadow(
               color: Colors.black.withValues(alpha: 0.08),
-              blurRadius: k2Double,
-              offset: const Offset(k0Double, k1Double),
+              blurRadius: AppSpacing.xxs,
+              offset: const Offset(AppSpacing.none, AppSpacing.xxxs),
             ),
             BoxShadow(
               color: _shadowColor,
-              offset: const Offset(k0Double, k3Double),
-              blurRadius: k0Double,
-              spreadRadius: k0Double,
+              offset: const Offset(AppSpacing.none, AppSpacing.xs),
+              blurRadius: AppSpacing.none,
+              spreadRadius: AppSpacing.none,
             ),
           ],
         ),
@@ -117,7 +117,7 @@ class AnswerOptionButton extends StatelessWidget {
             style: TextStyle(
               fontFamily: 'Hiragino Sans',
               fontWeight: FontWeight.w700,
-              fontSize: width <= 428 ? k12Double.sp : k14Double.sp,
+              fontSize: width <= 428 ? AppFontSize.small.sp : AppFontSize.body.sp,
               color: _textColor,
             ),
           ),
