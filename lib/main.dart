@@ -2,15 +2,17 @@ import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_localizations/flutter_localizations.dart';
 import 'package:get/get.dart';
+import 'package:kioku_navi/app/modules/auth/views/root_screen_view.dart';
+import 'package:kioku_navi/app/routes/app_pages.dart';
 import 'package:kioku_navi/utils/constants.dart';
 import 'package:kioku_navi/utils/error_manager.dart';
 import 'package:kioku_navi/utils/sizes.dart';
-
-import 'app/routes/app_pages.dart';
+import 'package:splash_master/splash_master.dart';
 
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
   await SystemChrome.setPreferredOrientations([DeviceOrientation.portraitUp]);
+  SplashMaster.initialize();
 
   // Initialize error manager
   Get.put(ErrorManager());
@@ -44,12 +46,26 @@ class MyApp extends StatelessWidget {
     Locale('ja', ''),
   ];
 
+  static const _lottieConfig = LottieConfig(
+    width: 300.0,
+    height: 300.0,
+    visibilityEnum: VisibilityEnum.none,
+    fit: BoxFit.contain,
+    overrideBoxFit: false,
+    repeat: true,
+  );
+
   @override
   Widget build(BuildContext context) {
     return GetMaterialApp(
+      home: SplashMaster.lottie(
+        source: AssetSource('assets/lottie/learning.json'),
+        nextScreen: const RootScreenView(),
+        backGroundColor: Colors.white,
+        lottieConfig: _lottieConfig,
+      ),
       title: kAppName,
       debugShowCheckedModeBanner: false,
-      initialRoute: AppPages.INITIAL,
       getPages: AppPages.routes,
       theme: _theme,
       defaultTransition: Transition.noTransition,

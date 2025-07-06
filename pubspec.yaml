@@ -21,6 +21,7 @@ dependencies:
   calendar_date_picker2: ^2.0.1
   flutter_inner_shadow: ^0.0.1
   bubble: ^1.2.1
+  splash_master: ^0.0.3
 
 dev_dependencies:
   flutter_test:
@@ -37,3 +38,4 @@ flutter:
 
   assets:
     - assets/images/
+    - assets/lottie/
