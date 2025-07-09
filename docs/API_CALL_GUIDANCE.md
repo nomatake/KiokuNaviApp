@@ -74,77 +74,109 @@ Future<T?> safeApiCall<T>(
 ```mermaid
 flowchart TD
     A[Controller calls safeApiCall] --> B[Set isLoading = true]
-    B --> C{Show Loader?}
-    C -->|Yes| D[Show CustomLoader with message]
-    C -->|No| E[Skip loader]
-    D --> F[Execute API Call]
-    E --> F
-    F --> G{API Success?}
+    B --> C[Clear error state]
+    C --> D{Show Loader?}
+    D -->|Yes| E[Show CustomLoader with message<br/>Set loaderShown = true]
+    D -->|No| F[Skip loader]
+    E --> G[Execute API Call]
+    F --> G
+    G --> H{API Success?}
     
-    G -->|✅ Success| H[Hide Loader]
-    H --> I[Delay 100ms for smooth UX]
-    I --> J[Execute onSuccess callback]
-    J --> K[Show Success Snackbar]
-    K --> L[Navigate if needed]
-    L --> M[Set isLoading = false]
+    H -->|✅ Success| I{Loader shown?}
+    I -->|Yes| J[Hide Loader<br/>Set loaderShown = false]
+    I -->|No| K[Skip loader hiding]
+    J --> L[Delay 100ms for smooth UX]
+    K --> L
+    L --> M[Execute onSuccess callback<br/>↳ CustomSnackbar.showSuccess<br/>↳ requestNavigation]
+    M --> N[Return result]
     
-    G -->|❌ Error| N[Set error state]
-    N --> O[Hide Loader]
-    O --> P[Delay 100ms for smooth UX]
-    P --> Q[Execute onError callback]
-    Q --> R[Show Error Snackbar]
-    R --> S[Stay on current screen]
-    S --> T[Set isLoading = false]
+    H -->|❌ Error| O[Set error state variables]
+    O --> P{Loader shown?}
+    P -->|Yes| Q[Hide Loader<br/>Set loaderShown = false]
+    P -->|No| R[Skip loader hiding]
+    Q --> S[Delay 100ms for smooth UX]
+    R --> S
+    S --> T[Execute onError callback<br/>↳ CustomSnackbar.showError<br/>↳ Stay on current screen]
+    T --> U[Return null]
     
-    M --> END[Complete]
-    T --> END
+    N --> V[Finally: Set isLoading = false]
+    U --> V
+    V --> W{Loader still shown?}
+    W -->|Yes| X[Hide Loader as backup]
+    W -->|No| Y[Complete]
+    X --> Y
+    
+    style M fill:#e8f5e8,stroke:#388e3c
+    style T fill:#ffebee,stroke:#d32f2f
+    style A fill:#e1f5fe,stroke:#01579b
+    style Y fill:#f3e5f5,stroke:#7b1fa2
 ```
 
 ### Loader Management Flow
 
 ```mermaid
 flowchart LR
-    A[safeApiCall starts] --> B{Context provided?}
-    B -->|Yes| C[CustomLoader.showLoader]
-    B -->|No| D[No visual loader]
+    A[safeApiCall starts] --> B[Calculate shouldShowLoader<br/>= useLoader ?? context != null]
+    B --> C{shouldShowLoader && context != null?}
+    C -->|Yes| D[CustomLoader.showLoader with message<br/>Set loaderShown = true]
+    C -->|No| E[No visual loader<br/>loaderShown = false]
     
-    C --> E[API Call executes]
-    D --> E
+    D --> F[API Call executes]
+    E --> F
     
-    E --> F{API Result?}
-    F -->|Success| G[Hide loader BEFORE onSuccess]
-    F -->|Error| H[Hide loader BEFORE onError]
+    F --> G{API Result?}
+    G -->|Success| H{loaderShown?}
+    G -->|Error| I{loaderShown?}
     
-    G --> I[100ms delay]
-    H --> J[100ms delay]
+    H -->|Yes| J[Hide loader<br/>Set loaderShown = false<br/>100ms delay]
+    H -->|No| K[Skip loader steps]
     
-    I --> K[Execute onSuccess]
-    J --> L[Execute onError]
+    I -->|Yes| L[Hide loader<br/>Set loaderShown = false<br/>100ms delay]
+    I -->|No| M[Skip loader steps]
     
-    K --> M[Show success feedback]
-    L --> N[Show error feedback]
+    J --> N[Execute onSuccess callback<br/>↳ Feedback & navigation handled inside]
+    K --> N
+    
+    L --> O[Execute onError callback<br/>↳ Error feedback handled inside]
+    M --> O
+    
+    N --> P[Finally: Backup loader hiding if needed]
+    O --> P
+    
+    style D fill:#fff3e0,stroke:#f57c00
+    style N fill:#e8f5e8,stroke:#388e3c
+    style O fill:#ffebee,stroke:#d32f2f
+    style P fill:#f3e5f5,stroke:#7b1fa2
 ```
 
 ### Error Handling Flow
 
 ```mermaid
 flowchart TD
-    A[API Error Occurs] --> B[Set error state variables]
-    B --> C[Hide loader immediately]
-    C --> D[100ms delay for UX]
-    D --> E{onError callback provided?}
+    A[API Error Occurs in try block] --> B[Set error.value = e.toString<br/>Set hasError.value = true<br/>Log error with debugPrint]
+    B --> C{Loader shown?}
+    C -->|Yes| D[Hide Loader<br/>Set loaderShown = false]
+    C -->|No| E[Skip loader hiding]
+    D --> F[100ms delay for UX]
+    E --> F
+    F --> G{onError callback provided?}
     
-    E -->|Yes| F[Execute onError callback]
-    E -->|No| G[Default error handling]
+    G -->|Yes| H[Execute onError callback<br/>↳ Usually shows CustomSnackbar.showError<br/>↳ Usually stays on current screen]
+    G -->|No| I[No custom error handling]
     
-    F --> H[Show Custom Error Snackbar]
-    G --> I[Log error only]
+    H --> J[Return null from safeApiCall]
+    I --> J
     
-    H --> J[User sees error message]
-    I --> K[Silent error handling]
+    J --> K[Finally block: Set isLoading = false]
+    K --> L{Loader still shown?}
+    L -->|Yes| M[Hide Loader as backup]
+    L -->|No| N[Complete Error Flow]
+    M --> N
     
-    J --> L[Stay on current screen]
-    K --> L
+    style A fill:#ffebee,stroke:#d32f2f
+    style H fill:#fff3e0,stroke:#f57c00
+    style N fill:#f3e5f5,stroke:#7b1fa2
+    style B fill:#ffebee,stroke:#c62828
 ```
 
 ## Usage Examples
