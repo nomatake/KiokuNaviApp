@@ -1,10 +1,13 @@
 abstract class TokenManager {
-  Future<String?> getAccessToken();
-  Future<String?> getRefreshToken();
-  Future<bool> refreshTokens();
-  Future<void> clearTokens();
-  Future<void> saveTokens(String accessToken, String refreshToken);
-  Future<void> saveAccessToken(String token);
-  Future<void> saveRefreshToken(String token);
+  /// Get the stored access token
+  Future<String?> getToken();
+
+  /// Save the access token
+  Future<void> saveToken(String token);
+
+  /// Clear the access token
+  Future<void> clearToken();
+
+  /// Check if user is authenticated (has valid access token)
   Future<bool> isAuthenticated();
 }

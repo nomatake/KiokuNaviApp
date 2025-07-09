@@ -17,6 +17,8 @@ class RegisterView extends GetView<AuthController> {
 
   @override
   Widget build(BuildContext context) {
+    controller.setupNavigation();
+
     return Scaffold(
       backgroundColor: const Color(0xFFF7F9FC),
       appBar: RegisterAppBar(
@@ -44,6 +46,18 @@ class RegisterView extends GetView<AuthController> {
                   ),
                   SizedBox(height: k3Double.hp),
 
+                  // Name field
+                  CustomTextFormField(
+                    textController: controller.name,
+                    labelText: 'お名前',
+                    hintText: '氏名を入力',
+                    textInputAction: TextInputAction.next,
+                    customValidators: [
+                      FormBuilderValidators.required(errorText: kRequired),
+                    ],
+                  ),
+                  SizedBox(height: k1_5Double.hp),
+
                   // Date of Birth field
                   CustomDatePickerFormField(
                     textController: controller.dob,
@@ -70,6 +84,7 @@ class RegisterView extends GetView<AuthController> {
                     labelText: '保護者の方のメールアドレス',
                     hintText: 'メールアドレスを入力',
                     keyboardType: TextInputType.emailAddress,
+                    textInputAction: TextInputAction.next,
                     customValidators: [
                       FormBuilderValidators.required(errorText: kRequired),
                       FormBuilderValidators.email(errorText: "Invalid email"),
@@ -83,11 +98,32 @@ class RegisterView extends GetView<AuthController> {
                     labelText: 'パスワード',
                     hintText: 'パスワードを入力',
                     isPassword: true,
+                    textInputAction: TextInputAction.next,
+                    customValidators: [
+                      FormBuilderValidators.required(errorText: kRequired),
+                      FormBuilderValidators.minLength(6,
+                          errorText: "Password must be at least 6 characters"),
+                    ],
+                  ),
+                  SizedBox(height: k1_5Double.hp),
+
+                  // Password confirmation field
+                  CustomTextFormField(
+                    textController: controller.passwordConfirmation,
+                    labelText: 'パスワード確認',
+                    hintText: 'パスワードを再入力',
+                    isPassword: true,
                     textInputAction: TextInputAction.done,
                     customValidators: [
                       FormBuilderValidators.required(errorText: kRequired),
                       FormBuilderValidators.minLength(6,
                           errorText: "Password must be at least 6 characters"),
+                      (value) {
+                        if (value != controller.password.text) {
+                          return "Passwords do not match";
+                        }
+                        return null;
+                      },
                     ],
                   ),
                   SizedBox(height: k3Double.hp),
@@ -112,8 +148,7 @@ class RegisterView extends GetView<AuthController> {
                   // Register button
                   CustomButton(
                     text: 'アカウントを作成する',
-                    disabled: true,
-                    onPressed: () => controller.onRegister(),
+                    onPressed: () => controller.onRegister(context),
                   ),
                 ],
               ),

@@ -5,11 +5,9 @@ import 'package:kioku_navi/utils/constants.dart';
 class AuthInterceptor extends Interceptor {
   final TokenManager tokenManager;
   final List<String> publicEndpoints = [
-    '/api/auth/student/login',
-    '/api/auth/parent/login',
-    '/api/auth/register',
-    '/api/auth/forgot-password',
-    '/api/auth/refresh',
+    'auth/login',
+    'auth/register',
+    'auth/forgot-password',
   ];
 
   AuthInterceptor({required this.tokenManager});
@@ -25,7 +23,7 @@ class AuthInterceptor extends Interceptor {
     }
 
     // Add auth token if available
-    final token = await tokenManager.getAccessToken();
+    final token = await tokenManager.getToken();
     if (token != null && token.isNotEmpty) {
       options.headers['Authorization'] = 'Bearer $token';
     }
@@ -42,12 +40,12 @@ class AuthInterceptor extends Interceptor {
     if (err.response?.statusCode == 401 &&
         !_isPublicEndpoint(err.requestOptions.path)) {
       try {
-        // Attempt token refresh
-        final refreshed = await tokenManager.refreshTokens();
+        // Attempt token refresh using direct API call (avoid circular dependency)
+        final refreshed = await _refreshToken();
 
         if (refreshed) {
           // Get the new token
-          final newToken = await tokenManager.getAccessToken();
+          final newToken = await tokenManager.getToken();
 
           if (newToken != null && newToken.isNotEmpty) {
             // Clone the failed request with new token
@@ -77,18 +75,62 @@ class AuthInterceptor extends Interceptor {
           }
         }
 
-        // If refresh failed, clear tokens and reject
-        await tokenManager.clearTokens();
+        // If refresh failed, clear token and reject
+        await tokenManager.clearToken();
         return handler.reject(err);
       } catch (refreshError) {
-        // If refresh throws an error, clear tokens and reject original error
-        await tokenManager.clearTokens();
+        // If refresh throws an error, clear token and reject original error
+        await tokenManager.clearToken();
         return handler.reject(err);
       }
     }
 
     // For all other errors, just pass them through
     handler.reject(err);
+  }
+
+  /// Attempts to refresh the access token using the current access token
+  /// Returns true if successful, false otherwise
+  /// Uses separate Dio instance to avoid circular dependency with AuthApi
+  Future<bool> _refreshToken() async {
+    try {
+      final currentToken = await tokenManager.getToken();
+
+      if (currentToken == null || currentToken.isEmpty) {
+        return false;
+      }
+
+      // Create a minimal Dio instance for refresh call (no interceptors to avoid circular dependency)
+      final dio = Dio(BaseOptions(
+        baseUrl: kBaseUrl,
+        connectTimeout: const Duration(seconds: 30),
+        receiveTimeout: const Duration(seconds: 30),
+        sendTimeout: const Duration(seconds: 30),
+        headers: {
+          'Content-Type': 'application/json',
+          'Accept': 'application/json',
+          'Authorization': 'Bearer $currentToken',
+        },
+      ));
+
+      // Call refresh endpoint (GET request as per Laravel routes)
+      final response = await dio.get('auth/refresh');
+
+      // Extract new access token from response and save it
+      final data = response.data['data'] as Map<String, dynamic>?;
+      final newAccessToken = data?['token'] as String?;
+
+      if (newAccessToken != null && newAccessToken.isNotEmpty) {
+        // Save the new access token
+        await tokenManager.saveToken(newAccessToken);
+        return true;
+      }
+
+      return false;
+    } catch (e) {
+      // Refresh failed
+      return false;
+    }
   }
 
   bool _isPublicEndpoint(String path) {

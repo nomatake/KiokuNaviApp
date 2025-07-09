@@ -3,7 +3,7 @@ import 'package:get/get.dart';
 import 'package:kioku_navi/app/routes/app_pages.dart';
 import 'package:kioku_navi/controllers/base_controller.dart';
 import 'package:kioku_navi/services/api/auth_api.dart';
-import 'package:kioku_navi/services/auth/token_manager.dart';
+import 'package:kioku_navi/widgets/custom_snackbar.dart';
 
 class AuthController extends BaseController {
   /// Form keys for different forms
@@ -12,13 +12,14 @@ class AuthController extends BaseController {
   final studentLoginFormKey = GlobalKey<FormState>();
 
   /// Text controllers
+  final name = TextEditingController(); // For registration
   final email = TextEditingController(); // For all login types and registration
   final dob = TextEditingController(); // For registration
   final password = TextEditingController(); // For all forms
+  final passwordConfirmation = TextEditingController(); // For registration
 
   /// Services - injected by GetX
   late final AuthApi _authApi;
-  late final TokenManager _tokenManager;
 
   /// Selected dates for the calendar picker (single date for DOB)
   RxList<DateTime?> selectedDates = <DateTime?>[].obs;
@@ -29,7 +30,6 @@ class AuthController extends BaseController {
 
     // Get injected services
     _authApi = Get.find<AuthApi>();
-    _tokenManager = Get.find<TokenManager>();
   }
 
   /// Format date for display
@@ -47,165 +47,244 @@ class AuthController extends BaseController {
   }
 
   /// Student Login Implementation (using email and password)
-  Future<void> loginStudent() async {
-    await safeApiCall(() async {
-      // Validate form
-      if (!studentLoginFormKey.currentState!.validate()) {
-        throw 'Please fill in all required fields correctly';
-      }
+  Future<void> loginStudent([BuildContext? context]) async {
+    await safeApiCall(
+      () async {
+        // Validate form
+        if (!studentLoginFormKey.currentState!.validate()) {
+          throw 'Please fill in all required fields correctly';
+        }
 
-      // Get input values
-      final emailValue = email.text.trim();
-      final passwordValue = password.text.trim();
+        // Get input values
+        final emailValue = email.text.trim();
+        final passwordValue = password.text.trim();
 
-      // Call authentication API
-      final response = await _authApi.loginStudent(emailValue, passwordValue);
+        // Call authentication API (token saving handled automatically)
+        final response = await _authApi.loginStudent(emailValue, passwordValue);
 
-      // Extract tokens from response
-      final accessToken = response['access_token'] as String;
-      final refreshToken = response['refresh_token'] as String;
+        // Extract user data for display
+        final data = response['data'] as Map<String, dynamic>;
+        final userData = data['user'] as Map<String, dynamic>;
 
-      // Save tokens securely
-      await _tokenManager.saveTokens(accessToken, refreshToken);
+        print('Student login successful: ${userData['name']}');
 
-      // Extract user data
-      final userData = response['user'] as Map<String, dynamic>;
-      print('Student login successful: ${userData['name']}');
-
-      // Navigate to student home
-      requestNavigation(Routes.CHILD_HOME);
-
-      return response;
-    });
+        return response;
+      },
+      context: context,
+      loaderMessage: 'Logging in...',
+      onSuccess: () {
+        // Show success snackbar
+        CustomSnackbar.showSuccess(
+          title: 'Welcome!',
+          message: 'Login successful',
+        );
+        // Navigate after loader is hidden
+        requestNavigation(Routes.CHILD_HOME);
+      },
+      onError: (error) {
+        // Show error snackbar
+        CustomSnackbar.showError(
+          title: 'Login Failed',
+          message: 'Please check your credentials and try again',
+        );
+      },
+    );
   }
 
   /// Parent Login Implementation
-  Future<void> loginParent() async {
-    await safeApiCall(() async {
-      // Validate form
-      if (!parentLoginFormKey.currentState!.validate()) {
-        throw 'Please fill in all required fields correctly';
-      }
+  Future<void> loginParent([BuildContext? context]) async {
+    await safeApiCall(
+      () async {
+        // Validate form
+        if (!parentLoginFormKey.currentState!.validate()) {
+          throw 'Please fill in all required fields correctly';
+        }
 
-      // Get input values
-      final emailValue = email.text.trim();
-      final passwordValue = password.text.trim();
+        // Get input values
+        final emailValue = email.text.trim();
+        final passwordValue = password.text.trim();
 
-      // Call authentication API
-      final response = await _authApi.loginParent(emailValue, passwordValue);
+        // Call authentication API (token saving handled automatically)
+        final response = await _authApi.loginParent(emailValue, passwordValue);
 
-      // Extract tokens from response
-      final accessToken = response['access_token'] as String;
-      final refreshToken = response['refresh_token'] as String;
+        // Extract user data for display
+        final data = response['data'] as Map<String, dynamic>;
+        final userData = data['user'] as Map<String, dynamic>;
 
-      // Save tokens securely
-      await _tokenManager.saveTokens(accessToken, refreshToken);
+        print('Parent login successful: ${userData['name']}');
 
-      // Extract user data
-      final userData = response['user'] as Map<String, dynamic>;
-      print('Parent login successful: ${userData['name']}');
-
-      // Navigate to parent home
-      requestNavigation(Routes.HOME);
-
-      return response;
-    });
+        return response;
+      },
+      context: context,
+      loaderMessage: 'Logging in...',
+      onSuccess: () {
+        // Show success snackbar
+        CustomSnackbar.showSuccess(
+          title: 'Welcome!',
+          message: 'Login successful',
+        );
+        // Navigate after loader is hidden
+        requestNavigation(Routes.HOME);
+      },
+      onError: (error) {
+        // Show error snackbar
+        CustomSnackbar.showError(
+          title: 'Login Failed',
+          message: 'Please check your credentials and try again',
+        );
+      },
+    );
   }
 
   /// Registration Implementation
-  Future<void> onRegister() async {
-    await safeApiCall(() async {
-      // Validate form
-      if (!registerFormKey.currentState!.validate()) {
-        throw 'Please fill in all required fields correctly';
-      }
+  Future<void> onRegister([BuildContext? context]) async {
+    await safeApiCall(
+      () async {
+        // Validate form
+        if (!registerFormKey.currentState!.validate()) {
+          throw 'Please fill in all required fields correctly';
+        }
 
-      // Get input values
-      final emailValue = email.text.trim();
-      final passwordValue = password.text.trim();
-      final dobValue = dob.text.trim();
+        // Get input values
+        final nameValue = name.text.trim();
+        final emailValue = email.text.trim();
+        final passwordValue = password.text.trim();
+        final passwordConfirmationValue = passwordConfirmation.text.trim();
+        final dobValue = dob.text.trim();
 
-      if (emailValue.isEmpty || passwordValue.isEmpty || dobValue.isEmpty) {
-        throw 'All fields are required';
-      }
+        // Call registration API (token saving handled automatically)
+        final response = await _authApi.register(
+          nameValue,
+          emailValue,
+          passwordValue,
+          passwordConfirmationValue,
+          dobValue,
+        );
 
-      // TODO: Implement registration API call when backend is ready
-      // This would look like:
-      // final response = await _authApi.registerParent(emailValue, passwordValue, dobValue);
-      // await _tokenManager.saveTokens(response['access_token'], response['refresh_token']);
-      // requestNavigation(Routes.HOME);
+        // Extract user data for display
+        final data = response['data'] as Map<String, dynamic>;
+        final userData = data['user'] as Map<String, dynamic>;
 
-      // For now, show success message
-      print('Registration would be called with: $emailValue, $dobValue');
+        print('Registration successful: ${userData['name']}');
 
-      // Navigate to next step or success page
-      requestNavigation(Routes.HOME);
-
-      return {'success': true};
-    });
+        return response;
+      },
+      context: context,
+      loaderMessage: 'Creating account...',
+      onSuccess: () {
+        // Show success snackbar
+        CustomSnackbar.showSuccess(
+          title: 'Account Created!',
+          message: 'Registration successful. Welcome to KiokuNavi!',
+        );
+        // Navigate after loader is hidden
+        requestNavigation(Routes.HOME);
+      },
+      onError: (error) {
+        // Show error snackbar
+        CustomSnackbar.showError(
+          title: 'Registration Failed',
+          message: 'Unable to create account. Please try again',
+        );
+      },
+    );
   }
 
   /// Forgot Password Implementation
-  Future<void> onForgotPassword() async {
-    await safeApiCall(() async {
-      final emailValue = email.text.trim();
+  Future<void> onForgotPassword([BuildContext? context]) async {
+    await safeApiCall(
+      () async {
+        final emailValue = email.text.trim();
 
-      if (emailValue.isEmpty) {
-        throw 'Please enter your email address';
-      }
+        if (emailValue.isEmpty) {
+          throw 'Please enter your email address';
+        }
 
-      // TODO: Implement forgot password API call when backend is ready
-      // This would look like:
-      // await _authApi.forgotPassword(emailValue);
+        // TODO: Implement forgot password API call when backend is ready
+        // This would look like:
+        // await _authApi.forgotPassword(emailValue);
 
-      // For now, show success message
-      print('Forgot password would be called for: $emailValue');
+        // For now, show success message
+        print('Forgot password would be called for: $emailValue');
 
-      // Show success dialog or navigate to reset instructions
-      Get.snackbar(
-        'Password Reset',
-        'If an account exists, you will receive reset instructions.',
-        snackPosition: SnackPosition.BOTTOM,
-      );
-
-      return {'success': true};
-    });
+        return {'success': true};
+      },
+      context: context,
+      loaderMessage: 'Sending reset email...',
+      onSuccess: () {
+        // Show success dialog after loader is hidden
+        CustomSnackbar.showInfo(
+          title: 'Password Reset',
+          message: 'If an account exists, you will receive reset instructions.',
+        );
+      },
+      onError: (error) {
+        // Show error snackbar
+        CustomSnackbar.showError(
+          title: 'Reset Failed',
+          message: 'Unable to send reset email. Please try again',
+        );
+      },
+    );
   }
 
   /// Logout Implementation
-  Future<void> logout() async {
-    await safeApiCall(() async {
-      // Call logout API
-      await _authApi.logout();
+  Future<void> logout([BuildContext? context]) async {
+    await safeApiCall(
+      () async {
+        // Call logout API (token clearing handled automatically)
+        await _authApi.logout();
 
-      // Clear stored tokens
-      await _tokenManager.clearTokens();
-
-      // Navigate to login screen
-      requestNavigation(Routes.ROOT_SCREEN);
-
-      return {'success': true};
-    });
-  }
-
-  /// Check if user is authenticated
-  Future<bool> checkAuthentication() async {
-    return await _tokenManager.isAuthenticated();
+        return {'success': true};
+      },
+      context: context,
+      loaderMessage: 'Logging out...',
+      onSuccess: () {
+        // Show success snackbar
+        CustomSnackbar.showInfo(
+          title: 'Goodbye!',
+          message: 'You have been logged out successfully',
+        );
+        // Navigate after loader is hidden
+        requestNavigation(Routes.ROOT_SCREEN);
+      },
+      onError: (error) {
+        // Show error snackbar
+        CustomSnackbar.showError(
+          title: 'Logout Failed',
+          message: 'Unable to logout. Please try again',
+        );
+      },
+    );
   }
 
   /// Get current user data
-  Future<Map<String, dynamic>?> getCurrentUser() async {
-    return await safeApiCall(() async {
-      final userData = await _authApi.getCurrentUser();
-      return userData;
-    });
+  Future<Map<String, dynamic>?> getCurrentUser([BuildContext? context]) async {
+    return await safeApiCall(
+      () async {
+        final userData = await _authApi.getCurrentUser();
+        return userData;
+      },
+      context: context,
+      loaderMessage: 'Loading user data...',
+      onError: (error) {
+        // Show error snackbar
+        CustomSnackbar.showError(
+          title: 'Load Failed',
+          message: 'Unable to load user data',
+        );
+      },
+      // No onSuccess callback needed for data fetching
+    );
   }
 
   @override
   void onClose() {
+    name.dispose();
     email.dispose();
     dob.dispose();
     password.dispose();
+    passwordConfirmation.dispose();
     super.onClose();
   }
 }

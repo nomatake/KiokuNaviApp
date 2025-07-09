@@ -1,4 +1,3 @@
-import 'package:flutter/widgets.dart';
 import 'package:get/get.dart';
 import 'package:kioku_navi/services/api/auth_api.dart';
 import 'package:kioku_navi/services/api/auth_api_impl.dart';
@@ -10,34 +9,27 @@ import 'package:kioku_navi/services/auth/token_manager_impl.dart';
 class ServiceBinding extends Bindings {
   @override
   void dependencies() {
-    // Step 1: API Clients (clean, no interceptors yet)
-    Get.lazyPut<BaseApiClient>(() => BaseApiClient(), fenix: true);
+    // Step 1: Token Manager (no dependencies)
+    Get.lazyPut<TokenManager>(() => TokenManagerImpl(), fenix: true);
 
-    // Step 2: API Services (depend on BaseApiClient)
-    Get.lazyPut<AuthApi>(
-      () => AuthApiImpl(apiClient: Get.find<BaseApiClient>()),
-      fenix: true,
-    );
-
-    // Step 3: Auth Services (TokenManager depends on AuthApi for refresh calls)
-    Get.lazyPut<TokenManager>(
-      () => TokenManagerImpl(authApi: Get.find<AuthApi>()),
-      fenix: true,
-    );
-
-    // Step 4: Add auth interceptor to API client after all dependencies are ready
-    _addAuthInterceptor();
-  }
-
-  /// Add AuthInterceptor to BaseApiClient after all dependencies are set up
-  void _addAuthInterceptor() {
-    // Use a post-frame callback to ensure all dependencies are registered
-    WidgetsBinding.instance.addPostFrameCallback((_) {
-      final apiClient = Get.find<BaseApiClient>();
+    // Step 2: Create BaseApiClient and immediately set up auth interceptor
+    Get.lazyPut<BaseApiClient>(() {
+      final apiClient = BaseApiClient();
       final tokenManager = Get.find<TokenManager>();
 
-      // Add auth interceptor
+      // Add auth interceptor immediately to avoid race conditions
       apiClient.addInterceptor(AuthInterceptor(tokenManager: tokenManager));
-    });
+
+      return apiClient;
+    }, fenix: true);
+
+    // Step 3: API Services (depend on BaseApiClient with interceptor already set up)
+    Get.lazyPut<AuthApi>(
+      () => AuthApiImpl(
+        apiClient: Get.find<BaseApiClient>(),
+        tokenManager: Get.find<TokenManager>(),
+      ),
+      fenix: true,
+    );
   }
 }

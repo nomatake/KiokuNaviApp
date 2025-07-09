@@ -16,7 +16,7 @@ class BaseLoginView extends StatelessWidget {
   final String title;
   final GlobalKey<FormState> formKey;
   final AuthController controller;
-  final VoidCallback onPressed; // Specific login method for each view
+  final Function(BuildContext?) onPressed; // Updated to accept BuildContext
 
   const BaseLoginView({
     super.key,
@@ -85,15 +85,16 @@ class BaseLoginView extends StatelessWidget {
                   // Login button with passed onPressed method
                   Obx(() => CustomButton.primary(
                         text: 'ログイン',
-                        onPressed:
-                            controller.isLoading.value ? null : onPressed,
+                        onPressed: controller.isLoading.value
+                            ? null
+                            : () => onPressed(context),
                       )),
                   SizedBox(height: k3Double.hp),
 
                   // Forgot password button
                   Center(
                     child: TextButton(
-                      onPressed: () => controller.onForgotPassword(),
+                      onPressed: () => controller.onForgotPassword(context),
                       child: const Text(
                         'パスワードを忘れた場合',
                         style: TextStyle(
