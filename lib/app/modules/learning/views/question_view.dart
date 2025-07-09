@@ -4,6 +4,7 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:kioku_navi/app/modules/learning/controllers/learning_controller.dart';
 import 'package:kioku_navi/generated/assets.gen.dart';
+import 'package:kioku_navi/generated/locales.g.dart';
 import 'package:kioku_navi/utils/extensions.dart';
 import 'package:kioku_navi/utils/sizes.dart';
 import 'package:kioku_navi/widgets/answer_option_button.dart';
@@ -72,7 +73,7 @@ class QuestionView extends GetView<LearningController> {
     return Align(
       alignment: Alignment.centerLeft,
       child: Text(
-        '正しい意味を選んでください',
+        LocaleKeys.pages_learning_question_header.tr,
         style: TextStyle(
           fontFamily: 'Hiragino Sans',
           fontWeight: FontWeight.w700,
@@ -109,7 +110,7 @@ class QuestionView extends GetView<LearningController> {
               radius: Radius.circular(k14Double),
             ),
             child: Text(
-              '考古学に関心がある',
+              LocaleKeys.pages_learning_question_text.tr,
               style: TextStyle(
                 fontFamily: 'Hiragino Sans',
                 fontWeight: FontWeight.w400,
@@ -225,7 +226,7 @@ class QuestionView extends GetView<LearningController> {
         return Opacity(
           opacity: 0.0,
           child: CustomButton.primary(
-            text: '答えを見る',
+            text: LocaleKeys.common_buttons_viewAnswer.tr,
             onPressed: null,
           ),
         );
@@ -234,11 +235,11 @@ class QuestionView extends GetView<LearningController> {
       final hasSelected = controller.selectedOptionIndex.value != -1;
       return hasSelected
           ? CustomButton.primary(
-              text: '答えを見る',
+              text: LocaleKeys.common_buttons_viewAnswer.tr,
               onPressed: controller.submitAnswer,
             )
           : CustomButton.ghost(
-              text: '答えを見る',
+              text: LocaleKeys.common_buttons_viewAnswer.tr,
               onPressed: null,
             );
     });
@@ -269,9 +270,9 @@ class QuestionView extends GetView<LearningController> {
             backgroundColor: const Color(0xFFD3F5DD),
             iconData: CupertinoIcons.checkmark_alt_circle_fill,
             iconColor: const Color(0xFF019B2B),
-            text: '正解',
+            text: LocaleKeys.common_status_correct.tr,
             textColor: const Color(0xFF019B2B),
-            buttonText: '次へ',
+            buttonText: LocaleKeys.common_buttons_next.tr,
             buttonBuilder: (text, onPressed) => CustomButton.success(
               text: text,
               onPressed: onPressed,
@@ -282,9 +283,9 @@ class QuestionView extends GetView<LearningController> {
             backgroundColor: const Color(0xFFFEE5E5),
             iconData: CupertinoIcons.xmark_circle_fill,
             iconColor: const Color(0xFFB71C1C),
-            text: '不正解',
+            text: LocaleKeys.common_status_incorrect.tr,
             textColor: const Color(0xFFB71C1C),
-            buttonText: 'もう一度',
+            buttonText: LocaleKeys.common_buttons_tryAgain.tr,
             buttonBuilder: (text, onPressed) => CustomButton.danger(
               text: text,
               onPressed: onPressed,

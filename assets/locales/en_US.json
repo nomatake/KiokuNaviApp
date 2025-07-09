@@ -1,4 +1,216 @@
 {
   "hello": "Hello",
-  "welcome": "Welcome"
+  "welcome": "Welcome",
+  "app": {
+    "title": "KiokuNavi",
+    "subtitle": "Let's learn together"
+  },
+  "common": {
+    "buttons": {
+      "login": "Login",
+      "signup": "Sign Up",
+      "next": "Next",
+      "cancel": "Cancel",
+      "confirm": "Confirm",
+      "tryAgain": "Try Again",
+      "viewAnswer": "View Answer",
+      "receiveXP": "Receive XP",
+      "createAccount": "Create Account",
+      "google": "Google",
+      "allow": "Allow",
+      "dontAllow": "Don't Allow"
+    },
+    "status": {
+      "correct": "Correct",
+      "incorrect": "Incorrect",
+      "selected": "Selected"
+    },
+    "navigation": {
+      "home": "Home",
+      "training": "Training",
+      "ranking": "Ranking",
+      "course": "Course",
+      "others": "Others",
+      "tapToNavigate": "Tap to navigate"
+    },
+    "weekdays": {
+      "sun": "Sun",
+      "mon": "Mon",
+      "tue": "Tue",
+      "wed": "Wed",
+      "thu": "Thu",
+      "fri": "Fri",
+      "sat": "Sat"
+    }
+  },
+  "pages": {
+    "root": {
+      "studentLogin": "Login as Student",
+      "parentLogin": "Login as Parent"
+    },
+    "login": {
+      "title": "Login",
+      "studentTitle": "Student Login",
+      "parentTitle": "Parent Login",
+      "instruction": "Please login",
+      "forgotPassword": "Forgot Password?",
+      "form": {
+        "email": {
+          "label": "Email",
+          "placeholder": "Enter email address"
+        },
+        "emailOrUsername": {
+          "label": "Email or Username",
+          "placeholder": "Enter email or username"
+        },
+        "password": {
+          "label": "Password",
+          "placeholder": "Enter password"
+        }
+      }
+    },
+    "register": {
+      "title": "Create Parent Account",
+      "termsText": "By signing up, you agree to KiokuNavi's Terms of Service and Privacy Policy",
+      "form": {
+        "birthDate": {
+          "label": "Date of Birth",
+          "placeholder": "Example: 2000/01/01"
+        },
+        "parentEmail": {
+          "label": "Parent's Email Address",
+          "placeholder": "Enter email address"
+        },
+        "password": {
+          "label": "Password",
+          "placeholder": "Enter password"
+        }
+      }
+    },
+    "forgotPassword": {
+      "title": "Forgot Password?",
+      "instruction": "Enter your email address to receive a password reset link.",
+      "form": {
+        "email": {
+          "label": "Email Address",
+          "placeholder": "Enter email address"
+        }
+      }
+    },
+    "home": {
+      "placeholder": "HomeView",
+      "working": "HomeView is working",
+      "lesson": "5th Grade Lower・Episode 18\nJapan's Major Cities・How to Read Topographic Maps"
+    },
+    "course": {
+      "sections": {
+        "start": "Start",
+        "basicLearning": "Basic Learning",
+        "appliedProblems": "Applied Problems",
+        "practiceTest": "Practice Test"
+      }
+    },
+    "learning": {
+      "placeholder": "LearningView",
+      "working": "LearningView is working",
+      "question": {
+        "header": "Please select the correct meaning",
+        "text": "Interested in archaeology"
+      },
+      "answers": {
+        "option1": "To be interested in something",
+        "option2": "To feel deeply in one's heart",
+        "option3": "A heart that pleases others"
+      },
+      "result": {
+        "title": "Challenge Complete!",
+        "totalXP": "Total XP",
+        "time": "Time",
+        "accuracyRate": "Accuracy Rate"
+      },
+      "session": {
+        "comprehensiveCourse": "Comprehensive Course",
+        "grade5Lower16": "5th Grade Lower Episode 16",
+        "comprehensive16": "Comprehensive Episode 16",
+        "grade5Lower17": "5th Grade Lower Episode 17",
+        "comprehensive17": "Comprehensive Episode 17",
+        "grade5Lower18": "5th Grade Lower Episode 18",
+        "comprehensive18": "Comprehensive Episode 18"
+      },
+      "continuous": {
+        "tooltip": "A new consecutive record has started! Let's continue updating the record by taking lessons every day.",
+        "recordText": "Day Consecutive Record"
+      }
+    },
+    "tutorial": {
+      "one": {
+        "message": "Hello! I'm Kio!"
+      },
+      "two": {
+        "message": "Before starting your first lesson,\nplease answer a few simple questions!"
+      },
+      "three": {
+        "question": "Please tell us your situation",
+        "options": {
+          "parent": "Parent",
+          "child": "Child",
+          "teacher": "Teacher"
+        }
+      },
+      "four": {
+        "question": "What grade is your child in?",
+        "options": {
+          "grade3": "3rd Grade",
+          "grade4": "4th Grade",
+          "grade5": "5th Grade",
+          "grade6": "6th Grade",
+          "grade7": "7th Grade",
+          "grade8": "8th Grade"
+        }
+      },
+      "five": {
+        "question": "Which cram school do you attend?",
+        "options": {
+          "waseda": "Waseda Academy",
+          "yotsuya": "Yotsuya Otsuka",
+          "sapix": "SAPIX",
+          "nichinoken": "Nichinoken",
+          "other": "Other"
+        }
+      },
+      "six": {
+        "question": "Please enter your child's name"
+      },
+      "seven": {
+        "question": "What daily goal would you like?",
+        "options": {
+          "fiveMin": "5 min / day",
+          "tenMin": "10 min / day",
+          "fifteenMin": "15 min / day",
+          "thirtyMin": "30 min / day"
+        }
+      },
+      "eight": {
+        "message": "Great! With this, you can learn ◯◯ in the first week!"
+      },
+      "nine": {
+        "notification": "I'll send notifications to make lessons a habit!",
+        "permission": "Allow KiokuNavi to send and\nreceive notifications?",
+        "allow": "Allow",
+        "dontAllow": "Don't Allow",
+        "reminderText": "Receive lesson reminders"
+      }
+    }
+  },
+  "subjects": {
+    "comprehensive": "Comprehensive",
+    "socialStudies": "Social Studies",
+    "science": "Science",
+    "japanese": "Japanese"
+  },
+  "validation": {
+    "required": "Required",
+    "invalidEmail": "Invalid email",
+    "passwordMinLength": "Password must be at least 6 characters"
+  }
 }

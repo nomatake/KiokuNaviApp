@@ -1,7 +1,9 @@
 import 'package:bubble/bubble.dart';
 import 'package:flutter/material.dart';
+import 'package:get/get.dart';
 import 'package:kioku_navi/app/routes/app_pages.dart';
 import 'package:kioku_navi/generated/assets.gen.dart';
+import 'package:kioku_navi/generated/locales.g.dart';
 import 'package:kioku_navi/utils/app_constants.dart';
 import 'package:kioku_navi/utils/extensions.dart';
 import 'package:kioku_navi/widgets/base_tutorial_view.dart';
@@ -38,7 +40,7 @@ class TutorialNineView extends StatelessWidget {
       ),
       nextRoute: Routes.CHILD_HOME,
       progress: 1.0,
-      primaryButtonText: 'レッスンリマインダーを受け取る',
+      primaryButtonText: LocaleKeys.pages_tutorial_nine_reminderText.tr,
     );
   }
 
@@ -68,7 +70,7 @@ class TutorialNineView extends StatelessWidget {
               radius: Radius.circular(AppFontSize.body),
             ),
             child: Text(
-              'レッスンが習慣になるように通知を送るよ！',
+              LocaleKeys.pages_tutorial_nine_notification.tr,
               style: TextStyle(
                 fontFamily: 'Hiragino Sans',
                 fontWeight: FontWeight.w400,
@@ -112,7 +114,7 @@ class TutorialNineView extends StatelessWidget {
 
             // Permission text
             Text(
-              'キオクナビ に通知の送信を\n許可して受信しますか？',
+              LocaleKeys.pages_tutorial_nine_permission.tr,
               textAlign: TextAlign.center,
               style: TextStyle(
                 fontFamily: 'Hiragino Sans',
@@ -141,7 +143,7 @@ class TutorialNineView extends StatelessWidget {
                   ),
                 ),
                 child: Text(
-                  '許可する',
+                  LocaleKeys.pages_tutorial_nine_allow.tr,
                   style: TextStyle(
                     fontFamily: 'Hiragino Sans',
                     fontSize: AppFontSize.small.sp,
@@ -170,7 +172,7 @@ class TutorialNineView extends StatelessWidget {
                   ),
                 ),
                 child: Text(
-                  '許可しない',
+                  LocaleKeys.pages_tutorial_nine_dontAllow.tr,
                   style: TextStyle(
                     fontFamily: 'Hiragino Sans',
                     fontSize: AppFontSize.small.sp,

@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:kioku_navi/app/modules/learning/controllers/learning_controller.dart';
+import 'package:kioku_navi/generated/locales.g.dart';
 import 'package:kioku_navi/utils/extensions.dart';
 import 'package:kioku_navi/utils/sizes.dart';
 import 'package:kioku_navi/widgets/custom_appbar.dart';
@@ -15,7 +16,7 @@ class SessionChangeView extends GetView<LearningController> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: CustomAppbar(
-        titleWidget: CustomTitleText(text: "総合コース"),
+        titleWidget: CustomTitleText(text: LocaleKeys.pages_learning_session_comprehensiveCourse.tr),
         centerTitle: true,
         onBackPressed: () => Get.back(),
         isHasBorder: true,
@@ -36,8 +37,8 @@ class SessionChangeView extends GetView<LearningController> {
                       padding: EdgeInsets.symmetric(vertical: k2Double.hp),
                       children: [
                         SessionCard(
-                          title: '5年下　第16回',
-                          subtitle: '総合 第16回',
+                          title: LocaleKeys.pages_learning_session_grade5Lower16.tr,
+                          subtitle: LocaleKeys.pages_learning_session_comprehensive16.tr,
                           progress: 1.0, // 100% complete
                           showTrophy: true,
                           onTap: () {
@@ -46,8 +47,8 @@ class SessionChangeView extends GetView<LearningController> {
                         ),
                         SizedBox(height: k2Double.hp),
                         SessionCard(
-                          title: '5年下　第17回',
-                          subtitle: '総合 第17回',
+                          title: LocaleKeys.pages_learning_session_grade5Lower17.tr,
+                          subtitle: LocaleKeys.pages_learning_session_comprehensive17.tr,
                           progress: 0.965, // ~96.5% complete
                           showTrophy: true,
                           onTap: () {
@@ -56,8 +57,8 @@ class SessionChangeView extends GetView<LearningController> {
                         ),
                         SizedBox(height: k2Double.hp),
                         SessionCard(
-                          title: '5年下　第18回',
-                          subtitle: '総合 第18回',
+                          title: LocaleKeys.pages_learning_session_grade5Lower18.tr,
+                          subtitle: LocaleKeys.pages_learning_session_comprehensive18.tr,
                           progress: 0.486, // ~48.6% complete
                           showTrophy: true,
                           onTap: () {

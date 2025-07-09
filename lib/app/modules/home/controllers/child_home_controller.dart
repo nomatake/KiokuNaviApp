@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:kioku_navi/app/routes/app_pages.dart';
+import 'package:kioku_navi/generated/locales.g.dart';
 import 'package:kioku_navi/widgets/course_section_widget.dart';
 import 'package:kioku_navi/widgets/subject_selection_dialog.dart';
 import 'package:kioku_navi/utils/navigation_helper.dart';
@@ -31,7 +32,7 @@ class ChildHomeController extends BaseController {
   void _initializeCourseSections() {
     courseSections.assignAll([
       CourseSection(
-        title: 'スタート',
+        title: LocaleKeys.pages_course_sections_start.tr,
         isAlignedRight: true,
         showDolphin: true,
         nodes: [
@@ -68,7 +69,7 @@ class ChildHomeController extends BaseController {
         ],
       ),
       CourseSection(
-        title: '基礎学習',
+        title: LocaleKeys.pages_course_sections_basicLearning.tr,
         isAlignedRight: false,
         showDolphin: true,
         nodes: [
@@ -120,7 +121,7 @@ class ChildHomeController extends BaseController {
         ],
       ),
       CourseSection(
-        title: '応用問題',
+        title: LocaleKeys.pages_course_sections_appliedProblems.tr,
         isAlignedRight: true,
         showDolphin: true,
         nodes: [
@@ -162,7 +163,7 @@ class ChildHomeController extends BaseController {
         ],
       ),
       CourseSection(
-        title: '実践テスト',
+        title: LocaleKeys.pages_course_sections_practiceTest.tr,
         isAlignedRight: false,
         showDolphin: false,
         nodes: [
@@ -212,7 +213,7 @@ class ChildHomeController extends BaseController {
   }
 
   void onSectionTapped(CourseSection section) {
-    if (section.title == 'スタート') {
+    if (section.title == LocaleKeys.pages_course_sections_start.tr) {
       requestNavigation(Routes.QUESTION);
     }
 

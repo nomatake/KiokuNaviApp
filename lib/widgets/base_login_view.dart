@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:form_builder_validators/form_builder_validators.dart';
 import 'package:get/get.dart';
 import 'package:kioku_navi/app/modules/auth/controllers/auth_controller.dart';
-import 'package:kioku_navi/utils/constants.dart';
+import 'package:kioku_navi/generated/locales.g.dart';
 import 'package:kioku_navi/utils/extensions.dart';
 import 'package:kioku_navi/utils/sizes.dart';
 import 'package:kioku_navi/widgets/custom_appbar.dart';
@@ -43,7 +43,7 @@ class BaseLoginView extends StatelessWidget {
                 children: [
                   SizedBox(height: k2_5Double.hp),
                   Text(
-                    'ログインしてください',
+                    LocaleKeys.pages_login_instruction.tr,
                     style: TextStyle(
                       fontWeight: FontWeight.w600,
                       fontSize: k16Double.sp,
@@ -54,32 +54,32 @@ class BaseLoginView extends StatelessWidget {
 
                   CustomTextFormField(
                     textController: controller.email,
-                    labelText: 'メールアドレスまたはユーザー名',
-                    hintText: 'メールアドレスまたはユーザー名を入力',
+                    labelText: LocaleKeys.pages_login_form_emailOrUsername_label.tr,
+                    hintText: LocaleKeys.pages_login_form_emailOrUsername_placeholder.tr,
                     keyboardType: TextInputType.emailAddress,
                     customValidators: [
-                      FormBuilderValidators.required(errorText: kRequired),
-                      FormBuilderValidators.email(errorText: "Invalid email"),
+                      FormBuilderValidators.required(errorText: LocaleKeys.validation_required.tr),
+                      FormBuilderValidators.email(errorText: LocaleKeys.validation_invalidEmail.tr),
                     ],
                   ),
                   SizedBox(height: k1_5Double.hp),
                   CustomTextFormField(
                     textController: controller.password,
-                    labelText: 'パスワード',
-                    hintText: 'パスワードを入力',
+                    labelText: LocaleKeys.pages_login_form_password_label.tr,
+                    hintText: LocaleKeys.pages_login_form_password_placeholder.tr,
                     isPassword: true,
                     textInputAction: TextInputAction.done,
                     customValidators: [
-                      FormBuilderValidators.required(errorText: kRequired),
+                      FormBuilderValidators.required(errorText: LocaleKeys.validation_required.tr),
                       FormBuilderValidators.minLength(6,
-                          errorText: "Password must be at least 6 characters"),
+                          errorText: LocaleKeys.validation_passwordMinLength.tr),
                     ],
                   ),
                   SizedBox(height: k3Double.hp),
 
                   // Login button
                   CustomButton.ghost(
-                    text: 'ログイン',
+                    text: LocaleKeys.common_buttons_login.tr,
                     onPressed: () {},
                   ),
                   SizedBox(height: k3Double.hp),
@@ -87,8 +87,8 @@ class BaseLoginView extends StatelessWidget {
                   Center(
                     child: TextButton(
                       onPressed: () {},
-                      child: const Text(
-                        'パスワードを忘れた場合',
+                      child: Text(
+                        LocaleKeys.pages_login_forgotPassword.tr,
                         style: TextStyle(
                           fontWeight: FontWeight.w600,
                           fontSize: 16,
@@ -100,7 +100,7 @@ class BaseLoginView extends StatelessWidget {
                   ),
                   SizedBox(height: k3Double.hp),
                   CustomButton.outline(
-                    text: 'Google',
+                    text: LocaleKeys.common_buttons_google.tr,
                     onPressed: () {},
                   )
                 ],

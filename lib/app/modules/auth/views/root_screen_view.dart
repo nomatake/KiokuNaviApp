@@ -3,6 +3,7 @@ import 'package:get/get.dart';
 import 'package:kioku_navi/app/modules/auth/controllers/auth_controller.dart';
 import 'package:kioku_navi/app/routes/app_pages.dart';
 import 'package:kioku_navi/generated/assets.gen.dart';
+import 'package:kioku_navi/generated/locales.g.dart';
 import 'package:kioku_navi/utils/extensions.dart';
 import 'package:kioku_navi/utils/sizes.dart';
 import 'package:kioku_navi/widgets/custom_button.dart';
@@ -32,7 +33,7 @@ class RootScreenView extends GetView<AuthController> {
 
               // Title
               Text(
-                'キオクナビ',
+                LocaleKeys.app_title.tr,
                 style: TextStyle(
                   fontFamily: 'Hiragino Sans',
                   fontWeight: FontWeight.w800,
@@ -44,7 +45,7 @@ class RootScreenView extends GetView<AuthController> {
 
               // Subtitle
               Text(
-                '楽しく学ぼう',
+                LocaleKeys.app_subtitle.tr,
                 style: TextStyle(
                   fontFamily: 'Hiragino Sans',
                   fontWeight: FontWeight.w700,
@@ -56,21 +57,21 @@ class RootScreenView extends GetView<AuthController> {
 
               // Sign Up Button
               CustomButton.primary(
-                text: '新規登録',
+                text: LocaleKeys.common_buttons_signup.tr,
                 onPressed: () => Get.toNamed(Routes.REGISTER),
               ),
               SizedBox(height: k2Double.hp),
 
               // Login as Student
               CustomButton.outline(
-                text: '生徒としてログイン',
+                text: LocaleKeys.pages_root_studentLogin.tr,
                 onPressed: () => Get.toNamed(Routes.STUDENT_LOGIN),
               ),
               SizedBox(height: k2Double.hp),
 
               // Login as Guardian
               CustomButton.outline(
-                text: '保護者としてログイン',
+                text: LocaleKeys.pages_root_parentLogin.tr,
                 onPressed: () => Get.toNamed(Routes.PARENT_LOGIN),
               ),
             ],
