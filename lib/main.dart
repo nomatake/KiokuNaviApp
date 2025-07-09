@@ -7,6 +7,7 @@ import 'package:kioku_navi/utils/error_manager.dart';
 import 'package:kioku_navi/utils/sizes.dart';
 
 import 'app/routes/app_pages.dart';
+import 'generated/locales.g.dart';
 
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
@@ -40,8 +41,8 @@ class MyApp extends StatelessWidget {
   ];
 
   static const _supportedLocales = [
-    Locale('en', ''),
-    Locale('ja', ''),
+    Locale('en', 'US'),
+    Locale('ja', 'JP'),
   ];
 
   @override
@@ -53,9 +54,11 @@ class MyApp extends StatelessWidget {
       getPages: AppPages.routes,
       theme: _theme,
       defaultTransition: Transition.noTransition,
-      localizationsDelegates: _localizationsDelegates,
+      locale: const Locale('ja', 'JP'),
       supportedLocales: _supportedLocales,
-      locale: const Locale('ja', ''),
+      localizationsDelegates: _localizationsDelegates,
+      fallbackLocale: const Locale('en', 'US'),
+      translationsKeys: AppTranslation.translations,
     );
   }
 }
