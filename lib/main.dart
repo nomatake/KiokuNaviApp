@@ -7,6 +7,7 @@ import 'package:kioku_navi/utils/error_manager.dart';
 import 'package:kioku_navi/utils/sizes.dart';
 
 import 'app/routes/app_pages.dart';
+import 'app/bindings/service_binding.dart';
 
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
@@ -51,6 +52,7 @@ class MyApp extends StatelessWidget {
       debugShowCheckedModeBanner: false,
       initialRoute: AppPages.INITIAL,
       getPages: AppPages.routes,
+      initialBinding: ServiceBinding(),
       theme: _theme,
       defaultTransition: Transition.noTransition,
       localizationsDelegates: _localizationsDelegates,

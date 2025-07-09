@@ -12,6 +12,7 @@ class ParentLoginView extends GetView<AuthController> {
       title: "保護者ログイン",
       formKey: controller.parentLoginFormKey,
       controller: controller,
+      onPressed: controller.loginParent,
     );
   }
 }

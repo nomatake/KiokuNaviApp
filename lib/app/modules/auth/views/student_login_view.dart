@@ -12,6 +12,7 @@ class StudentLoginView extends GetView<AuthController> {
       title: "生徒ログイン",
       formKey: controller.studentLoginFormKey,
       controller: controller,
+      onPressed: controller.loginStudent,
     );
   }
 }
