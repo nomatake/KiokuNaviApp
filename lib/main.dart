@@ -1,18 +1,29 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
-import 'package:flutter_localizations/flutter_localizations.dart';
 import 'package:get/get.dart';
 import 'package:kioku_navi/app/modules/auth/views/root_screen_view.dart';
 import 'package:kioku_navi/app/routes/app_pages.dart';
+import 'package:get_storage/get_storage.dart';
+import 'package:kioku_navi/config/config_store.dart';
 import 'package:kioku_navi/utils/constants.dart';
 import 'package:kioku_navi/utils/error_manager.dart';
 import 'package:kioku_navi/utils/sizes.dart';
 import 'package:splash_master/splash_master.dart';
+import 'package:kioku_navi/utils/route_helper.dart';
+
+import 'app/bindings/service_binding.dart';
+import 'app/routes/app_pages.dart';
 
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
   await SystemChrome.setPreferredOrientations([DeviceOrientation.portraitUp]);
   SplashMaster.initialize();
+
+  // Initialize GetStorage
+  await GetStorage.init();
+
+  // Initialize services
+  ServiceBinding().dependencies();
 
   // Initialize error manager
   Get.put(ErrorManager());
@@ -22,38 +33,6 @@ void main() async {
 
 class MyApp extends StatelessWidget {
   const MyApp({super.key});
-
-  static final _theme = ThemeData(
-    useMaterial3: true,
-    brightness: Brightness.light,
-    scaffoldBackgroundColor: const Color(kScaffoldBackgroundColor),
-    visualDensity: VisualDensity.adaptivePlatformDensity,
-    appBarTheme: AppBarTheme(
-      backgroundColor: Colors.white70,
-      scrolledUnderElevation: k0Double,
-      elevation: k0Double,
-    ),
-  );
-
-  static const _localizationsDelegates = [
-    GlobalMaterialLocalizations.delegate,
-    GlobalWidgetsLocalizations.delegate,
-    GlobalCupertinoLocalizations.delegate,
-  ];
-
-  static const _supportedLocales = [
-    Locale('en', ''),
-    Locale('ja', ''),
-  ];
-
-  static const _lottieConfig = LottieConfig(
-    width: 300.0,
-    height: 300.0,
-    visibilityEnum: VisibilityEnum.none,
-    fit: BoxFit.contain,
-    overrideBoxFit: false,
-    repeat: true,
-  );
 
   @override
   Widget build(BuildContext context) {
@@ -66,12 +45,13 @@ class MyApp extends StatelessWidget {
       ),
       title: kAppName,
       debugShowCheckedModeBanner: false,
+      initialRoute: RouteHelper.getInitialRoute(),
       getPages: AppPages.routes,
-      theme: _theme,
+      theme: ConfigStore.theme,
       defaultTransition: Transition.noTransition,
-      localizationsDelegates: _localizationsDelegates,
-      supportedLocales: _supportedLocales,
-      locale: const Locale('ja', ''),
+      localizationsDelegates: ConfigStore.localizationsDelegates,
+      supportedLocales: ConfigStore.supportedLocales,
+      locale: ConfigStore.locale,
     );
   }
 }

@@ -27,7 +27,7 @@ const Color kButtonSecondaryTopShadowColor = Color(0x14000000);
 const Color kButtonSecondaryBottomShadowColor = Color(0xFFB0BEC5);
 
 ///API
-const String kBaseUrl = "";
+const String kBaseUrl = "http://127.0.0.1:8000/api/v1/";
 
 ///Common
 const String kEmpty = "";
@@ -52,6 +52,7 @@ const String kToken = 'token';
 const String kAuthorization = 'Authorization';
 const String kBearer = 'Bearer';
 const String kUserEmail = 'user_email';
+const String kIsStudent = 'is_student';
 
 /// HTTP Status Codes
 const int kStatusOK = 200;

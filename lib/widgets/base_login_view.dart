@@ -16,12 +16,14 @@ class BaseLoginView extends StatelessWidget {
   final String title;
   final GlobalKey<FormState> formKey;
   final AuthController controller;
+  final Function(BuildContext?) onPressed; // Updated to accept BuildContext
 
   const BaseLoginView({
     super.key,
     required this.title,
     required this.formKey,
     required this.controller,
+    required this.onPressed,
   });
 
   @override
@@ -52,10 +54,11 @@ class BaseLoginView extends StatelessWidget {
                   ),
                   SizedBox(height: k3Double.hp),
 
+                  // Email field for both student and parent login
                   CustomTextFormField(
                     textController: controller.email,
-                    labelText: 'メールアドレスまたはユーザー名',
-                    hintText: 'メールアドレスまたはユーザー名を入力',
+                    labelText: 'メールアドレス',
+                    hintText: 'メールアドレスを入力',
                     keyboardType: TextInputType.emailAddress,
                     customValidators: [
                       FormBuilderValidators.required(errorText: kRequired),
@@ -63,6 +66,8 @@ class BaseLoginView extends StatelessWidget {
                     ],
                   ),
                   SizedBox(height: k1_5Double.hp),
+
+                  // Password field
                   CustomTextFormField(
                     textController: controller.password,
                     labelText: 'パスワード',
@@ -77,16 +82,19 @@ class BaseLoginView extends StatelessWidget {
                   ),
                   SizedBox(height: k3Double.hp),
 
-                  // Login button
-                  CustomButton.ghost(
-                    text: 'ログイン',
-                    onPressed: () {},
-                  ),
+                  // Login button with passed onPressed method
+                  Obx(() => CustomButton.primary(
+                        text: 'ログイン',
+                        onPressed: controller.isLoading.value
+                            ? null
+                            : () => onPressed(context),
+                      )),
                   SizedBox(height: k3Double.hp),
 
+                  // Forgot password button
                   Center(
                     child: TextButton(
-                      onPressed: () {},
+                      onPressed: () => controller.onForgotPassword(context),
                       child: const Text(
                         'パスワードを忘れた場合',
                         style: TextStyle(
@@ -99,9 +107,18 @@ class BaseLoginView extends StatelessWidget {
                     ),
                   ),
                   SizedBox(height: k3Double.hp),
+
+                  // Google login placeholder (TODO: implement when backend is ready)
                   CustomButton.outline(
                     text: 'Google',
-                    onPressed: () {},
+                    onPressed: () {
+                      // TODO: Implement Google OAuth when backend is ready
+                      Get.snackbar(
+                        'Google Login',
+                        'Google authentication not yet implemented',
+                        snackPosition: SnackPosition.BOTTOM,
+                      );
+                    },
                   )
                 ],
               ),
