@@ -11,6 +11,7 @@ import 'package:kioku_navi/widgets/custom_text_form_field.dart';
 import 'package:kioku_navi/widgets/intrinsic_height_scroll_view.dart';
 import 'package:kioku_navi/widgets/padded_wrapper.dart';
 import 'package:kioku_navi/widgets/register_app_bar.dart';
+import 'package:kioku_navi/generated/locales.g.dart';
 
 class RegisterView extends GetView<AuthController> {
   const RegisterView({super.key});
@@ -37,7 +38,7 @@ class RegisterView extends GetView<AuthController> {
 
                   // Title
                   Text(
-                    '保護者アカウントの作成',
+                    LocaleKeys.pages_register_title.tr,
                     style: TextStyle(
                       fontWeight: FontWeight.w600,
                       fontSize: k16Double.sp,
@@ -53,7 +54,7 @@ class RegisterView extends GetView<AuthController> {
                     hintText: '氏名を入力',
                     textInputAction: TextInputAction.next,
                     customValidators: [
-                      FormBuilderValidators.required(errorText: kRequired),
+                      FormBuilderValidators.required(errorText: LocaleKeys.validation_required.tr),
                     ],
                   ),
                   SizedBox(height: k1_5Double.hp),
@@ -63,14 +64,14 @@ class RegisterView extends GetView<AuthController> {
                     textController: controller.dob,
                     selectedDates: controller.selectedDates,
                     onDateSelected: controller.onDateSelected,
-                    labelText: '生年月日',
-                    hintText: '例: 2000/01/01',
+                    labelText: LocaleKeys.pages_register_form_birthDate_label.tr,
+                    hintText: LocaleKeys.pages_register_form_birthDate_placeholder.tr,
                     customValidators: [
-                      FormBuilderValidators.required(errorText: kRequired),
+                      FormBuilderValidators.required(errorText: LocaleKeys.validation_required.tr),
                       (value) {
                         if (controller.selectedDates.isEmpty ||
                             controller.selectedDates.first == null) {
-                          return kRequired;
+                          return LocaleKeys.validation_required.tr;
                         }
                         return null;
                       },
@@ -81,13 +82,13 @@ class RegisterView extends GetView<AuthController> {
                   // Email field
                   CustomTextFormField(
                     textController: controller.email,
-                    labelText: '保護者の方のメールアドレス',
-                    hintText: 'メールアドレスを入力',
+                    labelText: LocaleKeys.pages_register_form_parentEmail_label.tr,
+                    hintText: LocaleKeys.pages_register_form_parentEmail_placeholder.tr,
                     keyboardType: TextInputType.emailAddress,
                     textInputAction: TextInputAction.next,
                     customValidators: [
-                      FormBuilderValidators.required(errorText: kRequired),
-                      FormBuilderValidators.email(errorText: "Invalid email"),
+                      FormBuilderValidators.required(errorText: LocaleKeys.validation_required.tr),
+                      FormBuilderValidators.email(errorText: LocaleKeys.validation_invalidEmail.tr),
                     ],
                   ),
                   SizedBox(height: k1_5Double.hp),
@@ -95,14 +96,14 @@ class RegisterView extends GetView<AuthController> {
                   // Password field
                   CustomTextFormField(
                     textController: controller.password,
-                    labelText: 'パスワード',
-                    hintText: 'パスワードを入力',
+                    labelText: LocaleKeys.pages_register_form_password_label.tr,
+                    hintText: LocaleKeys.pages_register_form_password_placeholder.tr,
                     isPassword: true,
                     textInputAction: TextInputAction.next,
                     customValidators: [
                       FormBuilderValidators.required(errorText: kRequired),
                       FormBuilderValidators.minLength(6,
-                          errorText: "Password must be at least 6 characters"),
+                          errorText: LocaleKeys.validation_passwordMinLength.tr),
                     ],
                   ),
                   SizedBox(height: k1_5Double.hp),
@@ -115,9 +116,9 @@ class RegisterView extends GetView<AuthController> {
                     isPassword: true,
                     textInputAction: TextInputAction.done,
                     customValidators: [
-                      FormBuilderValidators.required(errorText: kRequired),
+                      FormBuilderValidators.required(errorText: LocaleKeys.validation_required.tr),
                       FormBuilderValidators.minLength(6,
-                          errorText: "Password must be at least 6 characters"),
+                          errorText: LocaleKeys.validation_passwordMinLength.tr),
                       (value) {
                         if (value != controller.password.text) {
                           return "Passwords do not match";
@@ -133,7 +134,7 @@ class RegisterView extends GetView<AuthController> {
                     child: Padding(
                       padding: EdgeInsets.symmetric(horizontal: k12Double.wp),
                       child: Text(
-                        '新規登録をすることにより、キオクナビのサービス利用規約とプライバシーポリシーに同意したものと見なされます',
+                        LocaleKeys.pages_register_termsText.tr,
                         textAlign: TextAlign.center,
                         style: TextStyle(
                           fontWeight: FontWeight.w600,
@@ -147,7 +148,7 @@ class RegisterView extends GetView<AuthController> {
 
                   // Register button
                   CustomButton(
-                    text: 'アカウントを作成する',
+                    text: LocaleKeys.common_buttons_createAccount.tr,
                     onPressed: () => controller.onRegister(context),
                   ),
                 ],

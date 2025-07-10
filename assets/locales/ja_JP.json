@@ -1,0 +1,216 @@
+{
+  "hello": "こんにちは",
+  "welcome": "ようこそ",
+  "app": {
+    "title": "キオクナビ",
+    "subtitle": "楽しく学ぼう"
+  },
+  "common": {
+    "buttons": {
+      "login": "ログイン",
+      "signup": "新規登録",
+      "next": "次へ",
+      "cancel": "キャンセル",
+      "confirm": "確認",
+      "tryAgain": "もう一度",
+      "viewAnswer": "答えを見る",
+      "receiveXP": "XPを受け取る",
+      "createAccount": "アカウントを作成する",
+      "google": "Google",
+      "allow": "許可する",
+      "dontAllow": "許可しない"
+    },
+    "status": {
+      "correct": "正解",
+      "incorrect": "不正解",
+      "selected": "選択中"
+    },
+    "navigation": {
+      "home": "ホーム",
+      "training": "トレーニング",
+      "ranking": "ランキング",
+      "course": "コース",
+      "others": "その他",
+      "tapToNavigate": "タップして移動"
+    },
+    "weekdays": {
+      "sun": "日",
+      "mon": "月",
+      "tue": "火",
+      "wed": "水",
+      "thu": "木",
+      "fri": "金",
+      "sat": "土"
+    }
+  },
+  "pages": {
+    "root": {
+      "studentLogin": "生徒としてログイン",
+      "parentLogin": "保護者としてログイン"
+    },
+    "login": {
+      "title": "ログイン",
+      "studentTitle": "生徒ログイン",
+      "parentTitle": "保護者ログイン",
+      "instruction": "ログインしてください",
+      "forgotPassword": "パスワードを忘れた場合",
+      "form": {
+        "email": {
+          "label": "メールアドレス",
+          "placeholder": "メールアドレスを入力"
+        },
+        "emailOrUsername": {
+          "label": "メールアドレスまたはユーザー名",
+          "placeholder": "メールアドレスまたはユーザー名を入力"
+        },
+        "password": {
+          "label": "パスワード",
+          "placeholder": "パスワードを入力"
+        }
+      }
+    },
+    "register": {
+      "title": "保護者アカウントの作成",
+      "termsText": "新規登録をすることにより、キオクナビのサービス利用規約とプライバシーポリシーに同意したものと見なされます",
+      "form": {
+        "birthDate": {
+          "label": "生年月日",
+          "placeholder": "例: 2000/01/01"
+        },
+        "parentEmail": {
+          "label": "保護者の方のメールアドレス",
+          "placeholder": "メールアドレスを入力"
+        },
+        "password": {
+          "label": "パスワード",
+          "placeholder": "パスワードを入力"
+        }
+      }
+    },
+    "forgotPassword": {
+      "title": "パスワードをお忘れですか？",
+      "instruction": "メールアドレスを入力して、パスワード再設定のリンクを受け取りましょう。",
+      "form": {
+        "email": {
+          "label": "メールアドレス",
+          "placeholder": "メールアドレスを入力"
+        }
+      }
+    },
+    "home": {
+      "placeholder": "HomeView",
+      "working": "HomeView is working",
+      "lesson": "5年下・第18回\n日本のおもな都市・地形図の読み方"
+    },
+    "course": {
+      "sections": {
+        "start": "スタート",
+        "basicLearning": "基礎学習",
+        "appliedProblems": "応用問題",
+        "practiceTest": "実践テスト"
+      }
+    },
+    "learning": {
+      "placeholder": "LearningView",
+      "working": "LearningView is working",
+      "question": {
+        "header": "正しい意味を選んでください",
+        "text": "考古学に関心がある"
+      },
+      "answers": {
+        "option1": "物事に興味を抱くこと",
+        "option2": "心に深く感ずること",
+        "option3": "相手に気に入られる心"
+      },
+      "result": {
+        "title": "チャレンジ完了！",
+        "totalXP": "累計XP",
+        "time": "時間",
+        "accuracyRate": "正解率"
+      },
+      "session": {
+        "comprehensiveCourse": "総合コース",
+        "grade5Lower16": "5年下　第16回",
+        "comprehensive16": "総合 第16回",
+        "grade5Lower17": "5年下　第17回",
+        "comprehensive17": "総合 第17回",
+        "grade5Lower18": "5年下　第18回",
+        "comprehensive18": "総合 第18回"
+      },
+      "continuous": {
+        "tooltip": "新しい連続記録がスタートしたね！毎日レッスンして記録を更新し続けよう。",
+        "recordText": "日連続記録"
+      }
+    },
+    "tutorial": {
+      "one": {
+        "message": "こんにちは！キオだよ！"
+      },
+      "two": {
+        "message": "最初のレッスンを始める前に、\nn個の簡単な質問に答えてね！"
+      },
+      "three": {
+        "question": "あなたの状況を教えてください",
+        "options": {
+          "parent": "保護者",
+          "child": "児童",
+          "teacher": "教師"
+        }
+      },
+      "four": {
+        "question": "お子様の学年を教えてください",
+        "options": {
+          "grade3": "小学３年生",
+          "grade4": "小学４年生",
+          "grade5": "小学５年生",
+          "grade6": "小学６年生",
+          "grade7": "中学１年生",
+          "grade8": "中学２年生"
+        }
+      },
+      "five": {
+        "question": "通っている塾はどれですか？",
+        "options": {
+          "waseda": "早稲田アカデミー",
+          "yotsuya": "四谷大塚",
+          "sapix": "SAPIX",
+          "nichinoken": "日能研",
+          "other": "それ以外"
+        }
+      },
+      "six": {
+        "question": "お子様のお名前を入力してください"
+      },
+      "seven": {
+        "question": "毎日の目標はどれがいい？",
+        "options": {
+          "fiveMin": "5分 / 日",
+          "tenMin": "10分 / 日",
+          "fifteenMin": "15分 / 日",
+          "thirtyMin": "30分 / 日"
+        }
+      },
+      "eight": {
+        "message": "いいですね！これだと最初の１週間で◯◯学べるよ！"
+      },
+      "nine": {
+        "notification": "レッスンが習慣になるように通知を送るよ！",
+        "permission": "キオクナビ に通知の送信を\n許可して受信しますか？",
+        "allow": "許可する",
+        "dontAllow": "許可しない",
+        "reminderText": "レッスンリマインダーを受け取る"
+      }
+    }
+  },
+  "subjects": {
+    "comprehensive": "総合",
+    "socialStudies": "社会",
+    "science": "理科",
+    "japanese": "国語"
+  },
+  "validation": {
+    "required": "Required",
+    "invalidEmail": "Invalid email",
+    "passwordMinLength": "Password must be at least 6 characters"
+  }
+}

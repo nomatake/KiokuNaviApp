@@ -1,4 +1,6 @@
 import 'package:flutter/material.dart';
+import 'package:get/get.dart';
+import 'package:kioku_navi/generated/locales.g.dart';
 import 'package:kioku_navi/utils/accessibility_helper.dart';
 import 'package:kioku_navi/utils/app_constants.dart';
 import 'package:kioku_navi/utils/extensions.dart';
@@ -37,28 +39,28 @@ class ChildBottomNavBar extends StatelessWidget {
           mainAxisAlignment: MainAxisAlignment.spaceAround,
           children: [
             _NavBarItem(
-              label: 'ホーム',
+              label: LocaleKeys.common_navigation_home.tr,
               icon: Icons.home,
               selected: true,
               isTablet: isTablet,
             ),
             _NavBarItem(
-              label: 'トレーニング',
+              label: LocaleKeys.common_navigation_training.tr,
               icon: Icons.fitness_center,
               isTablet: isTablet,
             ),
             _NavBarItem(
-              label: 'ランキング',
+              label: LocaleKeys.common_navigation_ranking.tr,
               icon: Icons.emoji_events,
               isTablet: isTablet,
             ),
             _NavBarItem(
-              label: 'コース',
+              label: LocaleKeys.common_navigation_course.tr,
               icon: Icons.school,
               isTablet: isTablet,
             ),
             _NavBarItem(
-              label: 'その他',
+              label: LocaleKeys.common_navigation_others.tr,
               icon: Icons.settings,
               isTablet: isTablet,
             ),
@@ -96,7 +98,7 @@ class _NavBarItem extends StatelessWidget {
     // Accessibility
     final semanticsLabel = AccessibilityHelper.getButtonSemanticLabel(
       label,
-      hint: selected ? '選択中' : 'タップして移動',
+      hint: selected ? LocaleKeys.common_status_selected.tr : LocaleKeys.common_navigation_tapToNavigate.tr,
     );
 
     return Expanded(

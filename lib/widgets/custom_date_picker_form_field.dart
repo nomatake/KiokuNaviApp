@@ -2,6 +2,7 @@ import 'package:calendar_date_picker2/calendar_date_picker2.dart';
 import 'package:flutter/material.dart';
 import 'package:form_builder_validators/form_builder_validators.dart';
 import 'package:get/get.dart';
+import 'package:kioku_navi/generated/locales.g.dart';
 import 'package:kioku_navi/utils/extensions.dart';
 import 'package:kioku_navi/utils/sizes.dart';
 
@@ -43,13 +44,13 @@ class _CustomDatePickerFormFieldState extends State<CustomDatePickerFormField> {
   static const Color _primaryColor = Color(0xFF1976D2);
   static const Color _dialogBackgroundColor = Color(0xFFF7F9FC);
   static const List<String> _japaneseWeekdayLabels = [
-    '日',
-    '月',
-    '火',
-    '水',
-    '木',
-    '金',
-    '土'
+    LocaleKeys.common_weekdays_sun,
+    LocaleKeys.common_weekdays_mon,
+    LocaleKeys.common_weekdays_tue,
+    LocaleKeys.common_weekdays_wed,
+    LocaleKeys.common_weekdays_thu,
+    LocaleKeys.common_weekdays_fri,
+    LocaleKeys.common_weekdays_sat,
   ];
 
   static double getResponsiveDialogWidth(BuildContext context) {
@@ -238,7 +239,7 @@ class _CustomDatePickerFormFieldState extends State<CustomDatePickerFormField> {
       selectedRangeHighlightColor: _primaryColor.withValues(alpha: 0.2),
 
       // Weekday configuration
-      weekdayLabels: _japaneseWeekdayLabels,
+      weekdayLabels: _japaneseWeekdayLabels.map((key) => key.tr).toList(),
       weekdayLabelTextStyle: _getWeekdayTextStyle(context),
 
       // Text styles
@@ -253,10 +254,12 @@ class _CustomDatePickerFormFieldState extends State<CustomDatePickerFormField> {
       buttonPadding: buttonPadding,
 
       // Custom OK button
-      okButton: Text('確認', style: _getPrimaryBoldTextStyle(context)),
+      okButton: Text(LocaleKeys.common_buttons_confirm.tr,
+          style: _getPrimaryBoldTextStyle(context)),
 
       // Custom cancel button
-      cancelButton: Text('キャンセル', style: _getPrimaryBoldTextStyle(context)),
+      cancelButton: Text(LocaleKeys.common_buttons_cancel.tr,
+          style: _getPrimaryBoldTextStyle(context)),
 
       // Date validation
       selectableDayPredicate: (day) => !day.isAfter(DateTime.now()),

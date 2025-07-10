@@ -3,6 +3,7 @@ import 'package:get/get.dart';
 import 'package:kioku_navi/app/modules/learning/controllers/learning_controller.dart';
 import 'package:kioku_navi/app/routes/app_pages.dart';
 import 'package:kioku_navi/generated/assets.gen.dart';
+import 'package:kioku_navi/generated/locales.g.dart';
 import 'package:kioku_navi/utils/extensions.dart';
 import 'package:kioku_navi/utils/sizes.dart';
 import 'package:kioku_navi/widgets/custom_button.dart';
@@ -40,7 +41,8 @@ class ResultView extends GetView<LearningController> {
 
                   // Challenge complete text
                   Text(
-                    'チャレンジ完了！',
+                    LocaleKeys.pages_learning_result_title.tr,
+                    textAlign: TextAlign.center,
                     style: TextStyle(
                       fontFamily: 'Hiragino Sans',
                       fontWeight: FontWeight.w800,
@@ -60,21 +62,22 @@ class ResultView extends GetView<LearningController> {
                         Flexible(
                           child: ResultStatCard.orange(
                             value: '23',
-                            label: '累計XP',
+                            label: LocaleKeys.pages_learning_result_totalXP.tr,
                           ),
                         ),
                         SizedBox(width: k3Double.wp),
                         Flexible(
                           child: ResultStatCard.blue(
                             value: '5:35',
-                            label: '時間',
+                            label: LocaleKeys.pages_learning_result_time.tr,
                           ),
                         ),
                         SizedBox(width: k3Double.wp),
                         Flexible(
                           child: ResultStatCard.green(
                             value: '85%',
-                            label: '正解率',
+                            label: LocaleKeys
+                                .pages_learning_result_accuracyRate.tr,
                           ),
                         ),
                       ],
@@ -89,7 +92,7 @@ class ResultView extends GetView<LearningController> {
 
                   // Get XP button
                   CustomButton.orange(
-                    text: 'XPを受け取る',
+                    text: LocaleKeys.common_buttons_receiveXP.tr,
                     onPressed: () {
                       Get.toNamed(Routes.CONTINUOUS_PLAY_RECORD);
                     },

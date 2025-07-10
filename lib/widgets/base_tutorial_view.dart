@@ -5,6 +5,7 @@ import 'package:bubble/bubble.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:kioku_navi/generated/assets.gen.dart';
+import 'package:kioku_navi/generated/locales.g.dart';
 import 'package:kioku_navi/utils/app_constants.dart';
 import 'package:kioku_navi/utils/extensions.dart';
 import 'package:kioku_navi/widgets/custom_appbar.dart';
@@ -71,8 +72,8 @@ class BaseTutorialView extends StatelessWidget {
   /// Custom callback for back button
   final VoidCallback? onBack;
 
-  /// Text for the primary button (defaults to '次へ')
-  final String primaryButtonText;
+  /// Text for the primary button
+  final String? primaryButtonText;
 
   /// Whether to show the primary button
   final bool showPrimaryButton;
@@ -88,7 +89,7 @@ class BaseTutorialView extends StatelessWidget {
     this.customContent,
     this.showBackButton = true,
     this.onBack,
-    this.primaryButtonText = '次へ',
+    this.primaryButtonText,
     this.showPrimaryButton = true,
   });
 
@@ -99,7 +100,7 @@ class BaseTutorialView extends StatelessWidget {
     required String nextRoute,
     bool showBackButton = true,
     VoidCallback? onBack,
-    String primaryButtonText = '次へ',
+    String? primaryButtonText,
   }) {
     return BaseTutorialView(
       key: key,
@@ -121,7 +122,7 @@ class BaseTutorialView extends StatelessWidget {
     required List<TutorialOption> options,
     bool showBackButton = true,
     VoidCallback? onBack,
-    String primaryButtonText = '次へ',
+    String? primaryButtonText,
   }) {
     return BaseTutorialView(
       key: key,
@@ -144,7 +145,7 @@ class BaseTutorialView extends StatelessWidget {
     double? progress,
     bool showBackButton = true,
     VoidCallback? onBack,
-    String primaryButtonText = '次へ',
+    String? primaryButtonText,
     bool showPrimaryButton = true,
   }) {
     return BaseTutorialView(
@@ -223,7 +224,7 @@ class BaseTutorialView extends StatelessWidget {
         ),
         if (showPrimaryButton)
           CustomButton.primary(
-            text: primaryButtonText,
+            text: primaryButtonText ?? LocaleKeys.common_buttons_next.tr,
             onPressed: () => Get.toNamed(nextRoute),
           ),
       ],
@@ -252,7 +253,7 @@ class BaseTutorialView extends StatelessWidget {
           const Spacer(),
           if (showPrimaryButton)
             CustomButton.primary(
-              text: primaryButtonText,
+              text: primaryButtonText ?? LocaleKeys.common_buttons_next.tr,
               onPressed: () => Get.toNamed(nextRoute),
             ),
         ],
@@ -269,7 +270,7 @@ class BaseTutorialView extends StatelessWidget {
         ),
         if (showPrimaryButton)
           CustomButton.primary(
-            text: primaryButtonText,
+            text: primaryButtonText ?? LocaleKeys.common_buttons_next.tr,
             onPressed: () => Get.toNamed(nextRoute),
           ),
       ],

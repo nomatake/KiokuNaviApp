@@ -1,5 +1,6 @@
 import 'package:get/get.dart';
 import 'package:kioku_navi/app/routes/app_pages.dart';
+import 'package:kioku_navi/generated/locales.g.dart';
 import 'package:kioku_navi/utils/navigation_helper.dart';
 
 class LearningController extends BaseController {
@@ -16,10 +17,10 @@ class LearningController extends BaseController {
   final int correctAnswerIndex = 0;
 
   // Answer options
-  final List<String> options = [
-    '物事に興味を抱くこと',
-    '心に深く感ずること',
-    '相手に気に入られる心',
+  List<String> get options => [
+    LocaleKeys.pages_learning_answers_option1.tr,
+    LocaleKeys.pages_learning_answers_option2.tr,
+    LocaleKeys.pages_learning_answers_option3.tr,
   ];
 
   void selectOption(int index) {

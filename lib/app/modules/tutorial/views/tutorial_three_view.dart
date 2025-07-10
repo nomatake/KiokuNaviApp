@@ -1,6 +1,8 @@
 import 'package:flutter/material.dart';
+import 'package:get/get.dart';
 import 'package:kioku_navi/app/routes/app_pages.dart';
 import 'package:kioku_navi/widgets/base_tutorial_view.dart';
+import 'package:kioku_navi/generated/locales.g.dart';
 
 class TutorialThreeView extends StatelessWidget {
   const TutorialThreeView({super.key});
@@ -8,24 +10,24 @@ class TutorialThreeView extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return BaseTutorialView.interactive(
-      message: 'あなたの状況を教えてください',
+      message: LocaleKeys.pages_tutorial_three_question.tr,
       nextRoute: Routes.TUTORIAL_FOUR,
       progress: 0.142,
       options: [
         TutorialOption(
-          text: '保護者',
+          text: LocaleKeys.pages_tutorial_three_options_parent.tr,
           onPressed: () {
             // TODO: Handle selection
           },
         ),
         TutorialOption(
-          text: '児童',
+          text: LocaleKeys.pages_tutorial_three_options_child.tr,
           onPressed: () {
             // TODO: Handle selection
           },
         ),
         TutorialOption(
-          text: '教師',
+          text: LocaleKeys.pages_tutorial_three_options_teacher.tr,
           onPressed: () {
             // TODO: Handle selection
           },

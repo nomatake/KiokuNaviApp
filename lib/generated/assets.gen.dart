@@ -51,6 +51,19 @@ class $AssetsImagesGen {
   ];
 }
 
+class $AssetsLocalesGen {
+  const $AssetsLocalesGen();
+
+  /// File path: assets/locales/en_US.json
+  String get enUS => 'assets/locales/en_US.json';
+
+  /// File path: assets/locales/ja_JP.json
+  String get jaJP => 'assets/locales/ja_JP.json';
+
+  /// List of all assets
+  List<String> get values => [enUS, jaJP];
+}
+
 class $AssetsLottieGen {
   const $AssetsLottieGen();
 
@@ -65,6 +78,7 @@ class Assets {
   const Assets._();
 
   static const $AssetsImagesGen images = $AssetsImagesGen();
+  static const $AssetsLocalesGen locales = $AssetsLocalesGen();
   static const $AssetsLottieGen lottie = $AssetsLottieGen();
 }
 

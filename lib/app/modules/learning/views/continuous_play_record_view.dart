@@ -3,6 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:kioku_navi/app/modules/learning/controllers/learning_controller.dart';
 import 'package:kioku_navi/generated/assets.gen.dart';
+import 'package:kioku_navi/generated/locales.g.dart';
 import 'package:kioku_navi/utils/extensions.dart';
 import 'package:kioku_navi/utils/sizes.dart';
 import 'package:kioku_navi/widgets/custom_tooltip.dart';
@@ -26,7 +27,7 @@ class ContinuousPlayRecordView extends GetView<LearningController> {
                   if (context.isLandscape) SizedBox(height: k5Double.hp),
                   // Tooltip with message
                   CustomTooltip(
-                    message: '新しい連続記録がスタートしたね！毎日レッスンして記録を更新し続けよう。',
+                    message: LocaleKeys.pages_learning_continuous_tooltip.tr,
                     backgroundColor: const Color(0xFFFBFCEA),
                     borderColor: const Color(0xFFD8E82F),
                     child: const SizedBox.shrink(),
@@ -54,7 +55,8 @@ class ContinuousPlayRecordView extends GetView<LearningController> {
 
                   // Days streak text
                   Text(
-                    '日連続記録',
+                    LocaleKeys.pages_learning_continuous_recordText.tr,
+                    textAlign: TextAlign.center,
                     style: TextStyle(
                       fontFamily: 'Hiragino Sans',
                       fontWeight: FontWeight.w800,
@@ -77,7 +79,15 @@ class ContinuousPlayRecordView extends GetView<LearningController> {
   }
 
   Widget _buildWeekTracker() {
-    final weekDays = ['月', '火', '水', '木', '金', '土', '日'];
+    final weekDays = [
+      LocaleKeys.common_weekdays_mon.tr,
+      LocaleKeys.common_weekdays_tue.tr,
+      LocaleKeys.common_weekdays_wed.tr,
+      LocaleKeys.common_weekdays_thu.tr,
+      LocaleKeys.common_weekdays_fri.tr,
+      LocaleKeys.common_weekdays_sat.tr,
+      LocaleKeys.common_weekdays_sun.tr,
+    ];
     final activeDay = 4; // Friday is active (0-indexed)
 
     return Container(

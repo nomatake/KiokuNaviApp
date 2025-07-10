@@ -1,6 +1,8 @@
 import 'package:flutter/material.dart';
+import 'package:get/get.dart';
 import 'package:kioku_navi/app/routes/app_pages.dart';
 import 'package:kioku_navi/widgets/base_tutorial_view.dart';
+import 'package:kioku_navi/generated/locales.g.dart';
 
 class TutorialTwoView extends StatelessWidget {
   const TutorialTwoView({super.key});
@@ -8,7 +10,7 @@ class TutorialTwoView extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return BaseTutorialView.simple(
-      message: '最初のレッスンを始める前に、\nn個の簡単な質問に答えてね！',
+      message: LocaleKeys.pages_tutorial_two_message.tr,
       nextRoute: Routes.TUTORIAL_THREE,
     );
   }

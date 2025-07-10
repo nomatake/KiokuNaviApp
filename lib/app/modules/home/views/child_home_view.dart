@@ -10,6 +10,7 @@ import 'package:kioku_navi/widgets/child/child_bottom_nav_bar.dart';
 import 'package:kioku_navi/widgets/child/child_app_bar.dart';
 import 'package:kioku_navi/widgets/course_section_widget.dart';
 import 'package:kioku_navi/generated/assets.gen.dart';
+import 'package:kioku_navi/generated/locales.g.dart';
 import 'package:kioku_navi/widgets/subject_selection_dialog.dart';
 
 class ChildHomeView extends GetView<ChildHomeController> {
@@ -90,7 +91,7 @@ class ChildHomeView extends GetView<ChildHomeController> {
                     // Right part (label) with lesson information
                     Expanded(
                       child: CustomButton.primary(
-                        text: '5年下・第18回\n日本のおもな都市・地形図の読み方',
+                        text: LocaleKeys.pages_home_lesson.tr,
                         buttonColor: const Color(0xFF57CC02),
                         shadowColor: const Color(0xFF47A302),
                         textColor: Colors.white,

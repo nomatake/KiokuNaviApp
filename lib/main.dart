@@ -8,6 +8,8 @@ import 'package:kioku_navi/utils/constants.dart';
 import 'package:kioku_navi/utils/route_helper.dart';
 import 'package:splash_master/splash_master.dart';
 
+import 'generated/locales.g.dart';
+
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
   await SystemChrome.setPreferredOrientations([DeviceOrientation.portraitUp]);
@@ -38,6 +40,8 @@ class MyApp extends StatelessWidget {
       supportedLocales: ConfigStore.supportedLocales,
       locale: ConfigStore.locale,
       debugShowCheckedModeBanner: false,
+      fallbackLocale: const Locale('en', 'US'),
+      translationsKeys: AppTranslation.translations,
     );
   }
 }
