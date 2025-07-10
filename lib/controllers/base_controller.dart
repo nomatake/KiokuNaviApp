@@ -14,14 +14,14 @@ abstract class BaseController extends GetxController with NavigationHelper {
 
   /// Enhanced safeApiCall with CustomLoader integration
   /// [apiCall] - The API function to execute
-  /// [context] - BuildContext for showing loader (optional)
+  /// [context] - BuildContext for showing loader (required)
   /// [loaderMessage] - Message to show in loader (optional)
-  /// [useLoader] - Whether to show visual loader (default: true if context provided)
+  /// [useLoader] - Whether to show visual loader (default: true)
   /// [onSuccess] - Callback to execute after successful API call (for navigation)
   /// [onError] - Callback to execute when API call fails (for error handling)
   Future<T?> safeApiCall<T>(
     Future<T> Function() apiCall, {
-    BuildContext? context,
+    required BuildContext context,
     String? loaderMessage,
     bool? useLoader,
     VoidCallback? onSuccess,
@@ -50,9 +50,9 @@ abstract class BaseController extends GetxController with NavigationHelper {
       error.value = '';
       hasError.value = false;
 
-      // Show visual loader if context is provided and useLoader is not false
-      final shouldShowLoader = useLoader ?? (context != null);
-      if (shouldShowLoader && context != null) {
+      // Show visual loader if useLoader is not false
+      final shouldShowLoader = useLoader ?? true;
+      if (shouldShowLoader && context.mounted) {
         CustomLoader.showLoader(context, loaderMessage);
         loaderShown = true;
       }
@@ -61,7 +61,7 @@ abstract class BaseController extends GetxController with NavigationHelper {
       final result = await apiCall();
 
       // Hide loader BEFORE executing success callback (navigation)
-      if (loaderShown) {
+      if (loaderShown && context.mounted) {
         CustomLoader.hideLoader();
         loaderShown = false;
         // Small delay to ensure smooth UX transition
@@ -78,7 +78,7 @@ abstract class BaseController extends GetxController with NavigationHelper {
       debugPrint('API Error: $e');
 
       // Hide loader BEFORE handling error
-      if (loaderShown) {
+      if (loaderShown && context.mounted) {
         CustomLoader.hideLoader();
         loaderShown = false;
         // Small delay to ensure smooth UX transition
@@ -105,15 +105,10 @@ abstract class BaseController extends GetxController with NavigationHelper {
       isLoading.value = false;
 
       // Hide visual loader if it wasn't already hidden
-      if (loaderShown) {
+      if (loaderShown && context.mounted) {
         CustomLoader.hideLoader();
       }
     }
-  }
-
-  /// Backward compatible safeApiCall without loader
-  Future<T?> safeApiCallSimple<T>(Future<T> Function() apiCall) async {
-    return safeApiCall(apiCall, useLoader: false);
   }
 
   Future<T?> safeCall<T>(Future<T> Function() call,

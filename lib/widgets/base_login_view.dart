@@ -16,7 +16,7 @@ class BaseLoginView extends StatelessWidget {
   final String title;
   final GlobalKey<FormState> formKey;
   final AuthController controller;
-  final Function(BuildContext?) onPressed;
+  final Function(BuildContext) onPressed;
 
   const BaseLoginView({
     super.key,

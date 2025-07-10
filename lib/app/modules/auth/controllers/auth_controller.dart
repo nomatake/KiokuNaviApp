@@ -48,7 +48,7 @@ class AuthController extends BaseController {
   }
 
   /// Student Login Implementation (using email and password)
-  Future<void> loginStudent([BuildContext? context]) async {
+  Future<void> loginStudent(BuildContext context) async {
     await safeApiCall(
       () async {
         // Validate form - use ValidationException for form validation errors
@@ -95,7 +95,7 @@ class AuthController extends BaseController {
   }
 
   /// Parent Login Implementation
-  Future<void> loginParent([BuildContext? context]) async {
+  Future<void> loginParent(BuildContext context) async {
     await safeApiCall(
       () async {
         // Validate form - use ValidationException for form validation errors
@@ -142,7 +142,7 @@ class AuthController extends BaseController {
   }
 
   /// Registration Implementation
-  Future<void> onRegister([BuildContext? context]) async {
+  Future<void> onRegister(BuildContext context) async {
     await safeApiCall(
       () async {
         // Validate form - use ValidationException for form validation errors
@@ -198,7 +198,7 @@ class AuthController extends BaseController {
   }
 
   /// Forgot Password Implementation
-  Future<void> onForgotPassword([BuildContext? context]) async {
+  Future<void> onForgotPassword(BuildContext context) async {
     await safeApiCall(
       () async {
         final emailValue = email.text.trim();
@@ -238,7 +238,7 @@ class AuthController extends BaseController {
   }
 
   /// Logout Implementation
-  Future<void> logout([BuildContext? context]) async {
+  Future<void> logout(BuildContext context) async {
     await safeApiCall(
       () async {
         // Call logout API (token clearing handled automatically)
@@ -268,7 +268,7 @@ class AuthController extends BaseController {
   }
 
   /// Get current user data
-  Future<Map<String, dynamic>?> getCurrentUser([BuildContext? context]) async {
+  Future<Map<String, dynamic>?> getCurrentUser(BuildContext context) async {
     return await safeApiCall(
       () async {
         final userData = await _authApi.getCurrentUser();

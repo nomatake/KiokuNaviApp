@@ -15,7 +15,7 @@ class ParentLoginView extends GetView<AuthController> {
       title: LocaleKeys.pages_login_parentTitle.tr,
       formKey: controller.parentLoginFormKey,
       controller: controller,
-      onPressed: (context) => controller.loginParent(context),
+      onPressed: controller.loginParent,
     );
   }
 }
