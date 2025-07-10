@@ -16,11 +16,14 @@ This document provides comprehensive guidance for making API calls in the KiokuN
 
 ## Architecture Overview
 
-Our API calling system consists of three main components:
+Our API calling system consists of several main components:
 
 - **BaseController**: Provides `safeApiCall` method with loading states and error handling
 - **CustomLoader**: Visual loading indicator management
 - **CustomSnackbar**: User feedback for success/error states
+- **TokenManager**: Handles authentication token storage using GetStorage
+- **AuthApiImpl**: Automatically saves user data (name, email, is_student) on login
+- **RouteHelper**: Determines initial routes based on authentication and user type
 
 ```
 ┌─────────────────┐    ┌──────────────────┐    ┌─────────────────┐
@@ -202,15 +205,16 @@ Future<void> fetchUserData() async {
 ### 2. Authentication Flow with Success/Error Handling
 
 ```dart
-// Login with comprehensive feedback
-Future<void> loginUser(BuildContext context) async {
+// Student Login with automatic token and user data storage
+Future<void> loginStudent(BuildContext context) async {
   await safeApiCall(
     () async {
-      if (!loginFormKey.currentState!.validate()) {
+      if (!studentLoginFormKey.currentState!.validate()) {
         throw 'Please fill in all required fields correctly';
       }
       
-      return await _authApi.login(email.text, password.text);
+      // API automatically saves token and user data (name, email, is_student)
+      return await _authApi.loginStudent(email.text, password.text);
     },
     context: context,
     loaderMessage: 'Logging in...',
@@ -219,6 +223,37 @@ Future<void> loginUser(BuildContext context) async {
         title: 'Welcome!',
         message: 'Login successful',
       );
+      // RouteHelper will automatically determine correct route based on user type
+      requestNavigation(Routes.CHILD_HOME);
+    },
+    onError: (error) {
+      CustomSnackbar.showError(
+        title: 'Login Failed',
+        message: 'Please check your credentials and try again',
+      );
+    },
+  );
+}
+
+// Parent Login with automatic token and user data storage
+Future<void> loginParent(BuildContext context) async {
+  await safeApiCall(
+    () async {
+      if (!parentLoginFormKey.currentState!.validate()) {
+        throw 'Please fill in all required fields correctly';
+      }
+      
+      // API automatically saves token and user data (name, email, is_student)
+      return await _authApi.loginParent(email.text, password.text);
+    },
+    context: context,
+    loaderMessage: 'Logging in...',
+    onSuccess: () {
+      CustomSnackbar.showSuccess(
+        title: 'Welcome!',
+        message: 'Login successful',
+      );
+      // RouteHelper will automatically determine correct route based on user type
       requestNavigation(Routes.HOME);
     },
     onError: (error) {
@@ -505,6 +540,90 @@ await safeApiCall(
 );
 ```
 
+## Authentication and User Data Storage
+
+### Automatic Token and User Data Management
+
+The authentication system automatically handles token and user data storage:
+
+```dart
+// Login response structure from Laravel Sanctum backend
+{
+  "data": {
+    "user": {
+      "id": 4,
+      "name": "Test User",
+      "email": "test@test.com",
+      "created_at": "2025-07-10T12:35:19.000000Z"
+    },
+    "token": "eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9...",
+    "token_type": "bearer",
+    "is_student": true
+  }
+}
+```
+
+### Storage Keys Used
+
+The system automatically stores the following data in GetStorage:
+
+| Key | Type | Description |
+|-----|------|-------------|
+| `token` | String | JWT authentication token |
+| `user_name` | String | User's full name |
+| `user_email` | String | User's email address |
+| `is_student` | Boolean | Whether user is a student (true) or parent (false) |
+
+### Route Helper Integration
+
+The `RouteHelper.getInitialRoute()` method automatically determines the correct initial route:
+
+```dart
+// Route determination logic
+String getInitialRoute() {
+  try {
+    final tokenManager = Get.find<TokenManager>();
+    final isAuthenticated = tokenManager.isAuthenticatedSync();
+    
+    if (!isAuthenticated) {
+      return Routes.ROOT_SCREEN; // Login/Register screen
+    }
+
+    // Get user type from storage
+    final storage = Get.find<GetStorage>();
+    final isStudent = storage.read(kIsStudent) ?? false;
+
+    // Route based on user type
+    return isStudent ? Routes.CHILD_HOME : Routes.HOME;
+  } catch (e) {
+    return Routes.ROOT_SCREEN;
+  }
+}
+```
+
+### Logout Cleanup
+
+The logout process automatically clears all stored data:
+
+```dart
+Future<void> logout() async {
+  await safeApiCall(
+    () async {
+      await _authApi.logout(); // Clears token AND user data
+    },
+    context: context,
+    loaderMessage: 'Logging out...',
+    onSuccess: () {
+      CustomSnackbar.showInfo(
+        title: 'Goodbye!',
+        message: 'You have been logged out successfully',
+      );
+      requestNavigation(Routes.ROOT_SCREEN);
+    },
+  );
+}
+```
+
 ## Conclusion
 
 The enhanced `safeApiCall` system provides:
@@ -514,5 +633,7 @@ The enhanced `safeApiCall` system provides:
 - **Code Simplification**: Reduces boilerplate for common API patterns
 - **Maintainability**: Centralized loading and error logic
 - **Accessibility**: Clear feedback for all user actions
+- **Automatic Data Management**: Seamless token and user data storage
+- **Smart Routing**: User-type based route determination
 
 By following these guidelines, you ensure a consistent, user-friendly experience across the entire KiokuNavi application. 
