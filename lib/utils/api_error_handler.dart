@@ -1,4 +1,6 @@
 import 'package:dio/dio.dart';
+import 'package:get/get.dart';
+import 'package:kioku_navi/generated/locales.g.dart';
 import 'package:kioku_navi/services/api/base_api_client.dart';
 import 'package:kioku_navi/widgets/custom_snackbar.dart';
 
@@ -24,8 +26,8 @@ class ApiErrorHandler {
 
   /// Get error information (title and message) for any error type
   static ErrorInfo _getErrorInfo(dynamic error) {
-    String title = 'Connection Error';
-    String message = 'Please check your internet connection and try again';
+    String title = LocaleKeys.common_errors_connectionError.tr;
+    String message = LocaleKeys.common_errors_checkInternetConnection.tr;
 
     if (error is ApiException && error.originalException != null) {
       final dioError = error.originalException!;
@@ -34,13 +36,13 @@ class ApiErrorHandler {
         return _getNetworkErrorInfo(dioError);
       } else if (error is TimeoutException) {
         return ErrorInfo(
-          title: 'Request Timeout',
-          message: 'Server is taking too long to respond. Please try again',
+          title: LocaleKeys.common_errors_requestTimeout.tr,
+          message: LocaleKeys.common_errors_serverTakingTooLong.tr,
         );
       } else if (error is UnauthorizedException) {
         return ErrorInfo(
-          title: 'Session Expired',
-          message: 'Your session has expired. Please login again',
+          title: LocaleKeys.common_errors_sessionExpired.tr,
+          message: LocaleKeys.common_errors_sessionExpiredMessage.tr,
         );
       } else if (error is ServerException) {
         return _getServerErrorInfo(error);
@@ -49,18 +51,18 @@ class ApiErrorHandler {
       // Fallback for errors without DioException
       if (error is NetworkException) {
         return ErrorInfo(
-          title: 'Network Error',
-          message: 'Unable to connect to server. Please try again',
+          title: LocaleKeys.common_errors_networkError.tr,
+          message: LocaleKeys.common_errors_unableToConnectToServer.tr,
         );
       } else if (error is TimeoutException) {
         return ErrorInfo(
-          title: 'Timeout Error',
-          message: 'Request timed out. Please try again',
+          title: LocaleKeys.common_errors_timeoutError.tr,
+          message: LocaleKeys.common_errors_requestTimedOut.tr,
         );
       } else if (error is UnauthorizedException) {
         return ErrorInfo(
-          title: 'Session Expired',
-          message: 'Please login again to continue',
+          title: LocaleKeys.common_errors_sessionExpired.tr,
+          message: LocaleKeys.common_errors_pleaseLoginAgain.tr,
         );
       }
     }
@@ -70,47 +72,47 @@ class ApiErrorHandler {
 
   /// Get specific error info for network errors based on DioException details
   static ErrorInfo _getNetworkErrorInfo(DioException dioError) {
-    const title = 'Network Error';
+    final title = LocaleKeys.common_errors_networkError.tr;
 
     if (dioError.message?.contains('Connection refused') == true) {
       return ErrorInfo(
         title: title,
-        message: 'Server is temporarily unavailable. Please try again later',
+        message: LocaleKeys.common_errors_serverTemporarilyUnavailable.tr,
       );
     } else if (dioError.message?.contains('Failed host lookup') == true) {
       return ErrorInfo(
         title: title,
-        message: 'Cannot reach server. Please check your internet connection',
+        message: LocaleKeys.common_errors_cannotReachServer.tr,
       );
     } else {
       return ErrorInfo(
         title: title,
-        message: 'Network connection failed. Please try again',
+        message: LocaleKeys.common_errors_networkConnectionFailed.tr,
       );
     }
   }
 
   /// Get specific error info for server errors
   static ErrorInfo _getServerErrorInfo(ServerException error) {
-    String title = 'Server Error';
+    String title = LocaleKeys.common_errors_networkError.tr;
     String message = error.message.isNotEmpty
         ? error.message
-        : 'Server encountered an error. Please try again';
+        : LocaleKeys.common_errors_unableToConnectToServer.tr;
 
     // Add status code context if available
     if (error.statusCode != null) {
       switch (error.statusCode) {
         case 500:
-          title = 'Server Error';
-          message = 'Internal server error. Please try again later';
+          title = LocaleKeys.common_errors_networkError.tr;
+          message = LocaleKeys.common_errors_unableToConnectToServer.tr;
           break;
         case 503:
-          title = 'Service Unavailable';
-          message = 'Server is temporarily down for maintenance';
+          title = LocaleKeys.common_errors_networkError.tr;
+          message = LocaleKeys.common_errors_serverTemporarilyUnavailable.tr;
           break;
         default:
           if (error.statusCode! >= 400 && error.statusCode! < 500) {
-            title = 'Request Error';
+            title = LocaleKeys.common_errors_networkError.tr;
           }
       }
     }

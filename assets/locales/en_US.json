@@ -19,7 +19,8 @@
       "google": "Google",
       "allow": "Allow",
       "dontAllow": "Don't Allow",
-      "openSettings": "Open Settings"
+      "openSettings": "Open Settings",
+      "ok": "OK"
     },
     "status": {
       "correct": "Correct",
@@ -35,12 +36,55 @@
       "tapToNavigate": "Tap to navigate"
     },
     "connectivity": {
+      "noNetworkAvailable": "No Network Available",
+      "checkDataOrWifi": "Please check your data or WiFi network connection.",
       "noInternetConnection": "No Internet Connection",
       "noInternetMessage": "This app requires an internet connection to function properly. Please check your network settings and try again.",
       "stillNoConnection": "Still No Connection",
       "checkConnectionMessage": "Please check your internet connection and try again.",
       "error": "Error",
       "unableToCheckConnection": "Unable to check connection. Please try again."
+    },
+    "errors": {
+      "connectionError": "Connection Error",
+      "checkInternetConnection": "Please check your internet connection and try again",
+      "requestTimeout": "Request Timeout",
+      "serverTakingTooLong": "Server is taking too long to respond. Please try again",
+      "sessionExpired": "Session Expired",
+      "sessionExpiredMessage": "Your session has expired. Please login again",
+      "networkError": "Network Error",
+      "unableToConnectToServer": "Unable to connect to server. Please try again",
+      "timeoutError": "Timeout Error",
+      "requestTimedOut": "Request timed out. Please try again",
+      "pleaseLoginAgain": "Please login again to continue",
+      "serverTemporarilyUnavailable": "Server is temporarily unavailable. Please try again later",
+      "cannotReachServer": "Cannot reach server. Please check your internet connection",
+      "networkConnectionFailed": "Network connection failed. Please try again"
+    },
+    "messages": {
+      "loggingIn": "Logging in...",
+      "welcome": "Welcome!",
+      "loginSuccessful": "Login successful",
+      "loginFailed": "Login Failed",
+      "checkCredentials": "Please check your credentials and try again",
+      "creatingAccount": "Creating account...",
+      "accountCreated": "Account Created!",
+      "welcomeToKiokuNavi": "Welcome to KiokuNavi. Please log in to continue.",
+      "registrationFailed": "Registration Failed",
+      "unableToCreateAccount": "Unable to create account. Please try again",
+      "sendingResetEmail": "Sending reset email...",
+      "passwordReset": "Password Reset",
+      "resetInstructions": "If an account exists, you will receive reset instructions.",
+      "resetFailed": "Reset Failed",
+      "unableToSendResetEmail": "Unable to send reset email. Please try again",
+      "loggingOut": "Logging out...",
+      "goodbye": "Goodbye!",
+      "loggedOutSuccessfully": "You have been logged out successfully",
+      "logoutFailed": "Logout Failed",
+      "unableToLogout": "Unable to logout. Please try again",
+      "loadingUserData": "Loading user data...",
+      "loadFailed": "Load Failed",
+      "unableToLoadUserData": "Unable to load user data"
     },
     "weekdays": {
       "sun": "Sun",
@@ -82,6 +126,10 @@
       "title": "Create Parent Account",
       "termsText": "By signing up, you agree to KiokuNavi's Terms of Service and Privacy Policy",
       "form": {
+        "name": {
+          "label": "Name",
+          "placeholder": "Enter your name"
+        },
         "birthDate": {
           "label": "Date of Birth",
           "placeholder": "Example: 2000/01/01"
@@ -93,6 +141,10 @@
         "password": {
           "label": "Password",
           "placeholder": "Enter password"
+        },
+        "passwordConfirmation": {
+          "label": "Password Confirmation",
+          "placeholder": "Re-enter password"
         }
       }
     },
@@ -220,6 +272,7 @@
   "validation": {
     "required": "Required",
     "invalidEmail": "Invalid email",
-    "passwordMinLength": "Password must be at least 6 characters"
+    "passwordMinLength": "Password must be at least 6 characters",
+    "passwordsDoNotMatch": "Passwords do not match"
   }
 }

@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart' as getx;
+import 'package:kioku_navi/generated/locales.g.dart';
 import 'package:kioku_navi/utils/extensions.dart';
 import 'package:kioku_navi/utils/sizes.dart';
 import 'package:kioku_navi/widgets/custom_button.dart';
@@ -39,10 +40,12 @@ class NoInternetBottomSheet {
                       ),
                     ),
                     SizedBox(height: k2_5Double.hp),
-                    const CustomTitleText(text: "No Network Available"),
+                    CustomTitleText(
+                        text: LocaleKeys
+                            .common_connectivity_noNetworkAvailable.tr),
                     SizedBox(height: k0_5Double.hp),
                     Text(
-                      'Please check your data or WiFi network connection.',
+                      LocaleKeys.common_connectivity_checkDataOrWifi.tr,
                       textAlign: TextAlign.center,
                       style: TextStyle(
                         color: Colors.grey.shade700,
@@ -53,7 +56,7 @@ class NoInternetBottomSheet {
                     ),
                     SizedBox(height: k3Double.hp),
                     CustomButton.primary(
-                      text: "OK",
+                      text: LocaleKeys.common_buttons_ok.tr,
                       onPressed: () {
                         // Simply close the bottom sheet
                         getx.Get.back(closeOverlays: true);

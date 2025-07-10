@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:kioku_navi/app/routes/app_pages.dart';
 import 'package:kioku_navi/controllers/base_controller.dart';
+import 'package:kioku_navi/generated/locales.g.dart';
 import 'package:kioku_navi/services/api/auth_api.dart';
 import 'package:kioku_navi/utils/validation_exception.dart';
 import 'package:kioku_navi/widgets/custom_snackbar.dart';
@@ -73,12 +74,12 @@ class AuthController extends BaseController {
         return response;
       },
       context: context,
-      loaderMessage: 'Logging in...',
+      loaderMessage: LocaleKeys.common_messages_loggingIn.tr,
       onSuccess: () {
         // Show success snackbar
         CustomSnackbar.showSuccess(
-          title: 'Welcome!',
-          message: 'Login successful',
+          title: LocaleKeys.common_messages_welcome.tr,
+          message: LocaleKeys.common_messages_loginSuccessful.tr,
         );
         // Navigate after loader is hidden
         requestNavigation(Routes.CHILD_HOME);
@@ -87,8 +88,8 @@ class AuthController extends BaseController {
         // Handle business logic errors only (technical errors handled globally)
         // This will ONLY be called for actual API response errors (401, 422, etc.)
         CustomSnackbar.showError(
-          title: 'Login Failed',
-          message: 'Please check your credentials and try again',
+          title: LocaleKeys.common_messages_loginFailed.tr,
+          message: LocaleKeys.common_messages_checkCredentials.tr,
         );
       },
     );
@@ -120,12 +121,12 @@ class AuthController extends BaseController {
         return response;
       },
       context: context,
-      loaderMessage: 'Logging in...',
+      loaderMessage: LocaleKeys.common_messages_loggingIn.tr,
       onSuccess: () {
         // Show success snackbar
         CustomSnackbar.showSuccess(
-          title: 'Welcome!',
-          message: 'Login successful',
+          title: LocaleKeys.common_messages_welcome.tr,
+          message: LocaleKeys.common_messages_loginSuccessful.tr,
         );
         // Navigate after loader is hidden
         requestNavigation(Routes.HOME);
@@ -134,8 +135,8 @@ class AuthController extends BaseController {
         // Handle business logic errors only (technical errors handled globally)
         // This will ONLY be called for actual API response errors (401, 422, etc.)
         CustomSnackbar.showError(
-          title: 'Login Failed',
-          message: 'Please check your credentials and try again',
+          title: LocaleKeys.common_messages_loginFailed.tr,
+          message: LocaleKeys.common_messages_checkCredentials.tr,
         );
       },
     );
@@ -176,12 +177,12 @@ class AuthController extends BaseController {
         return response;
       },
       context: context,
-      loaderMessage: 'Creating account...',
+      loaderMessage: LocaleKeys.common_messages_creatingAccount.tr,
       onSuccess: () {
         // Show success snackbar
         CustomSnackbar.showSuccess(
-          title: 'Account Created!',
-          message: 'Welcome to KiokuNavi. Please log in to continue.',
+          title: LocaleKeys.common_messages_accountCreated.tr,
+          message: LocaleKeys.common_messages_welcomeToKiokuNavi.tr,
         );
         // Navigate after loader is hidden
         requestNavigation(Routes.ROOT_SCREEN);
@@ -190,8 +191,8 @@ class AuthController extends BaseController {
         // Handle business logic errors only (technical errors handled globally)
         // This will ONLY be called for actual API response errors (401, 422, etc.)
         CustomSnackbar.showError(
-          title: 'Registration Failed',
-          message: 'Unable to create account. Please try again',
+          title: LocaleKeys.common_messages_registrationFailed.tr,
+          message: LocaleKeys.common_messages_unableToCreateAccount.tr,
         );
       },
     );
@@ -218,20 +219,20 @@ class AuthController extends BaseController {
         return {'success': true};
       },
       context: context,
-      loaderMessage: 'Sending reset email...',
+      loaderMessage: LocaleKeys.common_messages_sendingResetEmail.tr,
       onSuccess: () {
         // Show success dialog after loader is hidden
         CustomSnackbar.showInfo(
-          title: 'Password Reset',
-          message: 'If an account exists, you will receive reset instructions.',
+          title: LocaleKeys.common_messages_passwordReset.tr,
+          message: LocaleKeys.common_messages_resetInstructions.tr,
         );
       },
       onError: (error) {
         // Handle business logic errors only (technical errors handled globally)
         // This will ONLY be called for actual API response errors (401, 422, etc.)
         CustomSnackbar.showError(
-          title: 'Reset Failed',
-          message: 'Unable to send reset email. Please try again',
+          title: LocaleKeys.common_messages_resetFailed.tr,
+          message: LocaleKeys.common_messages_unableToSendResetEmail.tr,
         );
       },
     );
@@ -247,12 +248,12 @@ class AuthController extends BaseController {
         return {'success': true};
       },
       context: context,
-      loaderMessage: 'Logging out...',
+      loaderMessage: LocaleKeys.common_messages_loggingOut.tr,
       onSuccess: () {
         // Show success snackbar
         CustomSnackbar.showInfo(
-          title: 'Goodbye!',
-          message: 'You have been logged out successfully',
+          title: LocaleKeys.common_messages_goodbye.tr,
+          message: LocaleKeys.common_messages_loggedOutSuccessfully.tr,
         );
         // Navigate after loader is hidden
         requestNavigation(Routes.ROOT_SCREEN);
@@ -260,8 +261,8 @@ class AuthController extends BaseController {
       onError: (error) {
         // Show error snackbar
         CustomSnackbar.showError(
-          title: 'Logout Failed',
-          message: 'Unable to logout. Please try again',
+          title: LocaleKeys.common_messages_logoutFailed.tr,
+          message: LocaleKeys.common_messages_unableToLogout.tr,
         );
       },
     );
@@ -275,12 +276,12 @@ class AuthController extends BaseController {
         return userData;
       },
       context: context,
-      loaderMessage: 'Loading user data...',
+      loaderMessage: LocaleKeys.common_messages_loadingUserData.tr,
       onError: (error) {
         // Show error snackbar
         CustomSnackbar.showError(
-          title: 'Load Failed',
-          message: 'Unable to load user data',
+          title: LocaleKeys.common_messages_loadFailed.tr,
+          message: LocaleKeys.common_messages_unableToLoadUserData.tr,
         );
       },
       // No onSuccess callback needed for data fetching
