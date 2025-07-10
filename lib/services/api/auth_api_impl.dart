@@ -1,3 +1,4 @@
+import 'package:get_storage/get_storage.dart';
 import 'package:kioku_navi/services/api/auth_api.dart';
 import 'package:kioku_navi/services/api/base_api_client.dart';
 import 'package:kioku_navi/services/auth/token_manager.dart';
@@ -5,11 +6,13 @@ import 'package:kioku_navi/services/auth/token_manager.dart';
 class AuthApiImpl implements AuthApi {
   final BaseApiClient apiClient;
   final TokenManager tokenManager;
+  final GetStorage _storage;
 
   AuthApiImpl({
     required this.apiClient,
     required this.tokenManager,
-  });
+    GetStorage? storage,
+  }) : _storage = storage ?? GetStorage();
 
   @override
   Future<Map<String, dynamic>> loginStudent(
@@ -64,9 +67,6 @@ class AuthApiImpl implements AuthApi {
       },
     );
 
-    // Automatically save token after successful registration
-    await _saveTokenFromResponse(response);
-
     return response;
   }
 
@@ -74,8 +74,9 @@ class AuthApiImpl implements AuthApi {
   Future<void> logout() async {
     await apiClient.get('auth/logout');
 
-    // Automatically clear token after successful logout
+    // Automatically clear token and user data after successful logout
     await tokenManager.clearToken();
+    _clearUserData();
   }
 
   @override
@@ -87,25 +88,31 @@ class AuthApiImpl implements AuthApi {
     return response;
   }
 
-  @override
-  Future<Map<String, dynamic>> refreshToken() async {
-    final response = await apiClient.get<Map<String, dynamic>>(
-      'auth/refresh',
-    );
-
-    // Automatically save new token after successful refresh
-    await _saveTokenFromResponse(response);
-
-    return response;
-  }
-
   /// Private helper to extract and save token from API response
+  /// Also saves user data after successful authentication
   Future<void> _saveTokenFromResponse(Map<String, dynamic> response) async {
     final data = response['data'] as Map<String, dynamic>?;
     final token = data?['token'] as String?;
+    final user = data?['user'] as Map<String, dynamic>?;
+    final isStudent = data?['is_student'] as bool?;
 
     if (token != null && token.isNotEmpty) {
+      // Save the authentication token
       await tokenManager.saveToken(token);
     }
+
+    if (user != null) {
+      // Save user data
+      _storage.write('user_name', user['name']);
+      _storage.write('user_email', user['email']);
+      _storage.write('is_student', isStudent ?? false);
+    }
+  }
+
+  /// Private helper to clear user data from storage
+  void _clearUserData() {
+    _storage.remove('user_name');
+    _storage.remove('user_email');
+    _storage.remove('is_student');
   }
 }

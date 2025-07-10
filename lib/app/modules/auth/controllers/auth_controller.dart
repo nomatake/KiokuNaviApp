@@ -175,10 +175,10 @@ class AuthController extends BaseController {
         // Show success snackbar
         CustomSnackbar.showSuccess(
           title: 'Account Created!',
-          message: 'Registration successful. Welcome to KiokuNavi!',
+          message: 'Welcome to KiokuNavi. Please log in to continue.',
         );
         // Navigate after loader is hidden
-        requestNavigation(Routes.HOME);
+        requestNavigation(Routes.ROOT_SCREEN);
       },
       onError: (error) {
         // Show error snackbar

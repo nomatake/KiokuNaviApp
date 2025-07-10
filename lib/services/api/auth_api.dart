@@ -22,8 +22,4 @@ abstract class AuthApi {
 
   /// Get current authenticated user data
   Future<Map<String, dynamic>> getCurrentUser();
-
-  /// Refresh access token (GET request)
-  /// Returns new token response: { "data": { "token": "...", "token_type": "..." } }
-  Future<Map<String, dynamic>> refreshToken();
 }
