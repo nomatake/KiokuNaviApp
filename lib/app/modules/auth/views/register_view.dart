@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:form_builder_validators/form_builder_validators.dart';
 import 'package:get/get.dart';
 import 'package:kioku_navi/app/modules/auth/controllers/auth_controller.dart';
-import 'package:kioku_navi/generated/locales.g.dart';
+import 'package:kioku_navi/utils/constants.dart';
 import 'package:kioku_navi/utils/extensions.dart';
 import 'package:kioku_navi/utils/sizes.dart';
 import 'package:kioku_navi/widgets/custom_button.dart';
@@ -11,12 +11,15 @@ import 'package:kioku_navi/widgets/custom_text_form_field.dart';
 import 'package:kioku_navi/widgets/intrinsic_height_scroll_view.dart';
 import 'package:kioku_navi/widgets/padded_wrapper.dart';
 import 'package:kioku_navi/widgets/register_app_bar.dart';
+import 'package:kioku_navi/generated/locales.g.dart';
 
 class RegisterView extends GetView<AuthController> {
   const RegisterView({super.key});
 
   @override
   Widget build(BuildContext context) {
+    controller.setupNavigation();
+
     return Scaffold(
       backgroundColor: const Color(0xFFF7F9FC),
       appBar: RegisterAppBar(
@@ -44,6 +47,18 @@ class RegisterView extends GetView<AuthController> {
                   ),
                   SizedBox(height: k3Double.hp),
 
+                  // Name field
+                  CustomTextFormField(
+                    textController: controller.name,
+                    labelText: 'お名前',
+                    hintText: '氏名を入力',
+                    textInputAction: TextInputAction.next,
+                    customValidators: [
+                      FormBuilderValidators.required(errorText: kRequired),
+                    ],
+                  ),
+                  SizedBox(height: k1_5Double.hp),
+
                   // Date of Birth field
                   CustomDatePickerFormField(
                     textController: controller.dob,
@@ -70,6 +85,7 @@ class RegisterView extends GetView<AuthController> {
                     labelText: LocaleKeys.pages_register_form_parentEmail_label.tr,
                     hintText: LocaleKeys.pages_register_form_parentEmail_placeholder.tr,
                     keyboardType: TextInputType.emailAddress,
+                    textInputAction: TextInputAction.next,
                     customValidators: [
                       FormBuilderValidators.required(errorText: LocaleKeys.validation_required.tr),
                       FormBuilderValidators.email(errorText: LocaleKeys.validation_invalidEmail.tr),
@@ -83,11 +99,32 @@ class RegisterView extends GetView<AuthController> {
                     labelText: LocaleKeys.pages_register_form_password_label.tr,
                     hintText: LocaleKeys.pages_register_form_password_placeholder.tr,
                     isPassword: true,
+                    textInputAction: TextInputAction.next,
+                    customValidators: [
+                      FormBuilderValidators.required(errorText: kRequired),
+                      FormBuilderValidators.minLength(6,
+                          errorText: LocaleKeys.validation_passwordMinLength.tr),
+                    ],
+                  ),
+                  SizedBox(height: k1_5Double.hp),
+
+                  // Password confirmation field
+                  CustomTextFormField(
+                    textController: controller.passwordConfirmation,
+                    labelText: 'パスワード確認',
+                    hintText: 'パスワードを再入力',
+                    isPassword: true,
                     textInputAction: TextInputAction.done,
                     customValidators: [
                       FormBuilderValidators.required(errorText: LocaleKeys.validation_required.tr),
                       FormBuilderValidators.minLength(6,
                           errorText: LocaleKeys.validation_passwordMinLength.tr),
+                      (value) {
+                        if (value != controller.password.text) {
+                          return "Passwords do not match";
+                        }
+                        return null;
+                      },
                     ],
                   ),
                   SizedBox(height: k3Double.hp),
@@ -112,8 +149,7 @@ class RegisterView extends GetView<AuthController> {
                   // Register button
                   CustomButton(
                     text: LocaleKeys.common_buttons_createAccount.tr,
-                    disabled: true,
-                    onPressed: () => controller.onRegister(),
+                    onPressed: () => controller.onRegister(context),
                   ),
                 ],
               ),

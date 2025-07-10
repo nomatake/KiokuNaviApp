@@ -9,10 +9,13 @@ class ParentLoginView extends GetView<AuthController> {
 
   @override
   Widget build(BuildContext context) {
+    controller.setupNavigation();
+
     return BaseLoginView(
       title: LocaleKeys.pages_login_parentTitle.tr,
       formKey: controller.parentLoginFormKey,
       controller: controller,
+      onPressed: (context) => controller.loginParent(context),
     );
   }
 }

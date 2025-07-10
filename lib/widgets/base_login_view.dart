@@ -11,17 +11,20 @@ import 'package:kioku_navi/widgets/custom_text_form_field.dart';
 import 'package:kioku_navi/widgets/custom_title_text.dart';
 import 'package:kioku_navi/widgets/intrinsic_height_scroll_view.dart';
 import 'package:kioku_navi/widgets/padded_wrapper.dart';
+import 'package:kioku_navi/utils/constants.dart';
 
 class BaseLoginView extends StatelessWidget {
   final String title;
   final GlobalKey<FormState> formKey;
   final AuthController controller;
+  final Function(BuildContext?) onPressed; // Updated to accept BuildContext
 
   const BaseLoginView({
     super.key,
     required this.title,
     required this.formKey,
     required this.controller,
+    required this.onPressed,
   });
 
   @override
@@ -52,6 +55,7 @@ class BaseLoginView extends StatelessWidget {
                   ),
                   SizedBox(height: k3Double.hp),
 
+                  // Email field for both student and parent login
                   CustomTextFormField(
                     textController: controller.email,
                     labelText: LocaleKeys.pages_login_form_emailOrUsername_label.tr,
@@ -63,6 +67,8 @@ class BaseLoginView extends StatelessWidget {
                     ],
                   ),
                   SizedBox(height: k1_5Double.hp),
+
+                  // Password field
                   CustomTextFormField(
                     textController: controller.password,
                     labelText: LocaleKeys.pages_login_form_password_label.tr,
@@ -77,17 +83,20 @@ class BaseLoginView extends StatelessWidget {
                   ),
                   SizedBox(height: k3Double.hp),
 
-                  // Login button
-                  CustomButton.ghost(
-                    text: LocaleKeys.common_buttons_login.tr,
-                    onPressed: () {},
-                  ),
+                  // Login button with passed onPressed method
+                  Obx(() => CustomButton.primary(
+                        text: LocaleKeys.common_buttons_login.tr,
+                        onPressed: controller.isLoading.value
+                            ? null
+                            : () => onPressed(context),
+                      )),
                   SizedBox(height: k3Double.hp),
 
+                  // Forgot password button
                   Center(
                     child: TextButton(
-                      onPressed: () {},
-                      child: Text(
+                      onPressed: () => controller.onForgotPassword(context),
+                      child:  Text(
                         LocaleKeys.pages_login_forgotPassword.tr,
                         style: TextStyle(
                           fontWeight: FontWeight.w600,
@@ -99,9 +108,18 @@ class BaseLoginView extends StatelessWidget {
                     ),
                   ),
                   SizedBox(height: k3Double.hp),
+
+                  // Google login placeholder (TODO: implement when backend is ready)
                   CustomButton.outline(
                     text: LocaleKeys.common_buttons_google.tr,
-                    onPressed: () {},
+                    onPressed: () {
+                      // TODO: Implement Google OAuth when backend is ready
+                      Get.snackbar(
+                        'Google Login',
+                        'Google authentication not yet implemented',
+                        snackPosition: SnackPosition.BOTTOM,
+                      );
+                    },
                   )
                 ],
               ),

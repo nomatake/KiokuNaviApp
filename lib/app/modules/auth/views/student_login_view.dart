@@ -9,10 +9,13 @@ class StudentLoginView extends GetView<AuthController> {
 
   @override
   Widget build(BuildContext context) {
+    controller.setupNavigation();
+
     return BaseLoginView(
       title: LocaleKeys.pages_login_studentTitle.tr,
       formKey: controller.studentLoginFormKey,
       controller: controller,
+      onPressed: (context) => controller.loginStudent(context),
     );
   }
 }

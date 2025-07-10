@@ -2,7 +2,13 @@ import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_localizations/flutter_localizations.dart';
 import 'package:get/get.dart';
+import 'package:kioku_navi/app/routes/app_pages.dart';
+import 'package:kioku_navi/config/config_store.dart';
+import 'package:kioku_navi/generated/assets.gen.dart';
 import 'package:kioku_navi/utils/constants.dart';
+import 'package:kioku_navi/utils/route_helper.dart';
+import 'package:splash_master/splash_master.dart';
+
 import 'package:kioku_navi/utils/error_manager.dart';
 import 'package:kioku_navi/utils/sizes.dart';
 
@@ -13,8 +19,8 @@ void main() async {
   WidgetsFlutterBinding.ensureInitialized();
   await SystemChrome.setPreferredOrientations([DeviceOrientation.portraitUp]);
 
-  // Initialize error manager
-  Get.put(ErrorManager());
+  // Initialize services
+  await ConfigStore.initializeServices();
 
   runApp(const MyApp());
 }
@@ -22,43 +28,25 @@ void main() async {
 class MyApp extends StatelessWidget {
   const MyApp({super.key});
 
-  static final _theme = ThemeData(
-    useMaterial3: true,
-    brightness: Brightness.light,
-    scaffoldBackgroundColor: const Color(kScaffoldBackgroundColor),
-    visualDensity: VisualDensity.adaptivePlatformDensity,
-    appBarTheme: AppBarTheme(
-      backgroundColor: Colors.white70,
-      scrolledUnderElevation: k0Double,
-      elevation: k0Double,
-    ),
-  );
-
-  static const _localizationsDelegates = [
-    GlobalMaterialLocalizations.delegate,
-    GlobalWidgetsLocalizations.delegate,
-    GlobalCupertinoLocalizations.delegate,
-  ];
-
-  static const _supportedLocales = [
-    Locale('en', 'US'),
-    Locale('ja', 'JP'),
-  ];
-
   @override
   Widget build(BuildContext context) {
     return GetMaterialApp(
+      home: SplashMaster.lottie(
+        source: AssetSource(Assets.lottie.learning),
+        nextScreen: RouteHelper.getInitialScreen(),
+        backGroundColor: Colors.white,
+        lottieConfig: ConfigStore.lottieConfig,
+      ),
       title: kAppName,
-      debugShowCheckedModeBanner: false,
-      initialRoute: AppPages.INITIAL,
       getPages: AppPages.routes,
-      theme: _theme,
+      theme: ConfigStore.theme,
       defaultTransition: Transition.noTransition,
-      locale: const Locale('ja', 'JP'),
-      supportedLocales: _supportedLocales,
-      localizationsDelegates: _localizationsDelegates,
-      fallbackLocale: const Locale('en', 'US'),
-      translationsKeys: AppTranslation.translations,
+      localizationsDelegates: ConfigStore.localizationsDelegates,
+      supportedLocales: ConfigStore.supportedLocales,
+      locale: ConfigStore.locale,
+      debugShowCheckedModeBanner: false,
+       fallbackLocale: const Locale('en', 'US'),
+            translationsKeys: AppTranslation.translations,
     );
   }
 }
