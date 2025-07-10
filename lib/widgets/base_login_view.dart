@@ -11,13 +11,12 @@ import 'package:kioku_navi/widgets/custom_text_form_field.dart';
 import 'package:kioku_navi/widgets/custom_title_text.dart';
 import 'package:kioku_navi/widgets/intrinsic_height_scroll_view.dart';
 import 'package:kioku_navi/widgets/padded_wrapper.dart';
-import 'package:kioku_navi/utils/constants.dart';
 
 class BaseLoginView extends StatelessWidget {
   final String title;
   final GlobalKey<FormState> formKey;
   final AuthController controller;
-  final Function(BuildContext?) onPressed; // Updated to accept BuildContext
+  final Function(BuildContext?) onPressed;
 
   const BaseLoginView({
     super.key,

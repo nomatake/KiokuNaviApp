@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
-import 'package:flutter_localizations/flutter_localizations.dart';
 import 'package:get/get.dart';
 import 'package:kioku_navi/app/routes/app_pages.dart';
 import 'package:kioku_navi/config/config_store.dart';
@@ -9,10 +8,6 @@ import 'package:kioku_navi/utils/constants.dart';
 import 'package:kioku_navi/utils/route_helper.dart';
 import 'package:splash_master/splash_master.dart';
 
-import 'package:kioku_navi/utils/error_manager.dart';
-import 'package:kioku_navi/utils/sizes.dart';
-
-import 'app/routes/app_pages.dart';
 import 'generated/locales.g.dart';
 
 void main() async {
@@ -45,8 +40,8 @@ class MyApp extends StatelessWidget {
       supportedLocales: ConfigStore.supportedLocales,
       locale: ConfigStore.locale,
       debugShowCheckedModeBanner: false,
-       fallbackLocale: const Locale('en', 'US'),
-            translationsKeys: AppTranslation.translations,
+      fallbackLocale: const Locale('en', 'US'),
+      translationsKeys: AppTranslation.translations,
     );
   }
 }

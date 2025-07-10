@@ -54,7 +54,7 @@ class RegisterView extends GetView<AuthController> {
                     hintText: '氏名を入力',
                     textInputAction: TextInputAction.next,
                     customValidators: [
-                      FormBuilderValidators.required(errorText: kRequired),
+                      FormBuilderValidators.required(errorText: LocaleKeys.validation_required.tr),
                     ],
                   ),
                   SizedBox(height: k1_5Double.hp),
