@@ -18,7 +18,8 @@
       "createAccount": "Create Account",
       "google": "Google",
       "allow": "Allow",
-      "dontAllow": "Don't Allow"
+      "dontAllow": "Don't Allow",
+      "openSettings": "Open Settings"
     },
     "status": {
       "correct": "Correct",
@@ -32,6 +33,14 @@
       "course": "Course",
       "others": "Others",
       "tapToNavigate": "Tap to navigate"
+    },
+    "connectivity": {
+      "noInternetConnection": "No Internet Connection",
+      "noInternetMessage": "This app requires an internet connection to function properly. Please check your network settings and try again.",
+      "stillNoConnection": "Still No Connection",
+      "checkConnectionMessage": "Please check your internet connection and try again.",
+      "error": "Error",
+      "unableToCheckConnection": "Unable to check connection. Please try again."
     },
     "weekdays": {
       "sun": "Sun",

@@ -18,7 +18,8 @@
       "createAccount": "アカウントを作成する",
       "google": "Google",
       "allow": "許可する",
-      "dontAllow": "許可しない"
+      "dontAllow": "許可しない",
+      "openSettings": "設定を開く"
     },
     "status": {
       "correct": "正解",
@@ -32,6 +33,14 @@
       "course": "コース",
       "others": "その他",
       "tapToNavigate": "タップして移動"
+    },
+    "connectivity": {
+      "noInternetConnection": "インターネット接続がありません",
+      "noInternetMessage": "このアプリは正常に動作するためにインターネット接続が必要です。ネットワーク設定を確認してもう一度お試しください。",
+      "stillNoConnection": "まだ接続されていません",
+      "checkConnectionMessage": "インターネット接続を確認してもう一度お試しください。",
+      "error": "エラー",
+      "unableToCheckConnection": "接続を確認できません。もう一度お試しください。"
     },
     "weekdays": {
       "sun": "日",

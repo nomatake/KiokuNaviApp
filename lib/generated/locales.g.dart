@@ -27,6 +27,7 @@ class LocaleKeys {
   static const common_buttons_google = 'common_buttons_google';
   static const common_buttons_allow = 'common_buttons_allow';
   static const common_buttons_dontAllow = 'common_buttons_dontAllow';
+  static const common_buttons_openSettings = 'common_buttons_openSettings';
   static const common_status_correct = 'common_status_correct';
   static const common_status_incorrect = 'common_status_incorrect';
   static const common_status_selected = 'common_status_selected';
@@ -37,6 +38,17 @@ class LocaleKeys {
   static const common_navigation_others = 'common_navigation_others';
   static const common_navigation_tapToNavigate =
       'common_navigation_tapToNavigate';
+  static const common_connectivity_noInternetConnection =
+      'common_connectivity_noInternetConnection';
+  static const common_connectivity_noInternetMessage =
+      'common_connectivity_noInternetMessage';
+  static const common_connectivity_stillNoConnection =
+      'common_connectivity_stillNoConnection';
+  static const common_connectivity_checkConnectionMessage =
+      'common_connectivity_checkConnectionMessage';
+  static const common_connectivity_error = 'common_connectivity_error';
+  static const common_connectivity_unableToCheckConnection =
+      'common_connectivity_unableToCheckConnection';
   static const common_weekdays_sun = 'common_weekdays_sun';
   static const common_weekdays_mon = 'common_weekdays_mon';
   static const common_weekdays_tue = 'common_weekdays_tue';
@@ -206,6 +218,7 @@ class Locales {
     'common_buttons_google': 'Google',
     'common_buttons_allow': '許可する',
     'common_buttons_dontAllow': '許可しない',
+    'common_buttons_openSettings': '設定を開く',
     'common_status_correct': '正解',
     'common_status_incorrect': '不正解',
     'common_status_selected': '選択中',
@@ -215,6 +228,13 @@ class Locales {
     'common_navigation_course': 'コース',
     'common_navigation_others': 'その他',
     'common_navigation_tapToNavigate': 'タップして移動',
+    'common_connectivity_noInternetConnection': 'インターネット接続がありません',
+    'common_connectivity_noInternetMessage':
+        'このアプリは正常に動作するためにインターネット接続が必要です。ネットワーク設定を確認してもう一度お試しください。',
+    'common_connectivity_stillNoConnection': 'まだ接続されていません',
+    'common_connectivity_checkConnectionMessage': 'インターネット接続を確認してもう一度お試しください。',
+    'common_connectivity_error': 'エラー',
+    'common_connectivity_unableToCheckConnection': '接続を確認できません。もう一度お試しください。',
     'common_weekdays_sun': '日',
     'common_weekdays_mon': '月',
     'common_weekdays_tue': '火',
@@ -331,6 +351,7 @@ class Locales {
     'common_buttons_google': 'Google',
     'common_buttons_allow': 'Allow',
     'common_buttons_dontAllow': 'Don\'t Allow',
+    'common_buttons_openSettings': 'Open Settings',
     'common_status_correct': 'Correct',
     'common_status_incorrect': 'Incorrect',
     'common_status_selected': 'Selected',
@@ -340,6 +361,15 @@ class Locales {
     'common_navigation_course': 'Course',
     'common_navigation_others': 'Others',
     'common_navigation_tapToNavigate': 'Tap to navigate',
+    'common_connectivity_noInternetConnection': 'No Internet Connection',
+    'common_connectivity_noInternetMessage':
+        'This app requires an internet connection to function properly. Please check your network settings and try again.',
+    'common_connectivity_stillNoConnection': 'Still No Connection',
+    'common_connectivity_checkConnectionMessage':
+        'Please check your internet connection and try again.',
+    'common_connectivity_error': 'Error',
+    'common_connectivity_unableToCheckConnection':
+        'Unable to check connection. Please try again.',
     'common_weekdays_sun': 'Sun',
     'common_weekdays_mon': 'Mon',
     'common_weekdays_tue': 'Tue',

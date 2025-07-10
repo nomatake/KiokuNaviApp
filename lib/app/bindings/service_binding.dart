@@ -7,6 +7,9 @@ import 'package:kioku_navi/services/api/auth_interceptor.dart';
 import 'package:kioku_navi/services/api/base_api_client.dart';
 import 'package:kioku_navi/services/auth/token_manager.dart';
 import 'package:kioku_navi/services/auth/token_manager_impl.dart';
+import 'package:kioku_navi/services/connectivity/connectivity_manager.dart';
+import 'package:kioku_navi/services/connectivity/connectivity_service.dart';
+import 'package:kioku_navi/services/connectivity/connectivity_service_impl.dart';
 
 class ServiceBinding extends Bindings {
   @override
@@ -17,10 +20,19 @@ class ServiceBinding extends Bindings {
     // Step 1: GetStorage (shared instance)
     Get.put<GetStorage>(GetStorage(), permanent: true);
 
-    // Step 2: Token Manager (no dependencies)
+    // Step 2: Connectivity Services
+    Get.lazyPut<ConnectivityService>(
+      () => ConnectivityServiceImpl(),
+    );
+
+    Get.lazyPut<ConnectivityManager>(
+      () => ConnectivityManager(Get.find<ConnectivityService>()),
+    );
+
+    // Step 4: Token Manager (no dependencies)
     Get.lazyPut<TokenManager>(() => TokenManagerImpl(), fenix: true);
 
-    // Step 3: Create BaseApiClient and immediately set up auth interceptor
+    // Step 5: Create BaseApiClient and immediately set up auth interceptor
     Get.lazyPut<BaseApiClient>(() {
       final apiClient = BaseApiClient();
       final tokenManager = Get.find<TokenManager>();
@@ -31,7 +43,7 @@ class ServiceBinding extends Bindings {
       return apiClient;
     }, fenix: true);
 
-    // Step 4: API Services (depend on BaseApiClient with interceptor already set up)
+    // Step 6: API Services (depend on BaseApiClient with interceptor already set up)
     Get.lazyPut<AuthApi>(
       () => AuthApiImpl(
         apiClient: Get.find<BaseApiClient>(),

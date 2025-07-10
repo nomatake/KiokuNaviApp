@@ -23,6 +23,8 @@ dependencies:
   flutter_inner_shadow: ^0.0.1
   bubble: ^1.2.1
   splash_master: ^0.0.3
+  connectivity_plus: ^6.1.4
+  wolt_modal_sheet: ^0.9.3
 
 dev_dependencies:
   flutter_test:

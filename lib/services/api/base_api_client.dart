@@ -7,27 +7,34 @@ class ApiException implements Exception {
   final String message;
   final int? statusCode;
   final String? details;
+  final DioException? originalException;
 
-  ApiException(this.message, {this.statusCode, this.details});
+  ApiException(this.message,
+      {this.statusCode, this.details, this.originalException});
 
   @override
   String toString() => 'ApiException: $message (Status: $statusCode)';
 }
 
 class NetworkException extends ApiException {
-  NetworkException(super.message);
+  NetworkException(super.message, {super.originalException});
+}
+
+class NoInternetException extends ApiException {
+  NoInternetException() : super('No internet connection available');
 }
 
 class TimeoutException extends ApiException {
-  TimeoutException(super.message);
+  TimeoutException(super.message, {super.originalException});
 }
 
 class UnauthorizedException extends ApiException {
-  UnauthorizedException() : super('Unauthorized access');
+  UnauthorizedException({super.originalException})
+      : super('Unauthorized access', statusCode: 401);
 }
 
 class ServerException extends ApiException {
-  ServerException(super.message, {super.statusCode});
+  ServerException(super.message, {super.statusCode, super.originalException});
 }
 
 class BaseApiClient {
@@ -180,44 +187,62 @@ class BaseApiClient {
 
   // Handle Dio errors and convert to custom exceptions
   Exception _handleDioError(DioException error) {
+    // Check if error is due to no internet connection
+    if (error.error is NoInternetException) {
+      return error.error as NoInternetException;
+    }
+
     switch (error.type) {
       case DioExceptionType.connectionTimeout:
       case DioExceptionType.sendTimeout:
       case DioExceptionType.receiveTimeout:
-        return TimeoutException(kMessageTimeout);
+        return TimeoutException(kMessageTimeout, originalException: error);
 
       case DioExceptionType.connectionError:
-        return NetworkException(kMessageNetworkError);
+        return NetworkException(kMessageNetworkError, originalException: error);
 
       case DioExceptionType.badResponse:
         final statusCode = error.response?.statusCode;
         switch (statusCode) {
           case 401:
-            return UnauthorizedException();
+            return UnauthorizedException(originalException: error);
           case 403:
-            return ApiException(kMessageForbidden, statusCode: statusCode);
+            return ApiException(kMessageForbidden,
+                statusCode: statusCode, originalException: error);
           case 404:
-            return ApiException(kMessageNotFound, statusCode: statusCode);
+            return ApiException(kMessageNotFound,
+                statusCode: statusCode, originalException: error);
           case 422:
             return ApiException(kMessageValidationError,
-                statusCode: statusCode);
+                statusCode: statusCode, originalException: error);
           case 500:
-            return ServerException(kMessageServerError, statusCode: statusCode);
+            return ServerException(kMessageServerError,
+                statusCode: statusCode, originalException: error);
           case 503:
-            return ServerException(kMessageServerError, statusCode: statusCode);
+            return ServerException(kMessageServerError,
+                statusCode: statusCode, originalException: error);
           default:
-            return ServerException(
-              error.response?.data?['message'] ?? kMessageServerError,
-              statusCode: statusCode,
-            );
+            // Try to get error message from response data
+            String errorMessage = kMessageServerError;
+            if (error.response?.data != null) {
+              final responseData = error.response!.data;
+              if (responseData is Map<String, dynamic>) {
+                errorMessage = responseData['message'] ??
+                    responseData['error'] ??
+                    responseData['errors']?.toString() ??
+                    kMessageServerError;
+              }
+            }
+            return ServerException(errorMessage,
+                statusCode: statusCode, originalException: error);
         }
 
       case DioExceptionType.cancel:
-        return ApiException(kMessageCancel);
+        return ApiException(kMessageCancel, originalException: error);
 
       case DioExceptionType.unknown:
       default:
-        return NetworkException(kMessageNetworkError);
+        return NetworkException(kMessageNetworkError, originalException: error);
     }
   }
 

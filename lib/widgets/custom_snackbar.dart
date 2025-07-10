@@ -20,19 +20,23 @@ class CustomSnackbar {
     Status status = Status.SUCCESS,
   }) {
     Color backgroundColor;
+    Color textColor;
     IconData icon;
 
     switch (status) {
       case Status.SUCCESS:
-        backgroundColor = Colors.green;
+        backgroundColor = Colors.green.shade100;
+        textColor = Colors.green.shade800;
         icon = Icons.check_circle_rounded;
         break;
       case Status.ERROR:
-        backgroundColor = Colors.red.shade400;
+        backgroundColor = Colors.red.shade100;
+        textColor = Colors.red.shade800;
         icon = Icons.error;
         break;
       case Status.INFO:
-        backgroundColor = Colors.blue.shade400;
+        backgroundColor = Colors.blue.shade100;
+        textColor = Colors.blue.shade800;
         icon = Icons.info;
         break;
     }
@@ -43,22 +47,21 @@ class CustomSnackbar {
       titleText: Text(
         title.toTitleCase(),
         style: TextStyle(
-          fontSize: k10Double.sp,
+          fontSize: k11Double.sp,
           fontWeight: FontWeight.bold,
-          color: Colors.white,
+          color: textColor,
         ),
       ),
       messageText: Text(
         message.toTitleCase(),
         style: TextStyle(
-          fontSize: k9Double.sp,
-          color: Colors.white,
+          fontSize: k10Double.sp,
+          color: textColor,
         ),
       ),
       duration: const Duration(milliseconds: 2000),
       snackPosition: SnackPosition.BOTTOM,
       backgroundColor: backgroundColor,
-      colorText: Colors.white,
       shouldIconPulse: false,
       margin: EdgeInsets.only(
         bottom: k16Double,
@@ -77,7 +80,7 @@ class CustomSnackbar {
         onPressed: null,
         child: Icon(
           icon,
-          color: Colors.white,
+          color: textColor,
           size: k16Double.sp,
         ),
       ),

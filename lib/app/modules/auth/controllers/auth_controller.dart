@@ -3,6 +3,7 @@ import 'package:get/get.dart';
 import 'package:kioku_navi/app/routes/app_pages.dart';
 import 'package:kioku_navi/controllers/base_controller.dart';
 import 'package:kioku_navi/services/api/auth_api.dart';
+import 'package:kioku_navi/utils/validation_exception.dart';
 import 'package:kioku_navi/widgets/custom_snackbar.dart';
 
 class AuthController extends BaseController {
@@ -50,9 +51,10 @@ class AuthController extends BaseController {
   Future<void> loginStudent([BuildContext? context]) async {
     await safeApiCall(
       () async {
-        // Validate form
+        // Validate form - use ValidationException for form validation errors
         if (!studentLoginFormKey.currentState!.validate()) {
-          throw 'Please fill in all required fields correctly';
+          throw ValidationException(
+              'Please fill in all required fields correctly');
         }
 
         // Get input values
@@ -66,7 +68,7 @@ class AuthController extends BaseController {
         final data = response['data'] as Map<String, dynamic>;
         final userData = data['user'] as Map<String, dynamic>;
 
-        print('Student login successful: ${userData['name']}');
+        debugPrint('Student login successful: ${userData['name']}');
 
         return response;
       },
@@ -82,7 +84,8 @@ class AuthController extends BaseController {
         requestNavigation(Routes.CHILD_HOME);
       },
       onError: (error) {
-        // Show error snackbar
+        // Handle business logic errors only (technical errors handled globally)
+        // This will ONLY be called for actual API response errors (401, 422, etc.)
         CustomSnackbar.showError(
           title: 'Login Failed',
           message: 'Please check your credentials and try again',
@@ -95,9 +98,10 @@ class AuthController extends BaseController {
   Future<void> loginParent([BuildContext? context]) async {
     await safeApiCall(
       () async {
-        // Validate form
+        // Validate form - use ValidationException for form validation errors
         if (!parentLoginFormKey.currentState!.validate()) {
-          throw 'Please fill in all required fields correctly';
+          throw ValidationException(
+              'Please fill in all required fields correctly');
         }
 
         // Get input values
@@ -111,7 +115,7 @@ class AuthController extends BaseController {
         final data = response['data'] as Map<String, dynamic>;
         final userData = data['user'] as Map<String, dynamic>;
 
-        print('Parent login successful: ${userData['name']}');
+        debugPrint('Parent login successful: ${userData['name']}');
 
         return response;
       },
@@ -127,7 +131,8 @@ class AuthController extends BaseController {
         requestNavigation(Routes.HOME);
       },
       onError: (error) {
-        // Show error snackbar
+        // Handle business logic errors only (technical errors handled globally)
+        // This will ONLY be called for actual API response errors (401, 422, etc.)
         CustomSnackbar.showError(
           title: 'Login Failed',
           message: 'Please check your credentials and try again',
@@ -140,9 +145,10 @@ class AuthController extends BaseController {
   Future<void> onRegister([BuildContext? context]) async {
     await safeApiCall(
       () async {
-        // Validate form
+        // Validate form - use ValidationException for form validation errors
         if (!registerFormKey.currentState!.validate()) {
-          throw 'Please fill in all required fields correctly';
+          throw ValidationException(
+              'Please fill in all required fields correctly');
         }
 
         // Get input values
@@ -165,7 +171,7 @@ class AuthController extends BaseController {
         final data = response['data'] as Map<String, dynamic>;
         final userData = data['user'] as Map<String, dynamic>;
 
-        print('Registration successful: ${userData['name']}');
+        debugPrint('Registration successful: ${userData['name']}');
 
         return response;
       },
@@ -181,7 +187,8 @@ class AuthController extends BaseController {
         requestNavigation(Routes.ROOT_SCREEN);
       },
       onError: (error) {
-        // Show error snackbar
+        // Handle business logic errors only (technical errors handled globally)
+        // This will ONLY be called for actual API response errors (401, 422, etc.)
         CustomSnackbar.showError(
           title: 'Registration Failed',
           message: 'Unable to create account. Please try again',
@@ -196,8 +203,9 @@ class AuthController extends BaseController {
       () async {
         final emailValue = email.text.trim();
 
+        // Use ValidationException for form validation errors
         if (emailValue.isEmpty) {
-          throw 'Please enter your email address';
+          throw ValidationException('Please enter your email address');
         }
 
         // TODO: Implement forgot password API call when backend is ready
@@ -205,7 +213,7 @@ class AuthController extends BaseController {
         // await _authApi.forgotPassword(emailValue);
 
         // For now, show success message
-        print('Forgot password would be called for: $emailValue');
+        debugPrint('Forgot password would be called for: $emailValue');
 
         return {'success': true};
       },
@@ -219,7 +227,8 @@ class AuthController extends BaseController {
         );
       },
       onError: (error) {
-        // Show error snackbar
+        // Handle business logic errors only (technical errors handled globally)
+        // This will ONLY be called for actual API response errors (401, 422, etc.)
         CustomSnackbar.showError(
           title: 'Reset Failed',
           message: 'Unable to send reset email. Please try again',

@@ -12,11 +12,14 @@ class RouteHelper {
   RouteHelper._();
 
   /// Determine the initial screen based on authentication status and user type
+  /// Note: Connectivity checking is now handled globally by ConnectivityManager
   static Widget getInitialScreen() {
     try {
+      // Check authentication status
       final tokenManager = Get.find<TokenManager>();
-      final isAuthenticated = (tokenManager as TokenManagerImpl).isAuthenticatedSync();
-      
+      final isAuthenticated =
+          (tokenManager as TokenManagerImpl).isAuthenticatedSync();
+
       if (!isAuthenticated) {
         return const RootScreenView();
       }
@@ -26,9 +29,10 @@ class RouteHelper {
       final isStudent = storage.read(kIsStudent) ?? false;
 
       // Route based on user type
-      return isStudent ?  ChildHomeView() : const HomeView();
+      return isStudent ? ChildHomeView() : const HomeView();
     } catch (e) {
+      // If any error occurs, fallback to root screen
       return const RootScreenView();
     }
   }
-  }
+}
