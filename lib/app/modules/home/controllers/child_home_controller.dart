@@ -1,10 +1,12 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:kioku_navi/app/modules/learning/models/models.dart';
+import 'package:kioku_navi/app/modules/learning/services/course_api.dart';
 import 'package:kioku_navi/app/routes/app_pages.dart';
+import 'package:kioku_navi/controllers/base_controller.dart';
 import 'package:kioku_navi/generated/locales.g.dart';
 import 'package:kioku_navi/widgets/course_section_widget.dart';
 import 'package:kioku_navi/widgets/subject_selection_dialog.dart';
-import 'package:kioku_navi/utils/navigation_helper.dart';
 
 class ChildHomeController extends BaseController {
   // Observable list of course sections
@@ -13,20 +15,14 @@ class ChildHomeController extends BaseController {
   // Currently selected subject
   final Rx<Subject> selectedSubject = Subject.comprehensive.obs;
 
+  // Course API service
+  late final CourseApi _courseApi;
+
   @override
   void onInit() {
     super.onInit();
+    _courseApi = Get.find<CourseApi>();
     _initializeCourseSections();
-  }
-
-  @override
-  void onReady() {
-    super.onReady();
-  }
-
-  @override
-  void onClose() {
-    super.onClose();
   }
 
   void _initializeCourseSections() {
@@ -212,14 +208,65 @@ class ChildHomeController extends BaseController {
     ]);
   }
 
-  void onSectionTapped(CourseSection section) {
+  void onSectionTapped(CourseSection section) async {
     if (section.title == LocaleKeys.pages_course_sections_start.tr) {
-      requestNavigation(Routes.QUESTION);
+      await _loadTopicAndNavigate();
     }
 
     // Handle section tap
     print('Tapped on ${section.title}');
     // TODO: Navigate to section or show section details
+  }
+
+  /// Loads topic data from API and navigates to question page
+  Future<void> _loadTopicAndNavigate() async {
+    Map<String, dynamic>? topicData;
+
+    await safeApiCall(
+      () async {
+        // For now, using topicId = 6 as specified
+        const int topicId = 6;
+
+        print('Loading topic with ID: $topicId');
+
+        // Make API call to get topic with questions
+        final response = await _courseApi.getTopicWithQuestions(topicId);
+
+        print('API Response received: $response');
+
+        // Parse the response to get Topic model
+        final responseData = response['data'] as Map<String, dynamic>;
+        final topic = Topic.fromJson(responseData);
+
+        print('Topic loaded: ${topic.title}');
+        print('Number of questions: ${topic.contentBlocks?.length ?? 0}');
+
+        // Store data for navigation
+        topicData = {
+          'topic': topic,
+          'topicId': topicId,
+          'questions': topic.contentBlocks ?? [],
+        };
+
+        return response;
+      },
+      context: Get.context!,
+      loaderMessage: 'Loading questions...',
+      onSuccess: () {
+        // Navigate to question page with the topic data
+        if (topicData != null) {
+          requestNavigationWithArguments(
+            Routes.QUESTION,
+            arguments: topicData,
+          );
+        }
+      },
+      onError: (error) {
+        // Error handling is managed by BaseController's safeApiCall
+        // This will show appropriate error messages to the user
+        print('Error loading topic: $error');
+      },
+    );
   }
 
   void onSubjectSelected(Subject subject) {
