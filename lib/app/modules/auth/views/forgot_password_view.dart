@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:form_builder_validators/form_builder_validators.dart';
 import 'package:get/get.dart';
 import 'package:kioku_navi/app/modules/auth/controllers/auth_controller.dart';
+import 'package:kioku_navi/generated/locales.g.dart';
 import 'package:kioku_navi/utils/constants.dart';
 import 'package:kioku_navi/utils/extensions.dart';
 import 'package:kioku_navi/utils/sizes.dart';
@@ -29,7 +30,7 @@ class ForgotPasswordView extends GetView<AuthController> {
               children: [
                 SizedBox(height: k2_5Double.hp),
                 Text(
-                  'パスワードをお忘れですか？',
+                  LocaleKeys.pages_forgotPassword_title.tr,
                   style: TextStyle(
                     fontWeight: FontWeight.w600,
                     fontSize: k16Double.sp,
@@ -39,17 +40,20 @@ class ForgotPasswordView extends GetView<AuthController> {
                 SizedBox(height: k3Double.hp),
                 CustomTextFormField(
                   textController: controller.email,
-                  labelText: 'メールアドレス',
-                  hintText: 'メールアドレスを入力',
+                  labelText:
+                      LocaleKeys.pages_forgotPassword_form_email_label.tr,
+                  hintText:
+                      LocaleKeys.pages_forgotPassword_form_email_placeholder.tr,
                   keyboardType: TextInputType.emailAddress,
                   customValidators: [
                     FormBuilderValidators.required(errorText: kRequired),
-                    FormBuilderValidators.email(errorText: "Invalid email"),
+                    FormBuilderValidators.email(
+                        errorText: LocaleKeys.validation_invalidEmail.tr),
                   ],
                 ),
                 SizedBox(height: k2Double.hp),
                 Text(
-                  'メールアドレスを入力して、パスワード再設定のリンクを受け取りましょう。',
+                  LocaleKeys.pages_forgotPassword_instruction.tr,
                   style: TextStyle(
                     fontWeight: FontWeight.w500,
                     fontSize: k10Double.sp,
@@ -59,7 +63,7 @@ class ForgotPasswordView extends GetView<AuthController> {
                 SizedBox(height: k2Double.hp),
                 CustomButton(
                   disabled: true,
-                  text: '次へ',
+                  text: LocaleKeys.common_buttons_next.tr,
                   onPressed: () {},
                 ),
               ],

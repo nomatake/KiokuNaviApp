@@ -23,16 +23,25 @@ dependencies:
   flutter_inner_shadow: ^0.0.1
   bubble: ^1.2.1
   splash_master: ^0.0.3
+  connectivity_plus: ^6.1.4
+  wolt_modal_sheet: ^0.9.3
 
 dev_dependencies:
   flutter_test:
     sdk: flutter
-
   flutter_lints: ^5.0.0
   build_runner: ^2.4.15
+  # flutter_launcher_icons: ^0.14.1  # Used for generating app icons - can be removed after generation
 
 flutter_gen:
   output: lib/generated/
+
+# flutter_launcher_icons:
+#   android: "launcher_icon"
+#   ios: true
+#   image_path: "assets/images/logo.png"
+#   min_sdk_android: 21
+#   remove_alpha_ios: true
 
 flutter:
   uses-material-design: true

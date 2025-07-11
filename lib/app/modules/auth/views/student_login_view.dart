@@ -15,7 +15,7 @@ class StudentLoginView extends GetView<AuthController> {
       title: LocaleKeys.pages_login_studentTitle.tr,
       formKey: controller.studentLoginFormKey,
       controller: controller,
-      onPressed: (context) => controller.loginStudent(context),
+      onPressed: controller.loginStudent,
     );
   }
 }

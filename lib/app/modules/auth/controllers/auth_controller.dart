@@ -2,7 +2,9 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:kioku_navi/app/routes/app_pages.dart';
 import 'package:kioku_navi/controllers/base_controller.dart';
+import 'package:kioku_navi/generated/locales.g.dart';
 import 'package:kioku_navi/services/api/auth_api.dart';
+import 'package:kioku_navi/utils/validation_exception.dart';
 import 'package:kioku_navi/widgets/custom_snackbar.dart';
 
 class AuthController extends BaseController {
@@ -47,12 +49,13 @@ class AuthController extends BaseController {
   }
 
   /// Student Login Implementation (using email and password)
-  Future<void> loginStudent([BuildContext? context]) async {
+  Future<void> loginStudent(BuildContext context) async {
     await safeApiCall(
       () async {
-        // Validate form
+        // Validate form - use ValidationException for form validation errors
         if (!studentLoginFormKey.currentState!.validate()) {
-          throw 'Please fill in all required fields correctly';
+          throw ValidationException(
+              'Please fill in all required fields correctly');
         }
 
         // Get input values
@@ -66,38 +69,40 @@ class AuthController extends BaseController {
         final data = response['data'] as Map<String, dynamic>;
         final userData = data['user'] as Map<String, dynamic>;
 
-        print('Student login successful: ${userData['name']}');
+        debugPrint('Student login successful: ${userData['name']}');
 
         return response;
       },
       context: context,
-      loaderMessage: 'Logging in...',
+      loaderMessage: LocaleKeys.common_messages_loggingIn.tr,
       onSuccess: () {
         // Show success snackbar
         CustomSnackbar.showSuccess(
-          title: 'Welcome!',
-          message: 'Login successful',
+          title: LocaleKeys.common_messages_welcome.tr,
+          message: LocaleKeys.common_messages_loginSuccessful.tr,
         );
         // Navigate after loader is hidden
         requestNavigation(Routes.CHILD_HOME);
       },
       onError: (error) {
-        // Show error snackbar
+        // Handle business logic errors only (technical errors handled globally)
+        // This will ONLY be called for actual API response errors (401, 422, etc.)
         CustomSnackbar.showError(
-          title: 'Login Failed',
-          message: 'Please check your credentials and try again',
+          title: LocaleKeys.common_messages_loginFailed.tr,
+          message: LocaleKeys.common_messages_checkCredentials.tr,
         );
       },
     );
   }
 
   /// Parent Login Implementation
-  Future<void> loginParent([BuildContext? context]) async {
+  Future<void> loginParent(BuildContext context) async {
     await safeApiCall(
       () async {
-        // Validate form
+        // Validate form - use ValidationException for form validation errors
         if (!parentLoginFormKey.currentState!.validate()) {
-          throw 'Please fill in all required fields correctly';
+          throw ValidationException(
+              'Please fill in all required fields correctly');
         }
 
         // Get input values
@@ -111,38 +116,40 @@ class AuthController extends BaseController {
         final data = response['data'] as Map<String, dynamic>;
         final userData = data['user'] as Map<String, dynamic>;
 
-        print('Parent login successful: ${userData['name']}');
+        debugPrint('Parent login successful: ${userData['name']}');
 
         return response;
       },
       context: context,
-      loaderMessage: 'Logging in...',
+      loaderMessage: LocaleKeys.common_messages_loggingIn.tr,
       onSuccess: () {
         // Show success snackbar
         CustomSnackbar.showSuccess(
-          title: 'Welcome!',
-          message: 'Login successful',
+          title: LocaleKeys.common_messages_welcome.tr,
+          message: LocaleKeys.common_messages_loginSuccessful.tr,
         );
         // Navigate after loader is hidden
         requestNavigation(Routes.HOME);
       },
       onError: (error) {
-        // Show error snackbar
+        // Handle business logic errors only (technical errors handled globally)
+        // This will ONLY be called for actual API response errors (401, 422, etc.)
         CustomSnackbar.showError(
-          title: 'Login Failed',
-          message: 'Please check your credentials and try again',
+          title: LocaleKeys.common_messages_loginFailed.tr,
+          message: LocaleKeys.common_messages_checkCredentials.tr,
         );
       },
     );
   }
 
   /// Registration Implementation
-  Future<void> onRegister([BuildContext? context]) async {
+  Future<void> onRegister(BuildContext context) async {
     await safeApiCall(
       () async {
-        // Validate form
+        // Validate form - use ValidationException for form validation errors
         if (!registerFormKey.currentState!.validate()) {
-          throw 'Please fill in all required fields correctly';
+          throw ValidationException(
+              'Please fill in all required fields correctly');
         }
 
         // Get input values
@@ -165,39 +172,41 @@ class AuthController extends BaseController {
         final data = response['data'] as Map<String, dynamic>;
         final userData = data['user'] as Map<String, dynamic>;
 
-        print('Registration successful: ${userData['name']}');
+        debugPrint('Registration successful: ${userData['name']}');
 
         return response;
       },
       context: context,
-      loaderMessage: 'Creating account...',
+      loaderMessage: LocaleKeys.common_messages_creatingAccount.tr,
       onSuccess: () {
         // Show success snackbar
         CustomSnackbar.showSuccess(
-          title: 'Account Created!',
-          message: 'Welcome to KiokuNavi. Please log in to continue.',
+          title: LocaleKeys.common_messages_accountCreated.tr,
+          message: LocaleKeys.common_messages_welcomeToKiokuNavi.tr,
         );
         // Navigate after loader is hidden
         requestNavigation(Routes.ROOT_SCREEN);
       },
       onError: (error) {
-        // Show error snackbar
+        // Handle business logic errors only (technical errors handled globally)
+        // This will ONLY be called for actual API response errors (401, 422, etc.)
         CustomSnackbar.showError(
-          title: 'Registration Failed',
-          message: 'Unable to create account. Please try again',
+          title: LocaleKeys.common_messages_registrationFailed.tr,
+          message: LocaleKeys.common_messages_unableToCreateAccount.tr,
         );
       },
     );
   }
 
   /// Forgot Password Implementation
-  Future<void> onForgotPassword([BuildContext? context]) async {
+  Future<void> onForgotPassword(BuildContext context) async {
     await safeApiCall(
       () async {
         final emailValue = email.text.trim();
 
+        // Use ValidationException for form validation errors
         if (emailValue.isEmpty) {
-          throw 'Please enter your email address';
+          throw ValidationException('Please enter your email address');
         }
 
         // TODO: Implement forgot password API call when backend is ready
@@ -205,31 +214,32 @@ class AuthController extends BaseController {
         // await _authApi.forgotPassword(emailValue);
 
         // For now, show success message
-        print('Forgot password would be called for: $emailValue');
+        debugPrint('Forgot password would be called for: $emailValue');
 
         return {'success': true};
       },
       context: context,
-      loaderMessage: 'Sending reset email...',
+      loaderMessage: LocaleKeys.common_messages_sendingResetEmail.tr,
       onSuccess: () {
         // Show success dialog after loader is hidden
         CustomSnackbar.showInfo(
-          title: 'Password Reset',
-          message: 'If an account exists, you will receive reset instructions.',
+          title: LocaleKeys.common_messages_passwordReset.tr,
+          message: LocaleKeys.common_messages_resetInstructions.tr,
         );
       },
       onError: (error) {
-        // Show error snackbar
+        // Handle business logic errors only (technical errors handled globally)
+        // This will ONLY be called for actual API response errors (401, 422, etc.)
         CustomSnackbar.showError(
-          title: 'Reset Failed',
-          message: 'Unable to send reset email. Please try again',
+          title: LocaleKeys.common_messages_resetFailed.tr,
+          message: LocaleKeys.common_messages_unableToSendResetEmail.tr,
         );
       },
     );
   }
 
   /// Logout Implementation
-  Future<void> logout([BuildContext? context]) async {
+  Future<void> logout(BuildContext context) async {
     await safeApiCall(
       () async {
         // Call logout API (token clearing handled automatically)
@@ -238,12 +248,12 @@ class AuthController extends BaseController {
         return {'success': true};
       },
       context: context,
-      loaderMessage: 'Logging out...',
+      loaderMessage: LocaleKeys.common_messages_loggingOut.tr,
       onSuccess: () {
         // Show success snackbar
         CustomSnackbar.showInfo(
-          title: 'Goodbye!',
-          message: 'You have been logged out successfully',
+          title: LocaleKeys.common_messages_goodbye.tr,
+          message: LocaleKeys.common_messages_loggedOutSuccessfully.tr,
         );
         // Navigate after loader is hidden
         requestNavigation(Routes.ROOT_SCREEN);
@@ -251,27 +261,27 @@ class AuthController extends BaseController {
       onError: (error) {
         // Show error snackbar
         CustomSnackbar.showError(
-          title: 'Logout Failed',
-          message: 'Unable to logout. Please try again',
+          title: LocaleKeys.common_messages_logoutFailed.tr,
+          message: LocaleKeys.common_messages_unableToLogout.tr,
         );
       },
     );
   }
 
   /// Get current user data
-  Future<Map<String, dynamic>?> getCurrentUser([BuildContext? context]) async {
+  Future<Map<String, dynamic>?> getCurrentUser(BuildContext context) async {
     return await safeApiCall(
       () async {
         final userData = await _authApi.getCurrentUser();
         return userData;
       },
       context: context,
-      loaderMessage: 'Loading user data...',
+      loaderMessage: LocaleKeys.common_messages_loadingUserData.tr,
       onError: (error) {
         // Show error snackbar
         CustomSnackbar.showError(
-          title: 'Load Failed',
-          message: 'Unable to load user data',
+          title: LocaleKeys.common_messages_loadFailed.tr,
+          message: LocaleKeys.common_messages_unableToLoadUserData.tr,
         );
       },
       // No onSuccess callback needed for data fetching

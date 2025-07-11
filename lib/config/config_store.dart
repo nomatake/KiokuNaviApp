@@ -6,6 +6,7 @@ import 'package:kioku_navi/app/bindings/service_binding.dart';
 import 'package:kioku_navi/app/modules/auth/controllers/auth_controller.dart';
 import 'package:kioku_navi/app/modules/home/controllers/child_home_controller.dart';
 import 'package:kioku_navi/app/modules/home/controllers/home_controller.dart';
+import 'package:kioku_navi/services/connectivity/connectivity_service.dart';
 import 'package:kioku_navi/utils/constants.dart';
 import 'package:kioku_navi/utils/error_manager.dart';
 import 'package:splash_master/splash_master.dart';
@@ -18,12 +19,12 @@ class ConfigStore extends GetxController {
   bool get isRelease => true;
 
   // Locale configuration
-  static const Locale locale = Locale('ja', '');
+  static const Locale locale = Locale('ja', 'JP');
 
   // Languages configuration
   List<Locale> languages = [
-    const Locale('en', ''),
-    const Locale('ja', ''),
+    const Locale('en', 'US'),
+    const Locale('ja', 'JP'),
   ];
 
   // Localization Configuration
@@ -35,8 +36,8 @@ class ConfigStore extends GetxController {
 
   // Supported locales
   static const List<Locale> supportedLocales = [
-    Locale('en', ''),
-    Locale('ja', ''),
+    Locale('en', 'US'),
+    Locale('ja', 'JP'),
   ];
 
   // App Theme Configuration
@@ -69,8 +70,12 @@ class ConfigStore extends GetxController {
     // Initialize GetStorage
     await GetStorage.init();
 
-    // Initialize services
+    // Initialize services (this includes connectivity service and manager)
     ServiceBinding().dependencies();
+
+    // Initialize connectivity service
+    final connectivityService = Get.find<ConnectivityService>();
+    await connectivityService.initialize();
 
     // Initialize error manager
     Get.put(ErrorManager());

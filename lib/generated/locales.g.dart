@@ -27,6 +27,8 @@ class LocaleKeys {
   static const common_buttons_google = 'common_buttons_google';
   static const common_buttons_allow = 'common_buttons_allow';
   static const common_buttons_dontAllow = 'common_buttons_dontAllow';
+  static const common_buttons_openSettings = 'common_buttons_openSettings';
+  static const common_buttons_ok = 'common_buttons_ok';
   static const common_status_correct = 'common_status_correct';
   static const common_status_incorrect = 'common_status_incorrect';
   static const common_status_selected = 'common_status_selected';
@@ -37,6 +39,80 @@ class LocaleKeys {
   static const common_navigation_others = 'common_navigation_others';
   static const common_navigation_tapToNavigate =
       'common_navigation_tapToNavigate';
+  static const common_connectivity_noNetworkAvailable =
+      'common_connectivity_noNetworkAvailable';
+  static const common_connectivity_checkDataOrWifi =
+      'common_connectivity_checkDataOrWifi';
+  static const common_connectivity_noInternetConnection =
+      'common_connectivity_noInternetConnection';
+  static const common_connectivity_noInternetMessage =
+      'common_connectivity_noInternetMessage';
+  static const common_connectivity_stillNoConnection =
+      'common_connectivity_stillNoConnection';
+  static const common_connectivity_checkConnectionMessage =
+      'common_connectivity_checkConnectionMessage';
+  static const common_connectivity_error = 'common_connectivity_error';
+  static const common_connectivity_unableToCheckConnection =
+      'common_connectivity_unableToCheckConnection';
+  static const common_errors_connectionError = 'common_errors_connectionError';
+  static const common_errors_checkInternetConnection =
+      'common_errors_checkInternetConnection';
+  static const common_errors_requestTimeout = 'common_errors_requestTimeout';
+  static const common_errors_serverTakingTooLong =
+      'common_errors_serverTakingTooLong';
+  static const common_errors_sessionExpired = 'common_errors_sessionExpired';
+  static const common_errors_sessionExpiredMessage =
+      'common_errors_sessionExpiredMessage';
+  static const common_errors_networkError = 'common_errors_networkError';
+  static const common_errors_unableToConnectToServer =
+      'common_errors_unableToConnectToServer';
+  static const common_errors_timeoutError = 'common_errors_timeoutError';
+  static const common_errors_requestTimedOut = 'common_errors_requestTimedOut';
+  static const common_errors_pleaseLoginAgain =
+      'common_errors_pleaseLoginAgain';
+  static const common_errors_serverTemporarilyUnavailable =
+      'common_errors_serverTemporarilyUnavailable';
+  static const common_errors_cannotReachServer =
+      'common_errors_cannotReachServer';
+  static const common_errors_networkConnectionFailed =
+      'common_errors_networkConnectionFailed';
+  static const common_messages_loggingIn = 'common_messages_loggingIn';
+  static const common_messages_welcome = 'common_messages_welcome';
+  static const common_messages_loginSuccessful =
+      'common_messages_loginSuccessful';
+  static const common_messages_loginFailed = 'common_messages_loginFailed';
+  static const common_messages_checkCredentials =
+      'common_messages_checkCredentials';
+  static const common_messages_creatingAccount =
+      'common_messages_creatingAccount';
+  static const common_messages_accountCreated =
+      'common_messages_accountCreated';
+  static const common_messages_welcomeToKiokuNavi =
+      'common_messages_welcomeToKiokuNavi';
+  static const common_messages_registrationFailed =
+      'common_messages_registrationFailed';
+  static const common_messages_unableToCreateAccount =
+      'common_messages_unableToCreateAccount';
+  static const common_messages_sendingResetEmail =
+      'common_messages_sendingResetEmail';
+  static const common_messages_passwordReset = 'common_messages_passwordReset';
+  static const common_messages_resetInstructions =
+      'common_messages_resetInstructions';
+  static const common_messages_resetFailed = 'common_messages_resetFailed';
+  static const common_messages_unableToSendResetEmail =
+      'common_messages_unableToSendResetEmail';
+  static const common_messages_loggingOut = 'common_messages_loggingOut';
+  static const common_messages_goodbye = 'common_messages_goodbye';
+  static const common_messages_loggedOutSuccessfully =
+      'common_messages_loggedOutSuccessfully';
+  static const common_messages_logoutFailed = 'common_messages_logoutFailed';
+  static const common_messages_unableToLogout =
+      'common_messages_unableToLogout';
+  static const common_messages_loadingUserData =
+      'common_messages_loadingUserData';
+  static const common_messages_loadFailed = 'common_messages_loadFailed';
+  static const common_messages_unableToLoadUserData =
+      'common_messages_unableToLoadUserData';
   static const common_weekdays_sun = 'common_weekdays_sun';
   static const common_weekdays_mon = 'common_weekdays_mon';
   static const common_weekdays_tue = 'common_weekdays_tue';
@@ -64,6 +140,10 @@ class LocaleKeys {
       'pages_login_form_password_placeholder';
   static const pages_register_title = 'pages_register_title';
   static const pages_register_termsText = 'pages_register_termsText';
+  static const pages_register_form_name_label =
+      'pages_register_form_name_label';
+  static const pages_register_form_name_placeholder =
+      'pages_register_form_name_placeholder';
   static const pages_register_form_birthDate_label =
       'pages_register_form_birthDate_label';
   static const pages_register_form_birthDate_placeholder =
@@ -76,6 +156,10 @@ class LocaleKeys {
       'pages_register_form_password_label';
   static const pages_register_form_password_placeholder =
       'pages_register_form_password_placeholder';
+  static const pages_register_form_passwordConfirmation_label =
+      'pages_register_form_passwordConfirmation_label';
+  static const pages_register_form_passwordConfirmation_placeholder =
+      'pages_register_form_passwordConfirmation_placeholder';
   static const pages_forgotPassword_title = 'pages_forgotPassword_title';
   static const pages_forgotPassword_instruction =
       'pages_forgotPassword_instruction';
@@ -186,6 +270,8 @@ class LocaleKeys {
   static const validation_required = 'validation_required';
   static const validation_invalidEmail = 'validation_invalidEmail';
   static const validation_passwordMinLength = 'validation_passwordMinLength';
+  static const validation_passwordsDoNotMatch =
+      'validation_passwordsDoNotMatch';
 }
 
 class Locales {
@@ -206,6 +292,8 @@ class Locales {
     'common_buttons_google': 'Google',
     'common_buttons_allow': '許可する',
     'common_buttons_dontAllow': '許可しない',
+    'common_buttons_openSettings': '設定を開く',
+    'common_buttons_ok': 'OK',
     'common_status_correct': '正解',
     'common_status_incorrect': '不正解',
     'common_status_selected': '選択中',
@@ -215,6 +303,53 @@ class Locales {
     'common_navigation_course': 'コース',
     'common_navigation_others': 'その他',
     'common_navigation_tapToNavigate': 'タップして移動',
+    'common_connectivity_noNetworkAvailable': 'ネットワークが利用できません',
+    'common_connectivity_checkDataOrWifi': 'データ通信またはWiFiネットワーク接続をご確認ください。',
+    'common_connectivity_noInternetConnection': 'インターネット接続がありません',
+    'common_connectivity_noInternetMessage':
+        'このアプリは正常に動作するためにインターネット接続が必要です。ネットワーク設定を確認してもう一度お試しください。',
+    'common_connectivity_stillNoConnection': 'まだ接続されていません',
+    'common_connectivity_checkConnectionMessage': 'インターネット接続を確認してもう一度お試しください。',
+    'common_connectivity_error': 'エラー',
+    'common_connectivity_unableToCheckConnection': '接続を確認できません。もう一度お試しください。',
+    'common_errors_connectionError': '接続エラー',
+    'common_errors_checkInternetConnection': 'インターネット接続を確認してもう一度お試しください',
+    'common_errors_requestTimeout': 'リクエストタイムアウト',
+    'common_errors_serverTakingTooLong': 'サーバーの応答に時間がかかっています。もう一度お試しください',
+    'common_errors_sessionExpired': 'セッションが期限切れです',
+    'common_errors_sessionExpiredMessage': 'セッションが期限切れです。再度ログインしてください',
+    'common_errors_networkError': 'ネットワークエラー',
+    'common_errors_unableToConnectToServer': 'サーバーに接続できません。もう一度お試しください',
+    'common_errors_timeoutError': 'タイムアウトエラー',
+    'common_errors_requestTimedOut': 'リクエストがタイムアウトしました。もう一度お試しください',
+    'common_errors_pleaseLoginAgain': '続行するには再度ログインしてください',
+    'common_errors_serverTemporarilyUnavailable':
+        'サーバーが一時的に利用できません。しばらくしてからもう一度お試しください',
+    'common_errors_cannotReachServer': 'サーバーにアクセスできません。インターネット接続をご確認ください',
+    'common_errors_networkConnectionFailed': 'ネットワーク接続に失敗しました。もう一度お試しください',
+    'common_messages_loggingIn': 'ログイン中...',
+    'common_messages_welcome': 'ようこそ！',
+    'common_messages_loginSuccessful': 'ログインに成功しました',
+    'common_messages_loginFailed': 'ログインに失敗しました',
+    'common_messages_checkCredentials': '認証情報をご確認の上、もう一度お試しください',
+    'common_messages_creatingAccount': 'アカウント作成中...',
+    'common_messages_accountCreated': 'アカウントが作成されました！',
+    'common_messages_welcomeToKiokuNavi': 'キオクナビへようこそ。続行するにはログインしてください。',
+    'common_messages_registrationFailed': '登録に失敗しました',
+    'common_messages_unableToCreateAccount': 'アカウントを作成できませんでした。もう一度お試しください',
+    'common_messages_sendingResetEmail': 'リセットメールを送信中...',
+    'common_messages_passwordReset': 'パスワードリセット',
+    'common_messages_resetInstructions': 'アカウントが存在する場合、リセット手順をお送りします。',
+    'common_messages_resetFailed': 'リセットに失敗しました',
+    'common_messages_unableToSendResetEmail': 'リセットメールを送信できませんでした。もう一度お試しください',
+    'common_messages_loggingOut': 'ログアウト中...',
+    'common_messages_goodbye': 'さようなら！',
+    'common_messages_loggedOutSuccessfully': '正常にログアウトしました',
+    'common_messages_logoutFailed': 'ログアウトに失敗しました',
+    'common_messages_unableToLogout': 'ログアウトできませんでした。もう一度お試しください',
+    'common_messages_loadingUserData': 'ユーザーデータを読み込み中...',
+    'common_messages_loadFailed': '読み込みに失敗しました',
+    'common_messages_unableToLoadUserData': 'ユーザーデータを読み込めませんでした',
     'common_weekdays_sun': '日',
     'common_weekdays_mon': '月',
     'common_weekdays_tue': '火',
@@ -238,12 +373,16 @@ class Locales {
     'pages_register_title': '保護者アカウントの作成',
     'pages_register_termsText':
         '新規登録をすることにより、キオクナビのサービス利用規約とプライバシーポリシーに同意したものと見なされます',
+    'pages_register_form_name_label': 'お名前',
+    'pages_register_form_name_placeholder': '氏名を入力',
     'pages_register_form_birthDate_label': '生年月日',
     'pages_register_form_birthDate_placeholder': '例: 2000/01/01',
     'pages_register_form_parentEmail_label': '保護者の方のメールアドレス',
     'pages_register_form_parentEmail_placeholder': 'メールアドレスを入力',
     'pages_register_form_password_label': 'パスワード',
     'pages_register_form_password_placeholder': 'パスワードを入力',
+    'pages_register_form_passwordConfirmation_label': 'パスワード確認',
+    'pages_register_form_passwordConfirmation_placeholder': 'パスワードを再入力',
     'pages_forgotPassword_title': 'パスワードをお忘れですか？',
     'pages_forgotPassword_instruction': 'メールアドレスを入力して、パスワード再設定のリンクを受け取りましょう。',
     'pages_forgotPassword_form_email_label': 'メールアドレス',
@@ -313,6 +452,7 @@ class Locales {
     'validation_required': 'Required',
     'validation_invalidEmail': 'Invalid email',
     'validation_passwordMinLength': 'Password must be at least 6 characters',
+    'validation_passwordsDoNotMatch': 'パスワードが一致しません',
   };
   static const en_US = {
     'hello': 'Hello',
@@ -331,6 +471,8 @@ class Locales {
     'common_buttons_google': 'Google',
     'common_buttons_allow': 'Allow',
     'common_buttons_dontAllow': 'Don\'t Allow',
+    'common_buttons_openSettings': 'Open Settings',
+    'common_buttons_ok': 'OK',
     'common_status_correct': 'Correct',
     'common_status_incorrect': 'Incorrect',
     'common_status_selected': 'Selected',
@@ -340,6 +482,68 @@ class Locales {
     'common_navigation_course': 'Course',
     'common_navigation_others': 'Others',
     'common_navigation_tapToNavigate': 'Tap to navigate',
+    'common_connectivity_noNetworkAvailable': 'No Network Available',
+    'common_connectivity_checkDataOrWifi':
+        'Please check your data or WiFi network connection.',
+    'common_connectivity_noInternetConnection': 'No Internet Connection',
+    'common_connectivity_noInternetMessage':
+        'This app requires an internet connection to function properly. Please check your network settings and try again.',
+    'common_connectivity_stillNoConnection': 'Still No Connection',
+    'common_connectivity_checkConnectionMessage':
+        'Please check your internet connection and try again.',
+    'common_connectivity_error': 'Error',
+    'common_connectivity_unableToCheckConnection':
+        'Unable to check connection. Please try again.',
+    'common_errors_connectionError': 'Connection Error',
+    'common_errors_checkInternetConnection':
+        'Please check your internet connection and try again',
+    'common_errors_requestTimeout': 'Request Timeout',
+    'common_errors_serverTakingTooLong':
+        'Server is taking too long to respond. Please try again',
+    'common_errors_sessionExpired': 'Session Expired',
+    'common_errors_sessionExpiredMessage':
+        'Your session has expired. Please login again',
+    'common_errors_networkError': 'Network Error',
+    'common_errors_unableToConnectToServer':
+        'Unable to connect to server. Please try again',
+    'common_errors_timeoutError': 'Timeout Error',
+    'common_errors_requestTimedOut': 'Request timed out. Please try again',
+    'common_errors_pleaseLoginAgain': 'Please login again to continue',
+    'common_errors_serverTemporarilyUnavailable':
+        'Server is temporarily unavailable. Please try again later',
+    'common_errors_cannotReachServer':
+        'Cannot reach server. Please check your internet connection',
+    'common_errors_networkConnectionFailed':
+        'Network connection failed. Please try again',
+    'common_messages_loggingIn': 'Logging in...',
+    'common_messages_welcome': 'Welcome!',
+    'common_messages_loginSuccessful': 'Login successful',
+    'common_messages_loginFailed': 'Login Failed',
+    'common_messages_checkCredentials':
+        'Please check your credentials and try again',
+    'common_messages_creatingAccount': 'Creating account...',
+    'common_messages_accountCreated': 'Account Created!',
+    'common_messages_welcomeToKiokuNavi':
+        'Welcome to KiokuNavi. Please log in to continue.',
+    'common_messages_registrationFailed': 'Registration Failed',
+    'common_messages_unableToCreateAccount':
+        'Unable to create account. Please try again',
+    'common_messages_sendingResetEmail': 'Sending reset email...',
+    'common_messages_passwordReset': 'Password Reset',
+    'common_messages_resetInstructions':
+        'If an account exists, you will receive reset instructions.',
+    'common_messages_resetFailed': 'Reset Failed',
+    'common_messages_unableToSendResetEmail':
+        'Unable to send reset email. Please try again',
+    'common_messages_loggingOut': 'Logging out...',
+    'common_messages_goodbye': 'Goodbye!',
+    'common_messages_loggedOutSuccessfully':
+        'You have been logged out successfully',
+    'common_messages_logoutFailed': 'Logout Failed',
+    'common_messages_unableToLogout': 'Unable to logout. Please try again',
+    'common_messages_loadingUserData': 'Loading user data...',
+    'common_messages_loadFailed': 'Load Failed',
+    'common_messages_unableToLoadUserData': 'Unable to load user data',
     'common_weekdays_sun': 'Sun',
     'common_weekdays_mon': 'Mon',
     'common_weekdays_tue': 'Tue',
@@ -363,12 +567,16 @@ class Locales {
     'pages_register_title': 'Create Parent Account',
     'pages_register_termsText':
         'By signing up, you agree to KiokuNavi\'s Terms of Service and Privacy Policy',
+    'pages_register_form_name_label': 'Name',
+    'pages_register_form_name_placeholder': 'Enter your name',
     'pages_register_form_birthDate_label': 'Date of Birth',
     'pages_register_form_birthDate_placeholder': 'Example: 2000/01/01',
     'pages_register_form_parentEmail_label': 'Parent\'s Email Address',
     'pages_register_form_parentEmail_placeholder': 'Enter email address',
     'pages_register_form_password_label': 'Password',
     'pages_register_form_password_placeholder': 'Enter password',
+    'pages_register_form_passwordConfirmation_label': 'Password Confirmation',
+    'pages_register_form_passwordConfirmation_placeholder': 'Re-enter password',
     'pages_forgotPassword_title': 'Forgot Password?',
     'pages_forgotPassword_instruction':
         'Enter your email address to receive a password reset link.',
@@ -445,5 +653,6 @@ class Locales {
     'validation_required': 'Required',
     'validation_invalidEmail': 'Invalid email',
     'validation_passwordMinLength': 'Password must be at least 6 characters',
+    'validation_passwordsDoNotMatch': 'Passwords do not match',
   };
 }
