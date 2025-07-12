@@ -1,4 +1,5 @@
 import 'package:dio/dio.dart';
+import 'package:flutter/foundation.dart';
 import 'package:get/get.dart';
 import 'package:kioku_navi/generated/locales.g.dart';
 import 'package:kioku_navi/services/api/base_api_client.dart';
@@ -8,10 +9,40 @@ import 'package:kioku_navi/widgets/custom_snackbar.dart';
 class ApiErrorHandler {
   /// Check if error is a technical/network error that should be handled globally
   static bool isTechnicalError(dynamic error) {
-    return error is NetworkException ||
-        error is TimeoutException ||
-        error is NoInternetException ||
-        error is UnauthorizedException;
+    if (kDebugMode) {
+      print('Checking error type: ${error.runtimeType} - $error');
+    }
+
+    // Handle ApiException and its subclasses
+    if (error is ApiException) {
+      // 401 errors are business logic errors (invalid credentials)
+      if (error.statusCode == 401) {
+        return false;
+      }
+
+      // Network/connectivity errors should be handled globally
+      if (error is NetworkException ||
+          error is TimeoutException ||
+          error is NoInternetException) {
+        return true;
+      }
+
+      // Session expiry should be handled globally
+      if (error is UnauthorizedException) {
+        return true;
+      }
+
+      // Server errors (5xx) should be handled globally
+      if (error is ServerException) {
+        return true;
+      }
+
+      // Other ApiException types (4xx) are usually business logic errors
+      return false;
+    }
+
+    // Non-ApiException errors (shouldn't happen with current setup)
+    return false;
   }
 
   /// Show appropriate snackbar for technical errors
@@ -26,48 +57,56 @@ class ApiErrorHandler {
 
   /// Get error information (title and message) for any error type
   static ErrorInfo _getErrorInfo(dynamic error) {
-    String title = LocaleKeys.common_errors_connectionError.tr;
-    String message = LocaleKeys.common_errors_checkInternetConnection.tr;
+    // Handle ApiException and its subclasses
+    if (error is ApiException) {
+      // Handle 401 errors specifically (authentication errors)
+      if (error.statusCode == 401) {
+        return ErrorInfo(
+          title: LocaleKeys.common_messages_loginFailed.tr,
+          message: error.message, // Use the actual server message
+        );
+      }
 
-    if (error is ApiException && error.originalException != null) {
-      final dioError = error.originalException!;
+      // Handle NetworkException (subclass of ApiException)
+      if (error is NetworkException && error.originalException != null) {
+        return _getNetworkErrorInfo(error.originalException!);
+      }
 
-      if (error is NetworkException) {
-        return _getNetworkErrorInfo(dioError);
-      } else if (error is TimeoutException) {
+      // Handle TimeoutException (subclass of ApiException)
+      if (error is TimeoutException) {
         return ErrorInfo(
           title: LocaleKeys.common_errors_requestTimeout.tr,
           message: LocaleKeys.common_errors_serverTakingTooLong.tr,
         );
-      } else if (error is UnauthorizedException) {
-        return ErrorInfo(
-          title: LocaleKeys.common_errors_sessionExpired.tr,
-          message: LocaleKeys.common_errors_sessionExpiredMessage.tr,
-        );
-      } else if (error is ServerException) {
+      }
+
+      // Handle ServerException (subclass of ApiException)
+      if (error is ServerException) {
         return _getServerErrorInfo(error);
       }
-    } else {
-      // Fallback for errors without DioException
-      if (error is NetworkException) {
-        return ErrorInfo(
-          title: LocaleKeys.common_errors_networkError.tr,
-          message: LocaleKeys.common_errors_unableToConnectToServer.tr,
-        );
-      } else if (error is TimeoutException) {
-        return ErrorInfo(
-          title: LocaleKeys.common_errors_timeoutError.tr,
-          message: LocaleKeys.common_errors_requestTimedOut.tr,
-        );
-      } else if (error is UnauthorizedException) {
+
+      // Handle UnauthorizedException (subclass of ApiException)
+      if (error is UnauthorizedException) {
         return ErrorInfo(
           title: LocaleKeys.common_errors_sessionExpired.tr,
           message: LocaleKeys.common_errors_pleaseLoginAgain.tr,
         );
       }
+
+      // Generic ApiException handling (fallback)
+      return ErrorInfo(
+        title: LocaleKeys.common_errors_connectionError.tr,
+        message: error.message.isNotEmpty
+            ? error.message
+            : LocaleKeys.common_errors_checkInternetConnection.tr,
+      );
     }
 
-    return ErrorInfo(title: title, message: message);
+    // Fallback for non-ApiException errors (shouldn't happen with current setup)
+    return ErrorInfo(
+      title: LocaleKeys.common_errors_connectionError.tr,
+      message: LocaleKeys.common_errors_checkInternetConnection.tr,
+    );
   }
 
   /// Get specific error info for network errors based on DioException details

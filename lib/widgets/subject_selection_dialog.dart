@@ -145,10 +145,6 @@ class SubjectSelectionDialog extends StatelessWidget {
     if (buttonKey != null && buttonKey!.currentContext != null) {
       final renderObject = buttonKey!.currentContext!.findRenderObject();
       if (renderObject is RenderBox) {
-        final buttonBox = renderObject;
-        final buttonPosition = buttonBox.localToGlobal(Offset.zero);
-        final buttonSize = buttonBox.size;
-
         // Get adaptive gap for this device
         final double adaptiveGap = AdaptiveSizes.getDialogButtonGap(context);
 

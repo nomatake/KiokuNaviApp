@@ -76,16 +76,8 @@ class BaseApiClient {
       ));
     }
 
-    // Add error handling interceptor
-    _dio.interceptors.add(InterceptorsWrapper(
-      onError: (error, handler) {
-        final exception = _handleDioError(error);
-        handler.reject(DioException(
-          requestOptions: error.requestOptions,
-          error: exception,
-        ));
-      },
-    ));
+    // Note: Error handling is done in the individual method catch blocks
+    // to avoid double processing
   }
 
   // Add interceptor (used for AuthInterceptor)
@@ -192,6 +184,12 @@ class BaseApiClient {
       return error.error as NoInternetException;
     }
 
+    if (kDebugMode) {
+      print(
+          'DioError - Type: ${error.type}, Status: ${error.response?.statusCode}');
+      print('Response: ${error.response?.data}');
+    }
+
     switch (error.type) {
       case DioExceptionType.connectionTimeout:
       case DioExceptionType.sendTimeout:
@@ -202,40 +200,7 @@ class BaseApiClient {
         return NetworkException(kMessageNetworkError, originalException: error);
 
       case DioExceptionType.badResponse:
-        final statusCode = error.response?.statusCode;
-        switch (statusCode) {
-          case 401:
-            return UnauthorizedException(originalException: error);
-          case 403:
-            return ApiException(kMessageForbidden,
-                statusCode: statusCode, originalException: error);
-          case 404:
-            return ApiException(kMessageNotFound,
-                statusCode: statusCode, originalException: error);
-          case 422:
-            return ApiException(kMessageValidationError,
-                statusCode: statusCode, originalException: error);
-          case 500:
-            return ServerException(kMessageServerError,
-                statusCode: statusCode, originalException: error);
-          case 503:
-            return ServerException(kMessageServerError,
-                statusCode: statusCode, originalException: error);
-          default:
-            // Try to get error message from response data
-            String errorMessage = kMessageServerError;
-            if (error.response?.data != null) {
-              final responseData = error.response!.data;
-              if (responseData is Map<String, dynamic>) {
-                errorMessage = responseData['message'] ??
-                    responseData['error'] ??
-                    responseData['errors']?.toString() ??
-                    kMessageServerError;
-              }
-            }
-            return ServerException(errorMessage,
-                statusCode: statusCode, originalException: error);
-        }
+        return _handleBadResponse(error);
 
       case DioExceptionType.cancel:
         return ApiException(kMessageCancel, originalException: error);
@@ -243,6 +208,55 @@ class BaseApiClient {
       case DioExceptionType.unknown:
       default:
         return NetworkException(kMessageNetworkError, originalException: error);
+    }
+  }
+
+  // Handle bad response errors (4xx, 5xx status codes)
+  Exception _handleBadResponse(DioException error) {
+    final statusCode = error.response?.statusCode;
+    final responseData = error.response?.data;
+
+    // Extract server message
+    String? serverMessage;
+    if (responseData is Map<String, dynamic>) {
+      serverMessage = responseData['message'] ?? responseData['error'];
+    }
+
+    switch (statusCode) {
+      case 401:
+        final message = serverMessage ?? 'Invalid credentials';
+        return ApiException(message,
+            statusCode: statusCode, originalException: error);
+      case 403:
+        final message = serverMessage ?? kMessageForbidden;
+        return ApiException(message,
+            statusCode: statusCode, originalException: error);
+      case 404:
+        final message = serverMessage ?? kMessageNotFound;
+        return ApiException(message,
+            statusCode: statusCode, originalException: error);
+      case 422:
+        final message = serverMessage ?? kMessageValidationError;
+        return ApiException(message,
+            statusCode: statusCode, originalException: error);
+      case 500:
+        final message = serverMessage ?? kMessageServerError;
+        return ServerException(message,
+            statusCode: statusCode, originalException: error);
+      case 503:
+        final message = serverMessage ?? 'Service temporarily unavailable';
+        return ServerException(message,
+            statusCode: statusCode, originalException: error);
+      default:
+        // For other HTTP error codes
+        final message = serverMessage ?? 'Server error occurred';
+        if (statusCode != null && statusCode >= 500) {
+          return ServerException(message,
+              statusCode: statusCode, originalException: error);
+        } else {
+          return ApiException(message,
+              statusCode: statusCode, originalException: error);
+        }
     }
   }
 

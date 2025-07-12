@@ -1,5 +1,7 @@
 import 'package:get/get.dart';
 import 'package:get_storage/get_storage.dart';
+import 'package:kioku_navi/app/modules/learning/services/course_api.dart';
+import 'package:kioku_navi/app/modules/learning/services/course_api_impl.dart';
 import 'package:kioku_navi/config/config_store.dart';
 import 'package:kioku_navi/services/api/auth_api.dart';
 import 'package:kioku_navi/services/api/auth_api_impl.dart';
@@ -49,6 +51,14 @@ class ServiceBinding extends Bindings {
         apiClient: Get.find<BaseApiClient>(),
         tokenManager: Get.find<TokenManager>(),
         storage: Get.find<GetStorage>(),
+      ),
+      fenix: true,
+    );
+
+    // Step 7: Course API Service (learning module)
+    Get.lazyPut<CourseApi>(
+      () => CourseApiImpl(
+        apiClient: Get.find<BaseApiClient>(),
       ),
       fenix: true,
     );

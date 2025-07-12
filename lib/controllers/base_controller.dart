@@ -3,11 +3,10 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:kioku_navi/services/connectivity/connectivity_manager.dart';
 import 'package:kioku_navi/utils/api_error_handler.dart';
-import 'package:kioku_navi/utils/navigation_helper.dart';
 import 'package:kioku_navi/utils/validation_exception.dart';
 import 'package:kioku_navi/widgets/custom_loader.dart';
 
-abstract class BaseController extends GetxController with NavigationHelper {
+abstract class BaseController extends GetxController {
   final RxBool isLoading = false.obs;
   final RxString error = ''.obs;
   final RxBool hasError = false.obs;
@@ -155,9 +154,4 @@ abstract class BaseController extends GetxController with NavigationHelper {
   String? getServerErrorMessage(dynamic error) =>
       ApiErrorHandler.getServerErrorMessage(error);
 
-  @override
-  void onClose() {
-    clearNavigation();
-    super.onClose();
-  }
 }
