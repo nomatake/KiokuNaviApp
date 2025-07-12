@@ -82,7 +82,7 @@ class AuthController extends BaseController {
           message: LocaleKeys.common_messages_loginSuccessful.tr,
         );
         // Navigate after loader is hidden
-        requestNavigation(Routes.CHILD_HOME);
+        Get.toNamed(Routes.CHILD_HOME);
       },
       onError: (error) {
         // Handle business logic errors only (technical errors handled globally)
@@ -129,7 +129,7 @@ class AuthController extends BaseController {
           message: LocaleKeys.common_messages_loginSuccessful.tr,
         );
         // Navigate after loader is hidden
-        requestNavigation(Routes.HOME);
+        Get.toNamed(Routes.HOME);
       },
       onError: (error) {
         // Handle business logic errors only (technical errors handled globally)
@@ -185,7 +185,7 @@ class AuthController extends BaseController {
           message: LocaleKeys.common_messages_welcomeToKiokuNavi.tr,
         );
         // Navigate after loader is hidden
-        requestNavigation(Routes.ROOT_SCREEN);
+        Get.toNamed(Routes.ROOT_SCREEN);
       },
       onError: (error) {
         // Handle business logic errors only (technical errors handled globally)
@@ -256,7 +256,7 @@ class AuthController extends BaseController {
           message: LocaleKeys.common_messages_loggedOutSuccessfully.tr,
         );
         // Navigate after loader is hidden
-        requestNavigation(Routes.ROOT_SCREEN);
+        Get.toNamed(Routes.ROOT_SCREEN);
       },
       onError: (error) {
         // Show error snackbar

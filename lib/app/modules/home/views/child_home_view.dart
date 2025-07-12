@@ -20,9 +20,6 @@ class ChildHomeView extends GetView<ChildHomeController> {
 
   @override
   Widget build(BuildContext context) {
-    // Set up navigation using helper
-    controller.setupNavigation();
-    
     // Debug logging (can be removed in production)
     AdaptiveSizes.logDeviceInfo(context);
 

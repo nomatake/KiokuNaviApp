@@ -61,21 +61,21 @@ class ResultView extends GetView<LearningController> {
                       children: [
                         Flexible(
                           child: ResultStatCard.orange(
-                            value: '23',
+                            value: '${controller.progressTracker.correctAnswers}/${controller.totalQuestions}',
                             label: LocaleKeys.pages_learning_result_totalXP.tr,
                           ),
                         ),
                         SizedBox(width: k3Double.wp),
                         Flexible(
                           child: ResultStatCard.blue(
-                            value: '5:35',
+                            value: controller.formattedTotalTime,
                             label: LocaleKeys.pages_learning_result_time.tr,
                           ),
                         ),
                         SizedBox(width: k3Double.wp),
                         Flexible(
                           child: ResultStatCard.green(
-                            value: '85%',
+                            value: '${controller.progressTracker.scorePercentage.toStringAsFixed(0)}%',
                             label: LocaleKeys
                                 .pages_learning_result_accuracyRate.tr,
                           ),
