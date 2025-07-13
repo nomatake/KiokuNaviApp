@@ -46,18 +46,14 @@ class AuthInterceptor extends Interceptor {
       // Clear the token and force user to re-login
       await tokenManager.clearToken();
 
-      //TODO: Need to check this with karthi
+      // Navigate to root screen and clear all previous routes
+      Get.offAllNamed(Routes.ROOT_SCREEN);
+
       // Show message to user
       CustomSnackbar.showInfo(
         title: LocaleKeys.common_errors_sessionExpired.tr,
         message: LocaleKeys.common_errors_pleaseLoginAgain.tr,
       );
-
-      // Small delay for user to see the message
-      await Future.delayed(const Duration(milliseconds: 1500));
-
-      // Navigate to root screen and clear all previous routes
-      Get.offAllNamed(Routes.ROOT_SCREEN);
 
       // Don't retry - user needs to login again
       return handler.reject(err);
