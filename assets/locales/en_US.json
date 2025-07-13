@@ -8,6 +8,7 @@
   "common": {
     "buttons": {
       "login": "Login",
+      "logout": "Logout",
       "signup": "Sign Up",
       "next": "Next",
       "cancel": "Cancel",

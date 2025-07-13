@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:kioku_navi/app/modules/auth/controllers/auth_controller.dart';
 import 'package:kioku_navi/generated/locales.g.dart';
 import 'package:kioku_navi/utils/accessibility_helper.dart';
 import 'package:kioku_navi/utils/app_constants.dart';
@@ -59,10 +60,28 @@ class ChildBottomNavBar extends StatelessWidget {
               icon: Icons.school,
               isTablet: isTablet,
             ),
+            // Old settings button
+            // _NavBarItem(
+            //   label: LocaleKeys.common_navigation_others.tr,
+            //   icon: Icons.settings,
+            //   isTablet: isTablet,
+            // ),
+            
+            // New logout button
             _NavBarItem(
-              label: LocaleKeys.common_navigation_others.tr,
-              icon: Icons.settings,
+              label: LocaleKeys.common_buttons_logout.tr,
+              icon: Icons.logout,
               isTablet: isTablet,
+              onTap: () {
+                // Use Get.find to get existing instance or create if needed
+                final AuthController authController;
+                if (Get.isRegistered<AuthController>()) {
+                  authController = Get.find<AuthController>();
+                } else {
+                  authController = Get.put(AuthController());
+                }
+                authController.logout(context);
+              },
             ),
           ],
         ),
@@ -76,12 +95,14 @@ class _NavBarItem extends StatelessWidget {
   final IconData icon;
   final bool selected;
   final bool isTablet;
+  final VoidCallback? onTap;
 
   const _NavBarItem({
     required this.label,
     required this.icon,
     this.selected = false,
     this.isTablet = false,
+    this.onTap,
   });
 
   @override
@@ -102,14 +123,18 @@ class _NavBarItem extends StatelessWidget {
     );
 
     return Expanded(
-      child: AccessibilityHelper.makeAccessible(
-        label: semanticsLabel,
+      child: GestureDetector(
         onTap: () {
           AccessibilityHelper.provideTapFeedback();
-          // TODO: Add navigation logic
+          if (onTap != null) {
+            onTap!();
+          }
         },
-        child: Container(
-          padding: EdgeInsets.symmetric(
+        child: AccessibilityHelper.makeAccessible(
+          label: semanticsLabel,
+          onTap: null, // We handle tap in GestureDetector
+          child: Container(
+            padding: EdgeInsets.symmetric(
             horizontal: isTablet ? AppSpacing.xxxs.wp : 1.0.wp,
             vertical: isTablet ? AppSpacing.xxxs.hp : 1.0.hp,
           ),
@@ -146,6 +171,7 @@ class _NavBarItem extends StatelessWidget {
               ),
             ],
           ),
+        ),
         ),
       ),
     );

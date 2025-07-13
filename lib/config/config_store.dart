@@ -81,7 +81,7 @@ class ConfigStore extends GetxController {
     Get.put(ErrorManager());
 
     // Pre-register controllers that might be needed after splash
-    Get.lazyPut(() => AuthController());
+    Get.lazyPut(() => AuthController(), fenix: true);
     Get.lazyPut(() => HomeController());
     Get.lazyPut(() => ChildHomeController());
   }

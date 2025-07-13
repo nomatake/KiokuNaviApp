@@ -16,6 +16,7 @@ class LocaleKeys {
   static const app_title = 'app_title';
   static const app_subtitle = 'app_subtitle';
   static const common_buttons_login = 'common_buttons_login';
+  static const common_buttons_logout = 'common_buttons_logout';
   static const common_buttons_signup = 'common_buttons_signup';
   static const common_buttons_next = 'common_buttons_next';
   static const common_buttons_cancel = 'common_buttons_cancel';
@@ -285,6 +286,7 @@ class Locales {
     'app_title': 'キオクナビ',
     'app_subtitle': '楽しく学ぼう',
     'common_buttons_login': 'ログイン',
+    'common_buttons_logout': 'ログアウト',
     'common_buttons_signup': '新規登録',
     'common_buttons_next': '次へ',
     'common_buttons_cancel': 'キャンセル',
@@ -466,6 +468,7 @@ class Locales {
     'app_title': 'KiokuNavi',
     'app_subtitle': 'Let\'s learn together',
     'common_buttons_login': 'Login',
+    'common_buttons_logout': 'Logout',
     'common_buttons_signup': 'Sign Up',
     'common_buttons_next': 'Next',
     'common_buttons_cancel': 'Cancel',

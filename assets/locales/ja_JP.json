@@ -8,6 +8,7 @@
   "common": {
     "buttons": {
       "login": "ログイン",
+      "logout": "ログアウト",
       "signup": "新規登録",
       "next": "次へ",
       "cancel": "キャンセル",
