@@ -116,7 +116,7 @@ class QuestionView extends GetView<LearningController> {
                     _buildQuestionHeader(),
                     SizedBox(height: k5Double.hp),
                     _buildQuestionBubble(),
-                    SizedBox(height: k10Double.hp),
+                    SizedBox(height: k5Double.hp),
                     const QuestionTemplate(),
                   ],
                 ),

@@ -6,6 +6,7 @@ import 'package:kioku_navi/utils/sizes.dart';
 
 import 'question_templates/fill_blank_template.dart';
 import 'question_templates/multiple_choice_template.dart';
+import 'question_templates/multiple_select_template.dart';
 import 'question_templates/true_false_template.dart';
 
 class QuestionTemplate extends GetView<LearningController> {
@@ -25,6 +26,10 @@ class QuestionTemplate extends GetView<LearningController> {
         case 'multiple_choice':
         case 'multiple-choice':
           return MultipleChoiceTemplate(question: question);
+          
+        case 'multiple_select':
+        case 'multiple-select':
+          return MultipleSelectTemplate(question: question);
           
         case 'true_false':
         case 'true-false':

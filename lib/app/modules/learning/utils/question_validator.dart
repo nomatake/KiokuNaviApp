@@ -3,7 +3,15 @@ import '../models/models.dart';
 class QuestionValidator {
   /// Validates if the selected option is correct for the given question
   static bool validateAnswer(Question question, String selectedOption) {
-    return question.data.correctAnswer.selected == selectedOption;
+    if (question.data.correctAnswer.isMultipleSelect) {
+      // For multiple select, selectedOption should be comma-separated values
+      final selectedList = selectedOption.split(',').map((e) => e.trim()).toSet();
+      final correctList = question.data.correctAnswer.multipleAnswers.toSet();
+      return selectedList.length == correctList.length && 
+             selectedList.containsAll(correctList);
+    } else {
+      return question.data.correctAnswer.selected == selectedOption;
+    }
   }
 
   /// Creates a UserAnswer object for the given question and selected option
@@ -23,8 +31,16 @@ class QuestionValidator {
 
   /// Gets the correct option text for a question
   static String getCorrectOptionText(Question question) {
-    final correctKey = question.data.correctAnswer.selected;
-    return question.data.options[correctKey] ?? '';
+    if (question.data.correctAnswer.isMultipleSelect) {
+      final correctKeys = question.data.correctAnswer.multipleAnswers;
+      return correctKeys
+          .map((key) => question.data.options[key] ?? '')
+          .where((text) => text.isNotEmpty)
+          .join(', ');
+    } else {
+      final correctKey = question.data.correctAnswer.selected;
+      return question.data.options[correctKey] ?? '';
+    }
   }
 
   /// Gets all option keys in order

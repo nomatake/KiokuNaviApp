@@ -137,7 +137,7 @@ class QuestionData {
 }
 
 class CorrectAnswer {
-  final String selected;
+  final dynamic selected; // Can be String or List<String>
 
   CorrectAnswer({required this.selected});
 
@@ -148,12 +148,24 @@ class CorrectAnswer {
   Map<String, dynamic> toJson() {
     return {'selected': selected};
   }
+  
+  // Helper getters
+  bool get isMultipleSelect => selected is List;
+  
+  String? get singleAnswer => selected is String ? selected as String : null;
+  
+  List<String> get multipleAnswers {
+    if (selected is List) {
+      return List<String>.from(selected);
+    }
+    return [];
+  }
 
   @override
   bool operator ==(Object other) {
     if (identical(this, other)) return true;
 
-    return other is CorrectAnswer && other.selected == selected;
+    return other is CorrectAnswer && other.selected.toString() == selected.toString();
   }
 
   @override
@@ -167,7 +179,7 @@ class CorrectAnswer {
   }
 
   CorrectAnswer copyWith({
-    String? selected,
+    dynamic selected,
   }) {
     return CorrectAnswer(
       selected: selected ?? this.selected,

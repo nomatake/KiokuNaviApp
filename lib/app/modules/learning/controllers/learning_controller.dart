@@ -33,6 +33,9 @@ class LearningController extends BaseController {
   
   // For fill-in-the-blank questions
   final RxString userTextAnswer = ''.obs;
+  
+  // For multiple select questions
+  final RxList<String> selectedMultipleOptions = <String>[].obs;
 
   // Progress tracking
   final ProgressTracker progressTracker = ProgressTracker();
@@ -123,6 +126,7 @@ class LearningController extends BaseController {
     hasSubmitted.value = false;
     isCorrect.value = false;
     userTextAnswer.value = '';
+    selectedMultipleOptions.clear();
     
     // Start timer for the new question
     sessionTimer.resetCurrentItem();
@@ -158,6 +162,19 @@ class LearningController extends BaseController {
     }
   }
   
+  /// Toggle a multiple select option
+  void toggleMultipleOption(String optionKey) {
+    if (!hasSubmitted.value) {
+      if (selectedMultipleOptions.contains(optionKey)) {
+        selectedMultipleOptions.remove(optionKey);
+      } else {
+        selectedMultipleOptions.add(optionKey);
+      }
+      // Update selectedOptionIndex to indicate if any options are selected
+      selectedOptionIndex.value = selectedMultipleOptions.isNotEmpty ? 0 : -1;
+    }
+  }
+  
   /// Set text answer for fill-in-the-blank questions
   void setTextAnswer(String answer) {
     if (!hasSubmitted.value) {
@@ -183,9 +200,15 @@ class LearningController extends BaseController {
     
     String selectedAnswer;
     
-    // Check if this is a fill-in-the-blank question
-    if (currentQuestion!.data.questionType.toLowerCase().contains('fill') ||
-        currentQuestion!.data.questionType.toLowerCase().contains('blank')) {
+    // Check question type and get appropriate answer
+    final questionType = currentQuestion!.data.questionType.toLowerCase();
+    
+    if (questionType.contains('multiple_select') || 
+        questionType.contains('multiple-select')) {
+      // For multiple select, join selected options with comma
+      selectedAnswer = selectedMultipleOptions.join(',');
+    } else if (questionType.contains('fill') || 
+               questionType.contains('blank')) {
       // Use text answer for fill-in-the-blank
       selectedAnswer = userTextAnswer.value.trim();
     } else {
@@ -233,11 +256,32 @@ class LearningController extends BaseController {
   /// Get the correct answer index for UI highlighting
   int get correctAnswerIndex {
     if (currentQuestion == null) return -1;
+    
+    if (currentQuestion!.data.correctAnswer.isMultipleSelect) {
+      // For multiple select, return -1 as there's no single correct index
+      return -1;
+    }
 
     final correctKey = currentQuestion!.data.correctAnswer.selected;
     final optionKeys = currentOptionKeys;
 
     return optionKeys.indexOf(correctKey);
+  }
+  
+  /// Get correct answer indices for multiple select questions
+  List<int> get correctAnswerIndices {
+    if (currentQuestion == null || 
+        !currentQuestion!.data.correctAnswer.isMultipleSelect) {
+      return [];
+    }
+    
+    final correctKeys = currentQuestion!.data.correctAnswer.multipleAnswers;
+    final optionKeys = currentOptionKeys;
+    
+    return correctKeys
+        .map((key) => optionKeys.indexOf(key))
+        .where((index) => index != -1)
+        .toList();
   }
 
   /// Get current progress as percentage
