@@ -6,6 +6,7 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:getwidget/getwidget.dart';
 import 'package:kioku_navi/app/modules/learning/controllers/learning_controller.dart';
+import 'package:kioku_navi/app/modules/learning/models/result_config.dart';
 import 'package:kioku_navi/app/modules/learning/widgets/question_template.dart';
 import 'package:kioku_navi/generated/assets.gen.dart';
 import 'package:kioku_navi/generated/locales.g.dart';
@@ -22,16 +23,18 @@ class QuestionView extends GetView<LearningController> {
   @override
   Widget build(BuildContext context) {
     return Obx(() => Scaffold(
-      appBar: RegisterAppBar(
-        progress: controller.progressPercentage,
-        onBack: () => Get.back(),
-        showCloseIcon: true,
-      ),
-      body: SafeArea(
-        bottom: false,
-        child: _buildBody(),
-      ),
-    ));
+          appBar: controller.shouldShowAppBar
+              ? RegisterAppBar(
+                  progress: controller.progressPercentage,
+                  onBack: () => Get.back(),
+                  showCloseIcon: true,
+                )
+              : null,
+          body: SafeArea(
+            bottom: false,
+            child: _buildBody(),
+          ),
+        ));
   }
 
   Widget _buildBody() {
@@ -45,42 +48,53 @@ class QuestionView extends GetView<LearningController> {
           ),
         );
       }
-      
+
       // Show error state
       if (controller.loadingError.value.isNotEmpty) {
-        return Center(
-          child: Column(
-            mainAxisAlignment: MainAxisAlignment.center,
-            children: [
-              Icon(
-                Icons.error_outline,
-                size: k48Double.sp,
-                color: Colors.red,
-              ),
-              SizedBox(height: k2Double.hp),
-              Text(
-                controller.loadingError.value,
-                style: TextStyle(
-                  fontSize: k16Double.sp,
-                  color: Colors.red,
+        return PaddedWrapper(
+          child: Center(
+            child: Column(
+              mainAxisAlignment: MainAxisAlignment.center,
+              children: [
+                Container(
+                  padding: EdgeInsets.all(k16Double.sp),
+                  decoration: BoxDecoration(
+                    color: const Color(0xFFFEE5E5),
+                    shape: BoxShape.circle,
+                  ),
+                  child: Icon(
+                    CupertinoIcons.exclamationmark_triangle_fill,
+                    size: k24Double.sp,
+                    color: const Color(0xFFDC2626),
+                  ),
                 ),
-                textAlign: TextAlign.center,
-              ),
-              SizedBox(height: k4Double.hp),
-              CustomButton.primary(
-                text: 'Go Back',
-                onPressed: () => Get.back(),
-              ),
-            ],
+                SizedBox(height: k3Double.hp),
+                Text(
+                  LocaleKeys.pages_learning_errors_oopsSomethingWentWrong.tr,
+                  textAlign: TextAlign.center,
+                  style: TextStyle(
+                    fontFamily: 'Hiragino Sans',
+                    fontSize: k18Double.sp,
+                    fontWeight: FontWeight.w600,
+                    color: const Color(0xFF212121),
+                  ),
+                ),
+                SizedBox(height: k4Double.hp),
+                CustomButton.danger(
+                  text: LocaleKeys.common_buttons_tryAgain.tr,
+                  onPressed: () => Get.back(),
+                ),
+              ],
+            ),
           ),
         );
       }
-      
+
       // Show empty state
       if (controller.questions.isEmpty) {
         return Center(
           child: Text(
-            'No questions available for this topic',
+            LocaleKeys.pages_learning_errors_noQuestionsAvailable.tr,
             style: TextStyle(
               fontSize: k16Double.sp,
               color: Colors.grey,
@@ -170,20 +184,20 @@ class QuestionView extends GetView<LearningController> {
         ));
   }
 
-
   Widget _buildBottomArea() {
     return Obx(() {
       final hasSubmitted = controller.hasSubmitted.value;
       final hasSelected = controller.selectedOptionIndex.value != -1;
-      
+
       // Get result configuration if submitted
-      final config = hasSubmitted ? _getResultConfig(controller.isCorrect.value) : null;
-      
+      final config =
+          hasSubmitted ? _getResultConfig(controller.isCorrect.value) : null;
+
       return Container(
         width: double.infinity,
         decoration: BoxDecoration(
           color: hasSubmitted ? config!.backgroundColor : Colors.transparent,
-          borderRadius: hasSubmitted 
+          borderRadius: hasSubmitted
               ? BorderRadius.only(
                   topLeft: Radius.circular(k15Double),
                   topRight: Radius.circular(k15Double),
@@ -250,9 +264,8 @@ class QuestionView extends GetView<LearningController> {
     });
   }
 
-
-  _ResultConfig _getResultConfig(bool isCorrect) {
-    return _ResultConfig(
+  ResultConfig _getResultConfig(bool isCorrect) {
+    return ResultConfig(
       backgroundColor:
           isCorrect ? const Color(0xFFD3F5DD) : const Color(0xFFFEE5E5),
       iconData: isCorrect
@@ -273,26 +286,4 @@ class QuestionView extends GetView<LearningController> {
       onButtonPressed: controller.nextQuestion,
     );
   }
-}
-
-class _ResultConfig {
-  final Color backgroundColor;
-  final IconData iconData;
-  final Color iconColor;
-  final String text;
-  final Color textColor;
-  final String buttonText;
-  final Widget Function(String text, VoidCallback onPressed) buttonBuilder;
-  final VoidCallback onButtonPressed;
-
-  const _ResultConfig({
-    required this.backgroundColor,
-    required this.iconData,
-    required this.iconColor,
-    required this.text,
-    required this.textColor,
-    required this.buttonText,
-    required this.buttonBuilder,
-    required this.onButtonPressed,
-  });
 }

@@ -48,6 +48,12 @@ class LearningController extends BaseController {
   int get totalQuestions => questions.length;
   int get questionNumber => currentQuestionIndex.value + 1;
   
+  // UI state
+  bool get shouldShowAppBar => 
+      !isLoadingTopic.value && 
+      loadingError.value.isEmpty && 
+      questions.isNotEmpty;
+  
   // Course API service
   late final CourseApi _courseApi;
 

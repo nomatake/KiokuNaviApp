@@ -201,6 +201,10 @@
       "continuous": {
         "tooltip": "A new consecutive record has started! Let's continue updating the record by taking lessons every day.",
         "recordText": "Day Consecutive Record"
+      },
+      "errors": {
+        "oopsSomethingWentWrong": "Oops! Something went wrong",
+        "noQuestionsAvailable": "No questions available for this topic"
       }
     },
     "tutorial": {
