@@ -43,6 +43,26 @@ class TagStateConfig {
     shadows: [],
   );
 
+  // Disabled state (grey with shadows)
+  static const TagStateConfig disabledState = TagStateConfig(
+    backgroundColor: Color(0xFFE5E5E5),
+    borderColor: Color(0xFFBDBDBD),
+    textColor: Color(0xFF757575),
+    shadows: [
+      BoxShadow(
+        color: Color(0x1A757575),
+        blurRadius: 2,
+        offset: Offset(0, 1),
+      ),
+      BoxShadow(
+        color: Color(0xFFBDBDBD),
+        offset: Offset(0, 2),
+        blurRadius: 0,
+        spreadRadius: 0,
+      ),
+    ],
+  );
+
   // Correct answer state
   static const TagStateConfig correctState = TagStateConfig(
     backgroundColor: Color(0xFFD3F5DD),
