@@ -8,10 +8,10 @@ import 'package:kioku_navi/utils/validation_exception.dart';
 import 'package:kioku_navi/widgets/custom_snackbar.dart';
 
 class AuthController extends BaseController {
-  /// Form keys for different forms
-  final registerFormKey = GlobalKey<FormState>();
-  final parentLoginFormKey = GlobalKey<FormState>();
-  final studentLoginFormKey = GlobalKey<FormState>();
+  /// Form keys for different forms - recreated to avoid duplicate key issues
+  late GlobalKey<FormState> registerFormKey;
+  late GlobalKey<FormState> parentLoginFormKey;
+  late GlobalKey<FormState> studentLoginFormKey;
 
   /// Text controllers
   final name = TextEditingController(); // For registration
@@ -30,8 +30,18 @@ class AuthController extends BaseController {
   void onInit() {
     super.onInit();
 
+    // Initialize form keys
+    _initializeFormKeys();
+
     // Get injected services
     _authApi = Get.find<AuthApi>();
+  }
+
+  /// Initialize or reinitialize form keys to avoid duplicate key issues
+  void _initializeFormKeys() {
+    registerFormKey = GlobalKey<FormState>();
+    parentLoginFormKey = GlobalKey<FormState>();
+    studentLoginFormKey = GlobalKey<FormState>();
   }
 
   /// Format date for display
@@ -81,8 +91,10 @@ class AuthController extends BaseController {
           title: LocaleKeys.common_messages_welcome.tr,
           message: LocaleKeys.common_messages_loginSuccessful.tr,
         );
+        // Clear text controllers after successful login
+        clearTextControllers();
         // Navigate after loader is hidden
-        requestNavigation(Routes.CHILD_HOME);
+        Get.toNamed(Routes.CHILD_HOME);
       },
       onError: (error) {
         // Handle business logic errors only (technical errors handled globally)
@@ -128,8 +140,10 @@ class AuthController extends BaseController {
           title: LocaleKeys.common_messages_welcome.tr,
           message: LocaleKeys.common_messages_loginSuccessful.tr,
         );
+        // Clear text controllers after successful login
+        clearTextControllers();
         // Navigate after loader is hidden
-        requestNavigation(Routes.HOME);
+        Get.toNamed(Routes.HOME);
       },
       onError: (error) {
         // Handle business logic errors only (technical errors handled globally)
@@ -184,8 +198,10 @@ class AuthController extends BaseController {
           title: LocaleKeys.common_messages_accountCreated.tr,
           message: LocaleKeys.common_messages_welcomeToKiokuNavi.tr,
         );
+        // Clear text controllers after successful registration
+        clearTextControllers();
         // Navigate after loader is hidden
-        requestNavigation(Routes.ROOT_SCREEN);
+        Get.toNamed(Routes.ROOT_SCREEN);
       },
       onError: (error) {
         // Handle business logic errors only (technical errors handled globally)
@@ -255,8 +271,10 @@ class AuthController extends BaseController {
           title: LocaleKeys.common_messages_goodbye.tr,
           message: LocaleKeys.common_messages_loggedOutSuccessfully.tr,
         );
+        // Clear text controllers after successful logout
+        clearTextControllers();
         // Navigate after loader is hidden
-        requestNavigation(Routes.ROOT_SCREEN);
+        Get.toNamed(Routes.ROOT_SCREEN);
       },
       onError: (error) {
         // Show error snackbar
@@ -286,6 +304,19 @@ class AuthController extends BaseController {
       },
       // No onSuccess callback needed for data fetching
     );
+  }
+
+  /// Clear all text controllers and reinitialize form keys
+  void clearTextControllers() {
+    name.clear();
+    email.clear();
+    dob.clear();
+    password.clear();
+    passwordConfirmation.clear();
+    selectedDates.clear();
+    
+    // Reinitialize form keys to avoid duplicate key issues
+    _initializeFormKeys();
   }
 
   @override

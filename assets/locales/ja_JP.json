@@ -8,6 +8,7 @@
   "common": {
     "buttons": {
       "login": "ログイン",
+      "logout": "ログアウト",
       "signup": "新規登録",
       "next": "次へ",
       "cancel": "キャンセル",
@@ -201,6 +202,10 @@
       "continuous": {
         "tooltip": "新しい連続記録がスタートしたね！毎日レッスンして記録を更新し続けよう。",
         "recordText": "日連続記録"
+      },
+      "errors": {
+        "oopsSomethingWentWrong": "おっと！何か問題が発生しました",
+        "noQuestionsAvailable": "このトピックには問題がありません"
       }
     },
     "tutorial": {

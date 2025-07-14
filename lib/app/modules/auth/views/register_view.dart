@@ -18,7 +18,6 @@ class RegisterView extends GetView<AuthController> {
 
   @override
   Widget build(BuildContext context) {
-    controller.setupNavigation();
 
     return Scaffold(
       backgroundColor: const Color(0xFFF7F9FC),

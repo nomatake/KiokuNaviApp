@@ -16,6 +16,7 @@ class LocaleKeys {
   static const app_title = 'app_title';
   static const app_subtitle = 'app_subtitle';
   static const common_buttons_login = 'common_buttons_login';
+  static const common_buttons_logout = 'common_buttons_logout';
   static const common_buttons_signup = 'common_buttons_signup';
   static const common_buttons_next = 'common_buttons_next';
   static const common_buttons_cancel = 'common_buttons_cancel';
@@ -211,6 +212,10 @@ class LocaleKeys {
       'pages_learning_continuous_tooltip';
   static const pages_learning_continuous_recordText =
       'pages_learning_continuous_recordText';
+  static const pages_learning_errors_oopsSomethingWentWrong =
+      'pages_learning_errors_oopsSomethingWentWrong';
+  static const pages_learning_errors_noQuestionsAvailable =
+      'pages_learning_errors_noQuestionsAvailable';
   static const pages_tutorial_one_message = 'pages_tutorial_one_message';
   static const pages_tutorial_two_message = 'pages_tutorial_two_message';
   static const pages_tutorial_three_question = 'pages_tutorial_three_question';
@@ -281,6 +286,7 @@ class Locales {
     'app_title': 'キオクナビ',
     'app_subtitle': '楽しく学ぼう',
     'common_buttons_login': 'ログイン',
+    'common_buttons_logout': 'ログアウト',
     'common_buttons_signup': '新規登録',
     'common_buttons_next': '次へ',
     'common_buttons_cancel': 'キャンセル',
@@ -414,6 +420,8 @@ class Locales {
     'pages_learning_session_comprehensive18': '総合 第18回',
     'pages_learning_continuous_tooltip': '新しい連続記録がスタートしたね！毎日レッスンして記録を更新し続けよう。',
     'pages_learning_continuous_recordText': '日連続記録',
+    'pages_learning_errors_oopsSomethingWentWrong': 'おっと！何か問題が発生しました',
+    'pages_learning_errors_noQuestionsAvailable': 'このトピックには問題がありません',
     'pages_tutorial_one_message': 'こんにちは！キオだよ！',
     'pages_tutorial_two_message': '最初のレッスンを始める前に、\nn個の簡単な質問に答えてね！',
     'pages_tutorial_three_question': 'あなたの状況を教えてください',
@@ -460,6 +468,7 @@ class Locales {
     'app_title': 'KiokuNavi',
     'app_subtitle': 'Let\'s learn together',
     'common_buttons_login': 'Login',
+    'common_buttons_logout': 'Logout',
     'common_buttons_signup': 'Sign Up',
     'common_buttons_next': 'Next',
     'common_buttons_cancel': 'Cancel',
@@ -611,6 +620,10 @@ class Locales {
     'pages_learning_continuous_tooltip':
         'A new consecutive record has started! Let\'s continue updating the record by taking lessons every day.',
     'pages_learning_continuous_recordText': 'Day Consecutive Record',
+    'pages_learning_errors_oopsSomethingWentWrong':
+        'Oops! Something went wrong',
+    'pages_learning_errors_noQuestionsAvailable':
+        'No questions available for this topic',
     'pages_tutorial_one_message': 'Hello! I\'m Kio!',
     'pages_tutorial_two_message':
         'Before starting your first lesson,\nplease answer a few simple questions!',

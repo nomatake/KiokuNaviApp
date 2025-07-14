@@ -1,5 +1,9 @@
 import 'package:dio/dio.dart';
+import 'package:get/get.dart';
+import 'package:kioku_navi/app/routes/app_pages.dart';
+import 'package:kioku_navi/generated/locales.g.dart';
 import 'package:kioku_navi/services/auth/token_manager.dart';
+import 'package:kioku_navi/widgets/custom_snackbar.dart';
 
 class AuthInterceptor extends Interceptor {
   final TokenManager tokenManager;
@@ -42,6 +46,15 @@ class AuthInterceptor extends Interceptor {
       // Clear the token and force user to re-login
       await tokenManager.clearToken();
 
+      // Navigate to root screen and clear all previous routes
+      Get.offAllNamed(Routes.ROOT_SCREEN);
+
+      // Show message to user
+      CustomSnackbar.showInfo(
+        title: LocaleKeys.common_errors_sessionExpired.tr,
+        message: LocaleKeys.common_errors_pleaseLoginAgain.tr,
+      );
+
       // Don't retry - user needs to login again
       return handler.reject(err);
     }
@@ -51,6 +64,7 @@ class AuthInterceptor extends Interceptor {
   }
 
   bool _isPublicEndpoint(String path) {
-    return publicEndpoints.any((endpoint) => path == endpoint || path.startsWith('$endpoint/'));
+    return publicEndpoints
+        .any((endpoint) => path == endpoint || path.startsWith('$endpoint/'));
   }
 }

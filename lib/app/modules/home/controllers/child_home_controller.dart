@@ -1,10 +1,10 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:kioku_navi/app/routes/app_pages.dart';
+import 'package:kioku_navi/controllers/base_controller.dart';
 import 'package:kioku_navi/generated/locales.g.dart';
 import 'package:kioku_navi/widgets/course_section_widget.dart';
 import 'package:kioku_navi/widgets/subject_selection_dialog.dart';
-import 'package:kioku_navi/utils/navigation_helper.dart';
 
 class ChildHomeController extends BaseController {
   // Observable list of course sections
@@ -17,16 +17,6 @@ class ChildHomeController extends BaseController {
   void onInit() {
     super.onInit();
     _initializeCourseSections();
-  }
-
-  @override
-  void onReady() {
-    super.onReady();
-  }
-
-  @override
-  void onClose() {
-    super.onClose();
   }
 
   void _initializeCourseSections() {
@@ -213,18 +203,13 @@ class ChildHomeController extends BaseController {
   }
 
   void onSectionTapped(CourseSection section) {
-    if (section.title == LocaleKeys.pages_course_sections_start.tr) {
-      requestNavigation(Routes.QUESTION);
-    }
-
-    // Handle section tap
-    print('Tapped on ${section.title}');
-    // TODO: Navigate to section or show section details
+    Get.toNamed(Routes.QUESTION, arguments: {
+      'topicId': 5,
+    });
   }
 
   void onSubjectSelected(Subject subject) {
     selectedSubject.value = subject;
-    print('Selected subject: ${subject.title}');
     // TODO: Update the course sections based on selected subject
     // For now, just refresh the current sections
     _initializeCourseSections();
