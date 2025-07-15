@@ -11,7 +11,6 @@ import 'package:kioku_navi/utils/extensions.dart';
 import 'package:kioku_navi/widgets/custom_appbar.dart';
 import 'package:kioku_navi/widgets/custom_button.dart';
 import 'package:kioku_navi/widgets/custom_tooltip.dart';
-import 'package:kioku_navi/widgets/intrinsic_height_scroll_view.dart';
 import 'package:kioku_navi/widgets/padded_wrapper.dart';
 import 'package:kioku_navi/widgets/register_app_bar.dart';
 
@@ -233,31 +232,29 @@ class BaseTutorialView extends StatelessWidget {
 
   /// Builds interactive tutorial view with speech bubble and options
   Widget _buildInteractiveView() {
-    return IntrinsicHeightScrollView(
-      child: Column(
-        crossAxisAlignment: CrossAxisAlignment.center,
-        children: [
-          SizedBox(height: AppSpacing.xs.hp),
-          _buildSpeechBubbleSection(),
-          SizedBox(height: AppSpacing.xs.hp),
-          ...options.map((option) => Column(
-                children: [
-                  CustomButton.secondary(
-                    text: option.text,
-                    textAlignment: option.textAlignment,
-                    onPressed: option.onPressed,
-                  ),
-                  SizedBox(height: AppSpacing.xxs.hp),
-                ],
-              )),
-          const Spacer(),
-          if (showPrimaryButton)
-            CustomButton.primary(
-              text: primaryButtonText ?? LocaleKeys.common_buttons_next.tr,
-              onPressed: () => Get.toNamed(nextRoute),
-            ),
-        ],
-      ),
+    return Column(
+      crossAxisAlignment: CrossAxisAlignment.center,
+      children: [
+        SizedBox(height: AppSpacing.xs.hp),
+        _buildSpeechBubbleSection(),
+        SizedBox(height: AppSpacing.xs.hp),
+        ...options.map((option) => Column(
+              children: [
+                CustomButton.secondary(
+                  text: option.text,
+                  textAlignment: option.textAlignment,
+                  onPressed: option.onPressed,
+                ),
+                SizedBox(height: AppSpacing.xxs.hp),
+              ],
+            )),
+        const Spacer(),
+        if (showPrimaryButton)
+          CustomButton.primary(
+            text: primaryButtonText ?? LocaleKeys.common_buttons_next.tr,
+            onPressed: () => Get.toNamed(nextRoute),
+          ),
+      ],
     );
   }
 

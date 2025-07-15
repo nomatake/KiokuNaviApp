@@ -11,13 +11,13 @@ import 'package:kioku_navi/utils/extensions.dart';
 import 'package:kioku_navi/utils/sizes.dart';
 import 'package:kioku_navi/widgets/custom_button.dart';
 import 'package:kioku_navi/widgets/custom_loader.dart';
-import 'package:kioku_navi/widgets/intrinsic_height_scroll_view.dart';
 import 'package:kioku_navi/widgets/padded_wrapper.dart';
 import 'package:kioku_navi/widgets/register_app_bar.dart';
+import 'package:kioku_navi/widgets/intrinsic_height_scroll_view.dart';
 
 class QuestionView extends GetView<LearningController> {
   const QuestionView({super.key});
-  
+
   static bool _isLoaderShowing = false;
 
   @override
@@ -121,9 +121,9 @@ class QuestionView extends GetView<LearningController> {
                   children: [
                     SizedBox(height: k1Double.hp),
                     _buildQuestionHeader(),
-                    SizedBox(height: k5Double.hp),
+                    SizedBox(height: k2Double.hp),
                     _buildQuestionBubble(),
-                    SizedBox(height: k5Double.hp),
+                    SizedBox(height: k3Double.hp),
                     const QuestionTemplate(),
                   ],
                 ),
