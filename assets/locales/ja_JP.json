@@ -124,7 +124,8 @@
       }
     },
     "register": {
-      "title": "保護者アカウントの作成",
+      "title": "アカウント作成",
+      "instruction": "登録してください",
       "termsText": "新規登録をすることにより、キオクナビのサービス利用規約とプライバシーポリシーに同意したものと見なされます",
       "form": {
         "name": {
@@ -135,8 +136,8 @@
           "label": "生年月日",
           "placeholder": "例: 2000/01/01"
         },
-        "parentEmail": {
-          "label": "保護者の方のメールアドレス",
+        "email": {
+          "label": "メールアドレス",
           "placeholder": "メールアドレスを入力"
         },
         "password": {

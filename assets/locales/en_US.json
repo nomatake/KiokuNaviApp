@@ -124,7 +124,8 @@
       }
     },
     "register": {
-      "title": "Create Parent Account",
+      "title": "Create Account",
+      "instruction": "Please Sign Up",
       "termsText": "By signing up, you agree to KiokuNavi's Terms of Service and Privacy Policy",
       "form": {
         "name": {
@@ -135,8 +136,8 @@
           "label": "Date of Birth",
           "placeholder": "Example: 2000/01/01"
         },
-        "parentEmail": {
-          "label": "Parent's Email Address",
+        "email": {
+          "label": "Email Address",
           "placeholder": "Enter email address"
         },
         "password": {

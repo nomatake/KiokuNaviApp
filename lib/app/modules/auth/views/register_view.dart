@@ -9,21 +9,23 @@ import 'package:kioku_navi/utils/sizes.dart';
 import 'package:kioku_navi/widgets/custom_button.dart';
 import 'package:kioku_navi/widgets/custom_date_picker_form_field.dart';
 import 'package:kioku_navi/widgets/custom_text_form_field.dart';
+import 'package:kioku_navi/widgets/custom_title_text.dart';
 import 'package:kioku_navi/widgets/intrinsic_height_scroll_view.dart';
 import 'package:kioku_navi/widgets/padded_wrapper.dart';
-import 'package:kioku_navi/widgets/register_app_bar.dart';
+import 'package:kioku_navi/widgets/custom_appbar.dart';
 
 class RegisterView extends GetView<AuthController> {
   const RegisterView({super.key});
 
   @override
   Widget build(BuildContext context) {
-
     return Scaffold(
       backgroundColor: const Color(0xFFF7F9FC),
-      appBar: RegisterAppBar(
-        progress: 0.5,
-        onBack: () => Get.back(),
+      appBar: CustomAppbar(
+        onBackPressed: () => Get.back(),
+        centerTitle: true,
+        color: Colors.white,
+        titleWidget: CustomTitleText(text: LocaleKeys.pages_register_title.tr),
       ),
       body: SafeArea(
         child: IntrinsicHeightScrollView(
@@ -37,7 +39,7 @@ class RegisterView extends GetView<AuthController> {
 
                   // Title
                   Text(
-                    LocaleKeys.pages_register_title.tr,
+                    LocaleKeys.pages_register_instruction.tr,
                     style: TextStyle(
                       fontWeight: FontWeight.w600,
                       fontSize: k16Double.sp,
@@ -70,15 +72,16 @@ class RegisterView extends GetView<AuthController> {
                     hintText:
                         LocaleKeys.pages_register_form_birthDate_placeholder.tr,
                     customValidators: [
-                      FormBuilderValidators.required(
-                          errorText: LocaleKeys.validation_required.tr),
-                      (value) {
-                        if (controller.selectedDates.isEmpty ||
-                            controller.selectedDates.first == null) {
-                          return LocaleKeys.validation_required.tr;
-                        }
-                        return null;
-                      },
+                      // keep this for now
+                      // FormBuilderValidators.required(
+                      //     errorText: LocaleKeys.validation_required.tr),
+                      // (value) {
+                      //   if (controller.selectedDates.isEmpty ||
+                      //       controller.selectedDates.first == null) {
+                      //     return LocaleKeys.validation_required.tr;
+                      //   }
+                      //   return null;
+                      // },
                     ],
                   ),
                   SizedBox(height: k1_5Double.hp),
@@ -86,10 +89,9 @@ class RegisterView extends GetView<AuthController> {
                   // Email field
                   CustomTextFormField(
                     textController: controller.email,
-                    labelText:
-                        LocaleKeys.pages_register_form_parentEmail_label.tr,
-                    hintText: LocaleKeys
-                        .pages_register_form_parentEmail_placeholder.tr,
+                    labelText: LocaleKeys.pages_register_form_email_label.tr,
+                    hintText:
+                        LocaleKeys.pages_register_form_email_placeholder.tr,
                     keyboardType: TextInputType.emailAddress,
                     textInputAction: TextInputAction.next,
                     customValidators: [

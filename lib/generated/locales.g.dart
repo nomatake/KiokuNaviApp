@@ -140,6 +140,7 @@ class LocaleKeys {
   static const pages_login_form_password_placeholder =
       'pages_login_form_password_placeholder';
   static const pages_register_title = 'pages_register_title';
+  static const pages_register_instruction = 'pages_register_instruction';
   static const pages_register_termsText = 'pages_register_termsText';
   static const pages_register_form_name_label =
       'pages_register_form_name_label';
@@ -149,10 +150,10 @@ class LocaleKeys {
       'pages_register_form_birthDate_label';
   static const pages_register_form_birthDate_placeholder =
       'pages_register_form_birthDate_placeholder';
-  static const pages_register_form_parentEmail_label =
-      'pages_register_form_parentEmail_label';
-  static const pages_register_form_parentEmail_placeholder =
-      'pages_register_form_parentEmail_placeholder';
+  static const pages_register_form_email_label =
+      'pages_register_form_email_label';
+  static const pages_register_form_email_placeholder =
+      'pages_register_form_email_placeholder';
   static const pages_register_form_password_label =
       'pages_register_form_password_label';
   static const pages_register_form_password_placeholder =
@@ -378,15 +379,16 @@ class Locales {
     'pages_login_form_emailOrUsername_placeholder': 'メールアドレスまたはユーザー名を入力',
     'pages_login_form_password_label': 'パスワード',
     'pages_login_form_password_placeholder': 'パスワードを入力',
-    'pages_register_title': '保護者アカウントの作成',
+    'pages_register_title': 'アカウント作成',
+    'pages_register_instruction': '登録してください',
     'pages_register_termsText':
         '新規登録をすることにより、キオクナビのサービス利用規約とプライバシーポリシーに同意したものと見なされます',
     'pages_register_form_name_label': 'お名前',
     'pages_register_form_name_placeholder': '氏名を入力',
     'pages_register_form_birthDate_label': '生年月日',
     'pages_register_form_birthDate_placeholder': '例: 2000/01/01',
-    'pages_register_form_parentEmail_label': '保護者の方のメールアドレス',
-    'pages_register_form_parentEmail_placeholder': 'メールアドレスを入力',
+    'pages_register_form_email_label': 'メールアドレス',
+    'pages_register_form_email_placeholder': 'メールアドレスを入力',
     'pages_register_form_password_label': 'パスワード',
     'pages_register_form_password_placeholder': 'パスワードを入力',
     'pages_register_form_passwordConfirmation_label': 'パスワード確認',
@@ -576,15 +578,16 @@ class Locales {
     'pages_login_form_emailOrUsername_placeholder': 'Enter email or username',
     'pages_login_form_password_label': 'Password',
     'pages_login_form_password_placeholder': 'Enter password',
-    'pages_register_title': 'Create Parent Account',
+    'pages_register_title': 'Create Account',
+    'pages_register_instruction': 'Please Sign Up',
     'pages_register_termsText':
         'By signing up, you agree to KiokuNavi\'s Terms of Service and Privacy Policy',
     'pages_register_form_name_label': 'Name',
     'pages_register_form_name_placeholder': 'Enter your name',
     'pages_register_form_birthDate_label': 'Date of Birth',
     'pages_register_form_birthDate_placeholder': 'Example: 2000/01/01',
-    'pages_register_form_parentEmail_label': 'Parent\'s Email Address',
-    'pages_register_form_parentEmail_placeholder': 'Enter email address',
+    'pages_register_form_email_label': 'Email Address',
+    'pages_register_form_email_placeholder': 'Enter email address',
     'pages_register_form_password_label': 'Password',
     'pages_register_form_password_placeholder': 'Enter password',
     'pages_register_form_passwordConfirmation_label': 'Password Confirmation',
