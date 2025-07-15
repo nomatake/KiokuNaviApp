@@ -7,10 +7,10 @@ class AnswerBoxStyles {
   static const Color activeBorderColor = Color(0xFF2196F3);
   static const Color activeShadowColor = Color(0x1A2196F3);
   
-  // Default colors
+  // Default colors (matching pool options styling)
   static const Color defaultBackgroundColor = Colors.white;
   static const Color defaultBorderColor = Color(0xFFB0BEC5);
-  static const Color defaultShadowColor = Color(0x1A757575);
+  static const Color defaultShadowColor = Color(0xFFB0BEC5); // Match pool options shadow
   static const Color defaultTextColor = Color(0xFF424242);
   
   // Correct answer colors

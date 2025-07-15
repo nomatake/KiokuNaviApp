@@ -144,31 +144,93 @@ class QuestionMatchingTemplate extends GetView<LearningController> {
     
     // Get colors based on state
     final colorSet = AnswerBoxStyles.getColors(
-      isActive: false, // Remove active selection highlight
+      isActive: false,
       hasSubmitted: controller.hasSubmitted.value,
       selectedChoice: selectedChoice,
       correctChoice: correctChoice,
       questionKey: questionKey,
     );
     
-    return AnswerBox(
-      selectedText: selectedChoiceText,
-      isActive: false, // Remove active selection highlight
-      backgroundColor: colorSet.backgroundColor,
-      borderColor: colorSet.borderColor,
-      shadowColor: colorSet.shadowColor,
-      textColor: colorSet.textColor,
-      onTap: controller.hasSubmitted.value
-          ? null
-          : () {
-              // If there's a selected choice, remove it
-              if (selectedChoice != null) {
-                controller.matchingAnswers.remove(questionKey);
-                // Update the submit button state
-                _updateSubmitButtonState();
-              }
-            },
+    Widget answerBoxWidget = DragTarget<Map<String, String?>>(
+      builder: (context, candidateData, rejectedData) {
+        final isDragHovering = candidateData.isNotEmpty;
+        
+        return AnswerBox(
+          selectedText: selectedChoiceText,
+          isActive: isDragHovering, // Highlight when dragging over
+          backgroundColor: colorSet.backgroundColor,
+          borderColor: isDragHovering 
+              ? const Color(0xFF4791DB) // Blue border when hovering
+              : colorSet.borderColor,
+          shadowColor: isDragHovering 
+              ? Colors.transparent // No shadow when hovering
+              : colorSet.shadowColor,
+          textColor: colorSet.textColor,
+          onTap: controller.hasSubmitted.value
+              ? null
+              : () {
+                  // If there's a selected choice, remove it
+                  if (selectedChoice != null) {
+                    controller.matchingAnswers.remove(questionKey);
+                    // Update the submit button state
+                    _updateSubmitButtonState();
+                  }
+                },
+        );
+      },
+      onWillAcceptWithDetails: (details) {
+        // Only accept if the slot is empty and not submitted
+        return !controller.hasSubmitted.value && 
+               !controller.matchingAnswers.containsKey(questionKey);
+      },
+      onAcceptWithDetails: (details) {
+        // Handle drop from another slot
+        final sourceQuestionKey = details.data['sourceQuestionKey'];
+        final choiceKey = details.data['choiceKey'];
+        
+        if (sourceQuestionKey != null) {
+          // Remove from source slot
+          controller.matchingAnswers.remove(sourceQuestionKey);
+        }
+        
+        // Set the answer in this slot
+        controller.setMatchingAnswer(questionKey, choiceKey!);
+        _updateSubmitButtonState();
+      },
     );
+    
+    // If this slot has a selected choice and there are empty slots, make it draggable
+    if (selectedChoice != null && _hasEmptySlots() && !controller.hasSubmitted.value) {
+      return Draggable<Map<String, String?>>(
+        data: {
+          'choiceKey': selectedChoice,
+          'sourceQuestionKey': questionKey,
+        },
+        feedback: Material(
+          color: Colors.transparent,
+          child: SelectableTag(
+            text: selectedChoiceText!,
+            backgroundColor: TagStateConfig.defaultState.backgroundColor.withValues(alpha: 0.8),
+            borderColor: TagStateConfig.defaultState.borderColor,
+            textColor: TagStateConfig.defaultState.textColor,
+            shadows: TagStateConfig.defaultState.shadows,
+            showText: true,
+          ),
+        ),
+        childWhenDragging: AnswerBox(
+          selectedText: null,
+          isActive: false,
+          backgroundColor: Colors.white,
+          borderColor: const Color(0xFFD0D0D0),
+          shadowColor: Colors.transparent,
+          textColor: Colors.black,
+          onTap: null,
+        ),
+        child: answerBoxWidget,
+      );
+    }
+    
+    return answerBoxWidget;
   }
 
   Widget _buildChoiceTag({
@@ -192,33 +254,47 @@ class QuestionMatchingTemplate extends GetView<LearningController> {
       }
     }
 
-    return SelectableTag(
+    final tagWidget = SelectableTag(
       text: choiceText,
       backgroundColor: config.backgroundColor,
       borderColor: config.borderColor,
       textColor: config.textColor,
       shadows: config.shadows,
       showText: !isUsed && !controller.hasSubmitted.value, // Hide text when used or after submission
-      onTap: isEnabled
-          ? () {
-              // Find the first empty question slot
-              final subQuestions = question.data.options['sub_questions'] as Map<String, dynamic>? ?? {};
-              final questionKeys = subQuestions.keys.toList();
-              
-              // Find first question without an answer
-              String? targetQuestionKey;
-              for (final key in questionKeys) {
-                if (!controller.matchingAnswers.containsKey(key)) {
-                  targetQuestionKey = key;
-                  break;
-                }
-              }
-              
-              if (targetQuestionKey != null) {
-                controller.setMatchingAnswer(targetQuestionKey, choiceKey);
-              }
-            }
-          : null,
+      onTap: null, // Remove onTap since we're using drag and drop
+    );
+
+    // If the option is not enabled for dragging, just return the tag
+    if (!isEnabled) {
+      return tagWidget;
+    }
+
+    // Make the tag draggable
+    return Draggable<Map<String, String?>>(
+      data: {
+        'choiceKey': choiceKey,
+        'sourceQuestionKey': null, // This is from the options pool, not from another slot
+      },
+      feedback: Material(
+        color: Colors.transparent,
+        child: SelectableTag(
+          text: choiceText,
+          backgroundColor: config.backgroundColor.withValues(alpha: 0.8),
+          borderColor: config.borderColor,
+          textColor: config.textColor,
+          shadows: config.shadows,
+          showText: true,
+        ),
+      ),
+      childWhenDragging: SelectableTag(
+        text: choiceText,
+        backgroundColor: const Color(0xFFE0E0E0),
+        borderColor: const Color(0xFFE0E0E0),
+        textColor: const Color(0xFF9E9E9E),
+        shadows: [],
+        showText: false, // Hide text when dragging
+      ),
+      child: tagWidget,
     );
   }
   
@@ -229,5 +305,10 @@ class QuestionMatchingTemplate extends GetView<LearningController> {
       final allAnswered = subQuestions.keys.every((key) => controller.matchingAnswers.containsKey(key));
       controller.selectedOptionIndex.value = allAnswered ? 0 : -1;
     }
+  }
+  
+  bool _hasEmptySlots() {
+    final subQuestions = question.data.options['sub_questions'] as Map<String, dynamic>? ?? {};
+    return subQuestions.keys.any((key) => !controller.matchingAnswers.containsKey(key));
   }
 }

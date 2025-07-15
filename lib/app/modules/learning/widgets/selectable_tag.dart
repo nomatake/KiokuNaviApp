@@ -41,7 +41,7 @@ class SelectableTag extends StatelessWidget {
             borderRadius: BorderRadius.circular(k10Double),
             border: Border.all(
               color: borderColor,
-              width: 2,
+              width: 1.5,
             ),
             boxShadow: shadows,
           ),
