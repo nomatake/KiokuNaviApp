@@ -143,7 +143,7 @@ class AuthController extends BaseController {
         // Clear text controllers after successful login
         clearTextControllers();
         // Navigate after loader is hidden
-        Get.toNamed(Routes.HOME);
+        Get.toNamed(Routes.TUTORIAL);
       },
       onError: (error) {
         // Handle business logic errors only (technical errors handled globally)

@@ -1,19 +1,14 @@
 import 'package:flutter/material.dart';
-import 'package:flutter/services.dart';
 import 'package:get/get.dart';
 import 'package:kioku_navi/app/routes/app_pages.dart';
 import 'package:kioku_navi/config/config_store.dart';
 import 'package:kioku_navi/generated/assets.gen.dart';
-import 'package:kioku_navi/utils/constants.dart';
 import 'package:kioku_navi/utils/route_helper.dart';
 import 'package:splash_master/splash_master.dart';
 
 import 'generated/locales.g.dart';
 
 void main() async {
-  WidgetsFlutterBinding.ensureInitialized();
-  await SystemChrome.setPreferredOrientations([DeviceOrientation.portraitUp]);
-
   // Initialize services
   await ConfigStore.initializeServices();
 
@@ -32,7 +27,7 @@ class MyApp extends StatelessWidget {
         backGroundColor: Colors.white,
         lottieConfig: ConfigStore.lottieConfig,
       ),
-      title: kAppName,
+      title: ConfigStore.appName,
       getPages: AppPages.routes,
       theme: ConfigStore.theme,
       defaultTransition: Transition.noTransition,
@@ -40,7 +35,7 @@ class MyApp extends StatelessWidget {
       supportedLocales: ConfigStore.supportedLocales,
       locale: ConfigStore.locale,
       debugShowCheckedModeBanner: false,
-      fallbackLocale: const Locale('en', 'US'),
+      fallbackLocale: ConfigStore.fallbackLocale,
       translationsKeys: AppTranslation.translations,
     );
   }

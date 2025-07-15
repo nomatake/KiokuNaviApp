@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 import 'package:flutter_localizations/flutter_localizations.dart';
 import 'package:get/get.dart';
 import 'package:get_storage/get_storage.dart';
@@ -18,8 +19,14 @@ class ConfigStore extends GetxController {
   String get version => '1.0.0';
   bool get isRelease => true;
 
+  // App Name
+  static const String appName = kAppName;
+
   // Locale configuration
   static const Locale locale = Locale('ja', 'JP');
+
+  // Fallback locale
+  static const Locale fallbackLocale = Locale('en', 'US');
 
   // Languages configuration
   List<Locale> languages = [
@@ -64,6 +71,12 @@ class ConfigStore extends GetxController {
   );
 
   static Future<void> initializeServices() async {
+    // Initialize WidgetsFlutterBinding
+    WidgetsFlutterBinding.ensureInitialized();
+
+    // Set preferred orientations
+    await SystemChrome.setPreferredOrientations([DeviceOrientation.portraitUp]);
+
     // Initialize SplashMaster
     SplashMaster.initialize();
 
