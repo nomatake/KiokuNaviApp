@@ -35,13 +35,13 @@ class AnswerBox extends StatelessWidget {
             ? Container(
                 constraints: BoxConstraints(minWidth: k20Double.wp),
                 height: k5Double.hp,
-                padding: EdgeInsets.symmetric(horizontal: k3Double.wp),
+                padding: EdgeInsets.symmetric(horizontal: k2_5Double.wp),
                 decoration: BoxDecoration(
                   color: backgroundColor,
                   borderRadius: BorderRadius.circular(k10Double),
                   border: Border.all(
                     color: borderColor,
-                    width: isActive ? 2 : 1.5,
+                    width: 1.5,
                   ),
                   boxShadow: [
                     BoxShadow(
@@ -81,7 +81,7 @@ class AnswerBox extends StatelessWidget {
                 child: Container(
                   constraints: BoxConstraints(minWidth: k20Double.wp),
                   height: k5Double.hp,
-                  padding: EdgeInsets.symmetric(horizontal: k3Double.wp),
+                  padding: EdgeInsets.symmetric(horizontal: k2_5Double.wp),
                   decoration: BoxDecoration(
                     color: Colors.white,
                     borderRadius: BorderRadius.circular(k10Double),
