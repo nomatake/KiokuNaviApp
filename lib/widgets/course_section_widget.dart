@@ -101,20 +101,17 @@ class CourseSectionWidget extends StatelessWidget {
   Widget build(BuildContext context) {
     final int nodeCount = _calculateNodeCount();
 
-    return GestureDetector(
-      onTap: onTap,
-      child: Container(
-        margin: EdgeInsets.zero,
-        padding: EdgeInsets.only(bottom: k1Double.hp),
-        child: Column(
-          children: [
-            _buildSectionHeader(),
-            SizedBox(
-                height: k2Double
-                    .hp), // Add space between header and progress section
-            _buildProgressSection(nodeCount, context),
-          ],
-        ),
+    return Container(
+      margin: EdgeInsets.zero,
+      padding: EdgeInsets.only(bottom: k1Double.hp),
+      child: Column(
+        children: [
+          _buildSectionHeader(),
+          SizedBox(
+              height: k2Double
+                  .hp), // Add space between header and progress section
+          _buildProgressSection(nodeCount, context),
+        ],
       ),
     );
   }
@@ -269,6 +266,7 @@ class CourseSectionWidget extends StatelessWidget {
       size: nodeSize,
       customIcon: node.customIcon,
       customText: node.customText,
+      onPressed: onTap,
     );
   }
 

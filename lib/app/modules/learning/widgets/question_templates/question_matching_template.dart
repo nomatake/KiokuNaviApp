@@ -76,8 +76,6 @@ class QuestionMatchingTemplate extends GetView<LearningController> {
     final selectedChoiceKey = controller.matchingAnswers[questionKey];
     final selectedChoiceText =
         selectedChoiceKey != null ? choices[selectedChoiceKey] : null;
-    final isActiveSelection =
-        controller.activeMatchingQuestion.value == questionKey;
 
     return Padding(
       padding: EdgeInsets.only(
@@ -118,7 +116,6 @@ class QuestionMatchingTemplate extends GetView<LearningController> {
                           child: _buildAnswerBox(
                             questionKey: questionKey,
                             selectedChoiceText: selectedChoiceText,
-                            isActiveSelection: isActiveSelection,
                             choices: choices,
                           ),
                         ),
@@ -137,7 +134,6 @@ class QuestionMatchingTemplate extends GetView<LearningController> {
   Widget _buildAnswerBox({
     required String questionKey,
     required String? selectedChoiceText,
-    required bool isActiveSelection,
     required Map<String, dynamic> choices,
   }) {
     // Get correct answer for this question
@@ -148,7 +144,7 @@ class QuestionMatchingTemplate extends GetView<LearningController> {
     
     // Get colors based on state
     final colorSet = AnswerBoxStyles.getColors(
-      isActive: isActiveSelection,
+      isActive: false, // Remove active selection highlight
       hasSubmitted: controller.hasSubmitted.value,
       selectedChoice: selectedChoice,
       correctChoice: correctChoice,
@@ -157,7 +153,7 @@ class QuestionMatchingTemplate extends GetView<LearningController> {
     
     return AnswerBox(
       selectedText: selectedChoiceText,
-      isActive: isActiveSelection,
+      isActive: false, // Remove active selection highlight
       backgroundColor: colorSet.backgroundColor,
       borderColor: colorSet.borderColor,
       shadowColor: colorSet.shadowColor,
@@ -165,11 +161,11 @@ class QuestionMatchingTemplate extends GetView<LearningController> {
       onTap: controller.hasSubmitted.value
           ? null
           : () {
-              // Toggle active selection
-              if (isActiveSelection) {
-                controller.activeMatchingQuestion.value = '';
-              } else {
-                controller.activeMatchingQuestion.value = questionKey;
+              // If there's a selected choice, remove it
+              if (selectedChoice != null) {
+                controller.matchingAnswers.remove(questionKey);
+                // Update the submit button state
+                _updateSubmitButtonState();
               }
             },
     );
@@ -181,9 +177,7 @@ class QuestionMatchingTemplate extends GetView<LearningController> {
   }) {
     // Check if this choice is already used
     final isUsed = controller.matchingAnswers.containsValue(choiceKey);
-    final isEnabled = !controller.hasSubmitted.value &&
-        controller.activeMatchingQuestion.value.isNotEmpty &&
-        !isUsed;
+    final isEnabled = !controller.hasSubmitted.value && !isUsed;
 
     // Determine the tag state based on submission status
     TagStateConfig config = TagStateConfig.defaultState;
@@ -195,8 +189,6 @@ class QuestionMatchingTemplate extends GetView<LearningController> {
       // Before submission
       if (isUsed) {
         config = TagStateConfig.selectedState; // Grey without shadows for used options
-      } else if (!isEnabled) {
-        config = TagStateConfig.disabledState; // Grey with shadows for disabled options
       }
     }
 
@@ -209,15 +201,33 @@ class QuestionMatchingTemplate extends GetView<LearningController> {
       showText: !isUsed && !controller.hasSubmitted.value, // Hide text when used or after submission
       onTap: isEnabled
           ? () {
-              // Set the answer for the active question
-              controller.setMatchingAnswer(
-                controller.activeMatchingQuestion.value,
-                choiceKey,
-              );
-              // Clear active selection
-              controller.activeMatchingQuestion.value = '';
+              // Find the first empty question slot
+              final subQuestions = question.data.options['sub_questions'] as Map<String, dynamic>? ?? {};
+              final questionKeys = subQuestions.keys.toList();
+              
+              // Find first question without an answer
+              String? targetQuestionKey;
+              for (final key in questionKeys) {
+                if (!controller.matchingAnswers.containsKey(key)) {
+                  targetQuestionKey = key;
+                  break;
+                }
+              }
+              
+              if (targetQuestionKey != null) {
+                controller.setMatchingAnswer(targetQuestionKey, choiceKey);
+              }
             }
           : null,
     );
+  }
+  
+  void _updateSubmitButtonState() {
+    // Check if all questions have been answered
+    final subQuestions = question.data.options['sub_questions'] as Map<String, dynamic>?;
+    if (subQuestions != null) {
+      final allAnswered = subQuestions.keys.every((key) => controller.matchingAnswers.containsKey(key));
+      controller.selectedOptionIndex.value = allAnswered ? 0 : -1;
+    }
   }
 }
