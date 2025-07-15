@@ -175,6 +175,7 @@
     "learning": {
       "placeholder": "LearningView",
       "working": "LearningView is working",
+      "fetchingQuestions": "Fetching questions",
       "question": {
         "header": "Please select the correct meaning",
         "text": "Interested in archaeology"

@@ -175,6 +175,7 @@
     "learning": {
       "placeholder": "LearningView",
       "working": "LearningView is working",
+      "fetchingQuestions": "問題を取得中",
       "question": {
         "header": "正しい意味を選んでください",
         "text": "考古学に関心がある"

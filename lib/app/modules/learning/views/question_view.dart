@@ -1,10 +1,7 @@
-import 'dart:io';
-
 import 'package:bubble/bubble.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-import 'package:getwidget/getwidget.dart';
 import 'package:kioku_navi/app/modules/learning/controllers/learning_controller.dart';
 import 'package:kioku_navi/app/modules/learning/models/result_config.dart';
 import 'package:kioku_navi/app/modules/learning/widgets/question_template.dart';
@@ -13,12 +10,15 @@ import 'package:kioku_navi/generated/locales.g.dart';
 import 'package:kioku_navi/utils/extensions.dart';
 import 'package:kioku_navi/utils/sizes.dart';
 import 'package:kioku_navi/widgets/custom_button.dart';
+import 'package:kioku_navi/widgets/custom_loader.dart';
 import 'package:kioku_navi/widgets/intrinsic_height_scroll_view.dart';
 import 'package:kioku_navi/widgets/padded_wrapper.dart';
 import 'package:kioku_navi/widgets/register_app_bar.dart';
 
 class QuestionView extends GetView<LearningController> {
   const QuestionView({super.key});
+  
+  static bool _isLoaderShowing = false;
 
   @override
   Widget build(BuildContext context) {
@@ -32,21 +32,28 @@ class QuestionView extends GetView<LearningController> {
               : null,
           body: SafeArea(
             bottom: false,
-            child: _buildBody(),
+            child: _buildBody(context),
           ),
         ));
   }
 
-  Widget _buildBody() {
+  Widget _buildBody(BuildContext context) {
     return Obx(() {
+      // Handle loading state with dialog
+      WidgetsBinding.instance.addPostFrameCallback((_) {
+        if (controller.isLoadingTopic.value && !_isLoaderShowing) {
+          _isLoaderShowing = true;
+          CustomLoader.showLoader(
+              context, LocaleKeys.pages_learning_fetchingQuestions.tr);
+        } else if (!controller.isLoadingTopic.value && _isLoaderShowing) {
+          _isLoaderShowing = false;
+          CustomLoader.hideLoader();
+        }
+      });
+
       // Show loading state
       if (controller.isLoadingTopic.value) {
-        return Center(
-          child: GFLoader(
-            type: Platform.isAndroid ? GFLoaderType.android : GFLoaderType.ios,
-            size: GFSize.LARGE,
-          ),
-        );
+        return const SizedBox.shrink();
       }
 
       // Show error state

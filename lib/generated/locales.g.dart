@@ -180,6 +180,8 @@ class LocaleKeys {
       'pages_course_sections_practiceTest';
   static const pages_learning_placeholder = 'pages_learning_placeholder';
   static const pages_learning_working = 'pages_learning_working';
+  static const pages_learning_fetchingQuestions =
+      'pages_learning_fetchingQuestions';
   static const pages_learning_question_header =
       'pages_learning_question_header';
   static const pages_learning_question_text = 'pages_learning_question_text';
@@ -402,6 +404,7 @@ class Locales {
     'pages_course_sections_practiceTest': '実践テスト',
     'pages_learning_placeholder': 'LearningView',
     'pages_learning_working': 'LearningView is working',
+    'pages_learning_fetchingQuestions': '問題を取得中',
     'pages_learning_question_header': '正しい意味を選んでください',
     'pages_learning_question_text': '考古学に関心がある',
     'pages_learning_answers_option1': '物事に興味を抱くこと',
@@ -601,6 +604,7 @@ class Locales {
     'pages_course_sections_practiceTest': 'Practice Test',
     'pages_learning_placeholder': 'LearningView',
     'pages_learning_working': 'LearningView is working',
+    'pages_learning_fetchingQuestions': 'Fetching questions',
     'pages_learning_question_header': 'Please select the correct meaning',
     'pages_learning_question_text': 'Interested in archaeology',
     'pages_learning_answers_option1': 'To be interested in something',

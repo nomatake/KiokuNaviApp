@@ -54,7 +54,7 @@ class BaseApiClient {
 
   void _initializeDio() {
     _dio = Dio(BaseOptions(
-      baseUrl: kBaseUrl,
+      baseUrl: kBaseApiUrl,
       connectTimeout: const Duration(seconds: 30),
       receiveTimeout: const Duration(seconds: 30),
       sendTimeout: const Duration(seconds: 30),
