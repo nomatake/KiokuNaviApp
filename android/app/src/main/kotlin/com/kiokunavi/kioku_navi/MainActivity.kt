@@ -1,4 +1,4 @@
-package com.kiokunavi.kioku_navi
+package com.kiokunavi.kvapp
 
 import io.flutter.embedding.android.FlutterActivity
 
