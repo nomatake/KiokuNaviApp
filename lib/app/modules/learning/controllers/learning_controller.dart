@@ -36,6 +36,10 @@ class LearningController extends BaseController {
   
   // For multiple select questions
   final RxList<String> selectedMultipleOptions = <String>[].obs;
+  
+  // For question matching
+  final RxMap<String, String> matchingAnswers = <String, String>{}.obs;
+  final RxString activeMatchingQuestion = ''.obs;
 
   // Progress tracking
   final ProgressTracker progressTracker = ProgressTracker();
@@ -127,6 +131,8 @@ class LearningController extends BaseController {
     isCorrect.value = false;
     userTextAnswer.value = '';
     selectedMultipleOptions.clear();
+    matchingAnswers.clear();
+    activeMatchingQuestion.value = '';
     
     // Start timer for the new question
     sessionTimer.resetCurrentItem();
@@ -138,8 +144,15 @@ class LearningController extends BaseController {
     if (currentQuestion == null) return [];
 
     final options = currentQuestion!.data.options;
+    final questionType = currentQuestion!.data.questionType.toLowerCase();
+    
+    // For question matching, options are structured differently
+    if (questionType.contains('matching')) {
+      return [];
+    }
+    
     final sortedKeys = options.keys.toList()..sort();
-    return sortedKeys.map((key) => options[key] ?? '').toList();
+    return sortedKeys.map((key) => options[key]?.toString() ?? '').toList();
   }
 
   /// Get option keys in sorted order
@@ -183,6 +196,19 @@ class LearningController extends BaseController {
       selectedOptionIndex.value = answer.isNotEmpty ? 0 : -1;
     }
   }
+  
+  /// Set matching answer for question matching
+  void setMatchingAnswer(String questionKey, String choiceKey) {
+    if (!hasSubmitted.value) {
+      matchingAnswers[questionKey] = choiceKey;
+      // Check if all questions have been answered
+      final subQuestions = currentQuestion?.data.options['sub_questions'] as Map<String, dynamic>?;
+      if (subQuestions != null) {
+        final allAnswered = subQuestions.keys.every((key) => matchingAnswers.containsKey(key));
+        selectedOptionIndex.value = allAnswered ? 0 : -1;
+      }
+    }
+  }
 
   /// Submit the current answer
   void submitAnswer() {
@@ -211,6 +237,9 @@ class LearningController extends BaseController {
                questionType.contains('blank')) {
       // Use text answer for fill-in-the-blank
       selectedAnswer = userTextAnswer.value.trim();
+    } else if (questionType.contains('matching')) {
+      // For question matching, convert map to JSON string
+      selectedAnswer = matchingAnswers.toString();
     } else {
       // Get the selected option key for multiple choice/true-false
       selectedAnswer = currentOptionKeys[selectedOptionIndex.value];

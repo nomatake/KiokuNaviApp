@@ -7,6 +7,7 @@ import 'package:kioku_navi/utils/sizes.dart';
 import 'question_templates/fill_blank_template.dart';
 import 'question_templates/multiple_choice_template.dart';
 import 'question_templates/multiple_select_template.dart';
+import 'question_templates/question_matching_template.dart';
 import 'question_templates/true_false_template.dart';
 
 class QuestionTemplate extends GetView<LearningController> {
@@ -41,9 +42,12 @@ class QuestionTemplate extends GetView<LearningController> {
         case 'fill_in_the_blank':
           return FillBlankTemplate(question: question);
           
+        case 'question_matching':
+        case 'question-matching':
+        case 'matching':
+          return QuestionMatchingTemplate(question: question);
+          
         // Add more question types as needed
-        // case 'matching':
-        //   return MatchingTemplate(question: question);
         // case 'ordering':
         //   return OrderingTemplate(question: question);
         // case 'drag_drop':

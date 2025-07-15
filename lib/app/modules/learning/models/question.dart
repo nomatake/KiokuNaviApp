@@ -61,7 +61,7 @@ class Question {
 class QuestionData {
   final String question;
   final String questionType;
-  final Map<String, String> options;
+  final Map<String, dynamic> options;
   final CorrectAnswer correctAnswer;
   final dynamic metadata;
 
@@ -77,7 +77,7 @@ class QuestionData {
     return QuestionData(
       question: json['question'],
       questionType: json['question_type'],
-      options: Map<String, String>.from(json['options']),
+      options: Map<String, dynamic>.from(json['options']),
       correctAnswer: CorrectAnswer.fromJson(json['correct_answer']),
       metadata: json['metadata'],
     );
@@ -122,7 +122,7 @@ class QuestionData {
   QuestionData copyWith({
     String? question,
     String? questionType,
-    Map<String, String>? options,
+    Map<String, dynamic>? options,
     CorrectAnswer? correctAnswer,
     dynamic metadata,
   }) {
@@ -142,6 +142,10 @@ class CorrectAnswer {
   CorrectAnswer({required this.selected});
 
   factory CorrectAnswer.fromJson(Map<String, dynamic> json) {
+    // For question_matching, the correct answer has 'matches' instead of 'selected'
+    if (json.containsKey('matches')) {
+      return CorrectAnswer(selected: json);
+    }
     return CorrectAnswer(selected: json['selected']);
   }
 
