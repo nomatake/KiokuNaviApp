@@ -1,5 +1,10 @@
 PODS:
+  - connectivity_plus (0.0.1):
+    - Flutter
   - Flutter (1.0.0)
+  - path_provider_foundation (0.0.1):
+    - Flutter
+    - FlutterMacOS
   - rive_common (0.0.1):
     - Flutter
   - video_player_avfoundation (0.0.1):
@@ -7,20 +12,28 @@ PODS:
     - FlutterMacOS
 
 DEPENDENCIES:
+  - connectivity_plus (from `.symlinks/plugins/connectivity_plus/ios`)
   - Flutter (from `Flutter`)
+  - path_provider_foundation (from `.symlinks/plugins/path_provider_foundation/darwin`)
   - rive_common (from `.symlinks/plugins/rive_common/ios`)
   - video_player_avfoundation (from `.symlinks/plugins/video_player_avfoundation/darwin`)
 
 EXTERNAL SOURCES:
+  connectivity_plus:
+    :path: ".symlinks/plugins/connectivity_plus/ios"
   Flutter:
     :path: Flutter
+  path_provider_foundation:
+    :path: ".symlinks/plugins/path_provider_foundation/darwin"
   rive_common:
     :path: ".symlinks/plugins/rive_common/ios"
   video_player_avfoundation:
     :path: ".symlinks/plugins/video_player_avfoundation/darwin"
 
 SPEC CHECKSUMS:
+  connectivity_plus: cb623214f4e1f6ef8fe7403d580fdad517d2f7dd
   Flutter: e0871f40cf51350855a761d2e70bf5af5b9b5de7
+  path_provider_foundation: 080d55be775b7414fd5a5ef3ac137b97b097e564
   rive_common: dd421daaf9ae69f0125aa761dd96abd278399952
   video_player_avfoundation: 2cef49524dd1f16c5300b9cd6efd9611ce03639b
 

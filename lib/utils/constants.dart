@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 
 ///Basic Constants
-const String kAppName = "KiokuNavi";
+const String kAppName = "キオクナビ";
 
 ///Colors
 const kScaffoldBackgroundColor = 0xFFF7F9FC;

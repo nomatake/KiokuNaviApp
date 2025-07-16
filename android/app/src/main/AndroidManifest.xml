@@ -5,7 +5,7 @@
         android:required="true"/>
 
     <application
-        android:label="KiokuNavi"
+        android:label="キオクナビ"
         android:name="${applicationName}"
         android:icon="@mipmap/launcher_icon">
         <activity
