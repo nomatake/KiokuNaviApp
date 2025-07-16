@@ -3,7 +3,6 @@ import 'package:form_builder_validators/form_builder_validators.dart';
 import 'package:get/get.dart';
 import 'package:kioku_navi/app/modules/auth/controllers/auth_controller.dart';
 import 'package:kioku_navi/generated/locales.g.dart';
-import 'package:kioku_navi/utils/constants.dart';
 import 'package:kioku_navi/utils/extensions.dart';
 import 'package:kioku_navi/utils/sizes.dart';
 import 'package:kioku_navi/widgets/custom_appbar.dart';
@@ -46,7 +45,8 @@ class ForgotPasswordView extends GetView<AuthController> {
                       LocaleKeys.pages_forgotPassword_form_email_placeholder.tr,
                   keyboardType: TextInputType.emailAddress,
                   customValidators: [
-                    FormBuilderValidators.required(errorText: kRequired),
+                    FormBuilderValidators.required(
+                        errorText: LocaleKeys.validation_required.tr),
                     FormBuilderValidators.email(
                         errorText: LocaleKeys.validation_invalidEmail.tr),
                   ],

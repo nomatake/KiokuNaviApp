@@ -462,9 +462,9 @@ class Locales {
     'subjects_socialStudies': '社会',
     'subjects_science': '理科',
     'subjects_japanese': '国語',
-    'validation_required': 'Required',
-    'validation_invalidEmail': 'Invalid email',
-    'validation_passwordMinLength': 'Password must be at least 6 characters',
+    'validation_required': '必須項目です',
+    'validation_invalidEmail': '有効なメールアドレスを入力してください',
+    'validation_passwordMinLength': 'パスワードは6文字以上入力してください',
     'validation_passwordsDoNotMatch': 'パスワードが一致しません',
   };
   static const en_US = {

@@ -3,7 +3,6 @@ import 'package:form_builder_validators/form_builder_validators.dart';
 import 'package:get/get.dart';
 import 'package:kioku_navi/app/modules/auth/controllers/auth_controller.dart';
 import 'package:kioku_navi/generated/locales.g.dart';
-import 'package:kioku_navi/utils/constants.dart';
 import 'package:kioku_navi/utils/extensions.dart';
 import 'package:kioku_navi/utils/sizes.dart';
 import 'package:kioku_navi/widgets/custom_button.dart';
@@ -112,7 +111,8 @@ class RegisterView extends GetView<AuthController> {
                     isPassword: true,
                     textInputAction: TextInputAction.next,
                     customValidators: [
-                      FormBuilderValidators.required(errorText: kRequired),
+                      FormBuilderValidators.required(
+                          errorText: LocaleKeys.validation_required.tr),
                       FormBuilderValidators.minLength(6,
                           errorText:
                               LocaleKeys.validation_passwordMinLength.tr),
