@@ -77,6 +77,9 @@ class BaseTutorialView extends StatelessWidget {
   /// Whether to show the primary button
   final bool showPrimaryButton;
 
+  /// Whether to show the app bar
+  final bool showAppBar;
+
   /// Creates a base tutorial view with the specified configuration
   const BaseTutorialView({
     super.key,
@@ -90,6 +93,7 @@ class BaseTutorialView extends StatelessWidget {
     this.onBack,
     this.primaryButtonText,
     this.showPrimaryButton = true,
+    this.showAppBar = true,
   });
 
   /// Factory constructor for simple tutorial views
@@ -100,6 +104,7 @@ class BaseTutorialView extends StatelessWidget {
     bool showBackButton = true,
     VoidCallback? onBack,
     String? primaryButtonText,
+    bool showAppBar = true,
   }) {
     return BaseTutorialView(
       key: key,
@@ -109,6 +114,7 @@ class BaseTutorialView extends StatelessWidget {
       showBackButton: showBackButton,
       onBack: onBack,
       primaryButtonText: primaryButtonText,
+      showAppBar: showAppBar,
     );
   }
 
@@ -122,6 +128,7 @@ class BaseTutorialView extends StatelessWidget {
     bool showBackButton = true,
     VoidCallback? onBack,
     String? primaryButtonText,
+    bool showAppBar = true,
   }) {
     return BaseTutorialView(
       key: key,
@@ -133,6 +140,7 @@ class BaseTutorialView extends StatelessWidget {
       showBackButton: showBackButton,
       onBack: onBack,
       primaryButtonText: primaryButtonText,
+      showAppBar: showAppBar,
     );
   }
 
@@ -146,6 +154,7 @@ class BaseTutorialView extends StatelessWidget {
     VoidCallback? onBack,
     String? primaryButtonText,
     bool showPrimaryButton = true,
+    bool showAppBar = true,
   }) {
     return BaseTutorialView(
       key: key,
@@ -158,13 +167,14 @@ class BaseTutorialView extends StatelessWidget {
       onBack: onBack,
       primaryButtonText: primaryButtonText,
       showPrimaryButton: showPrimaryButton,
+      showAppBar: showAppBar,
     );
   }
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: _buildAppBar(),
+      appBar: showAppBar ? _buildAppBar() : null,
       body: SafeArea(
         child: PaddedWrapper(
           bottom: true,
