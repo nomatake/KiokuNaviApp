@@ -6,6 +6,11 @@ version: 1.0.0+1
 environment:
   sdk: ^3.6.1
 
+# Restrict to iOS and Android only
+platforms:
+  android:
+  ios:
+
 dependencies:
   flutter:
     sdk: flutter
@@ -32,7 +37,7 @@ dev_dependencies:
     sdk: flutter
   flutter_lints: ^5.0.0
   build_runner: ^2.4.15
-  flutter_launcher_icons: ^0.14.1  # Used for generating app icons - can be removed after generation
+  flutter_launcher_icons: ^0.14.1 # Used for generating app icons - can be removed after generation
 
 flutter_gen:
   output: lib/generated/
