@@ -14,6 +14,7 @@ class TutorialView extends GetView<TutorialController> {
   @override
   Widget build(BuildContext context) {
     return BaseTutorialView.simple(
+      showAppBar: false,
       message: LocaleKeys.pages_tutorial_one_message.tr,
       nextRoute: Routes.TUTORIAL_TWO,
     );

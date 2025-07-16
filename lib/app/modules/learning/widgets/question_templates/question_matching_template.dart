@@ -261,7 +261,7 @@ class QuestionMatchingTemplate extends GetView<LearningController> {
       textColor: config.textColor,
       shadows: config.shadows,
       showText: !isUsed && !controller.hasSubmitted.value, // Hide text when used or after submission
-      onTap: null, // Remove onTap since we're using drag and drop
+      onTap: isEnabled ? () => _fillFirstEmptySlot(choiceKey, choiceText) : null,
     );
 
     // If the option is not enabled for dragging, just return the tag
@@ -310,5 +310,23 @@ class QuestionMatchingTemplate extends GetView<LearningController> {
   bool _hasEmptySlots() {
     final subQuestions = question.data.options['sub_questions'] as Map<String, dynamic>? ?? {};
     return subQuestions.keys.any((key) => !controller.matchingAnswers.containsKey(key));
+  }
+  
+  String? _getFirstEmptySlot() {
+    final subQuestions = question.data.options['sub_questions'] as Map<String, dynamic>? ?? {};
+    for (String questionKey in subQuestions.keys) {
+      if (!controller.matchingAnswers.containsKey(questionKey)) {
+        return questionKey;
+      }
+    }
+    return null;
+  }
+  
+  void _fillFirstEmptySlot(String choiceKey, String choiceText) {
+    final firstEmptySlot = _getFirstEmptySlot();
+    if (firstEmptySlot != null) {
+      controller.setMatchingAnswer(firstEmptySlot, choiceKey);
+      _updateSubmitButtonState();
+    }
   }
 }
