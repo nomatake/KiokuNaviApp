@@ -61,7 +61,8 @@ class ResultView extends GetView<LearningController> {
                       children: [
                         Flexible(
                           child: ResultStatCard.orange(
-                            value: '${controller.progressTracker.correctAnswers}/${controller.totalQuestions}',
+                            value:
+                                '${controller.progressTracker.correctAnswers}/${controller.totalQuestions}',
                             label: LocaleKeys.pages_learning_result_totalXP.tr,
                           ),
                         ),
@@ -75,7 +76,8 @@ class ResultView extends GetView<LearningController> {
                         SizedBox(width: k3Double.wp),
                         Flexible(
                           child: ResultStatCard.green(
-                            value: '${controller.progressTracker.scorePercentage.toStringAsFixed(0)}%',
+                            value:
+                                '${controller.progressTracker.scorePercentage.toStringAsFixed(0)}%',
                             label: LocaleKeys
                                 .pages_learning_result_accuracyRate.tr,
                           ),

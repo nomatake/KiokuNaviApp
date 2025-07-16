@@ -2,10 +2,12 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:kioku_navi/app/modules/learning/controllers/learning_controller.dart';
+import 'package:kioku_navi/app/routes/app_pages.dart';
 import 'package:kioku_navi/generated/assets.gen.dart';
 import 'package:kioku_navi/generated/locales.g.dart';
 import 'package:kioku_navi/utils/extensions.dart';
 import 'package:kioku_navi/utils/sizes.dart';
+import 'package:kioku_navi/widgets/custom_appbar.dart';
 import 'package:kioku_navi/widgets/custom_tooltip.dart';
 import 'package:kioku_navi/widgets/padded_wrapper.dart';
 
@@ -15,6 +17,10 @@ class ContinuousPlayRecordView extends GetView<LearningController> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      appBar: CustomAppbar(
+        onBackPressed: () => Get.toNamed(Routes.CHILD_HOME),
+        isHasBorder: true,
+      ),
       body: SafeArea(
         child: PaddedWrapper(
           child: Center(
