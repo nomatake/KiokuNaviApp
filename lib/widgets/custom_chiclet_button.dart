@@ -1,10 +1,9 @@
-import 'package:chiclet/chiclet.dart';
 import 'package:flutter/material.dart';
 import 'package:kioku_navi/app/core/values/app_colors.dart';
 import 'package:kioku_navi/utils/app_constants.dart';
-import 'package:kioku_navi/utils/constants.dart';
 import 'package:kioku_navi/utils/extensions.dart';
 import 'package:kioku_navi/utils/responsive_wrapper.dart';
+import 'package:kioku_navi/widgets/chiclet.dart';
 
 class CustomChicletButton extends StatelessWidget {
   /// Primary button - filled with primary color
@@ -207,7 +206,7 @@ class CustomChicletButton extends StatelessWidget {
         fontFamily: 'Hiragino Sans',
         fontWeight: config.fontWeight,
         fontSize: baseFontSize,
-        color: config.foregroundColor,
+        color: disabled ? null : config.foregroundColor,
         letterSpacing: config.letterSpacing,
       ),
     );
@@ -223,9 +222,9 @@ class CustomChicletButton extends StatelessWidget {
         borderColor: config.borderColor,
         buttonColor: config.buttonColor,
         foregroundColor: config.foregroundColor,
-        disabledBackgroundColor: config.backgroundColor?.withValues(alpha: 0.5),
-        disabledBorderColor: config.borderColor?.withValues(alpha: 0.5),
-        disabledForegroundColor: config.foregroundColor.withValues(alpha: 0.5),
+        disabledBackgroundColor: AppColors.Common.DisabledBackgroundColor,
+        disabledBorderColor: AppColors.Common.DisabledBorderColor,
+        disabledForegroundColor: Colors.grey.shade500,
         width: width ?? double.infinity,
         height: effectiveHeight,
         buttonHeight: config.buttonHeight,
@@ -241,8 +240,8 @@ class CustomChicletButton extends StatelessWidget {
       backgroundColor: config.backgroundColor,
       buttonColor: config.buttonColor,
       foregroundColor: config.foregroundColor,
-      disabledBackgroundColor: kButtonDisabledColor,
-      disabledForegroundColor: Colors.grey.shade500,
+      disabledBackgroundColor: AppColors.Common.DisabledBackgroundColor,
+      disabledForegroundColor: AppColors.Common.DisabledTextColor,
       width: width ?? double.infinity,
       height: effectiveHeight,
       buttonHeight: config.buttonHeight,

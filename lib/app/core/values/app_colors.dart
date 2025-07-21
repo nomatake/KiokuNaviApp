@@ -13,6 +13,10 @@ class _Common {
   const _Common();
   
   final Color White = const Color(0xFFFFFFFF);
+  final Color DisabledBackgroundColor = const Color(0xFFE5E5E5);
+  final Color DisabledTextColor = const Color(0xFFAFAFAF);
+  final Color DisabledShadowColor = const Color(0x33000000);
+  final Color DisabledBorderColor = const Color(0xFFAFAFAF);
 }
 
 class _Button {
