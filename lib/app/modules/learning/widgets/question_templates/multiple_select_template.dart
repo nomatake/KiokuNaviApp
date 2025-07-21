@@ -82,7 +82,7 @@ class MultipleSelectTemplate extends GetView<LearningController> {
           : TagStateConfig.incorrectState;
     }
 
-    return SelectableTag(
+    Widget tag = SelectableTag(
       text: text,
       backgroundColor: config.backgroundColor,
       borderColor: config.borderColor,
@@ -92,6 +92,15 @@ class MultipleSelectTemplate extends GetView<LearningController> {
           ? null
           : () => controller.toggleMultipleOption(optionKey),
     );
+    
+    // Wrap with IgnorePointer after submission to prevent animations
+    if (controller.hasSubmitted.value) {
+      tag = IgnorePointer(
+        child: tag,
+      );
+    }
+    
+    return tag;
   }
 
   Widget _buildOptionButton({
@@ -115,7 +124,7 @@ class MultipleSelectTemplate extends GetView<LearningController> {
       }
     }
 
-    return SelectableTag(
+    Widget tag = SelectableTag(
       text: text,
       backgroundColor: config.backgroundColor,
       borderColor: config.borderColor,
@@ -126,6 +135,15 @@ class MultipleSelectTemplate extends GetView<LearningController> {
           ? null
           : () => controller.toggleMultipleOption(optionKey),
     );
+    
+    // Wrap with IgnorePointer after submission to prevent animations
+    if (controller.hasSubmitted.value) {
+      tag = IgnorePointer(
+        child: tag,
+      );
+    }
+    
+    return tag;
   }
 
   Widget _buildSelectedOptionsWithUnderlines(

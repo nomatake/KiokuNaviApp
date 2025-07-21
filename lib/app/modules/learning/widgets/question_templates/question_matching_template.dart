@@ -155,7 +155,7 @@ class QuestionMatchingTemplate extends GetView<LearningController> {
       builder: (context, candidateData, rejectedData) {
         final isDragHovering = candidateData.isNotEmpty;
         
-        return AnswerBox(
+        Widget answerBox = AnswerBox(
           selectedText: selectedChoiceText,
           isActive: isDragHovering, // Highlight when dragging over
           backgroundColor: colorSet.backgroundColor,
@@ -177,6 +177,15 @@ class QuestionMatchingTemplate extends GetView<LearningController> {
                   }
                 },
         );
+        
+        // Wrap with IgnorePointer after submission to prevent all interactions
+        if (controller.hasSubmitted.value) {
+          answerBox = IgnorePointer(
+            child: answerBox,
+          );
+        }
+        
+        return answerBox;
       },
       onWillAcceptWithDetails: (details) {
         // Only accept if the slot is empty and not submitted
@@ -246,11 +255,11 @@ class QuestionMatchingTemplate extends GetView<LearningController> {
 
     if (controller.hasSubmitted.value) {
       // After submission, all choice options remain grey/disabled
-      config = TagStateConfig.selectedState; // Grey without shadows
+      config = TagStateConfig.disabledState; // Grey with shadows for animation
     } else {
       // Before submission
       if (isUsed) {
-        config = TagStateConfig.selectedState; // Grey without shadows for used options
+        config = TagStateConfig.disabledState; // Grey with shadows for animation
       }
     }
 
@@ -264,9 +273,11 @@ class QuestionMatchingTemplate extends GetView<LearningController> {
       onTap: isEnabled ? () => _fillFirstEmptySlot(choiceKey, choiceText) : null,
     );
 
-    // If the option is not enabled for dragging, just return the tag
+    // If the option is not enabled for dragging, wrap with IgnorePointer
     if (!isEnabled) {
-      return tagWidget;
+      return IgnorePointer(
+        child: tagWidget,
+      );
     }
 
     // Make the tag draggable

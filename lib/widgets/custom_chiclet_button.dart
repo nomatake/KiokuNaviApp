@@ -4,7 +4,6 @@ import 'package:kioku_navi/utils/app_constants.dart';
 import 'package:kioku_navi/utils/extensions.dart';
 import 'package:kioku_navi/utils/responsive_wrapper.dart';
 import 'package:kioku_navi/widgets/chiclet.dart';
-import 'package:kioku_navi/widgets/answer_chiclet_button.dart';
 
 class CustomChicletButton extends StatelessWidget {
   /// Primary button - filled with primary color
@@ -184,14 +183,14 @@ class CustomChicletButton extends StatelessWidget {
   /// Answer None button - for unselected answer options
   factory CustomChicletButton.answerNone({
     required String text,
-    required VoidCallback? onPressed,
+    VoidCallback? onPressed,
     Key? key,
     Widget? icon,
     double? width,
     double? height,
     bool isPressed = false,
     bool disabled = false,
-    TextAlign textAlign = TextAlign.center,
+    TextAlign textAlign = TextAlign.left,
   }) =>
       CustomChicletButton._(
         key: key,
@@ -209,14 +208,14 @@ class CustomChicletButton extends StatelessWidget {
   /// Answer Selected button - for selected answer options
   factory CustomChicletButton.answerSelected({
     required String text,
-    required VoidCallback? onPressed,
+    VoidCallback? onPressed,
     Key? key,
     Widget? icon,
     double? width,
     double? height,
     bool isPressed = false,
     bool disabled = false,
-    TextAlign textAlign = TextAlign.center,
+    TextAlign textAlign = TextAlign.left,
   }) =>
       CustomChicletButton._(
         key: key,
@@ -234,14 +233,14 @@ class CustomChicletButton extends StatelessWidget {
   /// Answer Correct button - for correct answer options
   factory CustomChicletButton.answerCorrect({
     required String text,
-    required VoidCallback? onPressed,
+    VoidCallback? onPressed,
     Key? key,
     Widget? icon,
     double? width,
     double? height,
     bool isPressed = false,
     bool disabled = false,
-    TextAlign textAlign = TextAlign.center,
+    TextAlign textAlign = TextAlign.left,
   }) =>
       CustomChicletButton._(
         key: key,
@@ -259,14 +258,14 @@ class CustomChicletButton extends StatelessWidget {
   /// Answer Incorrect button - for incorrect answer options
   factory CustomChicletButton.answerIncorrect({
     required String text,
-    required VoidCallback? onPressed,
+    VoidCallback? onPressed,
     Key? key,
     Widget? icon,
     double? width,
     double? height,
     bool isPressed = false,
     bool disabled = false,
-    TextAlign textAlign = TextAlign.center,
+    TextAlign textAlign = TextAlign.left,
   }) =>
       CustomChicletButton._(
         key: key,
@@ -284,14 +283,14 @@ class CustomChicletButton extends StatelessWidget {
   /// Answer Disabled button - for unselected options after submission
   factory CustomChicletButton.answerDisabled({
     required String text,
-    required VoidCallback? onPressed,
+    VoidCallback? onPressed,
     Key? key,
     Widget? icon,
     double? width,
     double? height,
     bool isPressed = false,
     bool disabled = false,
-    TextAlign textAlign = TextAlign.center,
+    TextAlign textAlign = TextAlign.left,
   }) =>
       CustomChicletButton._(
         key: key,
@@ -369,21 +368,39 @@ class CustomChicletButton extends StatelessWidget {
         style == ChicletButtonStyle.answerCorrect ||
         style == ChicletButtonStyle.answerIncorrect;
 
-    // For answer buttons, use the specialized AnswerChicletButton
+    // For answer buttons, use special handling to always show shadows
     if (isAnswerButton || style == ChicletButtonStyle.answerDisabled) {
-      return AnswerChicletButton(
-        text: text,
-        onPressed: disabled ? null : onPressed,
-        backgroundColor: config.backgroundColor!,
-        borderColor: config.borderColor!,
-        buttonColor: config.buttonColor!,
+      // Always pass a non-null onPressed to ChicletOutlinedAnimatedButton to ensure shadows
+      final effectiveOnPressed =
+          (disabled || onPressed == null) ? () {} : onPressed;
+
+      Widget button = ChicletOutlinedAnimatedButton(
+        onPressed: effectiveOnPressed,
+        backgroundColor: config.backgroundColor,
+        borderColor: config.borderColor,
+        buttonColor: config.buttonColor,
         foregroundColor: config.foregroundColor,
+        disabledBackgroundColor: config.backgroundColor,
+        disabledBorderColor: config.borderColor,
+        disabledForegroundColor: config.foregroundColor,
         width: width ?? double.infinity,
         height: effectiveHeight,
         buttonHeight: config.buttonHeight,
         borderWidth: config.borderWidth ?? 2,
         borderRadius: AppBorderRadius.button,
+        isPressed: isPressed,
+        disabledShowsPressed: false,
+        child: child,
       );
+
+      // If actually disabled, wrap with IgnorePointer to prevent interactions
+      if (disabled || onPressed == null) {
+        button = IgnorePointer(
+          child: button,
+        );
+      }
+
+      return button;
     }
 
     // For non-answer outlined buttons
@@ -413,11 +430,11 @@ class CustomChicletButton extends StatelessWidget {
       backgroundColor: config.backgroundColor,
       buttonColor: config.buttonColor,
       foregroundColor: config.foregroundColor,
-      disabledBackgroundColor: isAnswerButton 
-          ? config.backgroundColor 
+      disabledBackgroundColor: isAnswerButton
+          ? config.backgroundColor
           : AppColors.Common.DisabledBackgroundColor,
-      disabledForegroundColor: isAnswerButton 
-          ? config.foregroundColor 
+      disabledForegroundColor: isAnswerButton
+          ? config.foregroundColor
           : AppColors.Common.DisabledTextColor,
       width: width ?? double.infinity,
       height: effectiveHeight,

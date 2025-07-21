@@ -153,7 +153,7 @@ class _ChicletOutlinedAnimatedButtonState
   }
 
   void _onTapDown(TapDownDetails details) {
-    if (widget.onPressed != null) {
+    if (widget.onPressed != null && mounted) {
       setState(() {
         _isPressed = true;
       });
@@ -161,7 +161,7 @@ class _ChicletOutlinedAnimatedButtonState
   }
 
   void _onTapUp(TapUpDetails details) {
-    if (widget.onPressed != null) {
+    if (widget.onPressed != null && mounted) {
       setState(() {
         _isPressed = false;
       });
@@ -169,7 +169,7 @@ class _ChicletOutlinedAnimatedButtonState
   }
 
   void _onTapCancel() {
-    if (widget.onPressed != null) {
+    if (widget.onPressed != null && mounted) {
       setState(() {
         _isPressed = false;
       });
