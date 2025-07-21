@@ -96,6 +96,7 @@ class AppContainerSize {
   static const double smallCard = 80.0;
   static const double mediumCard = 100.0;
   static const double largeCard = 120.0;
+  static const double notification = 150.0;
   static const double hero = 300.0;
 }
 

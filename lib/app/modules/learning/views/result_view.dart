@@ -6,7 +6,7 @@ import 'package:kioku_navi/generated/assets.gen.dart';
 import 'package:kioku_navi/generated/locales.g.dart';
 import 'package:kioku_navi/utils/extensions.dart';
 import 'package:kioku_navi/utils/sizes.dart';
-import 'package:kioku_navi/widgets/custom_button.dart';
+import 'package:kioku_navi/widgets/custom_chiclet_button.dart';
 import 'package:kioku_navi/widgets/intrinsic_height_scroll_view.dart';
 import 'package:kioku_navi/widgets/padded_wrapper.dart';
 import 'package:kioku_navi/widgets/result_stat_card.dart';
@@ -93,7 +93,7 @@ class ResultView extends GetView<LearningController> {
                   ),
 
                   // Get XP button
-                  CustomButton.orange(
+                  CustomChicletButton.orange(
                     text: LocaleKeys.common_buttons_receiveXP.tr,
                     onPressed: () {
                       Get.toNamed(Routes.CONTINUOUS_PLAY_RECORD);

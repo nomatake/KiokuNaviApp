@@ -89,7 +89,7 @@ class TutorialNineView extends StatelessWidget {
     return Center(
       child: Container(
         constraints: BoxConstraints(
-          maxWidth: AppContainerSize.hero.sp,
+          maxWidth: AppContainerSize.notification.wp,
         ),
         padding: EdgeInsets.all(AppSpacing.buttonSpacing.sp),
         decoration: BoxDecoration(
@@ -124,7 +124,7 @@ class TutorialNineView extends StatelessWidget {
               ),
             ),
 
-            SizedBox(height: AppSpacing.xs.hp),
+            SizedBox(height: AppSpacing.xxs.hp),
 
             // Allow button
             SizedBox(
@@ -139,7 +139,7 @@ class TutorialNineView extends StatelessWidget {
                   foregroundColor: const Color(0xFF1976D2),
                   shadowColor: Colors.transparent,
                   shape: RoundedRectangleBorder(
-                    borderRadius: BorderRadius.circular(AppBorderRadius.lg),
+                    borderRadius: BorderRadius.circular(AppBorderRadius.md),
                   ),
                 ),
                 child: Text(
@@ -168,7 +168,7 @@ class TutorialNineView extends StatelessWidget {
                   foregroundColor: const Color(0xFFAEAEAE),
                   shadowColor: Colors.transparent,
                   shape: RoundedRectangleBorder(
-                    borderRadius: BorderRadius.circular(AppBorderRadius.lg),
+                    borderRadius: BorderRadius.circular(AppBorderRadius.md),
                   ),
                 ),
                 child: Text(

@@ -6,7 +6,7 @@ import 'package:kioku_navi/generated/locales.g.dart';
 import 'package:kioku_navi/utils/extensions.dart';
 import 'package:kioku_navi/utils/sizes.dart';
 import 'package:kioku_navi/widgets/custom_appbar.dart';
-import 'package:kioku_navi/widgets/custom_button.dart';
+import 'package:kioku_navi/widgets/custom_chiclet_button.dart';
 import 'package:kioku_navi/widgets/custom_text_form_field.dart';
 import 'package:kioku_navi/widgets/intrinsic_height_scroll_view.dart';
 import 'package:kioku_navi/widgets/padded_wrapper.dart';
@@ -61,8 +61,7 @@ class ForgotPasswordView extends GetView<AuthController> {
                   ),
                 ),
                 SizedBox(height: k2Double.hp),
-                CustomButton(
-                  disabled: true,
+                CustomChicletButton.primary(
                   text: LocaleKeys.common_buttons_next.tr,
                   onPressed: () {},
                 ),

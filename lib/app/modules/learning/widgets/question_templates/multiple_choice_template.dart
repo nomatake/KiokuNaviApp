@@ -4,7 +4,7 @@ import 'package:kioku_navi/app/modules/learning/controllers/learning_controller.
 import 'package:kioku_navi/app/modules/learning/models/question.dart';
 import 'package:kioku_navi/utils/extensions.dart';
 import 'package:kioku_navi/utils/sizes.dart';
-import 'package:kioku_navi/widgets/answer_option_button.dart';
+import 'package:kioku_navi/widgets/custom_chiclet_button.dart';
 
 class MultipleChoiceTemplate extends GetView<LearningController> {
   final Question question;
@@ -24,12 +24,9 @@ class MultipleChoiceTemplate extends GetView<LearningController> {
           options.length,
           (index) => Padding(
             padding: EdgeInsets.only(bottom: k2Double.hp),
-            child: AnswerOptionButton(
+            child: _buildAnswerButton(
               text: options[index],
-              state: _getAnswerState(index),
-              onPressed: controller.hasSubmitted.value
-                  ? null
-                  : () => controller.selectOption(index),
+              index: index,
             ),
           ),
         ),
@@ -37,22 +34,49 @@ class MultipleChoiceTemplate extends GetView<LearningController> {
     });
   }
 
-  AnswerState _getAnswerState(int index) {
-    if (!controller.hasSubmitted.value) {
-      return controller.selectedOptionIndex.value == index
-          ? AnswerState.selected
-          : AnswerState.none;
+  Widget _buildAnswerButton({
+    required String text,
+    required int index,
+  }) {
+    final hasSubmitted = controller.hasSubmitted.value;
+    final isSelected = controller.selectedOptionIndex.value == index;
+    final isCorrect = index == controller.correctAnswerIndex;
+    final isIncorrect = isSelected && !controller.isCorrect.value;
+
+    if (!hasSubmitted) {
+      // Before submission
+      if (isSelected) {
+        return CustomChicletButton.answerSelected(
+          text: text,
+          onPressed: () => controller.selectOption(index),
+        );
+      } else {
+        return CustomChicletButton.answerNone(
+          text: text,
+          onPressed: () => controller.selectOption(index),
+        );
+      }
     }
 
-    if (index == controller.correctAnswerIndex) {
-      return AnswerState.correct;
+    // After submission
+    if (isCorrect) {
+      return CustomChicletButton.answerCorrect(
+        text: text,
+        onPressed: null,
+      );
     }
 
-    if (index == controller.selectedOptionIndex.value &&
-        !controller.isCorrect.value) {
-      return AnswerState.incorrect;
+    if (isIncorrect) {
+      return CustomChicletButton.answerIncorrect(
+        text: text,
+        onPressed: null,
+      );
     }
 
-    return AnswerState.none;
+    // Unselected options after submission should be grayed out
+    return CustomChicletButton.answerDisabled(
+      text: text,
+      onPressed: null,
+    );
   }
 }
