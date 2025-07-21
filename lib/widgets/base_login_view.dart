@@ -83,12 +83,10 @@ class BaseLoginView extends StatelessWidget {
                   SizedBox(height: k3Double.hp),
 
                   // Login button with passed onPressed method
-                  Obx(() => CustomChicletButton.primary(
-                        text: LocaleKeys.common_buttons_login.tr,
-                        onPressed: controller.isLoading.value
-                            ? null
-                            : () => onPressed(context),
-                      )),
+                  CustomChicletButton.primary(
+                    text: LocaleKeys.common_buttons_login.tr,
+                    onPressed: () => onPressed(context),
+                  ),
                   SizedBox(height: k3Double.hp),
 
                   // Forgot password button

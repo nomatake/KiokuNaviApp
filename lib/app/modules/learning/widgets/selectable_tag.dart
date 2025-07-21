@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:kioku_navi/utils/accessibility_helper.dart';
 import 'package:kioku_navi/utils/extensions.dart';
 import 'package:kioku_navi/utils/sizes.dart';
 
@@ -49,7 +50,13 @@ class _SelectableTagState extends State<SelectableTag> {
           onTapDown: _onTapDown,
           onTapUp: _onTapUp,
           onTapCancel: _onTapCancel,
-          onTap: widget.onTap,
+          onTap: widget.onTap == null ? null : () async {
+          // Small delay to show animation before action
+          await Future.delayed(const Duration(milliseconds: 80));
+          if (mounted && widget.onTap != null) {
+            widget.onTap!();
+          }
+        },
           behavior: HitTestBehavior.opaque,
           child: Container(
           height: isPressed ? k5Double.hp : k5Double.hp + _shadowHeight,
@@ -94,6 +101,10 @@ class _SelectableTagState extends State<SelectableTag> {
   void _onTapDown(TapDownDetails details) {
     // Always show press animation, even if onTap is null
     if (mounted) {
+      // Provide haptic feedback when the tag is interactive
+      if (widget.onTap != null) {
+        AccessibilityHelper.provideTapFeedback();
+      }
       setState(() {
         _isPressed = true;
       });

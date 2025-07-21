@@ -60,14 +60,14 @@ class RootScreenView extends GetView<AuthController> {
                 text: LocaleKeys.common_buttons_signup.tr,
                 onPressed: () => Get.toNamed(Routes.REGISTER),
               ),
-              SizedBox(height: k2Double.hp),
+              SizedBox(height: k1_5Double.hp),
 
               // Login as Student
               CustomChicletButton.outline(
                 text: LocaleKeys.pages_root_studentLogin.tr,
                 onPressed: () => Get.toNamed(Routes.STUDENT_LOGIN),
               ),
-              SizedBox(height: k2Double.hp),
+              SizedBox(height: k1_5Double.hp),
 
               // Login as Guardian
               CustomChicletButton.outline(

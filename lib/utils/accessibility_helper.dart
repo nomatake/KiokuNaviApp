@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter/semantics.dart';
+import 'package:gaimon/gaimon.dart';
 
 class AccessibilityHelper {
   static const double _minTapTargetSize = 48.0;
@@ -47,17 +48,48 @@ class AccessibilityHelper {
 
   /// Provides haptic feedback for interactions
   static void provideTapFeedback() {
-    HapticFeedback.lightImpact();
+    try {
+      Gaimon.selection();
+    } catch (e) {
+      debugPrint('Haptic feedback failed: $e');
+    }
   }
 
   /// Provides stronger haptic feedback for important actions
   static void provideSelectionFeedback() {
-    HapticFeedback.mediumImpact();
+    try {
+      Gaimon.medium();
+    } catch (e) {
+      debugPrint('Haptic feedback failed: $e');
+    }
   }
 
   /// Provides error haptic feedback
   static void provideErrorFeedback() {
-    HapticFeedback.heavyImpact();
+    try {
+      Gaimon.error();
+    } catch (e) {
+      debugPrint('Haptic feedback failed: $e');
+    }
+  }
+  
+  /// Provides success haptic feedback
+  static void provideSuccessFeedback() {
+    try {
+      Gaimon.success();
+    } catch (e) {
+      debugPrint('Haptic feedback failed: $e');
+    }
+  }
+  
+  /// Check if device supports haptic feedback
+  static Future<bool> canSupportsHaptic() async {
+    try {
+      return await Gaimon.canSupportsHaptic;
+    } catch (e) {
+      debugPrint('Haptic support check failed: $e');
+      return false;
+    }
   }
 
   /// Announces text to screen readers

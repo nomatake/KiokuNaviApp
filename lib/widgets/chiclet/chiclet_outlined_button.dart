@@ -101,6 +101,8 @@ class ChicletOutlinedButton extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final Color defaultDisabledBorderColor =
+        Theme.of(context).colorScheme.onSurface.withValues(alpha: 0.12);
     final isDisabled = onPressed == null;
     final double chicletWidth =
         buttonType == ButtonTypes.circle ? height : width ?? height;
@@ -134,8 +136,6 @@ class ChicletOutlinedButton extends StatelessWidget {
       outlinedButtonThemeColor = Colors.grey;
       outlinedButtonThemeWidth = 2;
     }
-    final Color defaultDisabledBorderColor =
-        Theme.of(context).colorScheme.onSurface.withValues(alpha: 0.12);
     return Container(
       width: chicletWidth,
       height: (isPressed || isDisabled) ? height : height + buttonHeight,

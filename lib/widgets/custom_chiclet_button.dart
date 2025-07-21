@@ -518,7 +518,7 @@ class CustomChicletButton extends StatelessWidget {
     // Common values
     const defaultLetterSpacing = 0.0;
     const filledButtonHeight = 4.0;
-    const outlinedButtonHeight = 3.0;
+    const outlinedButtonHeight = 2.0;
     const outlinedBorderWidth = 2.0;
 
     switch (style) {

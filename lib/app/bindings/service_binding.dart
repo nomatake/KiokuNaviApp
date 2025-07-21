@@ -25,10 +25,12 @@ class ServiceBinding extends Bindings {
     // Step 2: Connectivity Services
     Get.lazyPut<ConnectivityService>(
       () => ConnectivityServiceImpl(),
+      fenix: true,
     );
 
     Get.lazyPut<ConnectivityManager>(
       () => ConnectivityManager(Get.find<ConnectivityService>()),
+      fenix: true,
     );
 
     // Step 4: Token Manager (no dependencies)
