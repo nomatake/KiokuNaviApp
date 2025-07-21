@@ -4,6 +4,7 @@ import 'package:kioku_navi/utils/app_constants.dart';
 import 'package:kioku_navi/utils/extensions.dart';
 import 'package:kioku_navi/utils/responsive_wrapper.dart';
 import 'package:kioku_navi/widgets/chiclet.dart';
+import 'package:kioku_navi/widgets/answer_chiclet_button.dart';
 
 class CustomChicletButton extends StatelessWidget {
   /// Primary button - filled with primary color
@@ -180,6 +181,131 @@ class CustomChicletButton extends StatelessWidget {
         textAlign: textAlign,
       );
 
+  /// Answer None button - for unselected answer options
+  factory CustomChicletButton.answerNone({
+    required String text,
+    required VoidCallback? onPressed,
+    Key? key,
+    Widget? icon,
+    double? width,
+    double? height,
+    bool isPressed = false,
+    bool disabled = false,
+    TextAlign textAlign = TextAlign.center,
+  }) =>
+      CustomChicletButton._(
+        key: key,
+        text: text,
+        onPressed: onPressed,
+        icon: icon,
+        width: width,
+        height: height,
+        isPressed: isPressed,
+        disabled: disabled,
+        style: ChicletButtonStyle.answerNone,
+        textAlign: textAlign,
+      );
+
+  /// Answer Selected button - for selected answer options
+  factory CustomChicletButton.answerSelected({
+    required String text,
+    required VoidCallback? onPressed,
+    Key? key,
+    Widget? icon,
+    double? width,
+    double? height,
+    bool isPressed = false,
+    bool disabled = false,
+    TextAlign textAlign = TextAlign.center,
+  }) =>
+      CustomChicletButton._(
+        key: key,
+        text: text,
+        onPressed: onPressed,
+        icon: icon,
+        width: width,
+        height: height,
+        isPressed: isPressed,
+        disabled: disabled,
+        style: ChicletButtonStyle.answerSelected,
+        textAlign: textAlign,
+      );
+
+  /// Answer Correct button - for correct answer options
+  factory CustomChicletButton.answerCorrect({
+    required String text,
+    required VoidCallback? onPressed,
+    Key? key,
+    Widget? icon,
+    double? width,
+    double? height,
+    bool isPressed = false,
+    bool disabled = false,
+    TextAlign textAlign = TextAlign.center,
+  }) =>
+      CustomChicletButton._(
+        key: key,
+        text: text,
+        onPressed: onPressed,
+        icon: icon,
+        width: width,
+        height: height,
+        isPressed: isPressed,
+        disabled: disabled,
+        style: ChicletButtonStyle.answerCorrect,
+        textAlign: textAlign,
+      );
+
+  /// Answer Incorrect button - for incorrect answer options
+  factory CustomChicletButton.answerIncorrect({
+    required String text,
+    required VoidCallback? onPressed,
+    Key? key,
+    Widget? icon,
+    double? width,
+    double? height,
+    bool isPressed = false,
+    bool disabled = false,
+    TextAlign textAlign = TextAlign.center,
+  }) =>
+      CustomChicletButton._(
+        key: key,
+        text: text,
+        onPressed: onPressed,
+        icon: icon,
+        width: width,
+        height: height,
+        isPressed: isPressed,
+        disabled: disabled,
+        style: ChicletButtonStyle.answerIncorrect,
+        textAlign: textAlign,
+      );
+
+  /// Answer Disabled button - for unselected options after submission
+  factory CustomChicletButton.answerDisabled({
+    required String text,
+    required VoidCallback? onPressed,
+    Key? key,
+    Widget? icon,
+    double? width,
+    double? height,
+    bool isPressed = false,
+    bool disabled = false,
+    TextAlign textAlign = TextAlign.center,
+  }) =>
+      CustomChicletButton._(
+        key: key,
+        text: text,
+        onPressed: onPressed,
+        icon: icon,
+        width: width,
+        height: height,
+        isPressed: isPressed,
+        disabled: disabled,
+        style: ChicletButtonStyle.answerDisabled,
+        textAlign: textAlign,
+      );
+
   const CustomChicletButton._({
     required this.text,
     required this.style,
@@ -212,7 +338,7 @@ class CustomChicletButton extends StatelessWidget {
         ResponsivePatterns.bodyFontSize.getValue(context.screenInfo).sp;
 
     // Get style configuration
-    final config = _getStyleConfig();
+    final config = _getStyleConfig(disabled: disabled);
 
     // Build child widget
     final child = _buildChild(
@@ -228,10 +354,39 @@ class CustomChicletButton extends StatelessWidget {
       textAlign: textAlign,
     );
 
-    // Return outlined button for secondary and outline styles
+    // Return outlined button for secondary, outline, and answer styles
     final isOutlined = style == ChicletButtonStyle.secondary ||
-        style == ChicletButtonStyle.outline;
+        style == ChicletButtonStyle.outline ||
+        style == ChicletButtonStyle.answerNone ||
+        style == ChicletButtonStyle.answerSelected ||
+        style == ChicletButtonStyle.answerCorrect ||
+        style == ChicletButtonStyle.answerIncorrect ||
+        style == ChicletButtonStyle.answerDisabled;
 
+    // For answer buttons (except answerDisabled), preserve visual state even when disabled
+    final isAnswerButton = style == ChicletButtonStyle.answerNone ||
+        style == ChicletButtonStyle.answerSelected ||
+        style == ChicletButtonStyle.answerCorrect ||
+        style == ChicletButtonStyle.answerIncorrect;
+
+    // For answer buttons, use the specialized AnswerChicletButton
+    if (isAnswerButton || style == ChicletButtonStyle.answerDisabled) {
+      return AnswerChicletButton(
+        text: text,
+        onPressed: disabled ? null : onPressed,
+        backgroundColor: config.backgroundColor!,
+        borderColor: config.borderColor!,
+        buttonColor: config.buttonColor!,
+        foregroundColor: config.foregroundColor,
+        width: width ?? double.infinity,
+        height: effectiveHeight,
+        buttonHeight: config.buttonHeight,
+        borderWidth: config.borderWidth ?? 2,
+        borderRadius: AppBorderRadius.button,
+      );
+    }
+
+    // For non-answer outlined buttons
     if (isOutlined) {
       return ChicletOutlinedAnimatedButton(
         onPressed: disabled ? null : onPressed,
@@ -248,6 +403,7 @@ class CustomChicletButton extends StatelessWidget {
         borderWidth: config.borderWidth ?? 2,
         borderRadius: AppBorderRadius.button,
         isPressed: isPressed,
+        disabledShowsPressed: true,
         child: child,
       );
     }
@@ -257,13 +413,18 @@ class CustomChicletButton extends StatelessWidget {
       backgroundColor: config.backgroundColor,
       buttonColor: config.buttonColor,
       foregroundColor: config.foregroundColor,
-      disabledBackgroundColor: AppColors.Common.DisabledBackgroundColor,
-      disabledForegroundColor: AppColors.Common.DisabledTextColor,
+      disabledBackgroundColor: isAnswerButton 
+          ? config.backgroundColor 
+          : AppColors.Common.DisabledBackgroundColor,
+      disabledForegroundColor: isAnswerButton 
+          ? config.foregroundColor 
+          : AppColors.Common.DisabledTextColor,
       width: width ?? double.infinity,
       height: effectiveHeight,
       buttonHeight: config.buttonHeight,
       borderRadius: AppBorderRadius.button,
       isPressed: isPressed,
+      disabledShowsPressed: false,
       child: child,
     );
   }
@@ -336,7 +497,7 @@ class CustomChicletButton extends StatelessWidget {
     }
   }
 
-  _ChicletButtonConfig _getStyleConfig() {
+  _ChicletButtonConfig _getStyleConfig({bool disabled = false}) {
     // Common values
     const defaultLetterSpacing = 0.0;
     const filledButtonHeight = 4.0;
@@ -411,6 +572,61 @@ class CustomChicletButton extends StatelessWidget {
           letterSpacing: defaultLetterSpacing,
           buttonHeight: filledButtonHeight,
         );
+      case ChicletButtonStyle.answerNone:
+        return _ChicletButtonConfig(
+          backgroundColor: AppColors.Button.Answer.None.Background,
+          borderColor: AppColors.Button.Answer.None.Border,
+          buttonColor: AppColors.Button.Answer.None.Shadow,
+          foregroundColor: AppColors.Button.Answer.None.Text,
+          fontWeight: FontWeight.w700,
+          letterSpacing: defaultLetterSpacing,
+          buttonHeight: outlinedButtonHeight,
+          borderWidth: outlinedBorderWidth,
+        );
+      case ChicletButtonStyle.answerSelected:
+        return _ChicletButtonConfig(
+          backgroundColor: AppColors.Button.Answer.Selected.Background,
+          borderColor: AppColors.Button.Answer.Selected.Border,
+          buttonColor: AppColors.Button.Answer.Selected.Shadow,
+          foregroundColor: AppColors.Button.Answer.Selected.Text,
+          fontWeight: FontWeight.w700,
+          letterSpacing: defaultLetterSpacing,
+          buttonHeight: outlinedButtonHeight,
+          borderWidth: outlinedBorderWidth,
+        );
+      case ChicletButtonStyle.answerCorrect:
+        return _ChicletButtonConfig(
+          backgroundColor: AppColors.Button.Answer.Correct.Background,
+          borderColor: AppColors.Button.Answer.Correct.Border,
+          buttonColor: AppColors.Button.Answer.Correct.Shadow,
+          foregroundColor: AppColors.Button.Answer.Correct.Text,
+          fontWeight: FontWeight.w700,
+          letterSpacing: defaultLetterSpacing,
+          buttonHeight: outlinedButtonHeight,
+          borderWidth: outlinedBorderWidth,
+        );
+      case ChicletButtonStyle.answerIncorrect:
+        return _ChicletButtonConfig(
+          backgroundColor: AppColors.Button.Answer.Incorrect.Background,
+          borderColor: AppColors.Button.Answer.Incorrect.Border,
+          buttonColor: AppColors.Button.Answer.Incorrect.Shadow,
+          foregroundColor: AppColors.Button.Answer.Incorrect.Text,
+          fontWeight: FontWeight.w700,
+          letterSpacing: defaultLetterSpacing,
+          buttonHeight: outlinedButtonHeight,
+          borderWidth: outlinedBorderWidth,
+        );
+      case ChicletButtonStyle.answerDisabled:
+        return _ChicletButtonConfig(
+          backgroundColor: AppColors.Button.Answer.Disabled.Background,
+          borderColor: AppColors.Button.Answer.Disabled.Border,
+          buttonColor: AppColors.Button.Answer.Disabled.Shadow,
+          foregroundColor: AppColors.Button.Answer.Disabled.Text,
+          fontWeight: FontWeight.w700,
+          letterSpacing: defaultLetterSpacing,
+          buttonHeight: outlinedButtonHeight,
+          borderWidth: outlinedBorderWidth,
+        );
     }
   }
 }
@@ -424,6 +640,11 @@ enum ChicletButtonStyle {
   success,
   orange,
   ghost,
+  answerNone,
+  answerSelected,
+  answerCorrect,
+  answerIncorrect,
+  answerDisabled,
 }
 
 /// Internal configuration class

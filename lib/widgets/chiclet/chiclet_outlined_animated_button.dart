@@ -76,6 +76,9 @@ class ChicletOutlinedAnimatedButton extends StatefulWidget {
   /// Creates the InkWell splash factory, which defines the appearance of "ink" splashes that occur in response to taps.
   final InteractiveInkFeatureFactory? splashFactory;
 
+  /// Whether disabled buttons should appear pressed (flat) or maintain their shadow
+  final bool disabledShowsPressed;
+
   const ChicletOutlinedAnimatedButton(
       {super.key,
       this.onPressed,
@@ -97,6 +100,7 @@ class ChicletOutlinedAnimatedButton extends StatefulWidget {
       this.disabledBorderColor,
       this.splashFactory = NoSplash.splashFactory,
       this.buttonType = ButtonTypes.roundedRectangle,
+      this.disabledShowsPressed = true,
       required this.child})
       ;
 
@@ -125,7 +129,7 @@ class _ChicletOutlinedAnimatedButtonState
           height: widget.height,
           minimumSize: widget.minimumSize,
           maximumSize: widget.maximumSize,
-          isPressed: isDisabled ? true : _isPressed,
+          isPressed: isDisabled ? widget.disabledShowsPressed : _isPressed,
           buttonHeight: widget.buttonHeight,
           borderWidth: widget.borderWidth,
           borderRadius: widget.borderRadius,

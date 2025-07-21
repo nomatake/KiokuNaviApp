@@ -29,6 +29,7 @@ class _Button {
   final Success = const _Success();
   final Orange = const _Orange();
   final Ghost = const _Ghost();
+  final Answer = const _Answer();
 }
 
 class _Primary {
@@ -81,4 +82,59 @@ class _Ghost {
   final Color Background = const Color(0xFFE5E5E5);
   final Color Shadow = const Color(0x33000000);
   final Color Text = const Color(0xFFAFAFAF);
+}
+
+class _Answer {
+  const _Answer();
+  
+  final None = const _AnswerNone();
+  final Selected = const _AnswerSelected();
+  final Correct = const _AnswerCorrect();
+  final Incorrect = const _AnswerIncorrect();
+  final Disabled = const _AnswerDisabled();
+}
+
+class _AnswerNone {
+  const _AnswerNone();
+  
+  final Color Background = Colors.white;
+  final Color Border = const Color(0xFFB0BEC5);
+  final Color Shadow = const Color(0xFFB0BEC5);
+  final Color Text = const Color(0xFF424242);
+}
+
+class _AnswerSelected {
+  const _AnswerSelected();
+  
+  final Color Background = const Color(0xFFE3F2FD);
+  final Color Border = const Color(0xFF1976D2);
+  final Color Shadow = const Color(0xFF1976D2);
+  final Color Text = const Color(0xFF424242);
+}
+
+class _AnswerCorrect {
+  const _AnswerCorrect();
+  
+  final Color Background = const Color(0xFFD3F5DD);
+  final Color Border = const Color(0xFF15B440);
+  final Color Shadow = const Color(0xFF15B440);
+  final Color Text = const Color(0xFF019B2B);
+}
+
+class _AnswerIncorrect {
+  const _AnswerIncorrect();
+  
+  final Color Background = const Color(0xFFFEE5E5);
+  final Color Border = const Color(0xFFE53935);
+  final Color Shadow = const Color(0xFFE53935);
+  final Color Text = const Color(0xFFB71C1C);
+}
+
+class _AnswerDisabled {
+  const _AnswerDisabled();
+  
+  final Color Background = const Color(0xFFF5F5F5);
+  final Color Border = const Color(0xFFE0E0E0);
+  final Color Shadow = const Color(0xFFE0E0E0);
+  final Color Text = const Color(0xFF9E9E9E);
 }
