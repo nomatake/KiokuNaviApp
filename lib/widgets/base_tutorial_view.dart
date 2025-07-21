@@ -249,6 +249,7 @@ class BaseTutorialView extends StatelessWidget {
                 CustomChicletButton.secondary(
                   text: option.text,
                   onPressed: option.onPressed,
+                  textAlign: TextAlign.left,
                 ),
                 SizedBox(height: AppSpacing.xxs.hp),
               ],

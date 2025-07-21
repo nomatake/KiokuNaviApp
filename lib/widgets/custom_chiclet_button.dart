@@ -16,6 +16,7 @@ class CustomChicletButton extends StatelessWidget {
     double? height,
     bool isPressed = false,
     bool disabled = false,
+    TextAlign textAlign = TextAlign.center,
   }) =>
       CustomChicletButton._(
         key: key,
@@ -27,6 +28,7 @@ class CustomChicletButton extends StatelessWidget {
         isPressed: isPressed,
         disabled: disabled,
         style: ChicletButtonStyle.primary,
+        textAlign: textAlign,
       );
 
   /// Secondary button - outlined with secondary color
@@ -39,6 +41,7 @@ class CustomChicletButton extends StatelessWidget {
     double? height,
     bool isPressed = false,
     bool disabled = false,
+    TextAlign textAlign = TextAlign.center,
   }) =>
       CustomChicletButton._(
         key: key,
@@ -50,6 +53,7 @@ class CustomChicletButton extends StatelessWidget {
         isPressed: isPressed,
         disabled: disabled,
         style: ChicletButtonStyle.secondary,
+        textAlign: textAlign,
       );
 
   /// Outline button - outlined with primary color
@@ -62,6 +66,7 @@ class CustomChicletButton extends StatelessWidget {
     double? height,
     bool isPressed = false,
     bool disabled = false,
+    TextAlign textAlign = TextAlign.center,
   }) =>
       CustomChicletButton._(
         key: key,
@@ -73,6 +78,7 @@ class CustomChicletButton extends StatelessWidget {
         isPressed: isPressed,
         disabled: disabled,
         style: ChicletButtonStyle.outline,
+        textAlign: textAlign,
       );
 
   /// Danger button - filled with danger/red color
@@ -85,6 +91,7 @@ class CustomChicletButton extends StatelessWidget {
     double? height,
     bool isPressed = false,
     bool disabled = false,
+    TextAlign textAlign = TextAlign.center,
   }) =>
       CustomChicletButton._(
         key: key,
@@ -96,6 +103,7 @@ class CustomChicletButton extends StatelessWidget {
         isPressed: isPressed,
         disabled: disabled,
         style: ChicletButtonStyle.danger,
+        textAlign: textAlign,
       );
 
   /// Success button - filled with success/green color
@@ -108,6 +116,7 @@ class CustomChicletButton extends StatelessWidget {
     double? height,
     bool isPressed = false,
     bool disabled = false,
+    TextAlign textAlign = TextAlign.center,
   }) =>
       CustomChicletButton._(
         key: key,
@@ -119,6 +128,7 @@ class CustomChicletButton extends StatelessWidget {
         isPressed: isPressed,
         disabled: disabled,
         style: ChicletButtonStyle.success,
+        textAlign: textAlign,
       );
 
   /// Orange button - filled with orange color
@@ -131,6 +141,7 @@ class CustomChicletButton extends StatelessWidget {
     double? height,
     bool isPressed = false,
     bool disabled = false,
+    TextAlign textAlign = TextAlign.center,
   }) =>
       CustomChicletButton._(
         key: key,
@@ -142,6 +153,7 @@ class CustomChicletButton extends StatelessWidget {
         isPressed: isPressed,
         disabled: disabled,
         style: ChicletButtonStyle.orange,
+        textAlign: textAlign,
       );
 
   /// Ghost button - disabled style button
@@ -153,6 +165,7 @@ class CustomChicletButton extends StatelessWidget {
     double? width,
     double? height,
     bool disabled = false,
+    TextAlign textAlign = TextAlign.center,
   }) =>
       CustomChicletButton._(
         key: key,
@@ -164,6 +177,7 @@ class CustomChicletButton extends StatelessWidget {
         isPressed: false,
         disabled: disabled,
         style: ChicletButtonStyle.ghost,
+        textAlign: textAlign,
       );
 
   const CustomChicletButton._({
@@ -176,6 +190,7 @@ class CustomChicletButton extends StatelessWidget {
     this.height,
     this.isPressed = false,
     this.disabled = false,
+    this.textAlign = TextAlign.center,
   });
 
   final String text;
@@ -186,6 +201,7 @@ class CustomChicletButton extends StatelessWidget {
   final bool isPressed;
   final bool disabled;
   final ChicletButtonStyle style;
+  final TextAlign textAlign;
 
   @override
   Widget build(BuildContext context) {
@@ -209,6 +225,7 @@ class CustomChicletButton extends StatelessWidget {
         color: disabled ? null : config.foregroundColor,
         letterSpacing: config.letterSpacing,
       ),
+      textAlign: textAlign,
     );
 
     // Return outlined button for secondary and outline styles
@@ -224,7 +241,7 @@ class CustomChicletButton extends StatelessWidget {
         foregroundColor: config.foregroundColor,
         disabledBackgroundColor: AppColors.Common.DisabledBackgroundColor,
         disabledBorderColor: AppColors.Common.DisabledBorderColor,
-        disabledForegroundColor: Colors.grey.shade500,
+        disabledForegroundColor: AppColors.Common.DisabledTextColor,
         width: width ?? double.infinity,
         height: effectiveHeight,
         buttonHeight: config.buttonHeight,
@@ -256,22 +273,67 @@ class CustomChicletButton extends StatelessWidget {
     required String text,
     required Widget? icon,
     required TextStyle textStyle,
+    required TextAlign textAlign,
   }) {
-    final textWidget = Text(text, style: textStyle);
+    final textWidget = Text(text, style: textStyle, textAlign: textAlign);
 
-    if (icon == null) return textWidget;
+    // If no icon, wrap text in Align widget to make textAlign work
+    if (icon == null) {
+      return Padding(
+        padding: EdgeInsets.symmetric(horizontal: AppSpacing.lg),
+        child: Align(
+          alignment: _getAlignmentFromTextAlign(textAlign),
+          child: textWidget,
+        ),
+      );
+    }
 
-    return Row(
-      mainAxisAlignment: MainAxisAlignment.center,
-      mainAxisSize: MainAxisSize.min,
-      children: [
-        icon,
-        if (text.isNotEmpty) ...[
-          SizedBox(width: AppSpacing.xxxs.wp),
-          textWidget,
+    // With icon, use Row with alignment based on textAlign
+    return Padding(
+      padding: EdgeInsets.symmetric(horizontal: AppSpacing.lg),
+      child: Row(
+        mainAxisAlignment: _getMainAxisAlignmentFromTextAlign(textAlign),
+        mainAxisSize: MainAxisSize.min,
+        children: [
+          icon,
+          if (text.isNotEmpty) ...[
+            SizedBox(width: AppSpacing.xxxs.wp),
+            textWidget,
+          ],
         ],
-      ],
+      ),
     );
+  }
+
+  /// Convert TextAlign to Alignment for Align widget
+  Alignment _getAlignmentFromTextAlign(TextAlign textAlign) {
+    switch (textAlign) {
+      case TextAlign.left:
+      case TextAlign.start:
+        return Alignment.centerLeft;
+      case TextAlign.right:
+      case TextAlign.end:
+        return Alignment.centerRight;
+      case TextAlign.center:
+        return Alignment.center;
+      case TextAlign.justify:
+        return Alignment.center;
+    }
+  }
+
+  /// Convert TextAlign to MainAxisAlignment for Row widget
+  MainAxisAlignment _getMainAxisAlignmentFromTextAlign(TextAlign textAlign) {
+    switch (textAlign) {
+      case TextAlign.left:
+      case TextAlign.start:
+        return MainAxisAlignment.start;
+      case TextAlign.right:
+      case TextAlign.end:
+        return MainAxisAlignment.end;
+      case TextAlign.center:
+      case TextAlign.justify:
+        return MainAxisAlignment.center;
+    }
   }
 
   _ChicletButtonConfig _getStyleConfig() {
