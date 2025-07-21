@@ -3,7 +3,7 @@ import 'package:get/get.dart' as getx;
 import 'package:kioku_navi/generated/locales.g.dart';
 import 'package:kioku_navi/utils/extensions.dart';
 import 'package:kioku_navi/utils/sizes.dart';
-import 'package:kioku_navi/widgets/custom_button.dart';
+import 'package:kioku_navi/widgets/custom_chiclet_button.dart';
 import 'package:kioku_navi/widgets/custom_title_text.dart';
 import 'package:wolt_modal_sheet/wolt_modal_sheet.dart';
 
@@ -55,7 +55,7 @@ class NoInternetBottomSheet {
                       ),
                     ),
                     SizedBox(height: k3Double.hp),
-                    CustomButton.primary(
+                    CustomChicletButton.primary(
                       text: LocaleKeys.common_buttons_ok.tr,
                       onPressed: () {
                         // Simply close the bottom sheet

@@ -1,13 +1,14 @@
+import 'package:chiclet/chiclet.dart';
 import 'package:flutter/material.dart';
 import 'package:kioku_navi/app/core/values/app_colors.dart';
 import 'package:kioku_navi/utils/app_constants.dart';
+import 'package:kioku_navi/utils/constants.dart';
 import 'package:kioku_navi/utils/extensions.dart';
 import 'package:kioku_navi/utils/responsive_wrapper.dart';
-import 'package:chiclet/chiclet.dart';
 
-class ChicletButton extends StatelessWidget {
+class CustomChicletButton extends StatelessWidget {
   /// Primary button - filled with primary color
-  factory ChicletButton.primary({
+  factory CustomChicletButton.primary({
     required String text,
     required VoidCallback? onPressed,
     Key? key,
@@ -15,8 +16,9 @@ class ChicletButton extends StatelessWidget {
     double? width,
     double? height,
     bool isPressed = false,
+    bool disabled = false,
   }) =>
-      ChicletButton._(
+      CustomChicletButton._(
         key: key,
         text: text,
         onPressed: onPressed,
@@ -24,11 +26,12 @@ class ChicletButton extends StatelessWidget {
         width: width,
         height: height,
         isPressed: isPressed,
+        disabled: disabled,
         style: ChicletButtonStyle.primary,
       );
 
   /// Secondary button - outlined with secondary color
-  factory ChicletButton.secondary({
+  factory CustomChicletButton.secondary({
     required String text,
     required VoidCallback? onPressed,
     Key? key,
@@ -36,8 +39,9 @@ class ChicletButton extends StatelessWidget {
     double? width,
     double? height,
     bool isPressed = false,
+    bool disabled = false,
   }) =>
-      ChicletButton._(
+      CustomChicletButton._(
         key: key,
         text: text,
         onPressed: onPressed,
@@ -45,11 +49,12 @@ class ChicletButton extends StatelessWidget {
         width: width,
         height: height,
         isPressed: isPressed,
+        disabled: disabled,
         style: ChicletButtonStyle.secondary,
       );
 
   /// Outline button - outlined with primary color
-  factory ChicletButton.outline({
+  factory CustomChicletButton.outline({
     required String text,
     required VoidCallback? onPressed,
     Key? key,
@@ -57,8 +62,9 @@ class ChicletButton extends StatelessWidget {
     double? width,
     double? height,
     bool isPressed = false,
+    bool disabled = false,
   }) =>
-      ChicletButton._(
+      CustomChicletButton._(
         key: key,
         text: text,
         onPressed: onPressed,
@@ -66,11 +72,12 @@ class ChicletButton extends StatelessWidget {
         width: width,
         height: height,
         isPressed: isPressed,
+        disabled: disabled,
         style: ChicletButtonStyle.outline,
       );
 
   /// Danger button - filled with danger/red color
-  factory ChicletButton.danger({
+  factory CustomChicletButton.danger({
     required String text,
     required VoidCallback? onPressed,
     Key? key,
@@ -78,8 +85,9 @@ class ChicletButton extends StatelessWidget {
     double? width,
     double? height,
     bool isPressed = false,
+    bool disabled = false,
   }) =>
-      ChicletButton._(
+      CustomChicletButton._(
         key: key,
         text: text,
         onPressed: onPressed,
@@ -87,11 +95,12 @@ class ChicletButton extends StatelessWidget {
         width: width,
         height: height,
         isPressed: isPressed,
+        disabled: disabled,
         style: ChicletButtonStyle.danger,
       );
 
   /// Success button - filled with success/green color
-  factory ChicletButton.success({
+  factory CustomChicletButton.success({
     required String text,
     required VoidCallback? onPressed,
     Key? key,
@@ -99,8 +108,9 @@ class ChicletButton extends StatelessWidget {
     double? width,
     double? height,
     bool isPressed = false,
+    bool disabled = false,
   }) =>
-      ChicletButton._(
+      CustomChicletButton._(
         key: key,
         text: text,
         onPressed: onPressed,
@@ -108,11 +118,12 @@ class ChicletButton extends StatelessWidget {
         width: width,
         height: height,
         isPressed: isPressed,
+        disabled: disabled,
         style: ChicletButtonStyle.success,
       );
 
   /// Orange button - filled with orange color
-  factory ChicletButton.orange({
+  factory CustomChicletButton.orange({
     required String text,
     required VoidCallback? onPressed,
     Key? key,
@@ -120,8 +131,9 @@ class ChicletButton extends StatelessWidget {
     double? width,
     double? height,
     bool isPressed = false,
+    bool disabled = false,
   }) =>
-      ChicletButton._(
+      CustomChicletButton._(
         key: key,
         text: text,
         onPressed: onPressed,
@@ -129,19 +141,21 @@ class ChicletButton extends StatelessWidget {
         width: width,
         height: height,
         isPressed: isPressed,
+        disabled: disabled,
         style: ChicletButtonStyle.orange,
       );
 
   /// Ghost button - disabled style button
-  factory ChicletButton.ghost({
+  factory CustomChicletButton.ghost({
     required String text,
     Key? key,
     VoidCallback? onPressed,
     Widget? icon,
     double? width,
     double? height,
+    bool disabled = false,
   }) =>
-      ChicletButton._(
+      CustomChicletButton._(
         key: key,
         text: text,
         onPressed: onPressed,
@@ -149,10 +163,11 @@ class ChicletButton extends StatelessWidget {
         width: width,
         height: height,
         isPressed: false,
+        disabled: disabled,
         style: ChicletButtonStyle.ghost,
       );
 
-  const ChicletButton._({
+  const CustomChicletButton._({
     required this.text,
     required this.style,
     super.key,
@@ -161,6 +176,7 @@ class ChicletButton extends StatelessWidget {
     this.width,
     this.height,
     this.isPressed = false,
+    this.disabled = false,
   });
 
   final String text;
@@ -169,17 +185,20 @@ class ChicletButton extends StatelessWidget {
   final double? width;
   final double? height;
   final bool isPressed;
+  final bool disabled;
   final ChicletButtonStyle style;
 
   @override
   Widget build(BuildContext context) {
     // Get responsive values
-    final effectiveHeight = height ?? ResponsivePatterns.buttonHeight.getValueForContext(context);
-    final baseFontSize = ResponsivePatterns.bodyFontSize.getValue(context.screenInfo).sp;
-    
+    final effectiveHeight =
+        height ?? ResponsivePatterns.buttonHeight.getValueForContext(context);
+    final baseFontSize =
+        ResponsivePatterns.bodyFontSize.getValue(context.screenInfo).sp;
+
     // Get style configuration
     final config = _getStyleConfig();
-    
+
     // Build child widget
     final child = _buildChild(
       text: text,
@@ -192,43 +211,47 @@ class ChicletButton extends StatelessWidget {
         letterSpacing: config.letterSpacing,
       ),
     );
-    
+
     // Return outlined button for secondary and outline styles
-    final isOutlined = style == ChicletButtonStyle.secondary || style == ChicletButtonStyle.outline;
-    
+    final isOutlined = style == ChicletButtonStyle.secondary ||
+        style == ChicletButtonStyle.outline;
+
     if (isOutlined) {
       return ChicletOutlinedAnimatedButton(
-        onPressed: onPressed,
+        onPressed: disabled ? null : onPressed,
         backgroundColor: config.backgroundColor,
         borderColor: config.borderColor,
         buttonColor: config.buttonColor,
         foregroundColor: config.foregroundColor,
+        disabledBackgroundColor: config.backgroundColor?.withValues(alpha: 0.5),
+        disabledBorderColor: config.borderColor?.withValues(alpha: 0.5),
+        disabledForegroundColor: config.foregroundColor.withValues(alpha: 0.5),
         width: width ?? double.infinity,
         height: effectiveHeight,
         buttonHeight: config.buttonHeight,
         borderWidth: config.borderWidth ?? 2,
         borderRadius: AppBorderRadius.button,
         isPressed: isPressed,
-        splashFactory: NoSplash.splashFactory,
         child: child,
       );
     }
-    
+
     return ChicletAnimatedButton(
-      onPressed: onPressed,
+      onPressed: disabled ? null : onPressed,
       backgroundColor: config.backgroundColor,
       buttonColor: config.buttonColor,
       foregroundColor: config.foregroundColor,
+      disabledBackgroundColor: kButtonDisabledColor,
+      disabledForegroundColor: Colors.grey.shade500,
       width: width ?? double.infinity,
       height: effectiveHeight,
       buttonHeight: config.buttonHeight,
       borderRadius: AppBorderRadius.button,
       isPressed: isPressed,
-      splashFactory: NoSplash.splashFactory,
       child: child,
     );
   }
-  
+
   /// Build child widget with optional icon
   Widget _buildChild({
     required String text,
@@ -236,9 +259,9 @@ class ChicletButton extends StatelessWidget {
     required TextStyle textStyle,
   }) {
     final textWidget = Text(text, style: textStyle);
-    
+
     if (icon == null) return textWidget;
-    
+
     return Row(
       mainAxisAlignment: MainAxisAlignment.center,
       mainAxisSize: MainAxisSize.min,
@@ -258,7 +281,7 @@ class ChicletButton extends StatelessWidget {
     const filledButtonHeight = 4.0;
     const outlinedButtonHeight = 3.0;
     const outlinedBorderWidth = 2.0;
-    
+
     switch (style) {
       case ChicletButtonStyle.primary:
         return _ChicletButtonConfig(

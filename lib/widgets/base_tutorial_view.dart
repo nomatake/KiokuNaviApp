@@ -9,7 +9,7 @@ import 'package:kioku_navi/generated/locales.g.dart';
 import 'package:kioku_navi/utils/app_constants.dart';
 import 'package:kioku_navi/utils/extensions.dart';
 import 'package:kioku_navi/widgets/custom_appbar.dart';
-import 'package:kioku_navi/widgets/custom_button.dart';
+import 'package:kioku_navi/widgets/custom_chiclet_button.dart';
 import 'package:kioku_navi/widgets/custom_tooltip.dart';
 import 'package:kioku_navi/widgets/padded_wrapper.dart';
 import 'package:kioku_navi/widgets/register_app_bar.dart';
@@ -34,14 +34,10 @@ class TutorialOption {
   /// Callback when button is pressed
   final VoidCallback? onPressed;
 
-  /// Button text alignment
-  final ButtonTextAlignment textAlignment;
-
   /// Creates a tutorial option configuration
   const TutorialOption({
     required this.text,
     this.onPressed,
-    this.textAlignment = ButtonTextAlignment.start,
   });
 }
 
@@ -232,7 +228,7 @@ class BaseTutorialView extends StatelessWidget {
           ),
         ),
         if (showPrimaryButton)
-          CustomButton.primary(
+          CustomChicletButton.primary(
             text: primaryButtonText ?? LocaleKeys.common_buttons_next.tr,
             onPressed: () => Get.toNamed(nextRoute),
           ),
@@ -250,9 +246,8 @@ class BaseTutorialView extends StatelessWidget {
         SizedBox(height: AppSpacing.xs.hp),
         ...options.map((option) => Column(
               children: [
-                CustomButton.secondary(
+                CustomChicletButton.secondary(
                   text: option.text,
-                  textAlignment: option.textAlignment,
                   onPressed: option.onPressed,
                 ),
                 SizedBox(height: AppSpacing.xxs.hp),
@@ -260,7 +255,7 @@ class BaseTutorialView extends StatelessWidget {
             )),
         const Spacer(),
         if (showPrimaryButton)
-          CustomButton.primary(
+          CustomChicletButton.primary(
             text: primaryButtonText ?? LocaleKeys.common_buttons_next.tr,
             onPressed: () => Get.toNamed(nextRoute),
           ),
@@ -276,7 +271,7 @@ class BaseTutorialView extends StatelessWidget {
           child: customContent ?? const SizedBox.shrink(),
         ),
         if (showPrimaryButton)
-          CustomButton.primary(
+          CustomChicletButton.primary(
             text: primaryButtonText ?? LocaleKeys.common_buttons_next.tr,
             onPressed: () => Get.toNamed(nextRoute),
           ),

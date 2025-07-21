@@ -6,7 +6,7 @@ import 'package:kioku_navi/generated/locales.g.dart';
 import 'package:kioku_navi/utils/extensions.dart';
 import 'package:kioku_navi/utils/sizes.dart';
 import 'package:kioku_navi/widgets/custom_appbar.dart';
-import 'package:kioku_navi/widgets/custom_button.dart';
+import 'package:kioku_navi/widgets/custom_chiclet_button.dart';
 import 'package:kioku_navi/widgets/custom_text_form_field.dart';
 import 'package:kioku_navi/widgets/custom_title_text.dart';
 import 'package:kioku_navi/widgets/intrinsic_height_scroll_view.dart';
@@ -83,7 +83,7 @@ class BaseLoginView extends StatelessWidget {
                   SizedBox(height: k3Double.hp),
 
                   // Login button with passed onPressed method
-                  Obx(() => CustomButton.primary(
+                  Obx(() => CustomChicletButton.primary(
                         text: LocaleKeys.common_buttons_login.tr,
                         onPressed: controller.isLoading.value
                             ? null
@@ -109,7 +109,7 @@ class BaseLoginView extends StatelessWidget {
                   SizedBox(height: k3Double.hp),
 
                   // Google login placeholder (TODO: implement when backend is ready)
-                  CustomButton.outline(
+                  CustomChicletButton.outline(
                     text: LocaleKeys.common_buttons_google.tr,
                     onPressed: () {
                       // TODO: Implement Google OAuth when backend is ready

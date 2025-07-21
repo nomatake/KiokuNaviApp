@@ -19,7 +19,6 @@ class ContinuousPlayRecordView extends GetView<LearningController> {
     return Scaffold(
       appBar: CustomAppbar(
         onBackPressed: () => Get.toNamed(Routes.CHILD_HOME),
-        isHasBorder: true,
       ),
       body: SafeArea(
         child: PaddedWrapper(

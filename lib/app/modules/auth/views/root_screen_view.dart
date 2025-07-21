@@ -6,7 +6,7 @@ import 'package:kioku_navi/generated/assets.gen.dart';
 import 'package:kioku_navi/generated/locales.g.dart';
 import 'package:kioku_navi/utils/extensions.dart';
 import 'package:kioku_navi/utils/sizes.dart';
-import 'package:kioku_navi/widgets/custom_button.dart';
+import 'package:kioku_navi/widgets/custom_chiclet_button.dart';
 import 'package:kioku_navi/widgets/padded_wrapper.dart';
 
 class RootScreenView extends GetView<AuthController> {
@@ -56,21 +56,21 @@ class RootScreenView extends GetView<AuthController> {
               const Spacer(),
 
               // Sign Up Button
-              CustomButton.primary(
+              CustomChicletButton.primary(
                 text: LocaleKeys.common_buttons_signup.tr,
                 onPressed: () => Get.toNamed(Routes.REGISTER),
               ),
               SizedBox(height: k2Double.hp),
 
               // Login as Student
-              CustomButton.outline(
+              CustomChicletButton.outline(
                 text: LocaleKeys.pages_root_studentLogin.tr,
                 onPressed: () => Get.toNamed(Routes.STUDENT_LOGIN),
               ),
               SizedBox(height: k2Double.hp),
 
               // Login as Guardian
-              CustomButton.outline(
+              CustomChicletButton.outline(
                 text: LocaleKeys.pages_root_parentLogin.tr,
                 onPressed: () => Get.toNamed(Routes.PARENT_LOGIN),
               ),

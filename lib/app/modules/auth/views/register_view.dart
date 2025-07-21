@@ -5,7 +5,7 @@ import 'package:kioku_navi/app/modules/auth/controllers/auth_controller.dart';
 import 'package:kioku_navi/generated/locales.g.dart';
 import 'package:kioku_navi/utils/extensions.dart';
 import 'package:kioku_navi/utils/sizes.dart';
-import 'package:kioku_navi/widgets/custom_button.dart';
+import 'package:kioku_navi/widgets/custom_chiclet_button.dart';
 import 'package:kioku_navi/widgets/custom_date_picker_form_field.dart';
 import 'package:kioku_navi/widgets/custom_text_form_field.dart';
 import 'package:kioku_navi/widgets/custom_title_text.dart';
@@ -164,7 +164,7 @@ class RegisterView extends GetView<AuthController> {
                   SizedBox(height: k3Double.hp),
 
                   // Register button
-                  CustomButton(
+                  CustomChicletButton.primary(
                     text: LocaleKeys.common_buttons_createAccount.tr,
                     onPressed: () => controller.onRegister(context),
                   ),

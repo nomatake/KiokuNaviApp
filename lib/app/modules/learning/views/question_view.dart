@@ -9,11 +9,11 @@ import 'package:kioku_navi/generated/assets.gen.dart';
 import 'package:kioku_navi/generated/locales.g.dart';
 import 'package:kioku_navi/utils/extensions.dart';
 import 'package:kioku_navi/utils/sizes.dart';
-import 'package:kioku_navi/widgets/custom_button.dart';
+import 'package:kioku_navi/widgets/custom_chiclet_button.dart';
 import 'package:kioku_navi/widgets/custom_loader.dart';
+import 'package:kioku_navi/widgets/intrinsic_height_scroll_view.dart';
 import 'package:kioku_navi/widgets/padded_wrapper.dart';
 import 'package:kioku_navi/widgets/register_app_bar.dart';
-import 'package:kioku_navi/widgets/intrinsic_height_scroll_view.dart';
 
 class QuestionView extends GetView<LearningController> {
   const QuestionView({super.key});
@@ -87,7 +87,7 @@ class QuestionView extends GetView<LearningController> {
                   ),
                 ),
                 SizedBox(height: k4Double.hp),
-                CustomButton.danger(
+                CustomChicletButton.danger(
                   text: LocaleKeys.common_buttons_tryAgain.tr,
                   onPressed: () => Get.back(),
                 ),
@@ -255,15 +255,11 @@ class QuestionView extends GetView<LearningController> {
                         config.onButtonPressed,
                       ),
                     )
-                  : hasSelected
-                      ? CustomButton.primary(
-                          text: LocaleKeys.common_buttons_viewAnswer.tr,
-                          onPressed: controller.submitAnswer,
-                        )
-                      : CustomButton.ghost(
-                          text: LocaleKeys.common_buttons_viewAnswer.tr,
-                          onPressed: null,
-                        ),
+                  : CustomChicletButton.primary(
+                      disabled: !hasSelected,
+                      text: LocaleKeys.common_buttons_viewAnswer.tr,
+                      onPressed: controller.submitAnswer,
+                    ),
             ),
           ],
         ),
@@ -288,8 +284,8 @@ class QuestionView extends GetView<LearningController> {
           : LocaleKeys
               .common_buttons_next.tr, // Use next for now, can be updated later
       buttonBuilder: (text, onPressed) => isCorrect
-          ? CustomButton.success(text: text, onPressed: onPressed)
-          : CustomButton.danger(text: text, onPressed: onPressed),
+          ? CustomChicletButton.success(text: text, onPressed: onPressed)
+          : CustomChicletButton.danger(text: text, onPressed: onPressed),
       onButtonPressed: controller.nextQuestion,
     );
   }
