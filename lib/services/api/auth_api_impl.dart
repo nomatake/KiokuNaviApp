@@ -25,7 +25,7 @@ class AuthApiImpl implements AuthApi {
   @override
   Future<Map<String, dynamic>> preRegisterParent(String email) async {
     return await apiClient.post<Map<String, dynamic>>(
-      '/api/v1/auth/parents/pre-register',
+      'auth/parents/pre-register',
       data: {'email': email},
     );
   }
@@ -33,7 +33,7 @@ class AuthApiImpl implements AuthApi {
   @override
   Future<AuthResult> verifyEmail(String email, String otp) async {
     final response = await apiClient.post<Map<String, dynamic>>(
-      '/api/v1/auth/parents/verify-email',
+      'auth/parents/verify-email',
       data: {
         'email': email,
         'otp': otp,
@@ -54,7 +54,7 @@ class AuthApiImpl implements AuthApi {
   Future<AuthResult> completeParentProfile(
       ParentProfileCompletion profileData) async {
     final response = await apiClient.post<Map<String, dynamic>>(
-      '/api/v1/auth/parents/complete-profile',
+      'auth/parents/complete-profile',
       data: profileData.toJson(),
     );
 
@@ -69,7 +69,7 @@ class AuthApiImpl implements AuthApi {
   @override
   Future<AuthResult> loginParent(String email, String password) async {
     final response = await apiClient.post<Map<String, dynamic>>(
-      '/api/v1/auth/parents/login',
+      'auth/parents/login',
       data: {
         'email': email,
         'password': password,
@@ -89,7 +89,7 @@ class AuthApiImpl implements AuthApi {
   @override
   Future<AuthResult> joinWithCode(ChildJoinRequest request) async {
     final response = await apiClient.post<Map<String, dynamic>>(
-      '/api/v1/children/join',
+      'children/join',
       data: request.toJson(),
       options: Options(headers: request.deviceInfo.toHeaders()),
     );
@@ -107,7 +107,7 @@ class AuthApiImpl implements AuthApi {
   @override
   Future<AuthResult> setChildPin(ChildPinSetup pinData) async {
     final response = await apiClient.post<Map<String, dynamic>>(
-      '/api/v1/children/set-pin',
+      'children/set-pin',
       data: pinData.toJson(),
     );
 
@@ -122,7 +122,7 @@ class AuthApiImpl implements AuthApi {
   @override
   Future<AuthResult> authenticateChildWithPin(ChildPinAuth pinAuth) async {
     final response = await apiClient.post<Map<String, dynamic>>(
-      '/api/v1/children/auth/pin',
+      'children/auth/pin',
       data: pinAuth.toJson(),
       options: Options(headers: pinAuth.deviceInfo.toHeaders()),
     );
@@ -139,7 +139,7 @@ class AuthApiImpl implements AuthApi {
   Future<List<ChildModel>> getChildrenForDevice(
       String deviceFingerprint) async {
     final response = await apiClient.get<Map<String, dynamic>>(
-      '/api/v1/children/profiles',
+      'children/profiles',
       options: Options(headers: {'X-Device-Fingerprint': deviceFingerprint}),
     );
 
@@ -153,13 +153,13 @@ class AuthApiImpl implements AuthApi {
 
   @override
   Future<Map<String, dynamic>> getFamilyInfo() async {
-    return await apiClient.get<Map<String, dynamic>>('/api/v1/families');
+    return await apiClient.get<Map<String, dynamic>>('families');
   }
 
   @override
   Future<ChildModel> addChild(String nickname, DateTime birthDate) async {
     final response = await apiClient.post<Map<String, dynamic>>(
-      '/api/v1/families/children',
+      'families/children',
       data: {
         'nickname': nickname,
         'birth_date':
@@ -180,7 +180,7 @@ class AuthApiImpl implements AuthApi {
       data['birth_date'] = birthDate.toIso8601String().split('T')[0];
 
     final response = await apiClient.put<Map<String, dynamic>>(
-      '/api/v1/families/children/$childId',
+      'families/children/$childId',
       data: data,
     );
 
@@ -191,7 +191,7 @@ class AuthApiImpl implements AuthApi {
   @override
   Future<JoinCode> generateJoinCode(int childId) async {
     final response = await apiClient.post<Map<String, dynamic>>(
-      '/api/v1/families/children/$childId/join-code',
+      'families/children/$childId/join-code',
     );
 
     final data = response['data'] as Map<String, dynamic>;
@@ -200,7 +200,7 @@ class AuthApiImpl implements AuthApi {
 
   @override
   Future<void> removeChild(int childId) async {
-    await apiClient.delete('/api/v1/families/children/$childId');
+    await apiClient.delete('families/children/$childId');
   }
 
   // === Session Management Methods ===
@@ -208,7 +208,7 @@ class AuthApiImpl implements AuthApi {
   @override
   Future<UserModel> validateParentToken(String token) async {
     final response = await apiClient.get<Map<String, dynamic>>(
-      '/api/v1/auth/validate-token',
+      'auth/validate-token',
       options: Options(headers: {'Authorization': 'Bearer $token'}),
     );
 
@@ -219,7 +219,7 @@ class AuthApiImpl implements AuthApi {
   @override
   Future<ChildModel> validateChildSession(String sessionToken) async {
     final response = await apiClient.get<Map<String, dynamic>>(
-      '/api/v1/children/validate-session',
+      'children/validate-session',
       options: Options(headers: {'Authorization': 'Bearer $sessionToken'}),
     );
 
@@ -229,8 +229,7 @@ class AuthApiImpl implements AuthApi {
 
   @override
   Future<String> refreshSession() async {
-    final response =
-        await apiClient.post<Map<String, dynamic>>('/api/v1/auth/refresh');
+    final response = await apiClient.post<Map<String, dynamic>>('auth/refresh');
     final data = response['data'] as Map<String, dynamic>;
     final newToken = data['token'] as String;
 
@@ -242,13 +241,13 @@ class AuthApiImpl implements AuthApi {
 
   @override
   Future<void> logout() async {
-    await apiClient.get('/api/v1/auth/logout');
+    await apiClient.get('auth/logout');
     await _clearAuthenticationData();
   }
 
   @override
   Future<void> logoutChild() async {
-    await apiClient.post('/api/v1/children/logout');
+    await apiClient.post('children/logout');
     await _clearChildSessionData();
   }
 
@@ -257,7 +256,7 @@ class AuthApiImpl implements AuthApi {
   @override
   Future<void> registerDevice(String deviceFingerprint, int familyId) async {
     await apiClient.post(
-      '/api/v1/families/$familyId/register-device',
+      'families/$familyId/register-device',
       data: {'device_fingerprint': deviceFingerprint},
     );
   }
@@ -265,7 +264,7 @@ class AuthApiImpl implements AuthApi {
   @override
   Future<void> unregisterDevice(String deviceFingerprint) async {
     await apiClient.post(
-      '/api/v1/devices/unregister',
+      'devices/unregister',
       data: {'device_fingerprint': deviceFingerprint},
     );
   }
@@ -273,7 +272,7 @@ class AuthApiImpl implements AuthApi {
   @override
   Future<DeviceMode> getDeviceMode(int familyId) async {
     final response = await apiClient
-        .get<Map<String, dynamic>>('/api/v1/families/$familyId/device-mode');
+        .get<Map<String, dynamic>>('families/$familyId/device-mode');
     final data = response['data'] as Map<String, dynamic>;
     return DeviceMode.fromString(data['device_mode'] as String);
   }
@@ -281,7 +280,7 @@ class AuthApiImpl implements AuthApi {
   @override
   Future<void> updateDeviceMode(int familyId, DeviceMode deviceMode) async {
     await apiClient.put(
-      '/api/v1/families/$familyId/device-mode',
+      'families/$familyId/device-mode',
       data: {'device_mode': deviceMode.value},
     );
   }
