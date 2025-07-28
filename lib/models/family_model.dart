@@ -16,14 +16,19 @@ class FamilyModel {
   });
 
   factory FamilyModel.fromJson(Map<String, dynamic> json) {
+    final now = DateTime.now();
     return FamilyModel(
       id: json['id'] as int,
       familyCode: json['family_code'] as String,
       deviceMode:
           DeviceMode.fromString(json['device_mode'] as String? ?? 'personal'),
       primaryParentId: json['primary_parent_id'] as int?,
-      createdAt: DateTime.parse(json['created_at'] as String),
-      updatedAt: DateTime.parse(json['updated_at'] as String),
+      createdAt: json['created_at'] != null
+          ? DateTime.parse(json['created_at'] as String)
+          : now,
+      updatedAt: json['updated_at'] != null
+          ? DateTime.parse(json['updated_at'] as String)
+          : now,
     );
   }
 

@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:kioku_navi/app/modules/auth/controllers/auth_controller.dart';
+import 'package:kioku_navi/app/modules/auth/controllers/family_auth_controller.dart';
 import 'package:kioku_navi/app/routes/app_pages.dart';
 import 'package:kioku_navi/generated/assets.gen.dart';
 import 'package:kioku_navi/generated/locales.g.dart';
@@ -81,10 +82,21 @@ class RootScreenView extends GetView<AuthController> {
               ),
               SizedBox(height: k2Double.hp),
 
-              // Login as Student
-              CustomButton.outline(
-                text: LocaleKeys.pages_root_studentLogin.tr,
-                onPressed: () => Get.toNamed(Routes.STUDENT_LOGIN),
+              // Join Family Button (for children)
+              CustomButton.secondary(
+                text: 'Join Family (Child)',
+                onPressed: () => Get.toNamed(Routes.CHILD_JOIN),
+              ),
+              SizedBox(height: k2Double.hp),
+
+              // Child Login Button (for existing children)
+              CustomButton.secondary(
+                text: 'Child Login',
+                onPressed: () {
+                  // Use the FamilyAuthController for smart login routing
+                  final familyController = Get.put(FamilyAuthController());
+                  familyController.handleChildLogin();
+                },
               ),
               SizedBox(height: k2Double.hp),
 

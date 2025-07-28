@@ -271,9 +271,9 @@ class FamilyAuthController extends BaseController {
         final pinConfirmation = childPinConfirmation.text.trim();
 
         // Validate PIN security
-        final pinValidation = PinValidator.validate(pin);
-        if (!pinValidation.isValid) {
-          throw ValidationException(pinValidation.firstError);
+        final pinValidationError = PinValidator.validatePin(pin);
+        if (pinValidationError != null) {
+          throw ValidationException(pinValidationError);
         }
 
         if (pin != pinConfirmation) {
@@ -366,6 +366,40 @@ class FamilyAuthController extends BaseController {
         );
       },
     );
+  }
+
+  /// Handle child login flow - checks device mode and routes appropriately
+  Future<void> handleChildLogin() async {
+    try {
+      // Get device info to check for existing children
+      final deviceInfo = await DeviceUtils.getDeviceInfo();
+      final children =
+          await _authApi.getChildrenForDevice(deviceInfo.fingerprint);
+
+      if (children.isEmpty) {
+        // No children found on this device
+        CustomSnackbar.showError(
+          title: 'No Profiles Found',
+          message:
+              'No child profiles found on this device. Please join a family first.',
+        );
+        return;
+      }
+
+      if (children.length == 1) {
+        // Personal device mode - only one child, go directly to PIN login
+        selectedChild.value = children.first;
+        Get.toNamed(Routes.CHILD_PIN_LOGIN);
+      } else {
+        // Shared device mode - multiple children, show profile selection
+        availableChildren.value = children;
+        Get.toNamed(Routes.CHILD_PROFILE_SELECTION);
+      }
+    } catch (e) {
+      // If API call fails, assume personal device and go to PIN login
+      debugPrint('Error checking children: $e');
+      Get.toNamed(Routes.CHILD_PROFILE_SELECTION);
+    }
   }
 
   // === Helper Methods ===

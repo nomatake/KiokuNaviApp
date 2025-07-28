@@ -26,11 +26,35 @@ class ChildModel {
   });
 
   factory ChildModel.fromJson(Map<String, dynamic> json) {
+    // Calculate birth date from age if birth_date is not provided
+    DateTime? birthDate;
+    if (json['birth_date'] != null) {
+      birthDate = DateTime.parse(json['birth_date'] as String);
+    } else if (json['age'] != null) {
+      // Calculate approximate birth date from age
+      final age = json['age'] as int;
+      final now = DateTime.now();
+      birthDate = DateTime(now.year - age, now.month, now.day);
+    } else {
+      // Default to 10 years ago if no birth info available
+      final now = DateTime.now();
+      birthDate = DateTime(now.year - 10, now.month, now.day);
+    }
+
+    // Default timestamps if not provided
+    final now = DateTime.now();
+    final createdAt = json['created_at'] != null
+        ? DateTime.parse(json['created_at'] as String)
+        : now;
+    final updatedAt = json['updated_at'] != null
+        ? DateTime.parse(json['updated_at'] as String)
+        : createdAt;
+
     return ChildModel(
       id: json['id'] as int,
       familyId: json['family_id'] as int? ?? 0, // Default to 0 if not provided
       nickname: json['nickname'] as String,
-      birthDate: DateTime.parse(json['birth_date'] as String),
+      birthDate: birthDate,
       status: ChildStatus.fromString(json['status'] as String? ?? 'pending'),
       isPinLocked: json['is_pin_locked'] as bool? ?? false,
       pinLockedUntil: json['pin_locked_until'] != null
@@ -40,11 +64,8 @@ class ChildModel {
       lastLoginAt: json['last_login_at'] != null
           ? DateTime.parse(json['last_login_at'] as String)
           : null,
-      createdAt: DateTime.parse(json['created_at'] as String),
-      updatedAt: json['updated_at'] != null
-          ? DateTime.parse(json['updated_at'] as String)
-          : DateTime.parse(json['created_at']
-              as String), // Fallback to created_at if updated_at is missing
+      createdAt: createdAt,
+      updatedAt: updatedAt,
     );
   }
 

@@ -10,6 +10,10 @@ import '../modules/auth/views/student_login_view.dart';
 import '../modules/auth/views/parent_pre_registration_view.dart';
 import '../modules/auth/views/otp_verification_view.dart';
 import '../modules/auth/views/parent_profile_completion_view.dart';
+import '../modules/auth/views/child_join_view.dart';
+import '../modules/auth/views/child_pin_setup_view.dart';
+import '../modules/auth/views/child_profile_selection_view.dart';
+import '../modules/auth/views/child_pin_login_view.dart';
 import '../modules/home/bindings/child_home_binding.dart';
 import '../modules/home/bindings/parent_dashboard_binding.dart';
 import '../modules/home/views/child_home_view.dart';
@@ -78,6 +82,32 @@ class AppPages {
     GetPageTransition.withAutoTransition(
       name: _Paths.PARENT_PROFILE_COMPLETION,
       page: () => const ParentProfileCompletionView(),
+      binding: FamilyAuthBinding(),
+      forceContext: TransitionContext.auth,
+    ),
+
+    // Child Authentication Routes
+    GetPageTransition.withAutoTransition(
+      name: _Paths.CHILD_JOIN,
+      page: () => const ChildJoinView(),
+      binding: FamilyAuthBinding(),
+      forceContext: TransitionContext.auth,
+    ),
+    GetPageTransition.withAutoTransition(
+      name: _Paths.CHILD_PIN_SETUP,
+      page: () => const ChildPinSetupView(),
+      binding: FamilyAuthBinding(),
+      forceContext: TransitionContext.auth,
+    ),
+    GetPageTransition.withAutoTransition(
+      name: _Paths.CHILD_PROFILE_SELECTION,
+      page: () => const ChildProfileSelectionView(),
+      binding: FamilyAuthBinding(),
+      forceContext: TransitionContext.auth,
+    ),
+    GetPageTransition.withAutoTransition(
+      name: _Paths.CHILD_PIN_LOGIN,
+      page: () => const ChildPinLoginView(),
       binding: FamilyAuthBinding(),
       forceContext: TransitionContext.auth,
     ),
