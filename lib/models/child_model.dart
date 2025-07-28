@@ -28,7 +28,7 @@ class ChildModel {
   factory ChildModel.fromJson(Map<String, dynamic> json) {
     return ChildModel(
       id: json['id'] as int,
-      familyId: json['family_id'] as int,
+      familyId: json['family_id'] as int? ?? 0, // Default to 0 if not provided
       nickname: json['nickname'] as String,
       birthDate: DateTime.parse(json['birth_date'] as String),
       status: ChildStatus.fromString(json['status'] as String? ?? 'pending'),
@@ -41,7 +41,10 @@ class ChildModel {
           ? DateTime.parse(json['last_login_at'] as String)
           : null,
       createdAt: DateTime.parse(json['created_at'] as String),
-      updatedAt: DateTime.parse(json['updated_at'] as String),
+      updatedAt: json['updated_at'] != null
+          ? DateTime.parse(json['updated_at'] as String)
+          : DateTime.parse(json['created_at']
+              as String), // Fallback to created_at if updated_at is missing
     );
   }
 

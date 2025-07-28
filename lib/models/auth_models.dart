@@ -216,11 +216,22 @@ class JoinCode {
   });
 
   factory JoinCode.fromJson(Map<String, dynamic> json) {
+    // Handle different response structures
+    final code = json['join_code'] as String? ?? json['code'] as String;
+    final childData = json['child'] as Map<String, dynamic>?;
+    final childNickname = childData?['nickname'] as String? ?? 'Child';
+    final expiresInMinutes = json['expires_in_minutes'] as int;
+
+    // Calculate expires_at if not provided
+    final expiresAt = json['expires_at'] != null
+        ? DateTime.parse(json['expires_at'] as String)
+        : DateTime.now().add(Duration(minutes: expiresInMinutes));
+
     return JoinCode(
-      code: json['code'] as String,
-      childNickname: json['child_nickname'] as String,
-      expiresInMinutes: json['expires_in_minutes'] as int,
-      expiresAt: DateTime.parse(json['expires_at'] as String),
+      code: code,
+      childNickname: childNickname,
+      expiresInMinutes: expiresInMinutes,
+      expiresAt: expiresAt,
     );
   }
 

@@ -8,6 +8,7 @@ import 'package:kioku_navi/utils/sizes.dart';
 import 'package:kioku_navi/widgets/custom_button.dart';
 import 'package:kioku_navi/widgets/custom_snackbar.dart';
 import 'package:kioku_navi/widgets/padded_wrapper.dart';
+import 'package:kioku_navi/widgets/parent_bottom_nav_bar.dart';
 
 class ParentDashboardView extends GetView<ParentDashboardController> {
   const ParentDashboardView({super.key});
@@ -21,6 +22,7 @@ class ParentDashboardView extends GetView<ParentDashboardController> {
         backgroundColor: Colors.white,
         foregroundColor: const Color(0xFF1976D2),
         elevation: 0,
+        automaticallyImplyLeading: false,
         actions: [
           IconButton(
             onPressed: controller.loadFamilyData,
@@ -28,40 +30,44 @@ class ParentDashboardView extends GetView<ParentDashboardController> {
           ),
         ],
       ),
-      floatingActionButton: FloatingActionButton(
-        onPressed: controller.showAddChildDialog,
-        backgroundColor: const Color(0xFF1976D2),
-        child: const Icon(Icons.add, color: Colors.white),
-      ),
-      body: SafeArea(
-        child: PaddedWrapper(
-          child: Obx(() {
-            final family = controller.familyInfo.value;
-            final user = controller.user.value;
+      body: Column(
+        children: [
+          Expanded(
+            child: SafeArea(
+              bottom: false,
+              child: PaddedWrapper(
+                child: Obx(() {
+                  final family = controller.familyInfo.value;
+                  final user = controller.user.value;
 
-            return RefreshIndicator(
-              onRefresh: controller.loadFamilyData,
-              child: SingleChildScrollView(
-                physics: const AlwaysScrollableScrollPhysics(),
-                child: Column(
-                  crossAxisAlignment: CrossAxisAlignment.start,
-                  children: [
-                    // Family Info Card
-                    if (family != null && user != null) ...[
-                      _buildFamilyInfoCard(family, user),
-                      SizedBox(height: k3Double.hp),
-                    ],
+                  return RefreshIndicator(
+                    onRefresh: controller.loadFamilyData,
+                    child: SingleChildScrollView(
+                      physics: const AlwaysScrollableScrollPhysics(),
+                      child: Column(
+                        crossAxisAlignment: CrossAxisAlignment.start,
+                        children: [
+                          // Family Info Card
+                          if (family != null && user != null) ...[
+                            _buildFamilyInfoCard(family, user),
+                            SizedBox(height: k3Double.hp),
+                          ],
 
-                    // Children Section
-                    _buildChildrenSection(),
+                          // Children Section
+                          _buildChildrenSection(),
 
-                    SizedBox(height: k10Double.hp), // Space for FAB
-                  ],
-                ),
+                          SizedBox(height: k10Double.hp), // Space for FAB
+                        ],
+                      ),
+                    ),
+                  );
+                }),
               ),
-            );
-          }),
-        ),
+            ),
+          ),
+          // Bottom Navigation Bar
+          const ParentBottomNavBar(),
+        ],
       ),
     );
   }
@@ -143,13 +149,11 @@ class ParentDashboardView extends GetView<ParentDashboardController> {
                 color: const Color(0xFF1976D2),
               ),
             ),
-            Text(
-              'Tap to generate join codes',
-              style: TextStyle(
-                fontSize: k12Double.sp,
-                color: Colors.grey[600],
-                fontStyle: FontStyle.italic,
-              ),
+            IconButton(
+              onPressed: controller.showAddChildDialog,
+              icon: const Icon(Icons.add),
+              color: const Color(0xFF1976D2),
+              tooltip: 'Add Child',
             ),
           ],
         ),
