@@ -208,7 +208,8 @@
       "errors": {
         "oopsSomethingWentWrong": "Oops! Something went wrong",
         "noQuestionsAvailable": "No questions available for this topic"
-      }
+      },
+      "pleaseEnterYourAnswer": "Please enter your answer"
     },
     "tutorial": {
       "one": {

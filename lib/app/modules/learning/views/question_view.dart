@@ -4,6 +4,7 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:kioku_navi/app/modules/learning/controllers/learning_controller.dart';
 import 'package:kioku_navi/app/modules/learning/models/result_config.dart';
+import 'package:kioku_navi/app/modules/learning/widgets/answer_result_widget.dart';
 import 'package:kioku_navi/app/modules/learning/widgets/question_template.dart';
 import 'package:kioku_navi/generated/assets.gen.dart';
 import 'package:kioku_navi/generated/locales.g.dart';
@@ -11,9 +12,9 @@ import 'package:kioku_navi/utils/extensions.dart';
 import 'package:kioku_navi/utils/sizes.dart';
 import 'package:kioku_navi/widgets/custom_button.dart';
 import 'package:kioku_navi/widgets/custom_loader.dart';
+import 'package:kioku_navi/widgets/intrinsic_height_scroll_view.dart';
 import 'package:kioku_navi/widgets/padded_wrapper.dart';
 import 'package:kioku_navi/widgets/register_app_bar.dart';
-import 'package:kioku_navi/widgets/intrinsic_height_scroll_view.dart';
 
 class QuestionView extends GetView<LearningController> {
   const QuestionView({super.key});
@@ -195,15 +196,17 @@ class QuestionView extends GetView<LearningController> {
     return Obx(() {
       final hasSubmitted = controller.hasSubmitted.value;
       final hasSelected = controller.selectedOptionIndex.value != -1;
+      final isCorrect = controller.isCorrect.value;
 
       // Get result configuration if submitted
-      final config =
-          hasSubmitted ? _getResultConfig(controller.isCorrect.value) : null;
+      final config = hasSubmitted ? _getResultConfig(isCorrect) : null;
 
       return Container(
         width: double.infinity,
         decoration: BoxDecoration(
-          color: hasSubmitted ? config!.backgroundColor : Colors.transparent,
+          color: hasSubmitted
+              ? (isCorrect ? config!.backgroundColor : const Color(0xFFFEE5E5))
+              : Colors.transparent,
           borderRadius: hasSubmitted
               ? BorderRadius.only(
                   topLeft: Radius.circular(k15Double),
@@ -214,7 +217,7 @@ class QuestionView extends GetView<LearningController> {
         child: Column(
           children: [
             // Result feedback row (only show when submitted)
-            if (hasSubmitted)
+            if (hasSubmitted && isCorrect)
               Padding(
                 padding: EdgeInsets.symmetric(
                   horizontal: k6Double.wp,
@@ -239,6 +242,49 @@ class QuestionView extends GetView<LearningController> {
                     ),
                   ],
                 ),
+              ),
+            // For incorrect answers, show the original header
+            if (hasSubmitted && !isCorrect)
+              Padding(
+                padding: EdgeInsets.only(
+                  left: k6Double.wp,
+                  right: k6Double.wp,
+                  top: k2Double.hp,
+                  bottom: k2Double.hp,
+                ),
+                child: Row(
+                  children: [
+                    Icon(
+                      config!.iconData,
+                      color: config.iconColor,
+                      size: k20Double.sp,
+                    ),
+                    SizedBox(width: k2Double.wp),
+                    Text(
+                      config.text,
+                      style: TextStyle(
+                        fontFamily: 'Hiragino Sans',
+                        fontWeight: FontWeight.w700,
+                        fontSize: k14Double.sp,
+                        color: config.textColor,
+                      ),
+                    ),
+                  ],
+                ),
+              ),
+            // Show correct answer for incorrect responses (only for question_answer type)
+            if (hasSubmitted &&
+                !controller.isCorrect.value &&
+                controller.currentQuestion != null &&
+                (controller.currentQuestion!.data.questionType
+                        .toLowerCase()
+                        .contains('question_answer') ||
+                    controller.currentQuestion!.data.questionType
+                        .toLowerCase()
+                        .contains('question-answer')))
+              AnswerResultWidget(
+                question: controller.currentQuestion!,
+                isCorrect: controller.isCorrect.value,
               ),
             // Button area
             Padding(

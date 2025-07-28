@@ -208,7 +208,8 @@
       "errors": {
         "oopsSomethingWentWrong": "おっと！何か問題が発生しました",
         "noQuestionsAvailable": "このトピックには問題がありません"
-      }
+      },
+      "pleaseEnterYourAnswer": "答えを入力してください"
     },
     "tutorial": {
       "one": {

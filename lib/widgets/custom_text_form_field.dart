@@ -22,6 +22,7 @@ class CustomTextFormField extends StatefulWidget {
     this.inputFormatters = const [],
     this.textInputAction = TextInputAction.next,
     this.suffixText,
+    this.readOnly = false,
     super.key,
   });
 
@@ -40,6 +41,7 @@ class CustomTextFormField extends StatefulWidget {
   final List<TextInputFormatter> inputFormatters;
   final TextInputAction textInputAction;
   final String? suffixText;
+  final bool readOnly;
 
   @override
   State<CustomTextFormField> createState() => _CustomTextFormFieldState();
@@ -72,6 +74,8 @@ class _CustomTextFormFieldState extends State<CustomTextFormField> {
           controller: widget.textController,
           inputFormatters: widget.inputFormatters,
           keyboardType: widget.keyboardType,
+          readOnly: widget.readOnly,
+          enableInteractiveSelection: !widget.readOnly,
           decoration: InputDecoration(
             floatingLabelBehavior: FloatingLabelBehavior.auto,
             labelText: widget.labelText,

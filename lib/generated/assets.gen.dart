@@ -39,6 +39,10 @@ class $AssetsImagesGen {
   /// File path: assets/images/logo.png
   AssetGenImage get logo => const AssetGenImage('assets/images/logo.png');
 
+  /// File path: assets/images/question_answer_placeholder.webp
+  AssetGenImage get questionAnswerPlaceholder =>
+      const AssetGenImage('assets/images/question_answer_placeholder.webp');
+
   /// File path: assets/images/science_icon.png
   AssetGenImage get scienceIcon =>
       const AssetGenImage('assets/images/science_icon.png');
@@ -52,6 +56,7 @@ class $AssetsImagesGen {
     japanIcon,
     languageIcon,
     logo,
+    questionAnswerPlaceholder,
     scienceIcon,
   ];
 }
