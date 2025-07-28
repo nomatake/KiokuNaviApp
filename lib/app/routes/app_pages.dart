@@ -1,11 +1,14 @@
 import 'package:get/get.dart';
 
 import '../modules/auth/bindings/auth_binding.dart';
+import '../modules/auth/bindings/family_auth_binding.dart';
 import '../modules/auth/views/forgot_password_view.dart';
 import '../modules/auth/views/parent_login_view.dart';
 import '../modules/auth/views/register_view.dart';
 import '../modules/auth/views/root_screen_view.dart';
 import '../modules/auth/views/student_login_view.dart';
+import '../modules/auth/views/parent_pre_registration_view.dart';
+import '../modules/auth/views/otp_verification_view.dart';
 import '../modules/home/bindings/child_home_binding.dart';
 import '../modules/home/bindings/home_binding.dart';
 import '../modules/home/views/child_home_view.dart';
@@ -57,6 +60,22 @@ class AppPages {
       binding: AuthBinding(),
       forceContext: TransitionContext.auth,
     ),
+
+    // New Family Authentication Routes
+    GetPageTransition.withAutoTransition(
+      name: _Paths.PARENT_PRE_REGISTRATION,
+      page: () => const ParentPreRegistrationView(),
+      binding: FamilyAuthBinding(),
+      forceContext: TransitionContext.auth,
+    ),
+    GetPageTransition.withAutoTransition(
+      name: _Paths.OTP_VERIFICATION,
+      page: () => const OtpVerificationView(),
+      binding: FamilyAuthBinding(),
+      forceContext: TransitionContext.auth,
+    ),
+
+    // Legacy Auth Routes (for backward compatibility)
     GetPageTransition.withAutoTransition(
       name: _Paths.REGISTER,
       page: () => const RegisterView(),

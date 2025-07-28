@@ -58,7 +58,7 @@ class RootScreenView extends GetView<AuthController> {
               // Sign Up Button
               CustomButton.primary(
                 text: LocaleKeys.common_buttons_signup.tr,
-                onPressed: () => Get.toNamed(Routes.REGISTER),
+                onPressed: () => Get.toNamed(Routes.PARENT_PRE_REGISTRATION),
               ),
               SizedBox(height: k2Double.hp),
 

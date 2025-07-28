@@ -33,7 +33,7 @@ class MyApp extends StatelessWidget {
       defaultTransition: Transition.noTransition,
       localizationsDelegates: ConfigStore.localizationsDelegates,
       supportedLocales: ConfigStore.supportedLocales,
-      locale: ConfigStore.locale,
+      locale: ConfigStore.fallbackLocale,
       debugShowCheckedModeBanner: false,
       fallbackLocale: ConfigStore.fallbackLocale,
       translationsKeys: AppTranslation.translations,
