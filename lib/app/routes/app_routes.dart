@@ -3,15 +3,14 @@ part of 'app_pages.dart';
 
 abstract class Routes {
   Routes._();
-  static const HOME = _Paths.HOME;
   static const ROOT_SCREEN = _Paths.ROOT_SCREEN;
+  static const PARENT_DASHBOARD = _Paths.PARENT_DASHBOARD;
 
   // Parent Authentication Routes
   static const PARENT_PRE_REGISTRATION = _Paths.PARENT_PRE_REGISTRATION;
   static const OTP_VERIFICATION = _Paths.OTP_VERIFICATION;
   static const PARENT_PROFILE_COMPLETION = _Paths.PARENT_PROFILE_COMPLETION;
   static const PARENT_LOGIN = _Paths.PARENT_LOGIN;
-  static const PARENT_DASHBOARD = _Paths.PARENT_DASHBOARD;
 
   // Child Authentication Routes
   static const CHILD_JOIN = _Paths.CHILD_JOIN;
@@ -49,15 +48,14 @@ abstract class Routes {
 
 abstract class _Paths {
   _Paths._();
-  static const HOME = '/home';
   static const ROOT_SCREEN = '/auth/root-screen';
+  static const PARENT_DASHBOARD = '/parent/dashboard';
 
   // Parent Authentication Paths
   static const PARENT_PRE_REGISTRATION = '/auth/parent/pre-register';
   static const OTP_VERIFICATION = '/auth/otp-verification';
   static const PARENT_PROFILE_COMPLETION = '/auth/parent/complete-profile';
   static const PARENT_LOGIN = '/auth/parent/login';
-  static const PARENT_DASHBOARD = '/parent/dashboard';
 
   // Child Authentication Paths
   static const CHILD_JOIN = '/auth/child/join';

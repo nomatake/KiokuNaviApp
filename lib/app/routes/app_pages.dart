@@ -9,10 +9,11 @@ import '../modules/auth/views/root_screen_view.dart';
 import '../modules/auth/views/student_login_view.dart';
 import '../modules/auth/views/parent_pre_registration_view.dart';
 import '../modules/auth/views/otp_verification_view.dart';
+import '../modules/auth/views/parent_profile_completion_view.dart';
 import '../modules/home/bindings/child_home_binding.dart';
-import '../modules/home/bindings/home_binding.dart';
+import '../modules/home/bindings/parent_dashboard_binding.dart';
 import '../modules/home/views/child_home_view.dart';
-import '../modules/home/views/home_view.dart';
+import '../modules/home/views/parent_dashboard_view.dart';
 import '../modules/learning/bindings/learning_binding.dart';
 import '../modules/learning/views/continuous_play_record_view.dart';
 import '../modules/learning/views/learning_view.dart';
@@ -41,9 +42,9 @@ class AppPages {
   static final routes = [
     // Home routes with zoom fade transitions
     GetPageTransition.withAutoTransition(
-      name: _Paths.HOME,
-      page: () => const HomeView(),
-      binding: HomeBinding(),
+      name: _Paths.PARENT_DASHBOARD,
+      page: () => const ParentDashboardView(),
+      binding: ParentDashboardBinding(),
       forceContext: TransitionContext.home,
     ),
     GetPageTransition.withAutoTransition(
@@ -71,6 +72,12 @@ class AppPages {
     GetPageTransition.withAutoTransition(
       name: _Paths.OTP_VERIFICATION,
       page: () => const OtpVerificationView(),
+      binding: FamilyAuthBinding(),
+      forceContext: TransitionContext.auth,
+    ),
+    GetPageTransition.withAutoTransition(
+      name: _Paths.PARENT_PROFILE_COMPLETION,
+      page: () => const ParentProfileCompletionView(),
       binding: FamilyAuthBinding(),
       forceContext: TransitionContext.auth,
     ),

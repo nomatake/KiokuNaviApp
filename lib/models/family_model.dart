@@ -2,7 +2,7 @@ class FamilyModel {
   final int id;
   final String familyCode; // 8-character family identifier
   final DeviceMode deviceMode;
-  final int primaryParentId;
+  final int? primaryParentId;
   final DateTime createdAt;
   final DateTime updatedAt;
 
@@ -10,7 +10,7 @@ class FamilyModel {
     required this.id,
     required this.familyCode,
     required this.deviceMode,
-    required this.primaryParentId,
+    this.primaryParentId,
     required this.createdAt,
     required this.updatedAt,
   });
@@ -21,7 +21,7 @@ class FamilyModel {
       familyCode: json['family_code'] as String,
       deviceMode:
           DeviceMode.fromString(json['device_mode'] as String? ?? 'personal'),
-      primaryParentId: json['primary_parent_id'] as int,
+      primaryParentId: json['primary_parent_id'] as int?,
       createdAt: DateTime.parse(json['created_at'] as String),
       updatedAt: DateTime.parse(json['updated_at'] as String),
     );

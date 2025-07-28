@@ -4,6 +4,7 @@ import 'package:kioku_navi/app/modules/auth/controllers/auth_controller.dart';
 import 'package:kioku_navi/app/routes/app_pages.dart';
 import 'package:kioku_navi/generated/assets.gen.dart';
 import 'package:kioku_navi/generated/locales.g.dart';
+import 'package:kioku_navi/services/auth/token_manager.dart';
 import 'package:kioku_navi/utils/extensions.dart';
 import 'package:kioku_navi/utils/sizes.dart';
 import 'package:kioku_navi/widgets/custom_button.dart';
@@ -11,8 +12,26 @@ import 'package:kioku_navi/widgets/padded_wrapper.dart';
 
 class RootScreenView extends GetView<AuthController> {
   const RootScreenView({super.key});
+
   @override
   Widget build(BuildContext context) {
+    // Check authentication status on app startup
+    WidgetsBinding.instance.addPostFrameCallback((_) {
+      _checkAuthenticationStatus();
+    });
+
+    return _buildWelcomeScreen(context);
+  }
+
+  void _checkAuthenticationStatus() {
+    final tokenManager = Get.find<TokenManager>();
+
+    if (tokenManager.isAuthenticatedSync()) {
+      Get.offNamed(Routes.PARENT_DASHBOARD);
+    }
+  }
+
+  Widget _buildWelcomeScreen(BuildContext context) {
     return Scaffold(
       body: SafeArea(
         child: PaddedWrapper(
