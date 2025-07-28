@@ -9,6 +9,7 @@ import 'question_templates/multiple_choice_template.dart';
 import 'question_templates/multiple_select_template.dart';
 import 'question_templates/question_matching_template.dart';
 import 'question_templates/true_false_template.dart';
+import 'question_templates/ordering_template.dart';
 
 class QuestionTemplate extends GetView<LearningController> {
   const QuestionTemplate({super.key});
@@ -47,9 +48,10 @@ class QuestionTemplate extends GetView<LearningController> {
         case 'matching':
           return QuestionMatchingTemplate(question: question);
           
+        case 'ordering':
+          return OrderingTemplate(question: question);
+          
         // Add more question types as needed
-        // case 'ordering':
-        //   return OrderingTemplate(question: question);
         // case 'drag_drop':
         //   return DragDropTemplate(question: question);
           

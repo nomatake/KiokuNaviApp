@@ -4,7 +4,6 @@ import 'package:kioku_navi/app/modules/learning/constants/question_colors.dart';
 import 'package:kioku_navi/app/modules/learning/controllers/learning_controller.dart';
 import 'package:kioku_navi/app/modules/learning/models/question.dart';
 import 'package:kioku_navi/app/modules/learning/models/tag_state_config.dart';
-import 'package:kioku_navi/app/modules/learning/utils/layout_calculator.dart';
 import 'package:kioku_navi/app/modules/learning/widgets/selectable_tag.dart';
 import 'package:kioku_navi/utils/extensions.dart';
 import 'package:kioku_navi/utils/sizes.dart';
@@ -32,7 +31,7 @@ class MultipleSelectTemplate extends GetView<LearningController> {
             child: _buildSelectedOptionsWithUnderlines(options, optionKeys),
           ),
 
-          SizedBox(height: k6Double.hp),
+          SizedBox(height: k2Double.hp),
 
           // Options as secondary buttons in a wrap layout with padding and center alignment
           Padding(
@@ -142,47 +141,55 @@ class MultipleSelectTemplate extends GetView<LearningController> {
       }
     }
 
-    // Use LayoutCalculator to distribute tags across lines
-    final lines = LayoutCalculator.distributeTagsAcrossLines(selectedInfo, 3);
+    // Calculate dynamic number of lines based on total options
+    final totalOptions = options.length;
+    final avgOptionLength = totalOptions > 0 
+        ? options.fold<int>(0, (sum, opt) => sum + opt.length) / totalOptions 
+        : 0;
+    
+    // Estimate options per line based on average length
+    final optionsPerLine = avgOptionLength <= 10 ? 4 : avgOptionLength <= 15 ? 3 : 2;
+    
+    // Calculate needed lines (minimum 2, maximum 5)
+    final neededLines = ((totalOptions / optionsPerLine).ceil()).clamp(2, 5);
 
-    return Column(
-      crossAxisAlignment: CrossAxisAlignment.start,
-      children: [
-        // Three underlines with dynamic content
-        for (int i = 0; i < 3; i++) ...[
-          if (i > 0) SizedBox(height: k2Double.hp),
-          Container(
-            width: double.infinity,
-            // Always use the same total height
-            constraints: BoxConstraints(minHeight: k5Double.hp + k1_5Double.hp),
-            decoration: BoxDecoration(
-              border: Border(
-                bottom: BorderSide(
-                  color: QuestionColors.underlineBorderColor,
-                  width: QuestionColors.underlineWidth,
-                ),
+    // Match ordering template spacing
+    final lineHeight = k4_5Double.hp + k2_5Double.hp; // option height + spacing (same as ordering)
+    final containerHeight = k6Double.hp + (lineHeight * neededLines);
+
+    return SizedBox(
+      height: containerHeight,
+      child: Stack(
+        children: [
+          // Dynamic underlines based on needed lines
+          ...List.generate(neededLines, (index) {
+            final topPosition = k6Double.hp + (lineHeight * index); // Same as ordering template
+            return Positioned(
+              top: topPosition,
+              left: 0,
+              right: 0,
+              child: Container(
+                height: QuestionColors.underlineWidth,
+                color: QuestionColors.underlineBorderColor,
               ),
-            ),
+            );
+          }),
+          // Selected tags container with Wrap for dynamic flow
+          Positioned(
+            top: 0,
+            left: 0,
+            right: 0,
             child: Padding(
-              padding: EdgeInsets.only(bottom: k1_5Double.hp),
-              child: SizedBox(
-                height: k5Double.hp,
-                child: lines[i].isNotEmpty
-                    ? Row(
-                        crossAxisAlignment: CrossAxisAlignment.center,
-                        children: [
-                          for (int j = 0; j < lines[i].length; j++) ...[
-                            if (j > 0) SizedBox(width: k3Double.wp),
-                            lines[i][j].tag,
-                          ],
-                        ],
-                      )
-                    : null,
+              padding: EdgeInsets.only(top: k0_5Double.hp), // Same padding as ordering
+              child: Wrap(
+                spacing: k3Double.wp,
+                runSpacing: k2_5Double.hp, // Same as ordering template
+                children: selectedInfo.map((item) => item.tag).toList(),
               ),
             ),
           ),
         ],
-      ],
+      ),
     );
   }
 

@@ -21,7 +21,7 @@ class ChildHomeView extends GetView<ChildHomeController> {
   @override
   Widget build(BuildContext context) {
     // Debug logging (can be removed in production)
-    AdaptiveSizes.logDeviceInfo(context);
+    // AdaptiveSizes.logDeviceInfo(context);
 
     // Get adaptive sizes
     final double buttonWidth = AdaptiveSizes.getGreenButtonWidth(context);
