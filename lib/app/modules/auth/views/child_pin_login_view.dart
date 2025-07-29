@@ -21,9 +21,11 @@ class ChildPinLoginView extends GetView<FamilyAuthController> {
     return Scaffold(
       backgroundColor: const Color(0xFFF7F9FC),
       appBar: CustomAppbar(
+        onBackPressed: () => Get.back(),
         centerTitle: true,
         color: Colors.white,
-        titleWidget: CustomTitleText(text: 'Enter Your PIN'),
+        titleWidget: CustomTitleText(
+            text: LocaleKeys.pages_familyAuth_childPinLogin_title.tr),
       ),
       body: SafeArea(
         child: IntrinsicHeightScrollView(
@@ -142,7 +144,8 @@ class ChildPinLoginView extends GetView<FamilyAuthController> {
 
                   // Switch Profile Button (for shared devices)
                   CustomButton.outline(
-                    text: 'Switch Profile',
+                    text: LocaleKeys
+                        .pages_familyAuth_childPinLogin_switchProfileButton.tr,
                     onPressed: () => Get.back(),
                   ),
                   SizedBox(height: k4Double.hp),

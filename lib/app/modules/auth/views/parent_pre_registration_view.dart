@@ -23,7 +23,8 @@ class ParentPreRegistrationView extends GetView<FamilyAuthController> {
         onBackPressed: () => Get.back(),
         centerTitle: true,
         color: Colors.white,
-        titleWidget: CustomTitleText(text: 'Create Family Account'),
+        titleWidget: CustomTitleText(
+            text: LocaleKeys.pages_familyAuth_parentPreRegistration_title.tr),
       ),
       body: SafeArea(
         child: IntrinsicHeightScrollView(
@@ -37,7 +38,9 @@ class ParentPreRegistrationView extends GetView<FamilyAuthController> {
 
                   // Welcome Message
                   Text(
-                    'Welcome to KiokuNavi Family!',
+                    LocaleKeys
+                        .pages_familyAuth_parentPreRegistration_welcomeMessage
+                        .tr,
                     style: TextStyle(
                       fontWeight: FontWeight.w800,
                       fontSize: k24Double.sp,
@@ -48,7 +51,8 @@ class ParentPreRegistrationView extends GetView<FamilyAuthController> {
 
                   // Instructions
                   Text(
-                    'Let\'s set up your family account. First, we\'ll verify your email address with a confirmation code.',
+                    LocaleKeys
+                        .pages_familyAuth_parentPreRegistration_instructions.tr,
                     style: TextStyle(
                       fontWeight: FontWeight.w500,
                       fontSize: k16Double.sp,
@@ -60,7 +64,8 @@ class ParentPreRegistrationView extends GetView<FamilyAuthController> {
 
                   // Email Field
                   Text(
-                    'Email Address',
+                    LocaleKeys
+                        .pages_familyAuth_parentPreRegistration_emailLabel.tr,
                     style: TextStyle(
                       fontWeight: FontWeight.w600,
                       fontSize: k14Double.sp,
@@ -70,13 +75,19 @@ class ParentPreRegistrationView extends GetView<FamilyAuthController> {
                   SizedBox(height: k1Double.hp),
                   CustomTextFormField(
                     textController: controller.email,
-                    hintText: 'Enter your email address',
+                    hintText: LocaleKeys
+                        .pages_familyAuth_parentPreRegistration_emailPlaceholder
+                        .tr,
                     keyboardType: TextInputType.emailAddress,
                     validator: FormBuilderValidators.compose([
                       FormBuilderValidators.required(
-                          errorText: 'Email is required'),
+                          errorText: LocaleKeys
+                              .pages_familyAuth_parentPreRegistration_emailRequired
+                              .tr),
                       FormBuilderValidators.email(
-                          errorText: 'Please enter a valid email'),
+                          errorText: LocaleKeys
+                              .pages_familyAuth_parentPreRegistration_invalidEmail
+                              .tr),
                     ]),
                   ),
                   SizedBox(height: k1_5Double.hp),
@@ -100,7 +111,9 @@ class ParentPreRegistrationView extends GetView<FamilyAuthController> {
                         SizedBox(width: k1_5Double.hp),
                         Expanded(
                           child: Text(
-                            'We\'ll send a 6-digit verification code to this email. Make sure you have access to it.',
+                            LocaleKeys
+                                .pages_familyAuth_parentPreRegistration_verificationNotice
+                                .tr,
                             style: TextStyle(
                               fontSize: k12Double.sp,
                               color: Color(0xFF1976D2),
@@ -117,7 +130,9 @@ class ParentPreRegistrationView extends GetView<FamilyAuthController> {
 
                   // Continue Button
                   CustomButton.primary(
-                    text: 'Send Verification Code',
+                    text: LocaleKeys
+                        .pages_familyAuth_parentPreRegistration_sendVerificationCode
+                        .tr,
                     onPressed: () => controller.preRegisterParent(context),
                   ),
                   SizedBox(height: k2Double.hp),
@@ -126,21 +141,31 @@ class ParentPreRegistrationView extends GetView<FamilyAuthController> {
                   Row(
                     mainAxisAlignment: MainAxisAlignment.center,
                     children: [
-                      Text(
-                        'Already have an account? ',
-                        style: TextStyle(
-                          fontSize: k12Double.sp,
-                          color: Color(0xFF666666),
-                        ),
-                      ),
-                      GestureDetector(
-                        onTap: () => Get.toNamed('/auth/parent/login'),
+                      Flexible(
                         child: Text(
-                          'Sign In',
+                          LocaleKeys
+                              .pages_familyAuth_parentPreRegistration_alreadyHaveAccount
+                              .tr,
                           style: TextStyle(
                             fontSize: k12Double.sp,
-                            color: Color(0xFF1976D2),
-                            fontWeight: FontWeight.w600,
+                            color: Color(0xFF666666),
+                          ),
+                          textAlign: TextAlign.center,
+                        ),
+                      ),
+                      Flexible(
+                        child: GestureDetector(
+                          onTap: () => Get.toNamed('/auth/parent/login'),
+                          child: Text(
+                            LocaleKeys
+                                .pages_familyAuth_parentPreRegistration_signIn
+                                .tr,
+                            style: TextStyle(
+                              fontSize: k12Double.sp,
+                              color: Color(0xFF1976D2),
+                              fontWeight: FontWeight.w600,
+                            ),
+                            textAlign: TextAlign.center,
                           ),
                         ),
                       ),

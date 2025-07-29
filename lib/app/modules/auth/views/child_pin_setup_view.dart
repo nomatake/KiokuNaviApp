@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:form_builder_validators/form_builder_validators.dart';
 import 'package:get/get.dart';
 import 'package:kioku_navi/app/modules/auth/controllers/family_auth_controller.dart';
+import 'package:kioku_navi/generated/locales.g.dart';
 import 'package:kioku_navi/utils/extensions.dart';
 import 'package:kioku_navi/utils/sizes.dart';
 import 'package:kioku_navi/utils/pin_validator.dart';
@@ -20,10 +21,11 @@ class ChildPinSetupView extends GetView<FamilyAuthController> {
     return Scaffold(
       backgroundColor: const Color(0xFFF7F9FC),
       appBar: CustomAppbar(
+        onBackPressed: () => Get.back(),
         centerTitle: true,
         color: Colors.white,
-        titleWidget: CustomTitleText(text: 'Create Your PIN'),
-        isHasLeading: false, // Prevent going back during setup
+        titleWidget: CustomTitleText(
+            text: LocaleKeys.pages_familyAuth_childPinSetup_title.tr),
       ),
       body: SafeArea(
         child: IntrinsicHeightScrollView(
@@ -35,36 +37,32 @@ class ChildPinSetupView extends GetView<FamilyAuthController> {
                 children: [
                   SizedBox(height: k3Double.hp),
 
-                  // Welcome Message
-                  Center(
-                    child: Text(
-                      'Great! You\'re in! 🎉',
-                      style: TextStyle(
-                        fontWeight: FontWeight.w800,
-                        fontSize: k24Double.sp,
-                        color: Color(0xFF1976D2),
-                      ),
-                      textAlign: TextAlign.center,
+                  // Success Message
+                  Text(
+                    LocaleKeys.pages_familyAuth_childPinSetup_heading.tr,
+                    style: TextStyle(
+                      fontWeight: FontWeight.w800,
+                      fontSize: k24Double.sp,
+                      color: Color(0xFF1976D2),
                     ),
                   ),
                   SizedBox(height: k2Double.hp),
 
                   // Instructions
                   Text(
-                    'Now let\'s create a secure PIN that only you know. You\'ll use this PIN to log in every time.',
+                    LocaleKeys.pages_familyAuth_childPinSetup_instructions.tr,
                     style: TextStyle(
                       fontWeight: FontWeight.w500,
                       fontSize: k16Double.sp,
                       color: Color(0xFF666666),
                       height: 1.5,
                     ),
-                    textAlign: TextAlign.center,
                   ),
                   SizedBox(height: k4Double.hp),
 
                   // PIN Field
                   Text(
-                    'Create Your PIN',
+                    LocaleKeys.pages_familyAuth_childPinSetup_pinLabel.tr,
                     style: TextStyle(
                       fontWeight: FontWeight.w600,
                       fontSize: k14Double.sp,
@@ -75,20 +73,18 @@ class ChildPinSetupView extends GetView<FamilyAuthController> {
 
                   CustomTextFormField(
                     textController: controller.childPin,
-                    labelText: 'Enter 4-6 digit PIN',
-                    hintText: '••••',
-                    textInputAction: TextInputAction.next,
-                    keyboardType: TextInputType.number,
+                    labelText: LocaleKeys
+                        .pages_familyAuth_childPinSetup_pinPlaceholder.tr,
                     isPassword: true,
-                    customValidators: [
-                      PinValidator.validatePin,
-                    ],
+                    keyboardType: TextInputType.number,
+                    validator: PinValidator.validatePin,
                   ),
                   SizedBox(height: k2Double.hp),
 
                   // Confirm PIN Field
                   Text(
-                    'Confirm Your PIN',
+                    LocaleKeys
+                        .pages_familyAuth_childPinSetup_confirmPinLabel.tr,
                     style: TextStyle(
                       fontWeight: FontWeight.w600,
                       fontSize: k14Double.sp,
@@ -99,28 +95,34 @@ class ChildPinSetupView extends GetView<FamilyAuthController> {
 
                   CustomTextFormField(
                     textController: controller.childPinConfirmation,
-                    labelText: 'Re-enter your PIN',
-                    hintText: '••••',
-                    textInputAction: TextInputAction.done,
-                    keyboardType: TextInputType.number,
+                    labelText: LocaleKeys
+                        .pages_familyAuth_childPinSetup_confirmPinPlaceholder
+                        .tr,
                     isPassword: true,
-                    customValidators: [
-                      (value) => PinValidator.validatePinConfirmation(
-                            controller.childPin.text,
-                            value,
-                          ),
-                    ],
+                    keyboardType: TextInputType.number,
+                    validator: (value) {
+                      // First validate as PIN
+                      final pinValidation = PinValidator.validatePin(value);
+                      if (pinValidation != null) return pinValidation;
+
+                      // Then check if matches
+                      if (value != controller.childPin.text) {
+                        return LocaleKeys
+                            .pages_familyAuth_profileCompletion_passwordMismatch
+                            .tr;
+                      }
+                      return null;
+                    },
                   ),
                   SizedBox(height: k4Double.hp),
 
                   // Security Tips
                   Container(
-                    padding: EdgeInsets.all(k4Double.wp),
+                    padding: EdgeInsets.all(k2Double.hp),
                     decoration: BoxDecoration(
-                      color: Color(0xFFF3E5F5),
-                      borderRadius: BorderRadius.circular(12),
-                      border:
-                          Border.all(color: Color(0xFF9C27B0).withOpacity(0.3)),
+                      color: Color(0xFFF3F8FF),
+                      borderRadius: BorderRadius.circular(k1Double.hp),
+                      border: Border.all(color: Color(0xFFE3F2FD)),
                     ),
                     child: Column(
                       crossAxisAlignment: CrossAxisAlignment.start,
@@ -129,27 +131,29 @@ class ChildPinSetupView extends GetView<FamilyAuthController> {
                           children: [
                             Icon(
                               Icons.security,
-                              color: Color(0xFF9C27B0),
-                              size: k5Double.wp,
+                              color: Color(0xFF1976D2),
+                              size: k5Double.hp,
                             ),
-                            SizedBox(width: k2Double.wp),
+                            SizedBox(width: k1_5Double.hp),
                             Text(
-                              'PIN Security Tips',
+                              LocaleKeys
+                                  .pages_familyAuth_childPinSetup_securityTipsLabel
+                                  .tr,
                               style: TextStyle(
                                 fontSize: k14Double.sp,
                                 fontWeight: FontWeight.w600,
-                                color: Color(0xFF9C27B0),
+                                color: Color(0xFF1976D2),
                               ),
                             ),
                           ],
                         ),
-                        SizedBox(height: k2Double.hp),
+                        SizedBox(height: k1Double.hp),
                         Text(
-                          PinValidator.getValidationHint(),
+                          '• Choose a PIN that\'s easy for you to remember\n• Don\'t use obvious numbers like 1234 or your birthday\n• Keep your PIN secret - don\'t share it with anyone!',
                           style: TextStyle(
                             fontSize: k12Double.sp,
-                            color: Color(0xFF9C27B0),
-                            height: 1.3,
+                            color: Color(0xFF1976D2),
+                            height: 1.4,
                           ),
                         ),
                       ],
@@ -157,11 +161,13 @@ class ChildPinSetupView extends GetView<FamilyAuthController> {
                   ),
 
                   const Spacer(),
+                  SizedBox(height: k4Double.hp),
 
                   // Create PIN Button
                   CustomButton.primary(
-                    text: 'Create PIN & Start Learning',
-                    onPressed: () => _handleSetupPin(context),
+                    text: LocaleKeys
+                        .pages_familyAuth_childPinSetup_createButton.tr,
+                    onPressed: () => controller.setChildPin(context),
                   ),
                 ],
               ),
@@ -170,11 +176,5 @@ class ChildPinSetupView extends GetView<FamilyAuthController> {
         ),
       ),
     );
-  }
-
-  void _handleSetupPin(BuildContext context) {
-    if (controller.childPinSetupFormKey.currentState?.validate() ?? false) {
-      controller.setChildPin(context);
-    }
   }
 }

@@ -166,6 +166,132 @@ class LocaleKeys {
   static const pages_childPinLogin_pinHelpReminder =
       'pages_childPinLogin_pinHelpReminder';
   static const pages_childPinLogin_gotIt = 'pages_childPinLogin_gotIt';
+  static const pages_familyAuth_parentPreRegistration_title =
+      'pages_familyAuth_parentPreRegistration_title';
+  static const pages_familyAuth_parentPreRegistration_welcomeMessage =
+      'pages_familyAuth_parentPreRegistration_welcomeMessage';
+  static const pages_familyAuth_parentPreRegistration_instructions =
+      'pages_familyAuth_parentPreRegistration_instructions';
+  static const pages_familyAuth_parentPreRegistration_emailLabel =
+      'pages_familyAuth_parentPreRegistration_emailLabel';
+  static const pages_familyAuth_parentPreRegistration_emailPlaceholder =
+      'pages_familyAuth_parentPreRegistration_emailPlaceholder';
+  static const pages_familyAuth_parentPreRegistration_emailRequired =
+      'pages_familyAuth_parentPreRegistration_emailRequired';
+  static const pages_familyAuth_parentPreRegistration_invalidEmail =
+      'pages_familyAuth_parentPreRegistration_invalidEmail';
+  static const pages_familyAuth_parentPreRegistration_verificationNotice =
+      'pages_familyAuth_parentPreRegistration_verificationNotice';
+  static const pages_familyAuth_parentPreRegistration_sendVerificationCode =
+      'pages_familyAuth_parentPreRegistration_sendVerificationCode';
+  static const pages_familyAuth_parentPreRegistration_alreadyHaveAccount =
+      'pages_familyAuth_parentPreRegistration_alreadyHaveAccount';
+  static const pages_familyAuth_parentPreRegistration_signIn =
+      'pages_familyAuth_parentPreRegistration_signIn';
+  static const pages_familyAuth_childJoin_title =
+      'pages_familyAuth_childJoin_title';
+  static const pages_familyAuth_childJoin_welcomeMessage =
+      'pages_familyAuth_childJoin_welcomeMessage';
+  static const pages_familyAuth_childJoin_instructions =
+      'pages_familyAuth_childJoin_instructions';
+  static const pages_familyAuth_childJoin_joinCodeLabel =
+      'pages_familyAuth_childJoin_joinCodeLabel';
+  static const pages_familyAuth_childJoin_joinCodePlaceholder =
+      'pages_familyAuth_childJoin_joinCodePlaceholder';
+  static const pages_familyAuth_childJoin_joinCodeInputLabel =
+      'pages_familyAuth_childJoin_joinCodeInputLabel';
+  static const pages_familyAuth_childJoin_joinCodeRequired =
+      'pages_familyAuth_childJoin_joinCodeRequired';
+  static const pages_familyAuth_childJoin_joinCodeLength =
+      'pages_familyAuth_childJoin_joinCodeLength';
+  static const pages_familyAuth_childJoin_joinCodeNumeric =
+      'pages_familyAuth_childJoin_joinCodeNumeric';
+  static const pages_familyAuth_childJoin_helpMessage =
+      'pages_familyAuth_childJoin_helpMessage';
+  static const pages_familyAuth_childJoin_joinButton =
+      'pages_familyAuth_childJoin_joinButton';
+  static const pages_familyAuth_childJoin_backButton =
+      'pages_familyAuth_childJoin_backButton';
+  static const pages_familyAuth_otpVerification_title =
+      'pages_familyAuth_otpVerification_title';
+  static const pages_familyAuth_otpVerification_heading =
+      'pages_familyAuth_otpVerification_heading';
+  static const pages_familyAuth_otpVerification_instructions =
+      'pages_familyAuth_otpVerification_instructions';
+  static const pages_familyAuth_otpVerification_codeLabel =
+      'pages_familyAuth_otpVerification_codeLabel';
+  static const pages_familyAuth_otpVerification_codePlaceholder =
+      'pages_familyAuth_otpVerification_codePlaceholder';
+  static const pages_familyAuth_otpVerification_codeRequired =
+      'pages_familyAuth_otpVerification_codeRequired';
+  static const pages_familyAuth_otpVerification_codeNumeric =
+      'pages_familyAuth_otpVerification_codeNumeric';
+  static const pages_familyAuth_otpVerification_codeLength =
+      'pages_familyAuth_otpVerification_codeLength';
+  static const pages_familyAuth_otpVerification_verifyButton =
+      'pages_familyAuth_otpVerification_verifyButton';
+  static const pages_familyAuth_profileCompletion_title =
+      'pages_familyAuth_profileCompletion_title';
+  static const pages_familyAuth_profileCompletion_heading =
+      'pages_familyAuth_profileCompletion_heading';
+  static const pages_familyAuth_profileCompletion_instructions =
+      'pages_familyAuth_profileCompletion_instructions';
+  static const pages_familyAuth_profileCompletion_nameLabel =
+      'pages_familyAuth_profileCompletion_nameLabel';
+  static const pages_familyAuth_profileCompletion_namePlaceholder =
+      'pages_familyAuth_profileCompletion_namePlaceholder';
+  static const pages_familyAuth_profileCompletion_nameRequired =
+      'pages_familyAuth_profileCompletion_nameRequired';
+  static const pages_familyAuth_profileCompletion_nameMinLength =
+      'pages_familyAuth_profileCompletion_nameMinLength';
+  static const pages_familyAuth_profileCompletion_relationshipLabel =
+      'pages_familyAuth_profileCompletion_relationshipLabel';
+  static const pages_familyAuth_profileCompletion_relationshipPlaceholder =
+      'pages_familyAuth_profileCompletion_relationshipPlaceholder';
+  static const pages_familyAuth_profileCompletion_relationshipRequired =
+      'pages_familyAuth_profileCompletion_relationshipRequired';
+  static const pages_familyAuth_profileCompletion_deviceUsageLabel =
+      'pages_familyAuth_profileCompletion_deviceUsageLabel';
+  static const pages_familyAuth_profileCompletion_passwordLabel =
+      'pages_familyAuth_profileCompletion_passwordLabel';
+  static const pages_familyAuth_profileCompletion_passwordPlaceholder =
+      'pages_familyAuth_profileCompletion_passwordPlaceholder';
+  static const pages_familyAuth_profileCompletion_passwordRequired =
+      'pages_familyAuth_profileCompletion_passwordRequired';
+  static const pages_familyAuth_profileCompletion_passwordMinLength =
+      'pages_familyAuth_profileCompletion_passwordMinLength';
+  static const pages_familyAuth_profileCompletion_confirmPasswordLabel =
+      'pages_familyAuth_profileCompletion_confirmPasswordLabel';
+  static const pages_familyAuth_profileCompletion_confirmPasswordPlaceholder =
+      'pages_familyAuth_profileCompletion_confirmPasswordPlaceholder';
+  static const pages_familyAuth_profileCompletion_confirmPasswordRequired =
+      'pages_familyAuth_profileCompletion_confirmPasswordRequired';
+  static const pages_familyAuth_profileCompletion_passwordMismatch =
+      'pages_familyAuth_profileCompletion_passwordMismatch';
+  static const pages_familyAuth_profileCompletion_createAccountButton =
+      'pages_familyAuth_profileCompletion_createAccountButton';
+  static const pages_familyAuth_childPinSetup_title =
+      'pages_familyAuth_childPinSetup_title';
+  static const pages_familyAuth_childPinSetup_heading =
+      'pages_familyAuth_childPinSetup_heading';
+  static const pages_familyAuth_childPinSetup_instructions =
+      'pages_familyAuth_childPinSetup_instructions';
+  static const pages_familyAuth_childPinSetup_pinLabel =
+      'pages_familyAuth_childPinSetup_pinLabel';
+  static const pages_familyAuth_childPinSetup_pinPlaceholder =
+      'pages_familyAuth_childPinSetup_pinPlaceholder';
+  static const pages_familyAuth_childPinSetup_confirmPinLabel =
+      'pages_familyAuth_childPinSetup_confirmPinLabel';
+  static const pages_familyAuth_childPinSetup_confirmPinPlaceholder =
+      'pages_familyAuth_childPinSetup_confirmPinPlaceholder';
+  static const pages_familyAuth_childPinSetup_securityTipsLabel =
+      'pages_familyAuth_childPinSetup_securityTipsLabel';
+  static const pages_familyAuth_childPinSetup_createButton =
+      'pages_familyAuth_childPinSetup_createButton';
+  static const pages_familyAuth_childPinLogin_title =
+      'pages_familyAuth_childPinLogin_title';
+  static const pages_familyAuth_childPinLogin_switchProfileButton =
+      'pages_familyAuth_childPinLogin_switchProfileButton';
   static const pages_login_title = 'pages_login_title';
   static const pages_login_studentTitle = 'pages_login_studentTitle';
   static const pages_login_parentTitle = 'pages_login_parentTitle';
@@ -436,6 +562,82 @@ class Locales {
     'pages_childPinLogin_pinHelpStep3': '新しいPINを設定する',
     'pages_childPinLogin_pinHelpReminder': '注意：PINはあなただけが知っているものにしてください！',
     'pages_childPinLogin_gotIt': 'わかりました！',
+    'pages_familyAuth_parentPreRegistration_title': 'ファミリーアカウント作成',
+    'pages_familyAuth_parentPreRegistration_welcomeMessage': 'キオクナビファミリーへようこそ！',
+    'pages_familyAuth_parentPreRegistration_instructions':
+        'ファミリーアカウントを設定しましょう。まず、確認コードでメールアドレスを認証します。',
+    'pages_familyAuth_parentPreRegistration_emailLabel': 'メールアドレス',
+    'pages_familyAuth_parentPreRegistration_emailPlaceholder':
+        'メールアドレスを入力してください',
+    'pages_familyAuth_parentPreRegistration_emailRequired': 'メールアドレスは必須です',
+    'pages_familyAuth_parentPreRegistration_invalidEmail':
+        '有効なメールアドレスを入力してください',
+    'pages_familyAuth_parentPreRegistration_verificationNotice':
+        'このメールアドレスに6桁の確認コードを送信します。アクセスできることを確認してください。',
+    'pages_familyAuth_parentPreRegistration_sendVerificationCode': '確認コードを送信',
+    'pages_familyAuth_parentPreRegistration_alreadyHaveAccount':
+        'すでにアカウントをお持ちですか？ ',
+    'pages_familyAuth_parentPreRegistration_signIn': 'サインイン',
+    'pages_familyAuth_childJoin_title': 'ファミリーに参加',
+    'pages_familyAuth_childJoin_welcomeMessage': 'キオクナビへようこそ！',
+    'pages_familyAuth_childJoin_instructions':
+        '保護者の方から共有された6桁の参加コードを入力して、ファミリーアカウントに参加しましょう。',
+    'pages_familyAuth_childJoin_joinCodeLabel': 'ファミリー参加コード',
+    'pages_familyAuth_childJoin_joinCodePlaceholder': '123456',
+    'pages_familyAuth_childJoin_joinCodeInputLabel': '6桁のコードを入力',
+    'pages_familyAuth_childJoin_joinCodeRequired': '参加コードを入力してください',
+    'pages_familyAuth_childJoin_joinCodeLength': '参加コードは6桁である必要があります',
+    'pages_familyAuth_childJoin_joinCodeNumeric': '参加コードは数字のみである必要があります',
+    'pages_familyAuth_childJoin_helpMessage':
+        '保護者の方にファミリーダッシュボードから参加コードを生成してもらってください。',
+    'pages_familyAuth_childJoin_joinButton': 'ファミリーに参加',
+    'pages_familyAuth_childJoin_backButton': 'ウェルカム画面に戻る',
+    'pages_familyAuth_otpVerification_title': 'メール認証',
+    'pages_familyAuth_otpVerification_heading': 'メールをご確認ください',
+    'pages_familyAuth_otpVerification_instructions': 'メールアドレスに6桁の認証コードを送信しました',
+    'pages_familyAuth_otpVerification_codeLabel': '認証コード',
+    'pages_familyAuth_otpVerification_codePlaceholder': '6桁のコードを入力',
+    'pages_familyAuth_otpVerification_codeRequired': '認証コードは必須です',
+    'pages_familyAuth_otpVerification_codeNumeric': '数字のみを入力してください',
+    'pages_familyAuth_otpVerification_codeLength': 'コードは6桁である必要があります',
+    'pages_familyAuth_otpVerification_verifyButton': 'メールを認証',
+    'pages_familyAuth_profileCompletion_title': 'プロフィール完成',
+    'pages_familyAuth_profileCompletion_heading': 'もう少しです！',
+    'pages_familyAuth_profileCompletion_instructions':
+        'プロフィールを完成させて、ファミリーアカウントを作成し、学習の旅を始めましょう。',
+    'pages_familyAuth_profileCompletion_nameLabel': 'フルネーム',
+    'pages_familyAuth_profileCompletion_namePlaceholder': 'フルネームを入力してください',
+    'pages_familyAuth_profileCompletion_nameRequired': 'フルネームは必須です',
+    'pages_familyAuth_profileCompletion_nameMinLength': '名前は2文字以上である必要があります',
+    'pages_familyAuth_profileCompletion_relationshipLabel': '続柄',
+    'pages_familyAuth_profileCompletion_relationshipPlaceholder': '続柄を選択してください',
+    'pages_familyAuth_profileCompletion_relationshipRequired': '続柄を選択してください',
+    'pages_familyAuth_profileCompletion_deviceUsageLabel': 'デバイスの使用方法',
+    'pages_familyAuth_profileCompletion_passwordLabel': 'パスワード',
+    'pages_familyAuth_profileCompletion_passwordPlaceholder':
+        '安全なパスワードを作成してください',
+    'pages_familyAuth_profileCompletion_passwordRequired': 'パスワードは必須です',
+    'pages_familyAuth_profileCompletion_passwordMinLength':
+        'パスワードは8文字以上である必要があります',
+    'pages_familyAuth_profileCompletion_confirmPasswordLabel': 'パスワード確認',
+    'pages_familyAuth_profileCompletion_confirmPasswordPlaceholder':
+        'パスワードを確認してください',
+    'pages_familyAuth_profileCompletion_confirmPasswordRequired':
+        'パスワード確認は必須です',
+    'pages_familyAuth_profileCompletion_passwordMismatch': 'パスワードが一致しません',
+    'pages_familyAuth_profileCompletion_createAccountButton': 'ファミリーアカウントを作成',
+    'pages_familyAuth_childPinSetup_title': 'PINを作成',
+    'pages_familyAuth_childPinSetup_heading': '素晴らしい！参加完了です！🎉',
+    'pages_familyAuth_childPinSetup_instructions':
+        'あなただけが知っている安全なPINを作成しましょう。このPINを使って毎回ログインします。',
+    'pages_familyAuth_childPinSetup_pinLabel': 'PINを作成',
+    'pages_familyAuth_childPinSetup_pinPlaceholder': '4-6桁のPINを入力',
+    'pages_familyAuth_childPinSetup_confirmPinLabel': 'PINを確認',
+    'pages_familyAuth_childPinSetup_confirmPinPlaceholder': 'PINを再入力してください',
+    'pages_familyAuth_childPinSetup_securityTipsLabel': 'PINセキュリティのヒント',
+    'pages_familyAuth_childPinSetup_createButton': 'PIN作成 & 学習開始',
+    'pages_familyAuth_childPinLogin_title': 'PINを入力',
+    'pages_familyAuth_childPinLogin_switchProfileButton': 'プロフィール切替',
     'pages_login_title': 'ログイン',
     'pages_login_studentTitle': '生徒ログイン',
     'pages_login_parentTitle': '保護者ログイン',
@@ -664,6 +866,96 @@ class Locales {
     'pages_childPinLogin_pinHelpReminder':
         'Remember: Your PIN should be something only you know!',
     'pages_childPinLogin_gotIt': 'Got it!',
+    'pages_familyAuth_parentPreRegistration_title': 'Create Family Account',
+    'pages_familyAuth_parentPreRegistration_welcomeMessage':
+        'Welcome to KiokuNavi Family!',
+    'pages_familyAuth_parentPreRegistration_instructions':
+        'Let\'s set up your family account. First, we\'ll verify your email address with a confirmation code.',
+    'pages_familyAuth_parentPreRegistration_emailLabel': 'Email Address',
+    'pages_familyAuth_parentPreRegistration_emailPlaceholder':
+        'Enter your email address',
+    'pages_familyAuth_parentPreRegistration_emailRequired': 'Email is required',
+    'pages_familyAuth_parentPreRegistration_invalidEmail':
+        'Please enter a valid email',
+    'pages_familyAuth_parentPreRegistration_verificationNotice':
+        'We\'ll send a 6-digit verification code to this email. Make sure you have access to it.',
+    'pages_familyAuth_parentPreRegistration_sendVerificationCode':
+        'Send Verification Code',
+    'pages_familyAuth_parentPreRegistration_alreadyHaveAccount':
+        'Already have an account? ',
+    'pages_familyAuth_parentPreRegistration_signIn': 'Sign In',
+    'pages_familyAuth_childJoin_title': 'Join Family',
+    'pages_familyAuth_childJoin_welcomeMessage': 'Welcome to KiokuNavi!',
+    'pages_familyAuth_childJoin_instructions':
+        'Enter the 6-digit join code your parent shared with you to join your family account.',
+    'pages_familyAuth_childJoin_joinCodeLabel': 'Family Join Code',
+    'pages_familyAuth_childJoin_joinCodePlaceholder': '123456',
+    'pages_familyAuth_childJoin_joinCodeInputLabel': 'Enter 6-digit code',
+    'pages_familyAuth_childJoin_joinCodeRequired': 'Please enter the join code',
+    'pages_familyAuth_childJoin_joinCodeLength': 'Join code must be 6 digits',
+    'pages_familyAuth_childJoin_joinCodeNumeric':
+        'Join code must contain only numbers',
+    'pages_familyAuth_childJoin_helpMessage':
+        'Ask your parent to generate a join code from their Family Dashboard.',
+    'pages_familyAuth_childJoin_joinButton': 'Join Family',
+    'pages_familyAuth_childJoin_backButton': 'Back to Welcome',
+    'pages_familyAuth_otpVerification_title': 'Verify Email',
+    'pages_familyAuth_otpVerification_heading': 'Check Your Email',
+    'pages_familyAuth_otpVerification_instructions':
+        'We sent a 6-digit verification code to your email',
+    'pages_familyAuth_otpVerification_codeLabel': 'Verification Code',
+    'pages_familyAuth_otpVerification_codePlaceholder': 'Enter 6-digit code',
+    'pages_familyAuth_otpVerification_codeRequired':
+        'Verification code is required',
+    'pages_familyAuth_otpVerification_codeNumeric': 'Please enter numbers only',
+    'pages_familyAuth_otpVerification_codeLength': 'Code must be 6 digits',
+    'pages_familyAuth_otpVerification_verifyButton': 'Verify Email',
+    'pages_familyAuth_profileCompletion_title': 'Complete Profile',
+    'pages_familyAuth_profileCompletion_heading': 'Almost Done!',
+    'pages_familyAuth_profileCompletion_instructions':
+        'Complete your profile to create your family account and start your learning journey.',
+    'pages_familyAuth_profileCompletion_nameLabel': 'Full Name',
+    'pages_familyAuth_profileCompletion_namePlaceholder':
+        'Enter your full name',
+    'pages_familyAuth_profileCompletion_nameRequired': 'Full name is required',
+    'pages_familyAuth_profileCompletion_nameMinLength':
+        'Name must be at least 2 characters',
+    'pages_familyAuth_profileCompletion_relationshipLabel': 'Your Relationship',
+    'pages_familyAuth_profileCompletion_relationshipPlaceholder':
+        'Select your relationship',
+    'pages_familyAuth_profileCompletion_relationshipRequired':
+        'Please select your relationship',
+    'pages_familyAuth_profileCompletion_deviceUsageLabel': 'Device Usage',
+    'pages_familyAuth_profileCompletion_passwordLabel': 'Password',
+    'pages_familyAuth_profileCompletion_passwordPlaceholder':
+        'Create a secure password',
+    'pages_familyAuth_profileCompletion_passwordRequired':
+        'Password is required',
+    'pages_familyAuth_profileCompletion_passwordMinLength':
+        'Password must be at least 8 characters',
+    'pages_familyAuth_profileCompletion_confirmPasswordLabel':
+        'Confirm Password',
+    'pages_familyAuth_profileCompletion_confirmPasswordPlaceholder':
+        'Confirm your password',
+    'pages_familyAuth_profileCompletion_confirmPasswordRequired':
+        'Password confirmation is required',
+    'pages_familyAuth_profileCompletion_passwordMismatch':
+        'Passwords do not match',
+    'pages_familyAuth_profileCompletion_createAccountButton':
+        'Create Family Account',
+    'pages_familyAuth_childPinSetup_title': 'Create Your PIN',
+    'pages_familyAuth_childPinSetup_heading': 'Great! You\'re in! 🎉',
+    'pages_familyAuth_childPinSetup_instructions':
+        'Now let\'s create a secure PIN that only you know. You\'ll use this PIN to log in every time.',
+    'pages_familyAuth_childPinSetup_pinLabel': 'Create Your PIN',
+    'pages_familyAuth_childPinSetup_pinPlaceholder': 'Enter 4-6 digit PIN',
+    'pages_familyAuth_childPinSetup_confirmPinLabel': 'Confirm Your PIN',
+    'pages_familyAuth_childPinSetup_confirmPinPlaceholder': 'Re-enter your PIN',
+    'pages_familyAuth_childPinSetup_securityTipsLabel': 'PIN Security Tips',
+    'pages_familyAuth_childPinSetup_createButton':
+        'Create PIN & Start Learning',
+    'pages_familyAuth_childPinLogin_title': 'Enter Your PIN',
+    'pages_familyAuth_childPinLogin_switchProfileButton': 'Switch Profile',
     'pages_login_title': 'Login',
     'pages_login_studentTitle': 'Student Login',
     'pages_login_parentTitle': 'Parent Login',

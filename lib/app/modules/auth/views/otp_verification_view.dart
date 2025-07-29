@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:form_builder_validators/form_builder_validators.dart';
 import 'package:get/get.dart';
 import 'package:kioku_navi/app/modules/auth/controllers/family_auth_controller.dart';
+import 'package:kioku_navi/generated/locales.g.dart';
 import 'package:kioku_navi/utils/extensions.dart';
 import 'package:kioku_navi/utils/sizes.dart';
 import 'package:kioku_navi/widgets/custom_button.dart';
@@ -22,7 +23,8 @@ class OtpVerificationView extends GetView<FamilyAuthController> {
         onBackPressed: () => Get.back(),
         centerTitle: true,
         color: Colors.white,
-        titleWidget: CustomTitleText(text: 'Verify Email'),
+        titleWidget: CustomTitleText(
+            text: LocaleKeys.pages_familyAuth_otpVerification_title.tr),
       ),
       body: SafeArea(
         child: IntrinsicHeightScrollView(
@@ -55,7 +57,7 @@ class OtpVerificationView extends GetView<FamilyAuthController> {
                   // Title
                   Center(
                     child: Text(
-                      'Check Your Email',
+                      LocaleKeys.pages_familyAuth_otpVerification_heading.tr,
                       style: TextStyle(
                         fontWeight: FontWeight.w800,
                         fontSize: k24Double.sp,
@@ -68,7 +70,8 @@ class OtpVerificationView extends GetView<FamilyAuthController> {
                   // Instructions
                   Center(
                     child: Text(
-                      'We sent a 6-digit verification code to your email',
+                      LocaleKeys
+                          .pages_familyAuth_otpVerification_instructions.tr,
                       textAlign: TextAlign.center,
                       style: TextStyle(
                         fontWeight: FontWeight.w500,
@@ -82,7 +85,7 @@ class OtpVerificationView extends GetView<FamilyAuthController> {
 
                   // OTP Field
                   Text(
-                    'Verification Code',
+                    LocaleKeys.pages_familyAuth_otpVerification_codeLabel.tr,
                     style: TextStyle(
                       fontWeight: FontWeight.w600,
                       fontSize: k14Double.sp,
@@ -90,28 +93,36 @@ class OtpVerificationView extends GetView<FamilyAuthController> {
                     ),
                   ),
                   SizedBox(height: k1Double.hp),
+
                   CustomTextFormField(
                     textController: controller.otp,
-                    hintText: 'Enter 6-digit code',
+                    hintText: LocaleKeys
+                        .pages_familyAuth_otpVerification_codePlaceholder.tr,
                     keyboardType: TextInputType.number,
+                    textInputAction: TextInputAction.done,
                     validator: FormBuilderValidators.compose([
                       FormBuilderValidators.required(
-                          errorText: 'Verification code is required'),
+                          errorText: LocaleKeys
+                              .pages_familyAuth_otpVerification_codeRequired
+                              .tr),
                       FormBuilderValidators.numeric(
-                          errorText: 'Please enter numbers only'),
+                          errorText: LocaleKeys
+                              .pages_familyAuth_otpVerification_codeNumeric.tr),
                       FormBuilderValidators.minLength(6,
-                          errorText: 'Code must be 6 digits'),
+                          errorText: LocaleKeys
+                              .pages_familyAuth_otpVerification_codeLength.tr),
                       FormBuilderValidators.maxLength(6,
-                          errorText: 'Code must be 6 digits'),
+                          errorText: LocaleKeys
+                              .pages_familyAuth_otpVerification_codeLength.tr),
                     ]),
                   ),
 
                   const Spacer(),
-                  SizedBox(height: k4Double.hp),
 
                   // Verify Button
                   CustomButton.primary(
-                    text: 'Verify Email',
+                    text: LocaleKeys
+                        .pages_familyAuth_otpVerification_verifyButton.tr,
                     onPressed: () => controller.verifyOtp(context),
                   ),
                 ],

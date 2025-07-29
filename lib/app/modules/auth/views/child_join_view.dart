@@ -23,7 +23,8 @@ class ChildJoinView extends GetView<FamilyAuthController> {
         onBackPressed: () => Get.back(),
         centerTitle: true,
         color: Colors.white,
-        titleWidget: CustomTitleText(text: 'Join Family'),
+        titleWidget: CustomTitleText(
+            text: LocaleKeys.pages_familyAuth_childJoin_title.tr),
       ),
       body: SafeArea(
         child: IntrinsicHeightScrollView(
@@ -37,7 +38,7 @@ class ChildJoinView extends GetView<FamilyAuthController> {
 
                   // Welcome Message
                   Text(
-                    'Welcome to KiokuNavi!',
+                    LocaleKeys.pages_familyAuth_childJoin_welcomeMessage.tr,
                     style: TextStyle(
                       fontWeight: FontWeight.w800,
                       fontSize: k24Double.sp,
@@ -48,7 +49,7 @@ class ChildJoinView extends GetView<FamilyAuthController> {
 
                   // Instructions
                   Text(
-                    'Enter the 6-digit join code your parent shared with you to join your family account.',
+                    LocaleKeys.pages_familyAuth_childJoin_instructions.tr,
                     style: TextStyle(
                       fontWeight: FontWeight.w500,
                       fontSize: k16Double.sp,
@@ -60,7 +61,7 @@ class ChildJoinView extends GetView<FamilyAuthController> {
 
                   // Join Code Field
                   Text(
-                    'Family Join Code',
+                    LocaleKeys.pages_familyAuth_childJoin_joinCodeLabel.tr,
                     style: TextStyle(
                       fontWeight: FontWeight.w600,
                       fontSize: k14Double.sp,
@@ -71,24 +72,30 @@ class ChildJoinView extends GetView<FamilyAuthController> {
 
                   CustomTextFormField(
                     textController: controller.joinCode,
-                    labelText: 'Enter 6-digit code',
-                    hintText: '123456',
+                    labelText: LocaleKeys
+                        .pages_familyAuth_childJoin_joinCodeInputLabel.tr,
+                    hintText: LocaleKeys
+                        .pages_familyAuth_childJoin_joinCodePlaceholder.tr,
                     textInputAction: TextInputAction.done,
                     keyboardType: TextInputType.number,
                     customValidators: [
                       FormBuilderValidators.required(
-                        errorText: 'Please enter the join code',
+                        errorText: LocaleKeys
+                            .pages_familyAuth_childJoin_joinCodeRequired.tr,
                       ),
                       FormBuilderValidators.minLength(
                         6,
-                        errorText: 'Join code must be 6 digits',
+                        errorText: LocaleKeys
+                            .pages_familyAuth_childJoin_joinCodeLength.tr,
                       ),
                       FormBuilderValidators.maxLength(
                         6,
-                        errorText: 'Join code must be 6 digits',
+                        errorText: LocaleKeys
+                            .pages_familyAuth_childJoin_joinCodeLength.tr,
                       ),
                       FormBuilderValidators.numeric(
-                        errorText: 'Join code must contain only numbers',
+                        errorText: LocaleKeys
+                            .pages_familyAuth_childJoin_joinCodeNumeric.tr,
                       ),
                     ],
                   ),
@@ -113,7 +120,8 @@ class ChildJoinView extends GetView<FamilyAuthController> {
                         SizedBox(width: k3Double.wp),
                         Expanded(
                           child: Text(
-                            'Ask your parent to generate a join code from their Family Dashboard.',
+                            LocaleKeys
+                                .pages_familyAuth_childJoin_helpMessage.tr,
                             style: TextStyle(
                               fontSize: k12Double.sp,
                               color: Color(0xFF1976D2),
@@ -129,14 +137,14 @@ class ChildJoinView extends GetView<FamilyAuthController> {
 
                   // Join Family Button
                   CustomButton.primary(
-                    text: 'Join Family',
+                    text: LocaleKeys.pages_familyAuth_childJoin_joinButton.tr,
                     onPressed: () => _handleJoinFamily(context),
                   ),
                   SizedBox(height: k2Double.hp),
 
                   // Back to Welcome Button
                   CustomButton.outline(
-                    text: 'Back to Welcome',
+                    text: LocaleKeys.pages_familyAuth_childJoin_backButton.tr,
                     onPressed: () => Get.back(),
                   ),
                 ],
