@@ -23,12 +23,14 @@ class ServiceBinding extends Bindings {
     Get.put<GetStorage>(GetStorage(), permanent: true);
 
     // Step 2: Connectivity Services
-    Get.lazyPut<ConnectivityService>(
-      () => ConnectivityServiceImpl(),
+    Get.put<ConnectivityService>(
+      ConnectivityServiceImpl(),
+      permanent: true,
     );
 
-    Get.lazyPut<ConnectivityManager>(
-      () => ConnectivityManager(Get.find<ConnectivityService>()),
+    Get.put<ConnectivityManager>(
+      ConnectivityManager(Get.find<ConnectivityService>()),
+      permanent: true,
     );
 
     // Step 4: Token Manager (no dependencies)
@@ -40,7 +42,10 @@ class ServiceBinding extends Bindings {
       final tokenManager = Get.find<TokenManager>();
 
       // Add auth interceptor immediately to avoid race conditions
-      apiClient.addInterceptor(AuthInterceptor(tokenManager: tokenManager));
+      apiClient.addInterceptor(AuthInterceptor(
+        tokenManager: tokenManager,
+        storage: Get.find<GetStorage>(),
+      ));
 
       return apiClient;
     }, fenix: true);

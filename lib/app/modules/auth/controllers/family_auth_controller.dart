@@ -95,7 +95,11 @@ class FamilyAuthController extends BaseController {
           title: 'Code Sent!',
           message: 'Please check your email for the verification code.',
         );
-        Get.toNamed(Routes.OTP_VERIFICATION);
+
+        // Defer navigation to avoid setState during build
+        Future.delayed(Duration.zero, () {
+          Get.toNamed(Routes.OTP_VERIFICATION);
+        });
       },
       onError: (error) {
         CustomSnackbar.showError(
@@ -129,7 +133,11 @@ class FamilyAuthController extends BaseController {
           title: 'Email Verified!',
           message: 'Now let\'s complete your profile.',
         );
-        Get.toNamed(Routes.PARENT_PROFILE_COMPLETION);
+
+        // Defer navigation to avoid setState during build
+        Future.delayed(Duration.zero, () {
+          Get.toNamed(Routes.PARENT_PROFILE_COMPLETION);
+        });
       },
       onError: (error) {
         CustomSnackbar.showError(
@@ -174,7 +182,11 @@ class FamilyAuthController extends BaseController {
           title: 'Welcome to KiokuNavi!',
           message: 'Your family account has been created successfully.',
         );
-        Get.toNamed(Routes.PARENT_DASHBOARD);
+
+        // Defer navigation to avoid setState during build
+        Future.delayed(Duration.zero, () {
+          Get.offAllNamed(Routes.PARENT_DASHBOARD);
+        });
       },
       onError: (error) {
         CustomSnackbar.showError(
@@ -209,7 +221,11 @@ class FamilyAuthController extends BaseController {
           title: 'Welcome Back!',
           message: 'You have been signed in successfully.',
         );
-        Get.toNamed(Routes.PARENT_DASHBOARD);
+
+        // Defer navigation to avoid setState during build
+        Future.delayed(Duration.zero, () {
+          Get.offAllNamed(Routes.PARENT_DASHBOARD);
+        });
       },
       onError: (error) {
         CustomSnackbar.showError(
@@ -248,7 +264,11 @@ class FamilyAuthController extends BaseController {
           title: 'Family Found!',
           message: 'Now let\'s set up your secure PIN.',
         );
-        Get.toNamed(Routes.CHILD_PIN_SETUP);
+
+        // Defer navigation to avoid setState during build
+        Future.delayed(Duration.zero, () {
+          Get.toNamed(Routes.CHILD_PIN_SETUP);
+        });
       },
       onError: (error) {
         CustomSnackbar.showError(
@@ -297,7 +317,11 @@ class FamilyAuthController extends BaseController {
           title: 'PIN Created!',
           message: 'Your account is ready. Welcome to KiokuNavi!',
         );
-        Get.toNamed(Routes.CHILD_HOME);
+
+        // Defer navigation to avoid setState during build
+        Future.delayed(Duration.zero, () {
+          Get.offAllNamed(Routes.CHILD_HOME);
+        });
       },
       onError: (error) {
         CustomSnackbar.showError(
@@ -336,7 +360,11 @@ class FamilyAuthController extends BaseController {
           title: 'Welcome back, ${child.nickname}!',
           message: 'You have been signed in successfully.',
         );
-        Get.toNamed(Routes.CHILD_HOME);
+
+        // Defer navigation to avoid setState during build
+        Future.delayed(Duration.zero, () {
+          Get.offAllNamed(Routes.CHILD_HOME);
+        });
       },
       onError: (error) {
         CustomSnackbar.showError(
@@ -389,16 +417,22 @@ class FamilyAuthController extends BaseController {
       if (children.length == 1) {
         // Personal device mode - only one child, go directly to PIN login
         selectedChild.value = children.first;
-        Get.toNamed(Routes.CHILD_PIN_LOGIN);
+        Future.delayed(Duration.zero, () {
+          Get.toNamed(Routes.CHILD_PIN_LOGIN);
+        });
       } else {
         // Shared device mode - multiple children, show profile selection
         availableChildren.value = children;
-        Get.toNamed(Routes.CHILD_PROFILE_SELECTION);
+        Future.delayed(Duration.zero, () {
+          Get.toNamed(Routes.CHILD_PROFILE_SELECTION);
+        });
       }
     } catch (e) {
       // If API call fails, assume personal device and go to PIN login
       debugPrint('Error checking children: $e');
-      Get.toNamed(Routes.CHILD_PROFILE_SELECTION);
+      Future.delayed(Duration.zero, () {
+        Get.toNamed(Routes.CHILD_PROFILE_SELECTION);
+      });
     }
   }
 

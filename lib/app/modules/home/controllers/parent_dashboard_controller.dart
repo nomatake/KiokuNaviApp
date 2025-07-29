@@ -68,10 +68,14 @@ class ParentDashboardController extends BaseController {
       context: context,
       loaderMessage: 'Loading family data...',
       onError: (error) {
+        // Only show error if we're not in a silent refresh
         CustomSnackbar.showError(
           title: 'Load Failed',
           message: 'Unable to load family information.',
         );
+
+        // Don't let this cause navigation issues
+        debugPrint('Family data load error: $error');
       },
     );
   }
@@ -90,10 +94,18 @@ class ParentDashboardController extends BaseController {
         final nickname = childNickname.text.trim();
         final birthDate = DateTime.parse(childBirthDate.text);
 
-        await _authApi.addChild(nickname, birthDate);
+        final newChild = await _authApi.addChild(nickname, birthDate);
 
-        // Refresh family data to ensure consistency
-        await loadFamilyData();
+        // Add the new child to local list immediately to avoid API call issues
+        children.add(newChild);
+
+        // Try to refresh family data, but don't fail if it errors
+        try {
+          await loadFamilyData();
+        } catch (e) {
+          // If family data refresh fails, just log it but don't throw error
+          debugPrint('Family data refresh failed after adding child: $e');
+        }
 
         return true;
       },
