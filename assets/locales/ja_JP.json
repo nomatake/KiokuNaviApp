@@ -100,7 +100,35 @@
   "pages": {
     "root": {
       "studentLogin": "生徒としてログイン",
-      "parentLogin": "保護者としてログイン"
+      "parentLogin": "保護者としてログイン",
+      "joinFamily": "ファミリーに参加（お子様）",
+      "childLogin": "お子様ログイン"
+    },
+    "childProfileSelection": {
+      "title": "プロフィールを選択",
+      "welcomeMessage": "今日は誰が学習しますか？",
+      "instruction": "学習を続けるためにプロフィールを選択してください。",
+      "joinNewFamily": "新しいファミリーに参加",
+      "noProfilesFound": "プロフィールが見つかりません",
+      "noProfilesMessage": "このデバイスにはまだお子様のプロフィールがありません。\nまずファミリーに参加してください。"
+    },
+    "childPinLogin": {
+      "welcomeBack": "おかえりなさい、{nickname}さん！",
+      "instruction": "学習を続けるにはPINを入力してください。",
+      "pinLabel": "PINを入力",
+      "pinPlaceholder": "••••",
+      "pinRequired": "PINを入力してください",
+      "pinMinLength": "PINは4桁以上である必要があります",
+      "startLearning": "学習を始める",
+      "switchProfile": "プロフィール切替",
+      "forgotPin": "PINを忘れましたか？保護者の方に相談してください",
+      "pinHelpTitle": "PINヘルプ",
+      "pinHelpHeader": "PINを忘れた場合：",
+      "pinHelpStep1": "保護者の方にリセットを手伝ってもらう",
+      "pinHelpStep2": "新しい参加コードを作成してもらう",
+      "pinHelpStep3": "新しいPINを設定する",
+      "pinHelpReminder": "注意：PINはあなただけが知っているものにしてください！",
+      "gotIt": "わかりました！"
     },
     "login": {
       "title": "ログイン",

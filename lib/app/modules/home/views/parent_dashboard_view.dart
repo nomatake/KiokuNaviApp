@@ -301,11 +301,13 @@ class ParentDashboardView extends GetView<ParentDashboardController> {
                       Icon(Icons.check_circle,
                           color: Colors.green[600], size: k4Double.wp),
                       SizedBox(width: k2Double.wp),
-                      Text(
-                        'Child is active and can access the app',
-                        style: TextStyle(
-                          color: Colors.green[700],
-                          fontSize: k12Double.sp,
+                      Flexible(
+                        child: Text(
+                          'Child is active and can access the app',
+                          style: TextStyle(
+                            color: Colors.green[700],
+                            fontSize: k12Double.sp,
+                          ),
                         ),
                       ),
                     ],

@@ -11,6 +11,7 @@ import 'package:kioku_navi/widgets/custom_title_text.dart';
 import 'package:kioku_navi/widgets/intrinsic_height_scroll_view.dart';
 import 'package:kioku_navi/widgets/padded_wrapper.dart';
 import 'package:kioku_navi/widgets/custom_appbar.dart';
+import 'package:kioku_navi/generated/locales.g.dart';
 
 class ChildPinLoginView extends GetView<FamilyAuthController> {
   const ChildPinLoginView({super.key});
@@ -74,7 +75,8 @@ class ChildPinLoginView extends GetView<FamilyAuthController> {
 
                           // Welcome Message
                           Text(
-                            'Welcome back, ${child.nickname}!',
+                            LocaleKeys.pages_childPinLogin_welcomeBack
+                                .trParams({'nickname': child.nickname}),
                             style: TextStyle(
                               fontWeight: FontWeight.w800,
                               fontSize: k24Double.sp,
@@ -90,7 +92,7 @@ class ChildPinLoginView extends GetView<FamilyAuthController> {
 
                   // Instructions
                   Text(
-                    'Enter your PIN to continue learning.',
+                    LocaleKeys.pages_childPinLogin_instruction.tr,
                     style: TextStyle(
                       fontWeight: FontWeight.w500,
                       fontSize: k16Double.sp,
@@ -107,18 +109,21 @@ class ChildPinLoginView extends GetView<FamilyAuthController> {
                       width: k60Double.wp,
                       child: CustomTextFormField(
                         textController: controller.childPin,
-                        labelText: 'Enter your PIN',
-                        hintText: '••••',
+                        labelText: LocaleKeys.pages_childPinLogin_pinLabel.tr,
+                        hintText:
+                            LocaleKeys.pages_childPinLogin_pinPlaceholder.tr,
                         textInputAction: TextInputAction.done,
                         keyboardType: TextInputType.number,
                         isPassword: true,
                         customValidators: [
                           (value) {
                             if (value == null || value.isEmpty) {
-                              return 'Please enter your PIN';
+                              return LocaleKeys
+                                  .pages_childPinLogin_pinRequired.tr;
                             }
                             if (value.length < 4) {
-                              return 'PIN must be at least 4 digits';
+                              return LocaleKeys
+                                  .pages_childPinLogin_pinMinLength.tr;
                             }
                             return null;
                           },
@@ -130,7 +135,7 @@ class ChildPinLoginView extends GetView<FamilyAuthController> {
 
                   // Login Button
                   CustomButton.primary(
-                    text: 'Start Learning',
+                    text: LocaleKeys.pages_childPinLogin_startLearning.tr,
                     onPressed: () => _handlePinLogin(context),
                   ),
                   SizedBox(height: k2Double.hp),
@@ -179,7 +184,7 @@ class ChildPinLoginView extends GetView<FamilyAuthController> {
                     child: TextButton(
                       onPressed: () => _showPinHelp(context),
                       child: Text(
-                        'Forgot your PIN? Ask your parent for help',
+                        LocaleKeys.pages_childPinLogin_forgotPin.tr,
                         style: TextStyle(
                           fontSize: k12Double.sp,
                           color: Color(0xFF1976D2),
@@ -210,7 +215,7 @@ class ChildPinLoginView extends GetView<FamilyAuthController> {
     Get.dialog(
       AlertDialog(
         title: Text(
-          'PIN Help',
+          LocaleKeys.pages_childPinLogin_pinHelpTitle.tr,
           style: TextStyle(
             fontWeight: FontWeight.bold,
             color: Color(0xFF1976D2),
@@ -221,18 +226,18 @@ class ChildPinLoginView extends GetView<FamilyAuthController> {
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
             Text(
-              'If you forgot your PIN:',
+              LocaleKeys.pages_childPinLogin_pinHelpHeader.tr,
               style: TextStyle(fontWeight: FontWeight.w600),
             ),
             SizedBox(height: k1Double.hp),
-            Text('• Ask your parent to help you reset it'),
+            Text('• ${LocaleKeys.pages_childPinLogin_pinHelpStep1.tr}'),
             SizedBox(height: k0_5Double.hp),
-            Text('• They can create a new join code for you'),
+            Text('• ${LocaleKeys.pages_childPinLogin_pinHelpStep2.tr}'),
             SizedBox(height: k0_5Double.hp),
-            Text('• Then you can set up a new PIN'),
+            Text('• ${LocaleKeys.pages_childPinLogin_pinHelpStep3.tr}'),
             SizedBox(height: k2Double.hp),
             Text(
-              'Remember: Your PIN should be something only you know!',
+              LocaleKeys.pages_childPinLogin_pinHelpReminder.tr,
               style: TextStyle(
                 fontStyle: FontStyle.italic,
                 color: Colors.grey[600],
@@ -244,7 +249,7 @@ class ChildPinLoginView extends GetView<FamilyAuthController> {
           TextButton(
             onPressed: () => Get.back(),
             child: Text(
-              'Got it!',
+              LocaleKeys.pages_childPinLogin_gotIt.tr,
               style: TextStyle(color: Color(0xFF1976D2)),
             ),
           ),

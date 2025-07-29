@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:kioku_navi/app/modules/auth/controllers/family_auth_controller.dart';
 import 'package:kioku_navi/models/child_model.dart';
+import 'package:kioku_navi/generated/locales.g.dart';
 import 'package:kioku_navi/utils/extensions.dart';
 import 'package:kioku_navi/utils/sizes.dart';
 import 'package:kioku_navi/widgets/custom_button.dart';
@@ -21,7 +22,8 @@ class ChildProfileSelectionView extends GetView<FamilyAuthController> {
       appBar: CustomAppbar(
         centerTitle: true,
         color: Colors.white,
-        titleWidget: CustomTitleText(text: 'Select Your Profile'),
+        titleWidget: CustomTitleText(
+            text: LocaleKeys.pages_childProfileSelection_title.tr),
       ),
       body: SafeArea(
         child: IntrinsicHeightScrollView(
@@ -34,7 +36,7 @@ class ChildProfileSelectionView extends GetView<FamilyAuthController> {
                 // Welcome Message
                 Center(
                   child: Text(
-                    'Who\'s learning today?',
+                    LocaleKeys.pages_childProfileSelection_welcomeMessage.tr,
                     style: TextStyle(
                       fontWeight: FontWeight.w800,
                       fontSize: k24Double.sp,
@@ -47,7 +49,7 @@ class ChildProfileSelectionView extends GetView<FamilyAuthController> {
 
                 // Instructions
                 Text(
-                  'Select your profile to continue with your learning journey.',
+                  LocaleKeys.pages_childProfileSelection_instruction.tr,
                   style: TextStyle(
                     fontWeight: FontWeight.w500,
                     fontSize: k16Double.sp,
@@ -79,7 +81,7 @@ class ChildProfileSelectionView extends GetView<FamilyAuthController> {
 
                 // Join New Family Button
                 CustomButton.outline(
-                  text: 'Join a New Family',
+                  text: LocaleKeys.pages_childProfileSelection_joinNewFamily.tr,
                   onPressed: () => Get.back(),
                 ),
               ],
@@ -200,7 +202,7 @@ class ChildProfileSelectionView extends GetView<FamilyAuthController> {
           ),
           SizedBox(height: k2Double.hp),
           Text(
-            'No profiles found',
+            LocaleKeys.pages_childProfileSelection_noProfilesFound.tr,
             style: TextStyle(
               fontSize: k18Double.sp,
               fontWeight: FontWeight.w600,
@@ -209,7 +211,7 @@ class ChildProfileSelectionView extends GetView<FamilyAuthController> {
           ),
           SizedBox(height: k1Double.hp),
           Text(
-            'This device doesn\'t have any child profiles yet.\nPlease join a family first.',
+            LocaleKeys.pages_childProfileSelection_noProfilesMessage.tr,
             style: TextStyle(
               fontSize: k14Double.sp,
               color: Colors.grey[500],

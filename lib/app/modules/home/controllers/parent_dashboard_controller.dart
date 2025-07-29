@@ -90,12 +90,12 @@ class ParentDashboardController extends BaseController {
         final nickname = childNickname.text.trim();
         final birthDate = DateTime.parse(childBirthDate.text);
 
-        final newChild = await _authApi.addChild(nickname, birthDate);
+        await _authApi.addChild(nickname, birthDate);
 
-        // Add to local list
-        children.add(newChild);
+        // Refresh family data to ensure consistency
+        await loadFamilyData();
 
-        return newChild;
+        return true;
       },
       context: context,
       loaderMessage: 'Adding child...',

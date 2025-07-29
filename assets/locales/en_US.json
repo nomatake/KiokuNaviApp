@@ -100,7 +100,35 @@
   "pages": {
     "root": {
       "studentLogin": "Login as Student",
-      "parentLogin": "Login as Parent"
+      "parentLogin": "Login as Parent",
+      "joinFamily": "Join Family (Child)",
+      "childLogin": "Child Login"
+    },
+    "childProfileSelection": {
+      "title": "Select Your Profile",
+      "welcomeMessage": "Who's learning today?",
+      "instruction": "Select your profile to continue with your learning journey.",
+      "joinNewFamily": "Join a New Family",
+      "noProfilesFound": "No profiles found",
+      "noProfilesMessage": "This device doesn't have any child profiles yet.\nPlease join a family first."
+    },
+    "childPinLogin": {
+      "welcomeBack": "Welcome back, {nickname}!",
+      "instruction": "Enter your PIN to continue learning.",
+      "pinLabel": "Enter your PIN",
+      "pinPlaceholder": "••••",
+      "pinRequired": "Please enter your PIN",
+      "pinMinLength": "PIN must be at least 4 digits",
+      "startLearning": "Start Learning",
+      "switchProfile": "Switch Profile",
+      "forgotPin": "Forgot your PIN? Ask your parent for help",
+      "pinHelpTitle": "PIN Help",
+      "pinHelpHeader": "If you forgot your PIN:",
+      "pinHelpStep1": "Ask your parent to help you reset it",
+      "pinHelpStep2": "They can create a new join code for you",
+      "pinHelpStep3": "Then you can set up a new PIN",
+      "pinHelpReminder": "Remember: Your PIN should be something only you know!",
+      "gotIt": "Got it!"
     },
     "login": {
       "title": "Login",

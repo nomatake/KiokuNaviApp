@@ -123,6 +123,49 @@ class LocaleKeys {
   static const common_weekdays_sat = 'common_weekdays_sat';
   static const pages_root_studentLogin = 'pages_root_studentLogin';
   static const pages_root_parentLogin = 'pages_root_parentLogin';
+  static const pages_root_joinFamily = 'pages_root_joinFamily';
+  static const pages_root_childLogin = 'pages_root_childLogin';
+  static const pages_childProfileSelection_title =
+      'pages_childProfileSelection_title';
+  static const pages_childProfileSelection_welcomeMessage =
+      'pages_childProfileSelection_welcomeMessage';
+  static const pages_childProfileSelection_instruction =
+      'pages_childProfileSelection_instruction';
+  static const pages_childProfileSelection_joinNewFamily =
+      'pages_childProfileSelection_joinNewFamily';
+  static const pages_childProfileSelection_noProfilesFound =
+      'pages_childProfileSelection_noProfilesFound';
+  static const pages_childProfileSelection_noProfilesMessage =
+      'pages_childProfileSelection_noProfilesMessage';
+  static const pages_childPinLogin_welcomeBack =
+      'pages_childPinLogin_welcomeBack';
+  static const pages_childPinLogin_instruction =
+      'pages_childPinLogin_instruction';
+  static const pages_childPinLogin_pinLabel = 'pages_childPinLogin_pinLabel';
+  static const pages_childPinLogin_pinPlaceholder =
+      'pages_childPinLogin_pinPlaceholder';
+  static const pages_childPinLogin_pinRequired =
+      'pages_childPinLogin_pinRequired';
+  static const pages_childPinLogin_pinMinLength =
+      'pages_childPinLogin_pinMinLength';
+  static const pages_childPinLogin_startLearning =
+      'pages_childPinLogin_startLearning';
+  static const pages_childPinLogin_switchProfile =
+      'pages_childPinLogin_switchProfile';
+  static const pages_childPinLogin_forgotPin = 'pages_childPinLogin_forgotPin';
+  static const pages_childPinLogin_pinHelpTitle =
+      'pages_childPinLogin_pinHelpTitle';
+  static const pages_childPinLogin_pinHelpHeader =
+      'pages_childPinLogin_pinHelpHeader';
+  static const pages_childPinLogin_pinHelpStep1 =
+      'pages_childPinLogin_pinHelpStep1';
+  static const pages_childPinLogin_pinHelpStep2 =
+      'pages_childPinLogin_pinHelpStep2';
+  static const pages_childPinLogin_pinHelpStep3 =
+      'pages_childPinLogin_pinHelpStep3';
+  static const pages_childPinLogin_pinHelpReminder =
+      'pages_childPinLogin_pinHelpReminder';
+  static const pages_childPinLogin_gotIt = 'pages_childPinLogin_gotIt';
   static const pages_login_title = 'pages_login_title';
   static const pages_login_studentTitle = 'pages_login_studentTitle';
   static const pages_login_parentTitle = 'pages_login_parentTitle';
@@ -368,6 +411,31 @@ class Locales {
     'common_weekdays_sat': '土',
     'pages_root_studentLogin': '生徒としてログイン',
     'pages_root_parentLogin': '保護者としてログイン',
+    'pages_root_joinFamily': 'ファミリーに参加（お子様）',
+    'pages_root_childLogin': 'お子様ログイン',
+    'pages_childProfileSelection_title': 'プロフィールを選択',
+    'pages_childProfileSelection_welcomeMessage': '今日は誰が学習しますか？',
+    'pages_childProfileSelection_instruction': '学習を続けるためにプロフィールを選択してください。',
+    'pages_childProfileSelection_joinNewFamily': '新しいファミリーに参加',
+    'pages_childProfileSelection_noProfilesFound': 'プロフィールが見つかりません',
+    'pages_childProfileSelection_noProfilesMessage':
+        'このデバイスにはまだお子様のプロフィールがありません。\nまずファミリーに参加してください。',
+    'pages_childPinLogin_welcomeBack': 'おかえりなさい、{nickname}さん！',
+    'pages_childPinLogin_instruction': '学習を続けるにはPINを入力してください。',
+    'pages_childPinLogin_pinLabel': 'PINを入力',
+    'pages_childPinLogin_pinPlaceholder': '••••',
+    'pages_childPinLogin_pinRequired': 'PINを入力してください',
+    'pages_childPinLogin_pinMinLength': 'PINは4桁以上である必要があります',
+    'pages_childPinLogin_startLearning': '学習を始める',
+    'pages_childPinLogin_switchProfile': 'プロフィール切替',
+    'pages_childPinLogin_forgotPin': 'PINを忘れましたか？保護者の方に相談してください',
+    'pages_childPinLogin_pinHelpTitle': 'PINヘルプ',
+    'pages_childPinLogin_pinHelpHeader': 'PINを忘れた場合：',
+    'pages_childPinLogin_pinHelpStep1': '保護者の方にリセットを手伝ってもらう',
+    'pages_childPinLogin_pinHelpStep2': '新しい参加コードを作成してもらう',
+    'pages_childPinLogin_pinHelpStep3': '新しいPINを設定する',
+    'pages_childPinLogin_pinHelpReminder': '注意：PINはあなただけが知っているものにしてください！',
+    'pages_childPinLogin_gotIt': 'わかりました！',
     'pages_login_title': 'ログイン',
     'pages_login_studentTitle': '生徒ログイン',
     'pages_login_parentTitle': '保護者ログイン',
@@ -567,6 +635,35 @@ class Locales {
     'common_weekdays_sat': 'Sat',
     'pages_root_studentLogin': 'Login as Student',
     'pages_root_parentLogin': 'Login as Parent',
+    'pages_root_joinFamily': 'Join Family (Child)',
+    'pages_root_childLogin': 'Child Login',
+    'pages_childProfileSelection_title': 'Select Your Profile',
+    'pages_childProfileSelection_welcomeMessage': 'Who\'s learning today?',
+    'pages_childProfileSelection_instruction':
+        'Select your profile to continue with your learning journey.',
+    'pages_childProfileSelection_joinNewFamily': 'Join a New Family',
+    'pages_childProfileSelection_noProfilesFound': 'No profiles found',
+    'pages_childProfileSelection_noProfilesMessage':
+        'This device doesn\'t have any child profiles yet.\nPlease join a family first.',
+    'pages_childPinLogin_welcomeBack': 'Welcome back, {nickname}!',
+    'pages_childPinLogin_instruction': 'Enter your PIN to continue learning.',
+    'pages_childPinLogin_pinLabel': 'Enter your PIN',
+    'pages_childPinLogin_pinPlaceholder': '••••',
+    'pages_childPinLogin_pinRequired': 'Please enter your PIN',
+    'pages_childPinLogin_pinMinLength': 'PIN must be at least 4 digits',
+    'pages_childPinLogin_startLearning': 'Start Learning',
+    'pages_childPinLogin_switchProfile': 'Switch Profile',
+    'pages_childPinLogin_forgotPin':
+        'Forgot your PIN? Ask your parent for help',
+    'pages_childPinLogin_pinHelpTitle': 'PIN Help',
+    'pages_childPinLogin_pinHelpHeader': 'If you forgot your PIN:',
+    'pages_childPinLogin_pinHelpStep1': 'Ask your parent to help you reset it',
+    'pages_childPinLogin_pinHelpStep2':
+        'They can create a new join code for you',
+    'pages_childPinLogin_pinHelpStep3': 'Then you can set up a new PIN',
+    'pages_childPinLogin_pinHelpReminder':
+        'Remember: Your PIN should be something only you know!',
+    'pages_childPinLogin_gotIt': 'Got it!',
     'pages_login_title': 'Login',
     'pages_login_studentTitle': 'Student Login',
     'pages_login_parentTitle': 'Parent Login',

@@ -84,14 +84,14 @@ class RootScreenView extends GetView<AuthController> {
 
               // Join Family Button (for children)
               CustomButton.secondary(
-                text: 'Join Family (Child)',
+                text: LocaleKeys.pages_root_joinFamily.tr,
                 onPressed: () => Get.toNamed(Routes.CHILD_JOIN),
               ),
               SizedBox(height: k2Double.hp),
 
               // Child Login Button (for existing children)
               CustomButton.secondary(
-                text: 'Child Login',
+                text: LocaleKeys.pages_root_childLogin.tr,
                 onPressed: () {
                   // Use the FamilyAuthController for smart login routing
                   final familyController = Get.put(FamilyAuthController());
