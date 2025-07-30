@@ -4,8 +4,8 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:kioku_navi/app/modules/learning/controllers/learning_controller.dart';
 import 'package:kioku_navi/app/modules/learning/models/result_config.dart';
+import 'package:kioku_navi/app/modules/learning/widgets/animated_question_wrapper.dart';
 import 'package:kioku_navi/app/modules/learning/widgets/answer_result_widget.dart';
-import 'package:kioku_navi/app/modules/learning/widgets/question_template.dart';
 import 'package:kioku_navi/generated/assets.gen.dart';
 import 'package:kioku_navi/generated/locales.g.dart';
 import 'package:kioku_navi/utils/extensions.dart';
@@ -123,9 +123,9 @@ class QuestionView extends GetView<LearningController> {
                     SizedBox(height: k1Double.hp),
                     _buildQuestionHeader(),
                     SizedBox(height: k2Double.hp),
-                    _buildQuestionBubble(),
+                    _buildAnimatedQuestionBubble(),
                     SizedBox(height: k3Double.hp),
-                    const QuestionTemplate(),
+                    const DuolingoStyleQuestionWrapper(), // Change to SimpleAnimatedQuestionWrapper() if you get errors
                   ],
                 ),
               ),
@@ -192,6 +192,75 @@ class QuestionView extends GetView<LearningController> {
         ));
   }
 
+  Widget _buildAnimatedQuestionBubble() {
+    return Obx(() {
+      // Use question index as key to trigger animation when question text changes
+      final questionKey =
+          ValueKey('bubble_${controller.currentQuestionIndex.value}');
+
+      return Row(
+        crossAxisAlignment: CrossAxisAlignment.start,
+        children: [
+          Assets.images.logo.image(
+            height: k80Double.sp,
+            width: k80Double.sp,
+            fit: BoxFit.contain,
+          ),
+          Expanded(
+            child: AnimatedSwitcher(
+              duration: const Duration(milliseconds: 300),
+              switchInCurve: Curves.easeOutCubic,
+              switchOutCurve: Curves.easeInCubic,
+              transitionBuilder: (Widget child, Animation<double> animation) {
+                return SlideTransition(
+                  position: Tween<Offset>(
+                    begin: const Offset(
+                        0.3, 0.0), // Slide in from right (less dramatic)
+                    end: Offset.zero,
+                  ).animate(CurvedAnimation(
+                    parent: animation,
+                    curve: Curves.easeOutCubic,
+                  )),
+                  child: FadeTransition(
+                    opacity: animation,
+                    child: child,
+                  ),
+                );
+              },
+              child: Bubble(
+                key: questionKey,
+                style: BubbleStyle(
+                  margin: BubbleEdges.only(top: k10Double),
+                  elevation: k8Double,
+                  color: const Color(0xFFF7F7F7),
+                  borderColor: const Color(0xFFD8D8D8),
+                  borderWidth: k2_5Double,
+                  padding: BubbleEdges.all(k10Double.sp),
+                  alignment: Alignment.topLeft,
+                  nip: BubbleNip.leftBottom,
+                  nipWidth: k10Double.sp,
+                  nipHeight: k10Double.sp,
+                  nipOffset: k10Double.sp,
+                  radius: Radius.circular(k14Double),
+                ),
+                child: Text(
+                  controller.currentQuestionText,
+                  style: TextStyle(
+                    fontFamily: 'Hiragino Sans',
+                    fontWeight: FontWeight.w400,
+                    fontSize: k14Double.sp,
+                    color: const Color(0xFF212121),
+                  ),
+                  textAlign: TextAlign.left,
+                ),
+              ),
+            ),
+          ),
+        ],
+      );
+    });
+  }
+
   Widget _buildBottomArea() {
     return Obx(() {
       final hasSubmitted = controller.hasSubmitted.value;
@@ -201,118 +270,161 @@ class QuestionView extends GetView<LearningController> {
       // Get result configuration if submitted
       final config = hasSubmitted ? _getResultConfig(isCorrect) : null;
 
-      return Container(
-        width: double.infinity,
-        decoration: BoxDecoration(
-          color: hasSubmitted
-              ? (isCorrect ? config!.backgroundColor : const Color(0xFFFEE5E5))
-              : Colors.transparent,
-          borderRadius: hasSubmitted
-              ? BorderRadius.only(
-                  topLeft: Radius.circular(k15Double),
-                  topRight: Radius.circular(k15Double),
-                )
-              : null,
-        ),
-        child: Column(
-          children: [
-            // Result feedback row (only show when submitted)
-            if (hasSubmitted && isCorrect)
-              Padding(
-                padding: EdgeInsets.symmetric(
-                  horizontal: k6Double.wp,
-                  vertical: k2Double.hp,
+      return Column(
+        mainAxisSize: MainAxisSize.min,
+        children: [
+          // Pure slide-up animation from bottom - no fade
+          ClipRect(
+            child: AnimatedAlign(
+              duration: const Duration(milliseconds: 250),
+              curve: Curves.easeOutCubic,
+              alignment: Alignment.bottomCenter,
+              heightFactor: hasSubmitted ? 1.0 : 0.0, // Pure height animation only
+              child: Container(
+                width: double.infinity,
+                decoration: BoxDecoration(
+                  color: hasSubmitted
+                      ? (isCorrect ? config!.backgroundColor : const Color(0xFFFEE5E5))
+                      : Colors.transparent,
+                  borderRadius: BorderRadius.only(
+                    topLeft: Radius.circular(k15Double),
+                    topRight: Radius.circular(k15Double),
+                  ),
                 ),
-                child: Row(
+                child: Column(
                   children: [
-                    Icon(
-                      config!.iconData,
-                      color: config.iconColor,
-                      size: k20Double.sp,
-                    ),
-                    SizedBox(width: k2Double.wp),
-                    Text(
-                      config.text,
-                      style: TextStyle(
-                        fontFamily: 'Hiragino Sans',
-                        fontWeight: FontWeight.w700,
-                        fontSize: k14Double.sp,
-                        color: config.textColor,
+                    // Result feedback row (only show when submitted)
+                    if (hasSubmitted && isCorrect)
+                      Padding(
+                        padding: EdgeInsets.symmetric(
+                          horizontal: k6Double.wp,
+                          vertical: k2Double.hp,
+                        ),
+                        child: Row(
+                          children: [
+                            Icon(
+                              config!.iconData,
+                              color: config.iconColor,
+                              size: k20Double.sp,
+                            ),
+                            SizedBox(width: k2Double.wp),
+                            Text(
+                              config.text,
+                              style: TextStyle(
+                                fontFamily: 'Hiragino Sans',
+                                fontWeight: FontWeight.w700,
+                                fontSize: k14Double.sp,
+                                color: config.textColor,
+                              ),
+                            ),
+                          ],
+                        ),
                       ),
-                    ),
+                    // For incorrect answers, show the original header
+                    if (hasSubmitted && !isCorrect)
+                      Padding(
+                        padding: EdgeInsets.only(
+                          left: k6Double.wp,
+                          right: k6Double.wp,
+                          top: k2Double.hp,
+                          bottom: k2Double.hp,
+                        ),
+                        child: Row(
+                          children: [
+                            Icon(
+                              config!.iconData,
+                              color: config.iconColor,
+                              size: k20Double.sp,
+                            ),
+                            SizedBox(width: k2Double.wp),
+                            Text(
+                              config.text,
+                              style: TextStyle(
+                                fontFamily: 'Hiragino Sans',
+                                fontWeight: FontWeight.w700,
+                                fontSize: k14Double.sp,
+                                color: config.textColor,
+                              ),
+                            ),
+                          ],
+                        ),
+                      ),
+                    // Show correct answer for incorrect responses (only for question_answer type)
+                    if (hasSubmitted &&
+                        !controller.isCorrect.value &&
+                        controller.currentQuestion != null &&
+                        (controller.currentQuestion!.data.questionType
+                                .toLowerCase()
+                                .contains('question_answer') ||
+                            controller.currentQuestion!.data.questionType
+                                .toLowerCase()
+                                .contains('question-answer')))
+                      AnswerResultWidget(
+                        question: controller.currentQuestion!,
+                        isCorrect: controller.isCorrect.value,
+                      ),
                   ],
                 ),
               ),
-            // For incorrect answers, show the original header
-            if (hasSubmitted && !isCorrect)
-              Padding(
-                padding: EdgeInsets.only(
-                  left: k6Double.wp,
-                  right: k6Double.wp,
-                  top: k2Double.hp,
-                  bottom: k2Double.hp,
-                ),
-                child: Row(
-                  children: [
-                    Icon(
-                      config!.iconData,
-                      color: config.iconColor,
-                      size: k20Double.sp,
-                    ),
-                    SizedBox(width: k2Double.wp),
-                    Text(
-                      config.text,
-                      style: TextStyle(
-                        fontFamily: 'Hiragino Sans',
-                        fontWeight: FontWeight.w700,
-                        fontSize: k14Double.sp,
-                        color: config.textColor,
-                      ),
-                    ),
-                  ],
-                ),
-              ),
-            // Show correct answer for incorrect responses (only for question_answer type)
-            if (hasSubmitted &&
-                !controller.isCorrect.value &&
-                controller.currentQuestion != null &&
-                (controller.currentQuestion!.data.questionType
-                        .toLowerCase()
-                        .contains('question_answer') ||
-                    controller.currentQuestion!.data.questionType
-                        .toLowerCase()
-                        .contains('question-answer')))
-              AnswerResultWidget(
-                question: controller.currentQuestion!,
-                isCorrect: controller.isCorrect.value,
-              ),
-            // Button area
-            Padding(
+            ),
+          ),
+          
+          // Button area - with background to match the feedback section
+          Container(
+            width: double.infinity,
+            color: hasSubmitted ? config?.backgroundColor : Colors.transparent,
+            child: Padding(
               padding: EdgeInsets.only(
                 bottom: k4_5Double.hp,
-                left: hasSubmitted ? 0 : k6Double.wp,
-                right: hasSubmitted ? 0 : k6Double.wp,
+                left: k6Double.wp,
+                right: k6Double.wp,
               ),
-              child: hasSubmitted
-                  ? Padding(
-                      padding: EdgeInsets.symmetric(horizontal: k6Double.wp),
-                      child: config!.buttonBuilder(
-                        config.buttonText,
-                        config.onButtonPressed,
-                      ),
-                    )
-                  : hasSelected
-                      ? CustomButton.primary(
-                          text: LocaleKeys.common_buttons_viewAnswer.tr,
-                          onPressed: controller.submitAnswer,
-                        )
-                      : CustomButton.ghost(
-                          text: LocaleKeys.common_buttons_viewAnswer.tr,
-                          onPressed: null,
+              child: AnimatedSwitcher(
+                duration: const Duration(milliseconds: 200),
+                switchInCurve: Curves.easeOutCubic,
+                switchOutCurve: Curves.easeInCubic,
+                transitionBuilder: (Widget child, Animation<double> animation) {
+                  return SlideTransition(
+                    position: Tween<Offset>(
+                      begin: const Offset(0.0, 0.3), // Slight upward slide
+                      end: Offset.zero,
+                    ).animate(CurvedAnimation(
+                      parent: animation,
+                      curve: Curves.easeOutCubic,
+                    )),
+                    child: FadeTransition(
+                      opacity: animation,
+                      child: child,
+                    ),
+                  );
+                },
+                child: hasSubmitted
+                    ? Container(
+                        key: const ValueKey('submitted_button'),
+                        child: config!.buttonBuilder(
+                          config.buttonText,
+                          config.onButtonPressed,
                         ),
+                      )
+                    : hasSelected
+                        ? Container(
+                            key: const ValueKey('selected_button'),
+                            child: CustomButton.primary(
+                              text: LocaleKeys.common_buttons_viewAnswer.tr,
+                              onPressed: controller.submitAnswer,
+                            ),
+                          )
+                        : Container(
+                            key: const ValueKey('unselected_button'),
+                            child: CustomButton.ghost(
+                              text: LocaleKeys.common_buttons_viewAnswer.tr,
+                              onPressed: null,
+                            ),
+                          ),
+              ),
             ),
-          ],
-        ),
+          ),
+        ],
       );
     });
   }
