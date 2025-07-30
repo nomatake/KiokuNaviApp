@@ -1,8 +1,15 @@
 import 'package:get/get.dart';
 
 import '../modules/auth/bindings/auth_binding.dart';
+import '../modules/auth/views/child_join_view.dart';
+import '../modules/auth/views/child_pin_login_view.dart';
+import '../modules/auth/views/child_pin_setup_view.dart';
+import '../modules/auth/views/child_profile_selection_view.dart';
 import '../modules/auth/views/forgot_password_view.dart';
+import '../modules/auth/views/otp_verification_view.dart';
 import '../modules/auth/views/parent_login_view.dart';
+import '../modules/auth/views/parent_pre_registration_view.dart';
+import '../modules/auth/views/parent_profile_completion_view.dart';
 import '../modules/auth/views/register_view.dart';
 import '../modules/auth/views/root_screen_view.dart';
 import '../modules/auth/views/student_login_view.dart';
@@ -78,6 +85,50 @@ class AppPages {
     GetPageTransition.withAutoTransition(
       name: _Paths.FORGOT_PASSWORD,
       page: () => const ForgotPasswordView(),
+      binding: AuthBinding(),
+      forceContext: TransitionContext.auth,
+    ),
+
+    // Family Authentication Routes
+    GetPageTransition.withAutoTransition(
+      name: _Paths.PARENT_PRE_REGISTRATION,
+      page: () => const ParentPreRegistrationView(),
+      binding: AuthBinding(),
+      forceContext: TransitionContext.auth,
+    ),
+    GetPageTransition.withAutoTransition(
+      name: _Paths.OTP_VERIFICATION,
+      page: () => const OtpVerificationView(),
+      binding: AuthBinding(),
+      forceContext: TransitionContext.auth,
+    ),
+    GetPageTransition.withAutoTransition(
+      name: _Paths.PARENT_PROFILE_COMPLETION,
+      page: () => const ParentProfileCompletionView(),
+      binding: AuthBinding(),
+      forceContext: TransitionContext.auth,
+    ),
+    GetPageTransition.withAutoTransition(
+      name: _Paths.CHILD_JOIN,
+      page: () => const ChildJoinView(),
+      binding: AuthBinding(),
+      forceContext: TransitionContext.auth,
+    ),
+    GetPageTransition.withAutoTransition(
+      name: _Paths.CHILD_PIN_SETUP,
+      page: () => const ChildPinSetupView(),
+      binding: AuthBinding(),
+      forceContext: TransitionContext.auth,
+    ),
+    GetPageTransition.withAutoTransition(
+      name: _Paths.CHILD_PROFILE_SELECTION,
+      page: () => const ChildProfileSelectionView(),
+      binding: AuthBinding(),
+      forceContext: TransitionContext.auth,
+    ),
+    GetPageTransition.withAutoTransition(
+      name: _Paths.CHILD_PIN_LOGIN,
+      page: () => const ChildPinLoginView(),
       binding: AuthBinding(),
       forceContext: TransitionContext.auth,
     ),
