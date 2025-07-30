@@ -49,48 +49,6 @@ class OrderingTemplate extends GetView<LearningController> {
               ),
             ),
           ),
-
-          // Show correct answer after submission if incorrect
-          if (controller.hasSubmitted.value && !controller.isCorrect.value) ...[
-            SizedBox(height: k3Double.hp),
-            Padding(
-              padding: EdgeInsets.symmetric(horizontal: k3Double.wp),
-              child: Container(
-                padding: EdgeInsets.all(k2Double.wp),
-                decoration: BoxDecoration(
-                  color: Colors.green.withAlpha(26),
-                  borderRadius: BorderRadius.circular(k10Double),
-                  border: Border.all(
-                    color: Colors.green.withAlpha(51),
-                    width: 1,
-                  ),
-                ),
-                child: Column(
-                  crossAxisAlignment: CrossAxisAlignment.start,
-                  children: [
-                    Text(
-                      '正しい順番:',
-                      style: TextStyle(
-                        fontSize: k14Double.sp,
-                        color: Colors.green.shade700,
-                        fontWeight: FontWeight.w600,
-                      ),
-                    ),
-                    SizedBox(height: k1Double.hp),
-                    Text(
-                      _getCorrectOrderText(),
-                      style: TextStyle(
-                        fontSize: k14Double.sp,
-                        color: Colors.green.shade700,
-                      ),
-                    ),
-                  ],
-                ),
-              ),
-            ),
-          ],
-
-          SizedBox(height: k2Double.hp),
         ],
       );
     });
@@ -459,22 +417,5 @@ class OrderingTemplate extends GetView<LearningController> {
     final orderedCount = controller.orderingAnswers.length;
     controller.selectedOptionIndex.value =
         orderedCount == totalOptions ? 0 : -1;
-  }
-
-  String _getCorrectOrderText() {
-    final correctAnswer =
-        question.data.correctAnswer.selected as Map<String, dynamic>?;
-    if (correctAnswer == null) return '';
-
-    final correctOrder = correctAnswer['order'] as Map<String, dynamic>? ?? {};
-    final options = question.data.options;
-
-    // Sort by position key and get the option texts
-    final sortedEntries = correctOrder.entries.toList()
-      ..sort((a, b) => a.key.compareTo(b.key));
-
-    return sortedEntries
-        .map((e) => options[e.value]?.toString() ?? e.value)
-        .join(' → ');
   }
 }
