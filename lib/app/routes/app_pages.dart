@@ -26,6 +26,7 @@ import '../modules/tutorial/views/tutorial_six_view.dart';
 import '../modules/tutorial/views/tutorial_three_view.dart';
 import '../modules/tutorial/views/tutorial_two_view.dart';
 import '../modules/tutorial/views/tutorial_view.dart';
+import '../../utils/page_transitions.dart';
 
 part 'app_routes.dart';
 
@@ -35,110 +36,140 @@ class AppPages {
   static const INITIAL = Routes.ROOT_SCREEN;
 
   static final routes = [
-    GetPage(
+    // Home routes with zoom fade transitions
+    GetPageTransition.withAutoTransition(
       name: _Paths.HOME,
       page: () => const HomeView(),
       binding: HomeBinding(),
+      forceContext: TransitionContext.home,
     ),
-    GetPage(
-      name: _Paths.ROOT_SCREEN,
-      page: () => const RootScreenView(),
-      binding: AuthBinding(),
-    ),
-    GetPage(
-      name: _Paths.REGISTER,
-      page: () => const RegisterView(),
-      binding: AuthBinding(),
-    ),
-    GetPage(
-      name: _Paths.PARENT_LOGIN,
-      page: () => const ParentLoginView(),
-      binding: AuthBinding(),
-    ),
-    GetPage(
-      name: _Paths.STUDENT_LOGIN,
-      page: () => const StudentLoginView(),
-      binding: AuthBinding(),
-    ),
-    GetPage(
-      name: _Paths.FORGOT_PASSWORD,
-      page: () => const ForgotPasswordView(),
-      binding: AuthBinding(),
-    ),
-    GetPage(
-      name: _Paths.TUTORIAL,
-      page: () => const TutorialView(),
-      binding: TutorialBinding(),
-    ),
-    GetPage(
-      name: _Paths.TUTORIAL_TWO,
-      page: () => const TutorialTwoView(),
-      binding: TutorialBinding(),
-    ),
-    GetPage(
+    GetPageTransition.withAutoTransition(
       name: _Paths.CHILD_HOME,
       page: () => ChildHomeView(),
       binding: ChildHomeBinding(),
+      forceContext: TransitionContext.home,
     ),
-    GetPage(
+
+    // Auth routes with fade scale transitions
+    GetPageTransition.withAutoTransition(
+      name: _Paths.ROOT_SCREEN,
+      page: () => const RootScreenView(),
+      binding: AuthBinding(),
+      forceContext: TransitionContext.auth,
+    ),
+    GetPageTransition.withAutoTransition(
+      name: _Paths.REGISTER,
+      page: () => const RegisterView(),
+      binding: AuthBinding(),
+      forceContext: TransitionContext.auth,
+    ),
+    GetPageTransition.withAutoTransition(
+      name: _Paths.PARENT_LOGIN,
+      page: () => const ParentLoginView(),
+      binding: AuthBinding(),
+      forceContext: TransitionContext.auth,
+    ),
+    GetPageTransition.withAutoTransition(
+      name: _Paths.STUDENT_LOGIN,
+      page: () => const StudentLoginView(),
+      binding: AuthBinding(),
+      forceContext: TransitionContext.auth,
+    ),
+    GetPageTransition.withAutoTransition(
+      name: _Paths.FORGOT_PASSWORD,
+      page: () => const ForgotPasswordView(),
+      binding: AuthBinding(),
+      forceContext: TransitionContext.auth,
+    ),
+
+    // Tutorial routes with tutorial flow transitions (with bounce)
+    GetPageTransition.withAutoTransition(
+      name: _Paths.TUTORIAL,
+      page: () => const TutorialView(),
+      binding: TutorialBinding(),
+      forceContext: TransitionContext.tutorial,
+    ),
+    GetPageTransition.withAutoTransition(
+      name: _Paths.TUTORIAL_TWO,
+      page: () => const TutorialTwoView(),
+      binding: TutorialBinding(),
+      forceContext: TransitionContext.tutorial,
+    ),
+    GetPageTransition.withAutoTransition(
       name: _Paths.TUTORIAL_THREE,
       page: () => const TutorialThreeView(),
       binding: TutorialBinding(),
+      forceContext: TransitionContext.tutorial,
     ),
-    GetPage(
+    GetPageTransition.withAutoTransition(
       name: _Paths.TUTORIAL_FOUR,
       page: () => const TutorialFourView(),
       binding: TutorialBinding(),
+      forceContext: TransitionContext.tutorial,
     ),
-    GetPage(
+    GetPageTransition.withAutoTransition(
       name: _Paths.TUTORIAL_FIVE,
       page: () => const TutorialFiveView(),
       binding: TutorialBinding(),
+      forceContext: TransitionContext.tutorial,
     ),
-    GetPage(
+    GetPageTransition.withAutoTransition(
       name: _Paths.TUTORIAL_SIX,
       page: () => const TutorialSixView(),
       binding: TutorialBinding(),
+      forceContext: TransitionContext.tutorial,
     ),
-    GetPage(
+    GetPageTransition.withAutoTransition(
       name: _Paths.TUTORIAL_SEVEN,
       page: () => const TutorialSevenView(),
       binding: TutorialBinding(),
+      forceContext: TransitionContext.tutorial,
     ),
-    GetPage(
+    GetPageTransition.withAutoTransition(
       name: _Paths.TUTORIAL_EIGHT,
       page: () => const TutorialEightView(),
       binding: TutorialBinding(),
+      forceContext: TransitionContext.tutorial,
     ),
-    GetPage(
+    GetPageTransition.withAutoTransition(
       name: _Paths.TUTORIAL_NINE,
       page: () => const TutorialNineView(),
       binding: TutorialBinding(),
+      forceContext: TransitionContext.tutorial,
     ),
-    GetPage(
+
+    // Learning routes with learning flow transitions
+    GetPageTransition.withAutoTransition(
       name: _Paths.LEARNING,
       page: () => const LearningView(),
       binding: LearningBinding(),
+      forceContext: TransitionContext.learning,
     ),
-    GetPage(
+    GetPageTransition.withAutoTransition(
       name: _Paths.QUESTION,
       page: () => const QuestionView(),
       binding: LearningBinding(),
+      forceContext: TransitionContext.learning,
     ),
-    GetPage(
-      name: _Paths.RESULT,
-      page: () => const ResultView(),
-      binding: LearningBinding(),
-    ),
-    GetPage(
-      name: _Paths.CONTINUOUS_PLAY_RECORD,
-      page: () => const ContinuousPlayRecordView(),
-      binding: LearningBinding(),
-    ),
-    GetPage(
+    GetPageTransition.withAutoTransition(
       name: _Paths.SESSION_CHANGE,
       page: () => const SessionChangeView(),
       binding: LearningBinding(),
+      forceContext: TransitionContext.learning,
+    ),
+    GetPageTransition.withAutoTransition(
+      name: _Paths.CONTINUOUS_PLAY_RECORD,
+      page: () => const ContinuousPlayRecordView(),
+      binding: LearningBinding(),
+      forceContext: TransitionContext.learning,
+    ),
+
+    // Result route with bounce scale for celebration
+    GetPageTransition.withAutoTransition(
+      name: _Paths.RESULT,
+      page: () => const ResultView(),
+      binding: LearningBinding(),
+      forceContext: TransitionContext.result,
     ),
   ];
 }

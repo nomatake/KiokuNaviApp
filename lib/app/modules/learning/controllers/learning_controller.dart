@@ -151,7 +151,6 @@ class LearningController extends BaseController {
   List<String> get currentOptions {
     if (currentQuestion == null) return [];
 
-    final options = currentQuestion!.data.options;
     final questionType = currentQuestion!.data.questionType.toLowerCase();
     
     // For question matching, options are structured differently
@@ -159,6 +158,18 @@ class LearningController extends BaseController {
       return [];
     }
     
+    // For question answer type, there are no options
+    if (questionType.contains('question_answer') || 
+        questionType.contains('question-answer')) {
+      return [];
+    }
+    
+    // For fill-in-the-blank questions, there are no options
+    if (questionType.contains('fill') || questionType.contains('blank')) {
+      return [];
+    }
+    
+    final options = currentQuestion!.data.options;
     final sortedKeys = options.keys.toList()..sort();
     return sortedKeys.map((key) => options[key]?.toString() ?? '').toList();
   }
@@ -166,6 +177,17 @@ class LearningController extends BaseController {
   /// Get option keys in sorted order
   List<String> get currentOptionKeys {
     if (currentQuestion == null) return [];
+
+    final questionType = currentQuestion!.data.questionType.toLowerCase();
+    
+    // For question types without options, return empty list
+    if (questionType.contains('matching') ||
+        questionType.contains('question_answer') || 
+        questionType.contains('question-answer') ||
+        questionType.contains('fill') || 
+        questionType.contains('blank')) {
+      return [];
+    }
 
     final options = currentQuestion!.data.options;
     return options.keys.toList()..sort();
@@ -245,6 +267,10 @@ class LearningController extends BaseController {
     } else if (questionType.contains('fill') || 
                questionType.contains('blank')) {
       // Use text answer for fill-in-the-blank
+      selectedAnswer = userTextAnswer.value.trim();
+    } else if (questionType.contains('question_answer') || 
+               questionType.contains('question-answer')) {
+      // Use text answer for question-answer type
       selectedAnswer = userTextAnswer.value.trim();
     } else if (questionType.contains('matching')) {
       // For question matching, convert map to JSON string
