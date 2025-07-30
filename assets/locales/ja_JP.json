@@ -207,6 +207,32 @@
         "switchProfileButton": "プロフィール切替"
       }
     },
+    "dashboard": {
+      "title": "ファミリーダッシュボード",
+      "familyInfo": {
+        "title": "ファミリー情報",
+        "parent": "保護者",
+        "familyCode": "ファミリーコード",
+        "deviceMode": "デバイスモード",
+        "children": "お子様"
+      },
+      "children": {
+        "title": "お子様",
+        "addChild": "お子様を追加",
+        "noChildren": "まだお子様が追加されていません",
+        "remove": "削除",
+        "generateJoinCode": "参加コードを生成",
+        "childActive": "お子様はアクティブで、アプリにアクセスできます",
+        "joinCodeTitle": "参加コード",
+        "joinCodeCopied": "参加コードをクリップボードにコピーしました",
+        "expired": "期限切れ",
+        "removeDialog": {
+          "title": "お子様を削除",
+          "cancel": "キャンセル",
+          "remove": "削除"
+        }
+      }
+    },
     "login": {
       "title": "ログイン",
       "studentTitle": "生徒ログイン",

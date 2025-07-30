@@ -66,8 +66,8 @@ class FamilyModel {
 }
 
 enum DeviceMode {
-  personal('personal'),
-  shared('shared');
+  personal('single'),
+  shared('multiple');
 
   const DeviceMode(this.value);
   final String value;

@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:get/get.dart';
 import 'package:kioku_navi/app/modules/home/controllers/parent_dashboard_controller.dart';
+import 'package:kioku_navi/generated/locales.g.dart';
 import 'package:kioku_navi/models/child_model.dart';
 import 'package:kioku_navi/utils/extensions.dart';
 import 'package:kioku_navi/utils/sizes.dart';
@@ -18,7 +19,7 @@ class ParentDashboardView extends GetView<ParentDashboardController> {
     return Scaffold(
       backgroundColor: const Color(0xFFF7F9FC),
       appBar: AppBar(
-        title: const Text('Family Dashboard'),
+        title: Text(LocaleKeys.pages_dashboard_title.tr),
         backgroundColor: Colors.white,
         foregroundColor: const Color(0xFF1976D2),
         elevation: 0,
@@ -89,7 +90,7 @@ class ParentDashboardView extends GetView<ParentDashboardController> {
                 ),
                 SizedBox(width: k2Double.wp),
                 Text(
-                  'Family Information',
+                  LocaleKeys.pages_dashboard_familyInfo_title.tr,
                   style: TextStyle(
                     fontSize: k18Double.sp,
                     fontWeight: FontWeight.bold,
@@ -99,10 +100,14 @@ class ParentDashboardView extends GetView<ParentDashboardController> {
               ],
             ),
             SizedBox(height: k3Double.hp),
-            _buildInfoRow('Parent', user.name),
-            _buildInfoRow('Family Code', family.familyCode),
-            _buildInfoRow('Device Mode', family.deviceMode.displayName),
-            _buildInfoRow('Children', '${controller.children.length}'),
+            _buildInfoRow(
+                LocaleKeys.pages_dashboard_familyInfo_parent.tr, user.name),
+            _buildInfoRow(LocaleKeys.pages_dashboard_familyInfo_familyCode.tr,
+                family.familyCode),
+            _buildInfoRow(LocaleKeys.pages_dashboard_familyInfo_deviceMode.tr,
+                family.deviceMode.displayName),
+            _buildInfoRow(LocaleKeys.pages_dashboard_familyInfo_children.tr,
+                '${controller.children.length}'),
           ],
         ),
       ),
@@ -142,7 +147,7 @@ class ParentDashboardView extends GetView<ParentDashboardController> {
           mainAxisAlignment: MainAxisAlignment.spaceBetween,
           children: [
             Text(
-              'Children',
+              LocaleKeys.pages_dashboard_children_title.tr,
               style: TextStyle(
                 fontSize: k20Double.sp,
                 fontWeight: FontWeight.bold,
@@ -153,7 +158,7 @@ class ParentDashboardView extends GetView<ParentDashboardController> {
               onPressed: controller.showAddChildDialog,
               icon: const Icon(Icons.add),
               color: const Color(0xFF1976D2),
-              tooltip: 'Add Child',
+              tooltip: LocaleKeys.pages_dashboard_children_addChild.tr,
             ),
           ],
         ),
@@ -190,7 +195,7 @@ class ParentDashboardView extends GetView<ParentDashboardController> {
             ),
             SizedBox(height: k2Double.hp),
             Text(
-              'No children added yet',
+              LocaleKeys.pages_dashboard_children_noChildren.tr,
               style: TextStyle(
                 fontSize: k16Double.sp,
                 color: Colors.grey[600],
@@ -258,13 +263,13 @@ class ParentDashboardView extends GetView<ParentDashboardController> {
                   ),
                   PopupMenuButton(
                     itemBuilder: (context) => [
-                      const PopupMenuItem(
+                      PopupMenuItem(
                         value: 'remove',
                         child: Row(
                           children: [
                             Icon(Icons.delete, color: Colors.red),
                             SizedBox(width: 8),
-                            Text('Remove'),
+                            Text(LocaleKeys.pages_dashboard_children_remove.tr),
                           ],
                         ),
                       ),
@@ -283,7 +288,8 @@ class ParentDashboardView extends GetView<ParentDashboardController> {
                   _buildJoinCodeDisplay(joinCode),
                 ] else ...[
                   CustomButton.primary(
-                    text: 'Generate Join Code',
+                    text:
+                        LocaleKeys.pages_dashboard_children_generateJoinCode.tr,
                     onPressed: () => controller.generateJoinCode(child),
                   ),
                 ],
@@ -303,7 +309,7 @@ class ParentDashboardView extends GetView<ParentDashboardController> {
                       SizedBox(width: k2Double.wp),
                       Flexible(
                         child: Text(
-                          'Child is active and can access the app',
+                          LocaleKeys.pages_dashboard_children_childActive.tr,
                           style: TextStyle(
                             color: Colors.green[700],
                             fontSize: k12Double.sp,
@@ -336,7 +342,7 @@ class ParentDashboardView extends GetView<ParentDashboardController> {
             mainAxisAlignment: MainAxisAlignment.spaceBetween,
             children: [
               Text(
-                'Join Code',
+                LocaleKeys.pages_dashboard_children_joinCodeTitle.tr,
                 style: TextStyle(
                   fontSize: k14Double.sp,
                   fontWeight: FontWeight.bold,
@@ -382,13 +388,15 @@ class ParentDashboardView extends GetView<ParentDashboardController> {
     Clipboard.setData(ClipboardData(text: code));
     CustomSnackbar.showSuccess(
       title: 'Copied!',
-      message: 'Join code copied to clipboard',
+      message: LocaleKeys.pages_dashboard_children_joinCodeCopied.tr,
     );
   }
 
   String _formatTimeRemaining(DateTime expiresAt) {
     final remaining = expiresAt.difference(DateTime.now());
-    if (remaining.isNegative) return 'Expired';
+    if (remaining.isNegative) {
+      return LocaleKeys.pages_dashboard_children_expired.tr;
+    }
 
     final minutes = remaining.inMinutes;
     if (minutes < 60) {
@@ -402,13 +410,14 @@ class ParentDashboardView extends GetView<ParentDashboardController> {
   void _showRemoveChildDialog(ChildModel child) {
     Get.dialog(
       AlertDialog(
-        title: const Text('Remove Child'),
+        title: Text(LocaleKeys.pages_dashboard_children_removeDialog_title.tr),
         content: Text(
             'Are you sure you want to remove ${child.nickname} from your family?'),
         actions: [
           TextButton(
             onPressed: () => Get.back(),
-            child: const Text('Cancel'),
+            child: Text(
+                LocaleKeys.pages_dashboard_children_removeDialog_cancel.tr),
           ),
           ElevatedButton(
             onPressed: () {
@@ -416,7 +425,9 @@ class ParentDashboardView extends GetView<ParentDashboardController> {
               controller.removeChild(child);
             },
             style: ElevatedButton.styleFrom(backgroundColor: Colors.red),
-            child: const Text('Remove', style: TextStyle(color: Colors.white)),
+            child: Text(
+                LocaleKeys.pages_dashboard_children_removeDialog_remove.tr,
+                style: const TextStyle(color: Colors.white)),
           ),
         ],
       ),

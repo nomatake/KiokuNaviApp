@@ -157,16 +157,11 @@ class FamilyAuthController extends BaseController {
               'Please fill in all required fields correctly');
         }
 
-        if (selectedRelationship.value == null) {
-          throw ValidationException('Please select your relationship');
-        }
-
         final profileData = ParentProfileCompletion(
           tempToken: tempToken.value,
           name: parentName.text.trim(),
           password: password.text.trim(),
           passwordConfirmation: passwordConfirmation.text.trim(),
-          relationship: selectedRelationship.value!.value,
           deviceMode: selectedDeviceMode.value,
         );
 

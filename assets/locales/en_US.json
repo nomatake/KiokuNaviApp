@@ -207,6 +207,32 @@
         "switchProfileButton": "Switch Profile"
       }
     },
+    "dashboard": {
+      "title": "Family Dashboard",
+      "familyInfo": {
+        "title": "Family Information",
+        "parent": "Parent",
+        "familyCode": "Family Code",
+        "deviceMode": "Device Mode",
+        "children": "Children"
+      },
+      "children": {
+        "title": "Children",
+        "addChild": "Add Child",
+        "noChildren": "No children added yet",
+        "remove": "Remove",
+        "generateJoinCode": "Generate Join Code",
+        "childActive": "Child is active and can access the app",
+        "joinCodeTitle": "Join Code",
+        "joinCodeCopied": "Join code copied to clipboard",
+        "expired": "Expired",
+        "removeDialog": {
+          "title": "Remove Child",
+          "cancel": "Cancel",
+          "remove": "Remove"
+        }
+      }
+    },
     "login": {
       "title": "Login",
       "studentTitle": "Student Login",

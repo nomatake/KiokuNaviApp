@@ -72,7 +72,6 @@ class ParentProfileCompletion {
   final String name;
   final String password;
   final String passwordConfirmation;
-  final String relationship;
   final DeviceMode deviceMode;
 
   ParentProfileCompletion({
@@ -80,7 +79,6 @@ class ParentProfileCompletion {
     required this.name,
     required this.password,
     required this.passwordConfirmation,
-    required this.relationship,
     required this.deviceMode,
   });
 
@@ -90,7 +88,6 @@ class ParentProfileCompletion {
       'name': name,
       'password': password,
       'password_confirmation': passwordConfirmation,
-      'relationship': relationship,
       'device_mode': deviceMode.value,
     };
   }

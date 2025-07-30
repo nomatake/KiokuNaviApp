@@ -292,6 +292,41 @@ class LocaleKeys {
       'pages_familyAuth_childPinLogin_title';
   static const pages_familyAuth_childPinLogin_switchProfileButton =
       'pages_familyAuth_childPinLogin_switchProfileButton';
+  static const pages_dashboard_title = 'pages_dashboard_title';
+  static const pages_dashboard_familyInfo_title =
+      'pages_dashboard_familyInfo_title';
+  static const pages_dashboard_familyInfo_parent =
+      'pages_dashboard_familyInfo_parent';
+  static const pages_dashboard_familyInfo_familyCode =
+      'pages_dashboard_familyInfo_familyCode';
+  static const pages_dashboard_familyInfo_deviceMode =
+      'pages_dashboard_familyInfo_deviceMode';
+  static const pages_dashboard_familyInfo_children =
+      'pages_dashboard_familyInfo_children';
+  static const pages_dashboard_children_title =
+      'pages_dashboard_children_title';
+  static const pages_dashboard_children_addChild =
+      'pages_dashboard_children_addChild';
+  static const pages_dashboard_children_noChildren =
+      'pages_dashboard_children_noChildren';
+  static const pages_dashboard_children_remove =
+      'pages_dashboard_children_remove';
+  static const pages_dashboard_children_generateJoinCode =
+      'pages_dashboard_children_generateJoinCode';
+  static const pages_dashboard_children_childActive =
+      'pages_dashboard_children_childActive';
+  static const pages_dashboard_children_joinCodeTitle =
+      'pages_dashboard_children_joinCodeTitle';
+  static const pages_dashboard_children_joinCodeCopied =
+      'pages_dashboard_children_joinCodeCopied';
+  static const pages_dashboard_children_expired =
+      'pages_dashboard_children_expired';
+  static const pages_dashboard_children_removeDialog_title =
+      'pages_dashboard_children_removeDialog_title';
+  static const pages_dashboard_children_removeDialog_cancel =
+      'pages_dashboard_children_removeDialog_cancel';
+  static const pages_dashboard_children_removeDialog_remove =
+      'pages_dashboard_children_removeDialog_remove';
   static const pages_login_title = 'pages_login_title';
   static const pages_login_studentTitle = 'pages_login_studentTitle';
   static const pages_login_parentTitle = 'pages_login_parentTitle';
@@ -638,6 +673,24 @@ class Locales {
     'pages_familyAuth_childPinSetup_createButton': 'PIN作成 & 学習開始',
     'pages_familyAuth_childPinLogin_title': 'PINを入力',
     'pages_familyAuth_childPinLogin_switchProfileButton': 'プロフィール切替',
+    'pages_dashboard_title': 'ファミリーダッシュボード',
+    'pages_dashboard_familyInfo_title': 'ファミリー情報',
+    'pages_dashboard_familyInfo_parent': '保護者',
+    'pages_dashboard_familyInfo_familyCode': 'ファミリーコード',
+    'pages_dashboard_familyInfo_deviceMode': 'デバイスモード',
+    'pages_dashboard_familyInfo_children': 'お子様',
+    'pages_dashboard_children_title': 'お子様',
+    'pages_dashboard_children_addChild': 'お子様を追加',
+    'pages_dashboard_children_noChildren': 'まだお子様が追加されていません',
+    'pages_dashboard_children_remove': '削除',
+    'pages_dashboard_children_generateJoinCode': '参加コードを生成',
+    'pages_dashboard_children_childActive': 'お子様はアクティブで、アプリにアクセスできます',
+    'pages_dashboard_children_joinCodeTitle': '参加コード',
+    'pages_dashboard_children_joinCodeCopied': '参加コードをクリップボードにコピーしました',
+    'pages_dashboard_children_expired': '期限切れ',
+    'pages_dashboard_children_removeDialog_title': 'お子様を削除',
+    'pages_dashboard_children_removeDialog_cancel': 'キャンセル',
+    'pages_dashboard_children_removeDialog_remove': '削除',
     'pages_login_title': 'ログイン',
     'pages_login_studentTitle': '生徒ログイン',
     'pages_login_parentTitle': '保護者ログイン',
@@ -956,6 +1009,25 @@ class Locales {
         'Create PIN & Start Learning',
     'pages_familyAuth_childPinLogin_title': 'Enter Your PIN',
     'pages_familyAuth_childPinLogin_switchProfileButton': 'Switch Profile',
+    'pages_dashboard_title': 'Family Dashboard',
+    'pages_dashboard_familyInfo_title': 'Family Information',
+    'pages_dashboard_familyInfo_parent': 'Parent',
+    'pages_dashboard_familyInfo_familyCode': 'Family Code',
+    'pages_dashboard_familyInfo_deviceMode': 'Device Mode',
+    'pages_dashboard_familyInfo_children': 'Children',
+    'pages_dashboard_children_title': 'Children',
+    'pages_dashboard_children_addChild': 'Add Child',
+    'pages_dashboard_children_noChildren': 'No children added yet',
+    'pages_dashboard_children_remove': 'Remove',
+    'pages_dashboard_children_generateJoinCode': 'Generate Join Code',
+    'pages_dashboard_children_childActive':
+        'Child is active and can access the app',
+    'pages_dashboard_children_joinCodeTitle': 'Join Code',
+    'pages_dashboard_children_joinCodeCopied': 'Join code copied to clipboard',
+    'pages_dashboard_children_expired': 'Expired',
+    'pages_dashboard_children_removeDialog_title': 'Remove Child',
+    'pages_dashboard_children_removeDialog_cancel': 'Cancel',
+    'pages_dashboard_children_removeDialog_remove': 'Remove',
     'pages_login_title': 'Login',
     'pages_login_studentTitle': 'Student Login',
     'pages_login_parentTitle': 'Parent Login',
