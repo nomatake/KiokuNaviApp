@@ -50,7 +50,7 @@ class AnswerResultWidget extends GetView<LearningController> {
   Widget _buildCorrectAnswerDisplay() {
     final questionType = question.data.questionType.toLowerCase();
 
-    // For question_answer type only
+    // For question_answer type
     if (questionType.contains('question_answer') ||
         questionType.contains('question-answer')) {
       return Text(
@@ -62,8 +62,56 @@ class AnswerResultWidget extends GetView<LearningController> {
         ),
       );
     }
+    
+    // For ordering type
+    if (questionType.contains('ordering')) {
+      final correctOrder = question.data.correctAnswer.selected as Map<String, dynamic>?;
+      if (correctOrder != null && correctOrder.containsKey('order')) {
+        final order = correctOrder['order'] as Map<String, dynamic>;
+        final options = question.data.options;
+        
+        // Sort by position key and get the option texts
+        final sortedEntries = order.entries.toList()
+          ..sort((a, b) => a.key.compareTo(b.key));
+        
+        // Get option texts in correct order
+        final correctSequence = sortedEntries
+            .map((e) => options[e.value]?.toString() ?? e.value)
+            .join(', ');
+        
+        return Text(
+          correctSequence,
+          style: TextStyle(
+            fontSize: k13Double.sp,
+            fontWeight: FontWeight.w600,
+            color: Colors.red.shade800,
+          ),
+        );
+      }
+    }
+    
+    // For multiple select type
+    if (questionType.contains('multiple_select') ||
+        questionType.contains('multiple-select')) {
+      final correctKeys = question.data.correctAnswer.multipleAnswers;
+      final options = question.data.options;
+      
+      // Get option texts for correct answers
+      final correctAnswers = correctKeys
+          .map((key) => options[key]?.toString() ?? key)
+          .join(', ');
+      
+      return Text(
+        correctAnswers,
+        style: TextStyle(
+          fontSize: k13Double.sp,
+          fontWeight: FontWeight.w600,
+          color: Colors.red.shade800,
+        ),
+      );
+    }
 
-    // Return empty if not question_answer type
+    // Return empty for other types
     return const SizedBox.shrink();
     
     /* // Commented out for now - only showing for question_answer type

@@ -308,7 +308,7 @@ class QuestionView extends GetView<LearningController> {
                           ],
                         ),
                       ),
-                    // Show correct answer for incorrect responses (only for question_answer type)
+                    // Show correct answer for incorrect responses
                     if (hasSubmitted &&
                         !controller.isCorrect.value &&
                         controller.currentQuestion != null &&
@@ -317,7 +317,16 @@ class QuestionView extends GetView<LearningController> {
                                 .contains('question_answer') ||
                             controller.currentQuestion!.data.questionType
                                 .toLowerCase()
-                                .contains('question-answer')))
+                                .contains('question-answer') ||
+                            controller.currentQuestion!.data.questionType
+                                .toLowerCase()
+                                .contains('ordering') ||
+                            controller.currentQuestion!.data.questionType
+                                .toLowerCase()
+                                .contains('multiple_select') ||
+                            controller.currentQuestion!.data.questionType
+                                .toLowerCase()
+                                .contains('multiple-select')))
                       AnswerResultWidget(
                         question: controller.currentQuestion!,
                         isCorrect: controller.isCorrect.value,

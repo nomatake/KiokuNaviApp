@@ -31,7 +31,7 @@ class MultipleSelectTemplate extends GetView<LearningController> {
             child: _buildSelectedOptionsWithUnderlines(options, optionKeys),
           ),
 
-          SizedBox(height: k2Double.hp),
+          SizedBox(height: k1Double.hp),
 
           // Options as secondary buttons in a wrap layout with padding and center alignment
           Padding(
@@ -61,9 +61,6 @@ class MultipleSelectTemplate extends GetView<LearningController> {
               ),
             ),
           ),
-          
-          // Add space after the options group
-          SizedBox(height: k3Double.hp),
         ],
       );
     });
@@ -74,10 +71,10 @@ class MultipleSelectTemplate extends GetView<LearningController> {
     final isCorrect = controller.correctAnswerIndices.contains(index);
 
     TagStateConfig config = TagStateConfig.defaultState;
-    
+
     if (controller.hasSubmitted.value) {
-      config = isCorrect 
-          ? TagStateConfig.correctState 
+      config = isCorrect
+          ? TagStateConfig.correctState
           : TagStateConfig.incorrectState;
     }
 
@@ -101,7 +98,7 @@ class MultipleSelectTemplate extends GetView<LearningController> {
     required bool isCorrect,
   }) {
     TagStateConfig config = TagStateConfig.defaultState;
-    
+
     if (!controller.hasSubmitted.value) {
       if (isSelected) {
         config = TagStateConfig.selectedState;
@@ -143,19 +140,26 @@ class MultipleSelectTemplate extends GetView<LearningController> {
 
     // Calculate dynamic number of lines based on total options
     final totalOptions = options.length;
-    final avgOptionLength = totalOptions > 0 
-        ? options.fold<int>(0, (sum, opt) => sum + opt.length) / totalOptions 
+    final avgOptionLength = totalOptions > 0
+        ? options.fold<int>(0, (sum, opt) => sum + opt.length) / totalOptions
         : 0;
-    
+
     // Estimate options per line based on average length
-    final optionsPerLine = avgOptionLength <= 10 ? 4 : avgOptionLength <= 15 ? 3 : 2;
-    
+    final optionsPerLine = avgOptionLength <= 10
+        ? 4
+        : avgOptionLength <= 15
+            ? 3
+            : 2;
+
     // Calculate needed lines (minimum 2, maximum 5)
     final neededLines = ((totalOptions / optionsPerLine).ceil()).clamp(2, 5);
 
     // Match ordering template spacing
-    final lineHeight = k4_5Double.hp + k2_5Double.hp; // option height + spacing (same as ordering)
-    final containerHeight = k6Double.hp + (lineHeight * neededLines);
+    final lineHeight = k4_5Double.hp +
+        k2_5Double.hp; // option height + spacing (same as ordering)
+    // Reduce container height to remove extra spacing at bottom (same as ordering)
+    final containerHeight =
+        k6Double.hp + (lineHeight * (neededLines - 1)) + k4_5Double.hp;
 
     return SizedBox(
       height: containerHeight,
@@ -163,7 +167,8 @@ class MultipleSelectTemplate extends GetView<LearningController> {
         children: [
           // Dynamic underlines based on needed lines
           ...List.generate(neededLines, (index) {
-            final topPosition = k6Double.hp + (lineHeight * index); // Same as ordering template
+            final topPosition =
+                k6Double.hp + (lineHeight * index); // Same as ordering template
             return Positioned(
               top: topPosition,
               left: 0,
@@ -180,7 +185,8 @@ class MultipleSelectTemplate extends GetView<LearningController> {
             left: 0,
             right: 0,
             child: Padding(
-              padding: EdgeInsets.only(top: k0_5Double.hp), // Same padding as ordering
+              padding: EdgeInsets.only(
+                  top: k0_5Double.hp), // Same padding as ordering
               child: Wrap(
                 spacing: k3Double.wp,
                 runSpacing: k2_5Double.hp, // Same as ordering template
@@ -192,5 +198,4 @@ class MultipleSelectTemplate extends GetView<LearningController> {
       ),
     );
   }
-
 }
