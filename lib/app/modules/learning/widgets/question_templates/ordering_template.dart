@@ -305,6 +305,10 @@ class OrderingTemplate extends GetView<LearningController> {
           controller.draggedOptionKey.value = '';
           controller.dragHoverPosition.value = -1;
         },
+        onDraggableCanceled: (_, __) {
+          controller.draggedOptionKey.value = '';
+          controller.dragHoverPosition.value = -1;
+        },
         feedback: Material(
           color: Colors.transparent,
           child: Transform.scale(
@@ -329,6 +333,7 @@ class OrderingTemplate extends GetView<LearningController> {
           opacity: 0.3,
           child: optionWidget,
         ),
+        rootOverlay: true,
         child: optionWidget,
       );
     }
@@ -377,6 +382,10 @@ class OrderingTemplate extends GetView<LearningController> {
         controller.draggedOptionKey.value = '';
         controller.dragHoverPosition.value = -1;
       },
+      onDraggableCanceled: (_, __) {
+        controller.draggedOptionKey.value = '';
+        controller.dragHoverPosition.value = -1;
+      },
       feedback: Material(
         color: Colors.transparent,
         child: Transform.scale(
@@ -401,6 +410,7 @@ class OrderingTemplate extends GetView<LearningController> {
         opacity: 0.3,
         child: tagWidget,
       ),
+      rootOverlay: true,
       child: tagWidget,
     );
   }
