@@ -151,47 +151,6 @@ class QuestionView extends GetView<LearningController> {
         ));
   }
 
-  Widget _buildQuestionBubble() {
-    return Obx(() => Row(
-          crossAxisAlignment: CrossAxisAlignment.start,
-          children: [
-            Assets.images.logo.image(
-              height: k80Double.sp,
-              width: k80Double.sp,
-              fit: BoxFit.contain,
-            ),
-            Expanded(
-              child: Bubble(
-                style: BubbleStyle(
-                  margin: BubbleEdges.only(top: k10Double),
-                  elevation: k8Double,
-                  color: const Color(0xFFF7F7F7),
-                  borderColor: const Color(0xFFD8D8D8),
-                  borderWidth: k2_5Double,
-                  padding: BubbleEdges.all(k10Double.sp),
-                  alignment: Alignment.topLeft,
-                  nip: BubbleNip.leftBottom,
-                  nipWidth: k10Double.sp,
-                  nipHeight: k10Double.sp,
-                  nipOffset: k10Double.sp,
-                  radius: Radius.circular(k14Double),
-                ),
-                child: Text(
-                  controller.currentQuestionText,
-                  style: TextStyle(
-                    fontFamily: 'Hiragino Sans',
-                    fontWeight: FontWeight.w400,
-                    fontSize: k14Double.sp,
-                    color: const Color(0xFF212121),
-                  ),
-                  textAlign: TextAlign.left,
-                ),
-              ),
-            ),
-          ],
-        ));
-  }
-
   Widget _buildAnimatedQuestionBubble() {
     return Obx(() {
       // Use question index as key to trigger animation when question text changes
@@ -349,7 +308,7 @@ class QuestionView extends GetView<LearningController> {
                           ],
                         ),
                       ),
-                    // Show correct answer for incorrect responses (only for question_answer type)
+                    // Show correct answer for incorrect responses
                     if (hasSubmitted &&
                         !controller.isCorrect.value &&
                         controller.currentQuestion != null &&
@@ -358,7 +317,16 @@ class QuestionView extends GetView<LearningController> {
                                 .contains('question_answer') ||
                             controller.currentQuestion!.data.questionType
                                 .toLowerCase()
-                                .contains('question-answer')))
+                                .contains('question-answer') ||
+                            controller.currentQuestion!.data.questionType
+                                .toLowerCase()
+                                .contains('ordering') ||
+                            controller.currentQuestion!.data.questionType
+                                .toLowerCase()
+                                .contains('multiple_select') ||
+                            controller.currentQuestion!.data.questionType
+                                .toLowerCase()
+                                .contains('multiple-select')))
                       AnswerResultWidget(
                         question: controller.currentQuestion!,
                         isCorrect: controller.isCorrect.value,

@@ -148,6 +148,10 @@ class CorrectAnswer {
     if (json.containsKey('matches')) {
       return CorrectAnswer(selected: json);
     }
+    // For ordering questions, the correct answer has 'order' instead of 'selected'
+    if (json.containsKey('order')) {
+      return CorrectAnswer(selected: json);
+    }
     // For question_answer, the correct answer has 'answer' instead of 'selected'
     if (json.containsKey('answer')) {
       return CorrectAnswer(selected: json['answer']);

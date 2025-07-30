@@ -40,6 +40,11 @@ class LearningController extends BaseController {
   // For question matching
   final RxMap<String, String> matchingAnswers = <String, String>{}.obs;
   final RxString activeMatchingQuestion = ''.obs;
+  
+  // For ordering questions
+  final RxList<String?> orderingAnswers = <String?>[].obs;
+  final RxInt dragHoverPosition = (-1).obs;
+  final RxString draggedOptionKey = ''.obs;
 
   // Progress tracking
   final ProgressTracker progressTracker = ProgressTracker();
@@ -133,6 +138,9 @@ class LearningController extends BaseController {
     selectedMultipleOptions.clear();
     matchingAnswers.clear();
     activeMatchingQuestion.value = '';
+    orderingAnswers.clear();
+    dragHoverPosition.value = -1;
+    draggedOptionKey.value = '';
     
     // Start timer for the new question
     sessionTimer.resetCurrentItem();
@@ -231,6 +239,7 @@ class LearningController extends BaseController {
       }
     }
   }
+  
 
   /// Submit the current answer
   void submitAnswer() {
@@ -266,6 +275,13 @@ class LearningController extends BaseController {
     } else if (questionType.contains('matching')) {
       // For question matching, convert map to JSON string
       selectedAnswer = matchingAnswers.toString();
+    } else if (questionType.contains('ordering')) {
+      // For ordering questions, create position map similar to correct answer format
+      final orderMap = <String, String>{};
+      for (int i = 0; i < orderingAnswers.length; i++) {
+        orderMap['position_${i + 1}'] = orderingAnswers[i]!;
+      }
+      selectedAnswer = orderMap.toString();
     } else {
       // Get the selected option key for multiple choice/true-false
       selectedAnswer = currentOptionKeys[selectedOptionIndex.value];
