@@ -6,7 +6,7 @@ import 'package:get_storage/get_storage.dart';
 import 'package:kioku_navi/app/bindings/service_binding.dart';
 import 'package:kioku_navi/app/modules/auth/controllers/auth_controller.dart';
 import 'package:kioku_navi/app/modules/home/controllers/child_home_controller.dart';
-import 'package:kioku_navi/app/modules/home/controllers/home_controller.dart';
+import 'package:kioku_navi/app/modules/home/controllers/parent_dashboard_controller.dart';
 import 'package:kioku_navi/services/connectivity/connectivity_service.dart';
 import 'package:kioku_navi/utils/constants.dart';
 import 'package:kioku_navi/utils/error_manager.dart';
@@ -95,7 +95,7 @@ class ConfigStore extends GetxController {
 
     // Pre-register controllers that might be needed after splash
     Get.lazyPut(() => AuthController(), fenix: true);
-    Get.lazyPut(() => HomeController());
     Get.lazyPut(() => ChildHomeController());
+    Get.lazyPut(() => ParentDashboardController());
   }
 }

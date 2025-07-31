@@ -7,8 +7,8 @@ import 'package:kioku_navi/utils/app_constants.dart';
 import 'package:kioku_navi/utils/extensions.dart';
 import 'package:kioku_navi/utils/responsive_wrapper.dart';
 
-class ChildBottomNavBar extends StatelessWidget {
-  const ChildBottomNavBar({super.key});
+class ParentBottomNavBar extends StatelessWidget {
+  const ParentBottomNavBar({super.key});
 
   @override
   Widget build(BuildContext context) {
@@ -21,69 +21,64 @@ class ChildBottomNavBar extends StatelessWidget {
     // Ensure minimum accessibility tap target while keeping it reasonable
     final accessibleHeight = responsiveHeight > 48.0 ? responsiveHeight : 48.0;
 
-    return SafeArea(
-      top: false,
-      child: Container(
-        height: accessibleHeight,
-        width: double.infinity,
-        decoration: BoxDecoration(
-          color: Colors.white,
-          boxShadow: [
-            BoxShadow(
-              color: const Color(0x08000000),
-              offset: Offset(0, -4),
-              blurRadius: isTablet ? 6 : 4,
-            ),
-          ],
-        ),
-        child: Row(
-          mainAxisAlignment: MainAxisAlignment.spaceAround,
-          children: [
-            _NavBarItem(
-              label: LocaleKeys.common_navigation_home.tr,
-              icon: Icons.home,
-              selected: true,
-              isTablet: isTablet,
-            ),
-            _NavBarItem(
-              label: LocaleKeys.common_navigation_training.tr,
-              icon: Icons.fitness_center,
-              isTablet: isTablet,
-            ),
-            _NavBarItem(
-              label: LocaleKeys.common_navigation_ranking.tr,
-              icon: Icons.emoji_events,
-              isTablet: isTablet,
-            ),
-            _NavBarItem(
-              label: LocaleKeys.common_navigation_course.tr,
-              icon: Icons.school,
-              isTablet: isTablet,
-            ),
-            // Old settings button
-            // _NavBarItem(
-            //   label: LocaleKeys.common_navigation_others.tr,
-            //   icon: Icons.settings,
-            //   isTablet: isTablet,
-            // ),
-
-            // New logout button
-            _NavBarItem(
-              label: LocaleKeys.common_buttons_logout.tr,
-              icon: Icons.logout,
-              isTablet: isTablet,
-              onTap: () {
-                // Use Get.find to get existing instance or create if needed
-                final AuthController authController;
-                if (Get.isRegistered<AuthController>()) {
-                  authController = Get.find<AuthController>();
-                } else {
-                  authController = Get.put(AuthController());
-                }
-                authController.logoutChild(context);
-              },
-            ),
-          ],
+    return Container(
+      color: Colors.white, // Ensure consistent background color for safe area
+      child: SafeArea(
+        top: false,
+        child: Container(
+          height: accessibleHeight,
+          width: double.infinity,
+          decoration: BoxDecoration(
+            color: Colors.white,
+            boxShadow: [
+              BoxShadow(
+                color: const Color(0x08000000),
+                offset: Offset(0, -4),
+                blurRadius: isTablet ? 6 : 4,
+              ),
+            ],
+          ),
+          child: Row(
+            mainAxisAlignment: MainAxisAlignment.spaceAround,
+            children: [
+              _NavBarItem(
+                label: LocaleKeys.common_navigation_home.tr,
+                icon: Icons.home,
+                selected: true,
+                isTablet: isTablet,
+              ),
+              _NavBarItem(
+                label: LocaleKeys.common_navigation_course.tr,
+                icon: Icons.school,
+                isTablet: isTablet,
+              ),
+              _NavBarItem(
+                label: 'Reports',
+                icon: Icons.analytics,
+                isTablet: isTablet,
+              ),
+              _NavBarItem(
+                label: 'Settings',
+                icon: Icons.settings,
+                isTablet: isTablet,
+              ),
+              _NavBarItem(
+                label: LocaleKeys.common_buttons_logout.tr,
+                icon: Icons.logout,
+                isTablet: isTablet,
+                onTap: () {
+                  // Use Get.find to get existing instance or create if needed
+                  final AuthController authController;
+                  if (Get.isRegistered<AuthController>()) {
+                    authController = Get.find<AuthController>();
+                  } else {
+                    authController = Get.put(AuthController());
+                  }
+                  authController.logout(context);
+                },
+              ),
+            ],
+          ),
         ),
       ),
     );

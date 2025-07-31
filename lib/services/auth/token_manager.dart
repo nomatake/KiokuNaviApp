@@ -10,4 +10,10 @@ abstract class TokenManager {
 
   /// Check if user is authenticated (has valid access token)
   Future<bool> isAuthenticated();
+
+  /// Synchronous method to get token for initial route determination
+  String? getTokenSync();
+
+  /// Synchronous method to check authentication for initial route determination
+  bool isAuthenticatedSync();
 }

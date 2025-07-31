@@ -100,7 +100,138 @@
   "pages": {
     "root": {
       "studentLogin": "生徒としてログイン",
-      "parentLogin": "保護者としてログイン"
+      "parentLogin": "保護者としてログイン",
+      "joinFamily": "ファミリーに参加（お子様）",
+      "childLogin": "お子様ログイン"
+    },
+    "childProfileSelection": {
+      "title": "プロフィールを選択",
+      "welcomeMessage": "今日は誰が学習しますか？",
+      "instruction": "学習を続けるためにプロフィールを選択してください。",
+      "joinNewFamily": "新しいファミリーに参加",
+      "noProfilesFound": "プロフィールが見つかりません",
+      "noProfilesMessage": "このデバイスにはまだお子様のプロフィールがありません。\nまずファミリーに参加してください。"
+    },
+    "childPinLogin": {
+      "welcomeBack": "おかえりなさい、{nickname}さん！",
+      "instruction": "学習を続けるにはPINを入力してください。",
+      "pinLabel": "PINを入力",
+      "pinPlaceholder": "••••",
+      "pinRequired": "PINを入力してください",
+      "pinMinLength": "PINは4桁以上である必要があります",
+      "startLearning": "学習を始める",
+      "switchProfile": "プロフィール切替",
+      "forgotPin": "PINを忘れましたか？保護者の方に相談してください",
+      "pinHelpTitle": "PINヘルプ",
+      "pinHelpHeader": "PINを忘れた場合：",
+      "pinHelpStep1": "保護者の方にリセットを手伝ってもらう",
+      "pinHelpStep2": "新しい参加コードを作成してもらう",
+      "pinHelpStep3": "新しいPINを設定する",
+      "pinHelpReminder": "注意：PINはあなただけが知っているものにしてください！",
+      "gotIt": "わかりました！"
+    },
+    "familyAuth": {
+      "parentPreRegistration": {
+        "title": "ファミリーアカウント作成",
+        "welcomeMessage": "キオクナビファミリーへようこそ！",
+        "instructions": "ファミリーアカウントを設定しましょう。まず、確認コードでメールアドレスを認証します。",
+        "emailLabel": "メールアドレス",
+        "emailPlaceholder": "メールアドレスを入力してください",
+        "emailRequired": "メールアドレスは必須です",
+        "invalidEmail": "有効なメールアドレスを入力してください",
+        "verificationNotice": "このメールアドレスに6桁の確認コードを送信します。アクセスできることを確認してください。",
+        "sendVerificationCode": "確認コードを送信",
+        "alreadyHaveAccount": "すでにアカウントをお持ちですか？ ",
+        "signIn": "サインイン"
+      },
+      "childJoin": {
+        "title": "ファミリーに参加",
+        "welcomeMessage": "キオクナビへようこそ！",
+        "instructions": "保護者の方から共有された6桁の参加コードを入力して、ファミリーアカウントに参加しましょう。",
+        "joinCodeLabel": "ファミリー参加コード",
+        "joinCodePlaceholder": "123456",
+        "joinCodeInputLabel": "6桁のコードを入力",
+        "joinCodeRequired": "参加コードを入力してください",
+        "joinCodeLength": "参加コードは6桁である必要があります",
+        "joinCodeNumeric": "参加コードは数字のみである必要があります",
+        "helpMessage": "保護者の方にファミリーダッシュボードから参加コードを生成してもらってください。",
+        "joinButton": "ファミリーに参加",
+        "backButton": "ウェルカム画面に戻る"
+      },
+      "otpVerification": {
+        "title": "メール認証",
+        "heading": "メールをご確認ください",
+        "instructions": "メールアドレスに6桁の認証コードを送信しました",
+        "codeLabel": "認証コード",
+        "codePlaceholder": "6桁のコードを入力",
+        "codeRequired": "認証コードは必須です",
+        "codeNumeric": "数字のみを入力してください",
+        "codeLength": "コードは6桁である必要があります",
+        "verifyButton": "メールを認証"
+      },
+      "profileCompletion": {
+        "title": "プロフィール完成",
+        "heading": "もう少しです！",
+        "instructions": "プロフィールを完成させて、ファミリーアカウントを作成し、学習の旅を始めましょう。",
+        "nameLabel": "フルネーム",
+        "namePlaceholder": "フルネームを入力してください",
+        "nameRequired": "フルネームは必須です",
+        "nameMinLength": "名前は2文字以上である必要があります",
+        "relationshipLabel": "続柄",
+        "relationshipPlaceholder": "続柄を選択してください",
+        "relationshipRequired": "続柄を選択してください",
+        "deviceUsageLabel": "デバイスの使用方法",
+        "passwordLabel": "パスワード",
+        "passwordPlaceholder": "安全なパスワードを作成してください",
+        "passwordRequired": "パスワードは必須です",
+        "passwordMinLength": "パスワードは8文字以上である必要があります",
+        "confirmPasswordLabel": "パスワード確認",
+        "confirmPasswordPlaceholder": "パスワードを確認してください",
+        "confirmPasswordRequired": "パスワード確認は必須です",
+        "passwordMismatch": "パスワードが一致しません",
+        "createAccountButton": "ファミリーアカウントを作成"
+      },
+      "childPinSetup": {
+        "title": "PINを作成",
+        "heading": "素晴らしい！参加完了です！🎉",
+        "instructions": "あなただけが知っている安全なPINを作成しましょう。このPINを使って毎回ログインします。",
+        "pinLabel": "PINを作成",
+        "pinPlaceholder": "4-6桁のPINを入力",
+        "confirmPinLabel": "PINを確認",
+        "confirmPinPlaceholder": "PINを再入力してください",
+        "securityTipsLabel": "PINセキュリティのヒント",
+        "createButton": "PIN作成 & 学習開始"
+      },
+      "childPinLogin": {
+        "title": "PINを入力",
+        "switchProfileButton": "プロフィール切替"
+      }
+    },
+    "dashboard": {
+      "title": "ファミリーダッシュボード",
+      "familyInfo": {
+        "title": "ファミリー情報",
+        "parent": "保護者",
+        "familyCode": "ファミリーコード",
+        "deviceMode": "デバイスモード",
+        "children": "お子様"
+      },
+      "children": {
+        "title": "お子様",
+        "addChild": "お子様を追加",
+        "noChildren": "まだお子様が追加されていません",
+        "remove": "削除",
+        "generateJoinCode": "参加コードを生成",
+        "childActive": "お子様はアクティブで、アプリにアクセスできます",
+        "joinCodeTitle": "参加コード",
+        "joinCodeCopied": "参加コードをクリップボードにコピーしました",
+        "expired": "期限切れ",
+        "removeDialog": {
+          "title": "お子様を削除",
+          "cancel": "キャンセル",
+          "remove": "削除"
+        }
+      }
     },
     "login": {
       "title": "ログイン",

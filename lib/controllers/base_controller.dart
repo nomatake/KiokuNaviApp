@@ -28,13 +28,15 @@ abstract class BaseController extends GetxController {
   }) async {
     // Check connectivity FIRST, before showing loader
     try {
-      final connectivityManager = Get.find<ConnectivityManager>();
-      final isConnected =
-          await connectivityManager.checkAndShowNoInternetIfNeeded();
+      if (Get.isRegistered<ConnectivityManager>()) {
+        final connectivityManager = Get.find<ConnectivityManager>();
+        final isConnected =
+            await connectivityManager.checkAndShowNoInternetIfNeeded();
 
-      if (!isConnected) {
-        // No internet - bottom sheet is already shown, don't proceed with API call
-        return null;
+        if (!isConnected) {
+          // No internet - bottom sheet is already shown, don't proceed with API call
+          return null;
+        }
       }
     } catch (e) {
       // Continue with API call if connectivity manager is not available
@@ -153,5 +155,4 @@ abstract class BaseController extends GetxController {
       ApiErrorHandler.getErrorResponseData(error);
   String? getServerErrorMessage(dynamic error) =>
       ApiErrorHandler.getServerErrorMessage(error);
-
 }

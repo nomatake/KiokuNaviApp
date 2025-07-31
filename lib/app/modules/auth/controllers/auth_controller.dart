@@ -6,6 +6,7 @@ import 'package:kioku_navi/generated/locales.g.dart';
 import 'package:kioku_navi/services/api/auth_api.dart';
 import 'package:kioku_navi/utils/validation_exception.dart';
 import 'package:kioku_navi/widgets/custom_snackbar.dart';
+import '../../../../models/auth_models.dart';
 
 class AuthController extends BaseController {
   /// Form keys for different forms - recreated to avoid duplicate key issues
@@ -109,7 +110,7 @@ class AuthController extends BaseController {
 
   /// Parent Login Implementation
   Future<void> loginParent(BuildContext context) async {
-    await safeApiCall(
+    await safeApiCall<AuthResult>(
       () async {
         // Validate form - use ValidationException for form validation errors
         if (!parentLoginFormKey.currentState!.validate()) {
@@ -122,15 +123,14 @@ class AuthController extends BaseController {
         final passwordValue = password.text.trim();
 
         // Call authentication API (token saving handled automatically)
-        final response = await _authApi.loginParent(emailValue, passwordValue);
+        final result = await _authApi.loginParent(emailValue, passwordValue);
 
         // Extract user data for display
-        final data = response['data'] as Map<String, dynamic>;
-        final userData = data['user'] as Map<String, dynamic>;
+        if (result.user != null) {
+          debugPrint('Parent login successful: ${result.user!.name}');
+        }
 
-        debugPrint('Parent login successful: ${userData['name']}');
-
-        return response;
+        return result;
       },
       context: context,
       loaderMessage: LocaleKeys.common_messages_loggingIn.tr,
@@ -143,7 +143,7 @@ class AuthController extends BaseController {
         // Clear text controllers after successful login
         clearTextControllers();
         // Navigate after loader is hidden
-        Get.toNamed(Routes.TUTORIAL);
+        Get.toNamed(Routes.PARENT_DASHBOARD);
       },
       onError: (error) {
         // Handle business logic errors only (technical errors handled globally)
@@ -254,12 +254,44 @@ class AuthController extends BaseController {
     );
   }
 
-  /// Logout Implementation
+  /// Logout Implementation (Parent)
   Future<void> logout(BuildContext context) async {
     await safeApiCall(
       () async {
         // Call logout API (token clearing handled automatically)
         await _authApi.logout();
+
+        return {'success': true};
+      },
+      context: context,
+      loaderMessage: LocaleKeys.common_messages_loggingOut.tr,
+      onSuccess: () {
+        // Show success snackbar
+        CustomSnackbar.showInfo(
+          title: LocaleKeys.common_messages_goodbye.tr,
+          message: LocaleKeys.common_messages_loggedOutSuccessfully.tr,
+        );
+        // Clear text controllers after successful logout
+        clearTextControllers();
+        // Navigate after loader is hidden
+        Get.toNamed(Routes.ROOT_SCREEN);
+      },
+      onError: (error) {
+        // Show error snackbar
+        CustomSnackbar.showError(
+          title: LocaleKeys.common_messages_logoutFailed.tr,
+          message: LocaleKeys.common_messages_unableToLogout.tr,
+        );
+      },
+    );
+  }
+
+  /// Child Logout Implementation
+  Future<void> logoutChild(BuildContext context) async {
+    await safeApiCall(
+      () async {
+        // Call child logout API (child session clearing handled automatically)
+        await _authApi.logoutChild();
 
         return {'success': true};
       },
@@ -314,7 +346,7 @@ class AuthController extends BaseController {
     password.clear();
     passwordConfirmation.clear();
     selectedDates.clear();
-    
+
     // Reinitialize form keys to avoid duplicate key issues
     _initializeFormKeys();
   }

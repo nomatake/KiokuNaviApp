@@ -100,7 +100,138 @@
   "pages": {
     "root": {
       "studentLogin": "Login as Student",
-      "parentLogin": "Login as Parent"
+      "parentLogin": "Login as Parent",
+      "joinFamily": "Join Family (Child)",
+      "childLogin": "Child Login"
+    },
+    "childProfileSelection": {
+      "title": "Select Your Profile",
+      "welcomeMessage": "Who's learning today?",
+      "instruction": "Select your profile to continue with your learning journey.",
+      "joinNewFamily": "Join a New Family",
+      "noProfilesFound": "No profiles found",
+      "noProfilesMessage": "This device doesn't have any child profiles yet.\nPlease join a family first."
+    },
+    "childPinLogin": {
+      "welcomeBack": "Welcome back, {nickname}!",
+      "instruction": "Enter your PIN to continue learning.",
+      "pinLabel": "Enter your PIN",
+      "pinPlaceholder": "••••",
+      "pinRequired": "Please enter your PIN",
+      "pinMinLength": "PIN must be at least 4 digits",
+      "startLearning": "Start Learning",
+      "switchProfile": "Switch Profile",
+      "forgotPin": "Forgot your PIN? Ask your parent for help",
+      "pinHelpTitle": "PIN Help",
+      "pinHelpHeader": "If you forgot your PIN:",
+      "pinHelpStep1": "Ask your parent to help you reset it",
+      "pinHelpStep2": "They can create a new join code for you",
+      "pinHelpStep3": "Then you can set up a new PIN",
+      "pinHelpReminder": "Remember: Your PIN should be something only you know!",
+      "gotIt": "Got it!"
+    },
+    "familyAuth": {
+      "parentPreRegistration": {
+        "title": "Create Family Account",
+        "welcomeMessage": "Welcome to KiokuNavi Family!",
+        "instructions": "Let's set up your family account. First, we'll verify your email address with a confirmation code.",
+        "emailLabel": "Email Address",
+        "emailPlaceholder": "Enter your email address",
+        "emailRequired": "Email is required",
+        "invalidEmail": "Please enter a valid email",
+        "verificationNotice": "We'll send a 6-digit verification code to this email. Make sure you have access to it.",
+        "sendVerificationCode": "Send Verification Code",
+        "alreadyHaveAccount": "Already have an account? ",
+        "signIn": "Sign In"
+      },
+      "childJoin": {
+        "title": "Join Family",
+        "welcomeMessage": "Welcome to KiokuNavi!",
+        "instructions": "Enter the 6-digit join code your parent shared with you to join your family account.",
+        "joinCodeLabel": "Family Join Code",
+        "joinCodePlaceholder": "123456",
+        "joinCodeInputLabel": "Enter 6-digit code",
+        "joinCodeRequired": "Please enter the join code",
+        "joinCodeLength": "Join code must be 6 digits",
+        "joinCodeNumeric": "Join code must contain only numbers",
+        "helpMessage": "Ask your parent to generate a join code from their Family Dashboard.",
+        "joinButton": "Join Family",
+        "backButton": "Back to Welcome"
+      },
+      "otpVerification": {
+        "title": "Verify Email",
+        "heading": "Check Your Email",
+        "instructions": "We sent a 6-digit verification code to your email",
+        "codeLabel": "Verification Code",
+        "codePlaceholder": "Enter 6-digit code",
+        "codeRequired": "Verification code is required",
+        "codeNumeric": "Please enter numbers only",
+        "codeLength": "Code must be 6 digits",
+        "verifyButton": "Verify Email"
+      },
+      "profileCompletion": {
+        "title": "Complete Profile",
+        "heading": "Almost Done!",
+        "instructions": "Complete your profile to create your family account and start your learning journey.",
+        "nameLabel": "Full Name",
+        "namePlaceholder": "Enter your full name",
+        "nameRequired": "Full name is required",
+        "nameMinLength": "Name must be at least 2 characters",
+        "relationshipLabel": "Your Relationship",
+        "relationshipPlaceholder": "Select your relationship",
+        "relationshipRequired": "Please select your relationship",
+        "deviceUsageLabel": "Device Usage",
+        "passwordLabel": "Password",
+        "passwordPlaceholder": "Create a secure password",
+        "passwordRequired": "Password is required",
+        "passwordMinLength": "Password must be at least 8 characters",
+        "confirmPasswordLabel": "Confirm Password",
+        "confirmPasswordPlaceholder": "Confirm your password",
+        "confirmPasswordRequired": "Password confirmation is required",
+        "passwordMismatch": "Passwords do not match",
+        "createAccountButton": "Create Family Account"
+      },
+      "childPinSetup": {
+        "title": "Create Your PIN",
+        "heading": "Great! You're in! 🎉",
+        "instructions": "Now let's create a secure PIN that only you know. You'll use this PIN to log in every time.",
+        "pinLabel": "Create Your PIN",
+        "pinPlaceholder": "Enter 4-6 digit PIN",
+        "confirmPinLabel": "Confirm Your PIN",
+        "confirmPinPlaceholder": "Re-enter your PIN",
+        "securityTipsLabel": "PIN Security Tips",
+        "createButton": "Create PIN & Start Learning"
+      },
+      "childPinLogin": {
+        "title": "Enter Your PIN",
+        "switchProfileButton": "Switch Profile"
+      }
+    },
+    "dashboard": {
+      "title": "Family Dashboard",
+      "familyInfo": {
+        "title": "Family Information",
+        "parent": "Parent",
+        "familyCode": "Family Code",
+        "deviceMode": "Device Mode",
+        "children": "Children"
+      },
+      "children": {
+        "title": "Children",
+        "addChild": "Add Child",
+        "noChildren": "No children added yet",
+        "remove": "Remove",
+        "generateJoinCode": "Generate Join Code",
+        "childActive": "Child is active and can access the app",
+        "joinCodeTitle": "Join Code",
+        "joinCodeCopied": "Join code copied to clipboard",
+        "expired": "Expired",
+        "removeDialog": {
+          "title": "Remove Child",
+          "cancel": "Cancel",
+          "remove": "Remove"
+        }
+      }
     },
     "login": {
       "title": "Login",

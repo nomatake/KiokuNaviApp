@@ -27,7 +27,7 @@ const Color kButtonSecondaryTopShadowColor = Color(0x14000000);
 const Color kButtonSecondaryBottomShadowColor = Color(0xFFB0BEC5);
 
 ///API
-const String kBaseApiUrl = "http://127.0.0.1:8000/api/v1/";
+const String kBaseApiUrl = "http://kknavi-be.test/api/v1/";
 
 ///Common
 const String kEmpty = "";

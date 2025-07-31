@@ -1,9 +1,11 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:kioku_navi/app/modules/auth/controllers/auth_controller.dart';
+import 'package:kioku_navi/app/modules/auth/controllers/family_auth_controller.dart';
 import 'package:kioku_navi/app/routes/app_pages.dart';
 import 'package:kioku_navi/generated/assets.gen.dart';
 import 'package:kioku_navi/generated/locales.g.dart';
+import 'package:kioku_navi/services/auth/token_manager.dart';
 import 'package:kioku_navi/utils/extensions.dart';
 import 'package:kioku_navi/utils/sizes.dart';
 import 'package:kioku_navi/widgets/custom_button.dart';
@@ -11,8 +13,26 @@ import 'package:kioku_navi/widgets/padded_wrapper.dart';
 
 class RootScreenView extends GetView<AuthController> {
   const RootScreenView({super.key});
+
   @override
   Widget build(BuildContext context) {
+    // Check authentication status on app startup
+    WidgetsBinding.instance.addPostFrameCallback((_) {
+      _checkAuthenticationStatus();
+    });
+
+    return _buildWelcomeScreen(context);
+  }
+
+  void _checkAuthenticationStatus() {
+    final tokenManager = Get.find<TokenManager>();
+
+    if (tokenManager.isAuthenticatedSync()) {
+      Get.offNamed(Routes.PARENT_DASHBOARD);
+    }
+  }
+
+  Widget _buildWelcomeScreen(BuildContext context) {
     return Scaffold(
       body: SafeArea(
         child: PaddedWrapper(
@@ -58,14 +78,25 @@ class RootScreenView extends GetView<AuthController> {
               // Sign Up Button
               CustomButton.primary(
                 text: LocaleKeys.common_buttons_signup.tr,
-                onPressed: () => Get.toNamed(Routes.REGISTER),
+                onPressed: () => Get.toNamed(Routes.PARENT_PRE_REGISTRATION),
               ),
               SizedBox(height: k2Double.hp),
 
-              // Login as Student
-              CustomButton.outline(
-                text: LocaleKeys.pages_root_studentLogin.tr,
-                onPressed: () => Get.toNamed(Routes.STUDENT_LOGIN),
+              // Join Family Button (for children)
+              CustomButton.secondary(
+                text: LocaleKeys.pages_root_joinFamily.tr,
+                onPressed: () => Get.toNamed(Routes.CHILD_JOIN),
+              ),
+              SizedBox(height: k2Double.hp),
+
+              // Child Login Button (for existing children)
+              CustomButton.secondary(
+                text: LocaleKeys.pages_root_childLogin.tr,
+                onPressed: () {
+                  // Use the FamilyAuthController for smart login routing
+                  final familyController = Get.put(FamilyAuthController());
+                  familyController.handleChildLogin();
+                },
               ),
               SizedBox(height: k2Double.hp),
 
