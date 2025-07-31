@@ -28,10 +28,13 @@ class AuthResult {
     return AuthResult(
       token: data?['token'] as String?,
       sessionToken: data?['session_token'] as String?,
-      provisionalToken: data?['provisional_token'] as String?,
+      provisionalToken: data?['temp_token'] as String? ??
+          data?['provisional_token'] as String?,
       user: data?['user'] != null
           ? UserModel.fromJson(data!['user'] as Map<String, dynamic>)
-          : null,
+          : data?['parent'] != null
+              ? UserModel.fromJson(data!['parent'] as Map<String, dynamic>)
+              : null,
       child: data?['child'] != null
           ? ChildModel.fromJson(data!['child'] as Map<String, dynamic>)
           : null,
@@ -212,21 +215,26 @@ class JoinCode {
     required this.expiresAt,
   });
 
-  factory JoinCode.fromJson(Map<String, dynamic> json) {
+  factory JoinCode.fromJson(Map<String, dynamic> json,
+      {String? childNickname}) {
     // Handle different response structures
     final code = json['join_code'] as String? ?? json['code'] as String;
     final childData = json['child'] as Map<String, dynamic>?;
-    final childNickname = childData?['nickname'] as String? ?? 'Child';
-    final expiresInMinutes = json['expires_in_minutes'] as int;
+    final nickname =
+        childNickname ?? childData?['nickname'] as String? ?? 'Child';
 
-    // Calculate expires_at if not provided
+    // Parse expires_at first
     final expiresAt = json['expires_at'] != null
         ? DateTime.parse(json['expires_at'] as String)
-        : DateTime.now().add(Duration(minutes: expiresInMinutes));
+        : DateTime.now().add(const Duration(minutes: 60)); // Default 1 hour
+
+    // Calculate expires_in_minutes from expires_at if not provided
+    final expiresInMinutes = json['expires_in_minutes'] as int? ??
+        expiresAt.difference(DateTime.now()).inMinutes;
 
     return JoinCode(
       code: code,
-      childNickname: childNickname,
+      childNickname: nickname,
       expiresInMinutes: expiresInMinutes,
       expiresAt: expiresAt,
     );

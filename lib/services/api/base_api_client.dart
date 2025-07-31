@@ -64,17 +64,8 @@ class BaseApiClient {
       },
     ));
 
-    // Add interceptors
-    if (kDebugMode) {
-      _dio.interceptors.add(LogInterceptor(
-        requestBody: true,
-        responseBody: true,
-        requestHeader: true,
-        responseHeader: false,
-        error: true,
-        logPrint: (obj) => debugPrint(obj.toString()),
-      ));
-    }
+    // Note: LogInterceptor will be added AFTER AuthInterceptor
+    // to ensure authorization headers are included in logs
 
     // Note: Error handling is done in the individual method catch blocks
     // to avoid double processing

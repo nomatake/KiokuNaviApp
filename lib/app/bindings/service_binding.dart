@@ -1,3 +1,5 @@
+import 'package:dio/dio.dart';
+import 'package:flutter/foundation.dart';
 import 'package:get/get.dart';
 import 'package:get_storage/get_storage.dart';
 import 'package:kioku_navi/app/modules/learning/services/course_api.dart';
@@ -41,11 +43,23 @@ class ServiceBinding extends Bindings {
       final apiClient = BaseApiClient();
       final tokenManager = Get.find<TokenManager>();
 
-      // Add auth interceptor immediately to avoid race conditions
+      // Add auth interceptor FIRST
       apiClient.addInterceptor(AuthInterceptor(
         tokenManager: tokenManager,
         storage: Get.find<GetStorage>(),
       ));
+
+      // Add log interceptor AFTER auth interceptor so it logs the Authorization header
+      if (kDebugMode) {
+        apiClient.addInterceptor(LogInterceptor(
+          requestBody: true,
+          responseBody: true,
+          requestHeader: true,
+          responseHeader: false,
+          error: true,
+          logPrint: (obj) => debugPrint(obj.toString()),
+        ));
+      }
 
       return apiClient;
     }, fenix: true);

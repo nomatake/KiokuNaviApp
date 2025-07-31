@@ -9,6 +9,7 @@ import 'package:kioku_navi/widgets/custom_snackbar.dart';
 class AuthInterceptor extends Interceptor {
   final TokenManager tokenManager;
   final GetStorage _storage;
+
   final List<String> publicEndpoints = [
     'auth/login',
     'auth/register',
@@ -18,6 +19,16 @@ class AuthInterceptor extends Interceptor {
     'children/set-pin',
     'children/auth/pin',
     'children/profiles',
+    // Family authentication endpoints (registration flow)
+    'family/auth/pre-register',
+    'family/auth/verify-email',
+    'family/auth/complete-profile',
+    'family/auth/login',
+    // Family child authentication endpoints
+    'family/children/join',
+    'family/children/set-pin',
+    'family/children/auth/pin',
+    'family/children/profiles',
   ];
 
   AuthInterceptor({

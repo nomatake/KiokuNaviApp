@@ -1,6 +1,7 @@
 import 'package:get/get.dart';
 
 import '../modules/auth/bindings/auth_binding.dart';
+import '../modules/auth/bindings/family_auth_binding.dart';
 import '../modules/auth/views/child_join_view.dart';
 import '../modules/auth/views/child_pin_login_view.dart';
 import '../modules/auth/views/child_pin_setup_view.dart';
@@ -93,43 +94,43 @@ class AppPages {
     GetPageTransition.withAutoTransition(
       name: _Paths.PARENT_PRE_REGISTRATION,
       page: () => const ParentPreRegistrationView(),
-      binding: AuthBinding(),
+      binding: FamilyAuthBinding(),
       forceContext: TransitionContext.auth,
     ),
     GetPageTransition.withAutoTransition(
       name: _Paths.OTP_VERIFICATION,
       page: () => const OtpVerificationView(),
-      binding: AuthBinding(),
+      binding: FamilyAuthBinding(),
       forceContext: TransitionContext.auth,
     ),
     GetPageTransition.withAutoTransition(
       name: _Paths.PARENT_PROFILE_COMPLETION,
       page: () => const ParentProfileCompletionView(),
-      binding: AuthBinding(),
+      binding: FamilyAuthBinding(),
       forceContext: TransitionContext.auth,
     ),
     GetPageTransition.withAutoTransition(
       name: _Paths.CHILD_JOIN,
       page: () => const ChildJoinView(),
-      binding: AuthBinding(),
+      binding: FamilyAuthBinding(),
       forceContext: TransitionContext.auth,
     ),
     GetPageTransition.withAutoTransition(
       name: _Paths.CHILD_PIN_SETUP,
       page: () => const ChildPinSetupView(),
-      binding: AuthBinding(),
+      binding: FamilyAuthBinding(),
       forceContext: TransitionContext.auth,
     ),
     GetPageTransition.withAutoTransition(
       name: _Paths.CHILD_PROFILE_SELECTION,
       page: () => const ChildProfileSelectionView(),
-      binding: AuthBinding(),
+      binding: FamilyAuthBinding(),
       forceContext: TransitionContext.auth,
     ),
     GetPageTransition.withAutoTransition(
       name: _Paths.CHILD_PIN_LOGIN,
       page: () => const ChildPinLoginView(),
-      binding: AuthBinding(),
+      binding: FamilyAuthBinding(),
       forceContext: TransitionContext.auth,
     ),
 

@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:get_storage/get_storage.dart';
 
 import 'package:kioku_navi/controllers/base_controller.dart';
 import 'package:kioku_navi/models/child_model.dart';
@@ -7,6 +8,7 @@ import 'package:kioku_navi/models/family_model.dart';
 import 'package:kioku_navi/models/auth_models.dart';
 import 'package:kioku_navi/models/user_model.dart';
 import 'package:kioku_navi/services/api/auth_api.dart';
+import 'package:kioku_navi/services/api/auth_api_impl.dart';
 import 'package:kioku_navi/services/api/base_api_client.dart';
 import 'package:kioku_navi/utils/api_error_handler.dart';
 import 'package:kioku_navi/widgets/custom_snackbar.dart';
@@ -26,6 +28,9 @@ class ParentDashboardController extends BaseController {
   final isLoading = false.obs;
   final joinCodes = <int, JoinCode>{}.obs; // childId -> JoinCode
 
+  // Prevent duplicate API calls
+  bool _isLoadingFamilyData = false;
+
   // Services
   late final AuthApi _authApi;
 
@@ -43,9 +48,19 @@ class ParentDashboardController extends BaseController {
 
   /// Load family information and children
   Future<void> loadFamilyData() async {
+    // Prevent duplicate calls
+    if (_isLoadingFamilyData) {
+      return;
+    }
+
     // For data loading without user interaction, we can use Get.context
     final context = Get.context;
     if (context == null) return;
+
+    // Add small delay to ensure token save operation has completed
+    await Future.delayed(const Duration(milliseconds: 100));
+
+    _isLoadingFamilyData = true;
 
     await safeApiCall(
       () async {
@@ -55,10 +70,16 @@ class ParentDashboardController extends BaseController {
         final data = response['data'] as Map<String, dynamic>;
         final familyData = data['family'] as Map<String, dynamic>;
         final childrenData = data['children'] as List<dynamic>;
-        final userData = data['user'] as Map<String, dynamic>;
 
         familyInfo.value = FamilyModel.fromJson(familyData);
-        user.value = UserModel.fromJson(userData);
+
+        // User data might not be in family endpoint response, get from storage instead
+        final storedUserData = Get.find<GetStorage>().read('user_data');
+        if (storedUserData != null) {
+          user.value =
+              UserModel.fromJson(storedUserData as Map<String, dynamic>);
+        }
+
         children.value = childrenData
             .map((child) => ChildModel.fromJson(child as Map<String, dynamic>))
             .toList();
@@ -67,6 +88,9 @@ class ParentDashboardController extends BaseController {
       },
       context: context,
       loaderMessage: 'Loading family data...',
+      onSuccess: () {
+        _isLoadingFamilyData = false;
+      },
       onError: (error) {
         // Only show error if we're not in a silent refresh
         CustomSnackbar.showError(
@@ -76,6 +100,7 @@ class ParentDashboardController extends BaseController {
 
         // Don't let this cause navigation issues
         debugPrint('Family data load error: $error');
+        _isLoadingFamilyData = false;
       },
     );
   }
@@ -96,8 +121,11 @@ class ParentDashboardController extends BaseController {
 
         final newChild = await _authApi.addChild(nickname, birthDate);
 
-        // Add the new child to local list immediately to avoid API call issues
+        // Add the new child to local list immediately
         children.add(newChild);
+
+        // Reset the loading flag to allow immediate refresh
+        _isLoadingFamilyData = false;
 
         // Try to refresh family data, but don't fail if it errors
         try {
@@ -150,7 +178,9 @@ class ParentDashboardController extends BaseController {
 
     await safeApiCall(
       () async {
-        final joinCode = await _authApi.generateJoinCode(child.id);
+        // Use the new method that includes child nickname
+        final joinCode = await (_authApi as AuthApiImpl)
+            .generateJoinCodeWithNickname(child.id, child.nickname);
 
         // Store join code
         joinCodes[child.id] = joinCode;

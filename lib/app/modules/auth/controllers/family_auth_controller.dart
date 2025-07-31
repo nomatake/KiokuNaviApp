@@ -2,8 +2,9 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:kioku_navi/app/routes/app_pages.dart';
 import 'package:kioku_navi/controllers/base_controller.dart';
-import 'package:kioku_navi/generated/locales.g.dart';
+
 import 'package:kioku_navi/services/api/auth_api.dart';
+import 'package:kioku_navi/services/auth/token_manager.dart';
 import 'package:kioku_navi/utils/validation_exception.dart';
 import 'package:kioku_navi/widgets/custom_snackbar.dart';
 import '../../../../models/auth_models.dart';
@@ -171,8 +172,17 @@ class FamilyAuthController extends BaseController {
       },
       context: context,
       loaderMessage: 'Creating your family account...',
-      onSuccess: () {
+      onSuccess: () async {
         clearTextControllers();
+
+        // Debug: Verify token was saved
+        final savedToken = await Get.find<TokenManager>().getToken();
+        if (savedToken != null && savedToken.isNotEmpty) {
+          debugPrint('✅ Token saved successfully after profile completion');
+        } else {
+          debugPrint('❌ Token not found after profile completion');
+        }
+
         CustomSnackbar.showSuccess(
           title: 'Welcome to KiokuNavi!',
           message: 'Your family account has been created successfully.',
