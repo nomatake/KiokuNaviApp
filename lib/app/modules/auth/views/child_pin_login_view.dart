@@ -1,10 +1,10 @@
 import 'package:flutter/material.dart';
-import 'package:form_builder_validators/form_builder_validators.dart';
+
 import 'package:get/get.dart';
 import 'package:kioku_navi/app/modules/auth/controllers/family_auth_controller.dart';
 import 'package:kioku_navi/utils/extensions.dart';
 import 'package:kioku_navi/utils/sizes.dart';
-import 'package:kioku_navi/utils/pin_validator.dart';
+
 import 'package:kioku_navi/widgets/custom_button.dart';
 import 'package:kioku_navi/widgets/custom_text_form_field.dart';
 import 'package:kioku_navi/widgets/custom_title_text.dart';
@@ -37,59 +37,48 @@ class ChildPinLoginView extends GetView<FamilyAuthController> {
                 children: [
                   SizedBox(height: k3Double.hp),
 
-                  // Child Profile
-                  Obx(() {
-                    final child = controller.selectedChild.value;
-                    if (child == null) {
-                      return SizedBox.shrink();
-                    }
-
-                    return Center(
-                      child: Column(
-                        children: [
-                          // Avatar
-                          Container(
-                            width: k20Double.wp,
-                            height: k20Double.wp,
-                            decoration: BoxDecoration(
-                              color: Color(0xFF1976D2),
-                              shape: BoxShape.circle,
-                              boxShadow: [
-                                BoxShadow(
-                                  color: Colors.black.withOpacity(0.1),
-                                  blurRadius: 8,
-                                  offset: Offset(0, 4),
-                                ),
-                              ],
-                            ),
-                            child: Center(
-                              child: Text(
-                                child.nickname[0].toUpperCase(),
-                                style: TextStyle(
-                                  color: Colors.white,
-                                  fontWeight: FontWeight.bold,
-                                  fontSize: k24Double.sp,
-                                ),
+                  // Welcome Section
+                  Center(
+                    child: Column(
+                      children: [
+                        // Generic Learning Icon
+                        Container(
+                          width: k20Double.wp,
+                          height: k20Double.wp,
+                          decoration: BoxDecoration(
+                            color: Color(0xFF1976D2),
+                            shape: BoxShape.circle,
+                            boxShadow: [
+                              BoxShadow(
+                                color: Colors.black.withOpacity(0.1),
+                                blurRadius: 8,
+                                offset: Offset(0, 4),
                               ),
+                            ],
+                          ),
+                          child: Center(
+                            child: Icon(
+                              Icons.school,
+                              color: Colors.white,
+                              size: k10Double.wp,
                             ),
                           ),
-                          SizedBox(height: k2Double.hp),
+                        ),
+                        SizedBox(height: k2Double.hp),
 
-                          // Welcome Message
-                          Text(
-                            LocaleKeys.pages_childPinLogin_welcomeBack
-                                .trParams({'nickname': child.nickname}),
-                            style: TextStyle(
-                              fontWeight: FontWeight.w800,
-                              fontSize: k24Double.sp,
-                              color: Color(0xFF1976D2),
-                            ),
-                            textAlign: TextAlign.center,
+                        // Generic Welcome Message
+                        Text(
+                          'Welcome Back!',
+                          style: TextStyle(
+                            fontWeight: FontWeight.w800,
+                            fontSize: k24Double.sp,
+                            color: Color(0xFF1976D2),
                           ),
-                        ],
-                      ),
-                    );
-                  }),
+                          textAlign: TextAlign.center,
+                        ),
+                      ],
+                    ),
+                  ),
                   SizedBox(height: k3Double.hp),
 
                   // Instructions

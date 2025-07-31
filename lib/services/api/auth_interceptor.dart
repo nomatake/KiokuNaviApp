@@ -1,4 +1,5 @@
 import 'package:dio/dio.dart';
+import 'package:flutter/foundation.dart';
 import 'package:get/get.dart';
 import 'package:get_storage/get_storage.dart';
 import 'package:kioku_navi/app/routes/app_pages.dart';
@@ -25,10 +26,10 @@ class AuthInterceptor extends Interceptor {
     'family/auth/complete-profile',
     'family/auth/login',
     // Family child authentication endpoints
-    'family/children/join',
-    'family/children/set-pin',
-    'family/children/auth/pin',
-    'family/children/profiles',
+    'family/child/join',
+    'family/child/set-pin',
+    'family/child/profiles',
+    'family/child/login',
   ];
 
   AuthInterceptor({
@@ -46,15 +47,35 @@ class AuthInterceptor extends Interceptor {
       return handler.next(options);
     }
 
-    // Try to add parent JWT token first
-    final parentToken = await tokenManager.getToken();
-    if (parentToken != null && parentToken.isNotEmpty) {
-      options.headers['Authorization'] = 'Bearer $parentToken';
-    } else {
-      // If no parent token, try child session token
+    // Check if request explicitly wants to force child token
+    final forceChildToken = options.extra['forceChildToken'] == true;
+
+    // Debug logging for child token selection
+    debugPrint('Auth Interceptor - Path: ${options.path}');
+    debugPrint('Auth Interceptor - forceChildToken: $forceChildToken');
+
+    if (forceChildToken) {
+      // For child-specific requests, only use child session token
       final childSessionToken = _storage.read('child_session_token');
+      debugPrint(
+          'Auth Interceptor - child token found: ${childSessionToken != null}');
       if (childSessionToken != null && childSessionToken.isNotEmpty) {
         options.headers['Authorization'] = 'Bearer $childSessionToken';
+        debugPrint('Auth Interceptor - child token applied');
+      } else {
+        debugPrint('Auth Interceptor - no child token available');
+      }
+    } else {
+      // Normal token priority: parent first, then child
+      final parentToken = await tokenManager.getToken();
+      if (parentToken != null && parentToken.isNotEmpty) {
+        options.headers['Authorization'] = 'Bearer $parentToken';
+      } else {
+        // If no parent token, try child session token
+        final childSessionToken = _storage.read('child_session_token');
+        if (childSessionToken != null && childSessionToken.isNotEmpty) {
+          options.headers['Authorization'] = 'Bearer $childSessionToken';
+        }
       }
     }
 

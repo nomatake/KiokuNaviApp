@@ -96,6 +96,33 @@ class ParentProfileCompletion {
   }
 }
 
+/// Parent registration model (traditional one-step registration)
+class ParentRegistration {
+  final String name;
+  final String email;
+  final String password;
+  final String passwordConfirmation;
+  final DeviceMode deviceMode;
+
+  ParentRegistration({
+    required this.name,
+    required this.email,
+    required this.password,
+    required this.passwordConfirmation,
+    required this.deviceMode,
+  });
+
+  Map<String, dynamic> toJson() {
+    return {
+      'name': name,
+      'email': email,
+      'password': password,
+      'password_confirmation': passwordConfirmation,
+      'device_mode': deviceMode.value,
+    };
+  }
+}
+
 /// Child join request model
 class ChildJoinRequest {
   final String code;
@@ -109,10 +136,6 @@ class ChildJoinRequest {
   Map<String, dynamic> toJson() {
     return {
       'code': code,
-      'device_fingerprint': deviceInfo.fingerprint,
-      'device_platform': deviceInfo.platform,
-      'device_version': deviceInfo.version,
-      'device_model': deviceInfo.model,
     };
   }
 }
@@ -121,10 +144,12 @@ class ChildJoinRequest {
 class ChildPinSetup {
   final String provisionalToken;
   final String pin;
+  final DeviceInfo deviceInfo;
 
   ChildPinSetup({
     required this.provisionalToken,
     required this.pin,
+    required this.deviceInfo,
   });
 
   Map<String, dynamic> toJson() {

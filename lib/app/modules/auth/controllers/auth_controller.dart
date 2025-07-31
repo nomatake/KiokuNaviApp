@@ -254,12 +254,44 @@ class AuthController extends BaseController {
     );
   }
 
-  /// Logout Implementation
+  /// Logout Implementation (Parent)
   Future<void> logout(BuildContext context) async {
     await safeApiCall(
       () async {
         // Call logout API (token clearing handled automatically)
         await _authApi.logout();
+
+        return {'success': true};
+      },
+      context: context,
+      loaderMessage: LocaleKeys.common_messages_loggingOut.tr,
+      onSuccess: () {
+        // Show success snackbar
+        CustomSnackbar.showInfo(
+          title: LocaleKeys.common_messages_goodbye.tr,
+          message: LocaleKeys.common_messages_loggedOutSuccessfully.tr,
+        );
+        // Clear text controllers after successful logout
+        clearTextControllers();
+        // Navigate after loader is hidden
+        Get.toNamed(Routes.ROOT_SCREEN);
+      },
+      onError: (error) {
+        // Show error snackbar
+        CustomSnackbar.showError(
+          title: LocaleKeys.common_messages_logoutFailed.tr,
+          message: LocaleKeys.common_messages_unableToLogout.tr,
+        );
+      },
+    );
+  }
+
+  /// Child Logout Implementation
+  Future<void> logoutChild(BuildContext context) async {
+    await safeApiCall(
+      () async {
+        // Call child logout API (child session clearing handled automatically)
+        await _authApi.logoutChild();
 
         return {'success': true};
       },

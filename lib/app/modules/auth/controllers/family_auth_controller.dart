@@ -305,9 +305,11 @@ class FamilyAuthController extends BaseController {
           throw ValidationException('PINs do not match');
         }
 
+        final deviceInfo = await DeviceUtils.getDeviceInfo();
         final pinData = ChildPinSetup(
           provisionalToken: provisionalToken.value,
           pin: pin,
+          deviceInfo: deviceInfo,
         );
 
         final result = await _authApi.setChildPin(pinData);

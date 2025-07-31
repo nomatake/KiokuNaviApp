@@ -66,7 +66,7 @@ class ChildBottomNavBar extends StatelessWidget {
             //   icon: Icons.settings,
             //   isTablet: isTablet,
             // ),
-            
+
             // New logout button
             _NavBarItem(
               label: LocaleKeys.common_buttons_logout.tr,
@@ -80,7 +80,7 @@ class ChildBottomNavBar extends StatelessWidget {
                 } else {
                   authController = Get.put(AuthController());
                 }
-                authController.logout(context);
+                authController.logoutChild(context);
               },
             ),
           ],
@@ -119,7 +119,9 @@ class _NavBarItem extends StatelessWidget {
     // Accessibility
     final semanticsLabel = AccessibilityHelper.getButtonSemanticLabel(
       label,
-      hint: selected ? LocaleKeys.common_status_selected.tr : LocaleKeys.common_navigation_tapToNavigate.tr,
+      hint: selected
+          ? LocaleKeys.common_status_selected.tr
+          : LocaleKeys.common_navigation_tapToNavigate.tr,
     );
 
     return Expanded(
@@ -135,43 +137,43 @@ class _NavBarItem extends StatelessWidget {
           onTap: null, // We handle tap in GestureDetector
           child: Container(
             padding: EdgeInsets.symmetric(
-            horizontal: isTablet ? AppSpacing.xxxs.wp : 1.0.wp,
-            vertical: isTablet ? AppSpacing.xxxs.hp : 1.0.hp,
-          ),
-          child: Column(
-            mainAxisAlignment: MainAxisAlignment.center,
-            mainAxisSize: MainAxisSize.min,
-            children: [
-              Flexible(
-                child: Icon(
-                  icon,
-                  color: selected ? selectedColor : unselectedColor,
-                  size: iconSize,
-                ),
-              ),
-              SizedBox(height: spacing),
-              Flexible(
-                child: FittedBox(
-                  fit: BoxFit.scaleDown,
-                  child: Text(
-                    label,
-                    style: TextStyle(
-                      color: selected ? selectedColor : unselectedColor,
-                      fontWeight:
-                          selected ? FontWeight.bold : FontWeight.normal,
-                      fontSize: fontSize,
-                      height: 1.1,
-                      letterSpacing: isTablet ? 0.0 : -0.2,
-                    ),
-                    textAlign: TextAlign.center,
-                    maxLines: 1,
-                    overflow: TextOverflow.visible,
+              horizontal: isTablet ? AppSpacing.xxxs.wp : 1.0.wp,
+              vertical: isTablet ? AppSpacing.xxxs.hp : 1.0.hp,
+            ),
+            child: Column(
+              mainAxisAlignment: MainAxisAlignment.center,
+              mainAxisSize: MainAxisSize.min,
+              children: [
+                Flexible(
+                  child: Icon(
+                    icon,
+                    color: selected ? selectedColor : unselectedColor,
+                    size: iconSize,
                   ),
                 ),
-              ),
-            ],
+                SizedBox(height: spacing),
+                Flexible(
+                  child: FittedBox(
+                    fit: BoxFit.scaleDown,
+                    child: Text(
+                      label,
+                      style: TextStyle(
+                        color: selected ? selectedColor : unselectedColor,
+                        fontWeight:
+                            selected ? FontWeight.bold : FontWeight.normal,
+                        fontSize: fontSize,
+                        height: 1.1,
+                        letterSpacing: isTablet ? 0.0 : -0.2,
+                      ),
+                      textAlign: TextAlign.center,
+                      maxLines: 1,
+                      overflow: TextOverflow.visible,
+                    ),
+                  ),
+                ),
+              ],
+            ),
           ),
-        ),
         ),
       ),
     );

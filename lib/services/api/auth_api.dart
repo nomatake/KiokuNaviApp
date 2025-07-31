@@ -22,6 +22,15 @@ abstract class AuthApi {
   /// Returns Laravel response: { "data": { "token": "...", "user": {...}, "family": {...} } }
   Future<AuthResult> loginParent(String email, String password);
 
+  /// Traditional parent registration (one-step registration)
+  /// Returns full authentication with JWT token
+  Future<AuthResult> registerParent(ParentRegistration registrationData);
+
+  /// Associate all active children with current device
+  /// Requires parent authentication
+  Future<Map<String, dynamic>> associateDevice(
+      String deviceFingerprint, String platform);
+
   // === Child Authentication Methods ===
 
   /// Join family with join code (Step 1 of child onboarding)
@@ -46,9 +55,14 @@ abstract class AuthApi {
   /// Returns family data with children list
   Future<Map<String, dynamic>> getFamilyInfo();
 
-  /// Add new child to family
+  /// Add new child to family (without PIN)
   /// Returns child profile with PENDING status
   Future<ChildModel> addChild(String nickname, DateTime birthDate);
+
+  /// Add new child to family with PIN (immediate activation)
+  /// Returns child profile with ACTIVE status
+  Future<ChildModel> addChildWithPin(
+      String nickname, DateTime birthDate, String pin);
 
   /// Update child information
   /// Returns updated child profile
