@@ -40,6 +40,11 @@ class LearningController extends BaseController {
   // For question matching
   final RxMap<String, String> matchingAnswers = <String, String>{}.obs;
   final RxString activeMatchingQuestion = ''.obs;
+  
+  // For ordering questions
+  final RxList<String?> orderingAnswers = <String?>[].obs;
+  final RxInt dragHoverPosition = (-1).obs;
+  final RxString draggedOptionKey = ''.obs;
 
   // Progress tracking
   final ProgressTracker progressTracker = ProgressTracker();
@@ -133,6 +138,9 @@ class LearningController extends BaseController {
     selectedMultipleOptions.clear();
     matchingAnswers.clear();
     activeMatchingQuestion.value = '';
+    orderingAnswers.clear();
+    dragHoverPosition.value = -1;
+    draggedOptionKey.value = '';
     
     // Start timer for the new question
     sessionTimer.resetCurrentItem();
@@ -143,7 +151,6 @@ class LearningController extends BaseController {
   List<String> get currentOptions {
     if (currentQuestion == null) return [];
 
-    final options = currentQuestion!.data.options;
     final questionType = currentQuestion!.data.questionType.toLowerCase();
     
     // For question matching, options are structured differently
@@ -151,6 +158,18 @@ class LearningController extends BaseController {
       return [];
     }
     
+    // For question answer type, there are no options
+    if (questionType.contains('question_answer') || 
+        questionType.contains('question-answer')) {
+      return [];
+    }
+    
+    // For fill-in-the-blank questions, there are no options
+    if (questionType.contains('fill') || questionType.contains('blank')) {
+      return [];
+    }
+    
+    final options = currentQuestion!.data.options;
     final sortedKeys = options.keys.toList()..sort();
     return sortedKeys.map((key) => options[key]?.toString() ?? '').toList();
   }
@@ -158,6 +177,17 @@ class LearningController extends BaseController {
   /// Get option keys in sorted order
   List<String> get currentOptionKeys {
     if (currentQuestion == null) return [];
+
+    final questionType = currentQuestion!.data.questionType.toLowerCase();
+    
+    // For question types without options, return empty list
+    if (questionType.contains('matching') ||
+        questionType.contains('question_answer') || 
+        questionType.contains('question-answer') ||
+        questionType.contains('fill') || 
+        questionType.contains('blank')) {
+      return [];
+    }
 
     final options = currentQuestion!.data.options;
     return options.keys.toList()..sort();
@@ -209,6 +239,7 @@ class LearningController extends BaseController {
       }
     }
   }
+  
 
   /// Submit the current answer
   void submitAnswer() {
@@ -237,9 +268,20 @@ class LearningController extends BaseController {
                questionType.contains('blank')) {
       // Use text answer for fill-in-the-blank
       selectedAnswer = userTextAnswer.value.trim();
+    } else if (questionType.contains('question_answer') || 
+               questionType.contains('question-answer')) {
+      // Use text answer for question-answer type
+      selectedAnswer = userTextAnswer.value.trim();
     } else if (questionType.contains('matching')) {
       // For question matching, convert map to JSON string
       selectedAnswer = matchingAnswers.toString();
+    } else if (questionType.contains('ordering')) {
+      // For ordering questions, create position map similar to correct answer format
+      final orderMap = <String, String>{};
+      for (int i = 0; i < orderingAnswers.length; i++) {
+        orderMap['position_${i + 1}'] = orderingAnswers[i]!;
+      }
+      selectedAnswer = orderMap.toString();
     } else {
       // Get the selected option key for multiple choice/true-false
       selectedAnswer = currentOptionKeys[selectedOptionIndex.value];

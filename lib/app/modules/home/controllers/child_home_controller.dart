@@ -204,7 +204,7 @@ class ChildHomeController extends BaseController {
 
   void onSectionTapped(CourseSection section) {
     Get.toNamed(Routes.QUESTION, arguments: {
-      'topicId': 7,
+      'topicId': 1,
     });
   }
 

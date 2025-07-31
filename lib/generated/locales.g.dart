@@ -423,6 +423,8 @@ class LocaleKeys {
       'pages_learning_errors_oopsSomethingWentWrong';
   static const pages_learning_errors_noQuestionsAvailable =
       'pages_learning_errors_noQuestionsAvailable';
+  static const pages_learning_pleaseEnterYourAnswer =
+      'pages_learning_pleaseEnterYourAnswer';
   static const pages_tutorial_one_message = 'pages_tutorial_one_message';
   static const pages_tutorial_two_message = 'pages_tutorial_two_message';
   static const pages_tutorial_three_question = 'pages_tutorial_three_question';
@@ -750,6 +752,7 @@ class Locales {
     'pages_learning_continuous_recordText': '日連続記録',
     'pages_learning_errors_oopsSomethingWentWrong': 'おっと！何か問題が発生しました',
     'pages_learning_errors_noQuestionsAvailable': 'このトピックには問題がありません',
+    'pages_learning_pleaseEnterYourAnswer': '答えを入力してください',
     'pages_tutorial_one_message': 'こんにちは！キオだよ！',
     'pages_tutorial_two_message': '最初のレッスンを始める前に、\nn個の簡単な質問に答えてね！',
     'pages_tutorial_three_question': 'あなたの状況を教えてください',
@@ -1092,6 +1095,7 @@ class Locales {
         'Oops! Something went wrong',
     'pages_learning_errors_noQuestionsAvailable':
         'No questions available for this topic',
+    'pages_learning_pleaseEnterYourAnswer': 'Please enter your answer',
     'pages_tutorial_one_message': 'Hello! I\'m Kio!',
     'pages_tutorial_two_message':
         'Before starting your first lesson,\nplease answer a few simple questions!',

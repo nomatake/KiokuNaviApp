@@ -28,8 +28,7 @@ class RouteHelper {
       final storage = Get.find<GetStorage>();
       final isStudent = storage.read(kIsStudent) ?? false;
 
-      // Route based on user type
-      return isStudent ? ChildHomeView() : const ParentDashboardView();
+      return ChildHomeView();
     } catch (e) {
       // If any error occurs, fallback to root screen
       return const RootScreenView();

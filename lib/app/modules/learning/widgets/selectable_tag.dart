@@ -30,10 +30,10 @@ class SelectableTag extends StatelessWidget {
         onTap: onTap,
         child: AnimatedContainer(
           duration: const Duration(milliseconds: 100),
-          height: k5Double.hp,
-          constraints: BoxConstraints(minHeight: k5Double.hp),
+          height: k4_5Double.hp,
+          constraints: BoxConstraints(minHeight: k4_5Double.hp),
           padding: EdgeInsets.symmetric(
-            horizontal: k2_5Double.wp,
+            horizontal: k1_5Double.wp,
             vertical: k0Double.hp,
           ),
           decoration: BoxDecoration(
@@ -49,7 +49,7 @@ class SelectableTag extends StatelessWidget {
             child: Text(
               text,
               style: TextStyle(
-                fontSize: k13Double.sp,
+                fontSize: k12Double.sp,
                 fontWeight: FontWeight.w500,
                 letterSpacing: 0,
                 color: showText ? textColor : Colors.transparent,

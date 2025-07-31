@@ -42,6 +42,43 @@ class QuestionValidator {
       }
       
       return false;
+    } else if (questionType.contains('ordering')) {
+      // For ordering questions, selectedOption is a position map string
+      // Parse the selected ordering
+      final selectedOrder = <String, String>{};
+      
+      // Simple parsing of the map string format: {position_1: option_1, position_2: option_2}
+      if (selectedOption.startsWith('{') && selectedOption.endsWith('}')) {
+        final content = selectedOption.substring(1, selectedOption.length - 1);
+        final pairs = content.split(', ');
+        for (final pair in pairs) {
+          final parts = pair.split(': ');
+          if (parts.length == 2) {
+            selectedOrder[parts[0]] = parts[1];
+          }
+        }
+      }
+      
+      // Get correct order from the correct answer
+      final correctAnswer = question.data.correctAnswer.selected;
+      if (correctAnswer is Map<String, dynamic>) {
+        final correctOrder = correctAnswer['order'] as Map<String, dynamic>? ?? {};
+        
+        // Check if all positions match
+        if (selectedOrder.length != correctOrder.length) {
+          return false;
+        }
+        
+        for (final entry in correctOrder.entries) {
+          if (selectedOrder[entry.key] != entry.value) {
+            return false;
+          }
+        }
+        
+        return true;
+      }
+      
+      return false;
     } else if (question.data.correctAnswer.isMultipleSelect) {
       // For multiple select, selectedOption should be comma-separated values
       final selectedList = selectedOption.split(',').map((e) => e.trim()).toSet();
@@ -83,6 +120,22 @@ class QuestionValidator {
         return correctMatches.entries
             .map((e) => '${subQuestions[e.key] ?? e.key}: ${choices[e.value] ?? e.value}')
             .join(', ');
+      }
+      return '';
+    } else if (questionType.contains('ordering')) {
+      // For ordering questions, return the correct order
+      final correctAnswer = question.data.correctAnswer.selected;
+      if (correctAnswer is Map<String, dynamic>) {
+        final correctOrder = correctAnswer['order'] as Map<String, dynamic>? ?? {};
+        final options = question.data.options;
+        
+        // Sort by position key and get the option texts
+        final sortedEntries = correctOrder.entries.toList()
+          ..sort((a, b) => a.key.compareTo(b.key));
+        
+        return sortedEntries
+            .map((e) => options[e.value]?.toString() ?? e.value)
+            .join(' → ');
       }
       return '';
     } else if (question.data.correctAnswer.isMultipleSelect) {

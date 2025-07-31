@@ -77,7 +77,9 @@ class QuestionData {
     return QuestionData(
       question: json['question'],
       questionType: json['question_type'],
-      options: Map<String, dynamic>.from(json['options']),
+      options: json['options'] is List 
+          ? {} // For question_answer type, options might be an empty array
+          : Map<String, dynamic>.from(json['options'] ?? {}),
       correctAnswer: CorrectAnswer.fromJson(json['correct_answer']),
       metadata: json['metadata'],
     );
@@ -145,6 +147,14 @@ class CorrectAnswer {
     // For question_matching, the correct answer has 'matches' instead of 'selected'
     if (json.containsKey('matches')) {
       return CorrectAnswer(selected: json);
+    }
+    // For ordering questions, the correct answer has 'order' instead of 'selected'
+    if (json.containsKey('order')) {
+      return CorrectAnswer(selected: json);
+    }
+    // For question_answer, the correct answer has 'answer' instead of 'selected'
+    if (json.containsKey('answer')) {
+      return CorrectAnswer(selected: json['answer']);
     }
     return CorrectAnswer(selected: json['selected']);
   }
