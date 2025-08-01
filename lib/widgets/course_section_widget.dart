@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:kioku_navi/utils/app_constants.dart';
 import 'package:kioku_navi/utils/sizes.dart';
 import 'package:kioku_navi/utils/extensions.dart';
 import 'package:kioku_navi/utils/adaptive_sizes.dart';
@@ -77,6 +78,9 @@ class CourseSectionWidget extends StatelessWidget {
   /// Callback function executed when the widget is tapped
   final VoidCallback? onTap;
 
+  /// Optional key for the section header to track scroll position
+  final GlobalKey? headerKey;
+
   /// Creates a course section widget with progress indicators.
   ///
   /// The [title], [isAlignedRight], and [nodes] parameters are required.
@@ -90,6 +94,7 @@ class CourseSectionWidget extends StatelessWidget {
     this.showDolphin = false,
     this.dolphinCount = _defaultDolphinCount,
     this.onTap,
+    this.headerKey,
   });
 
   /// Gets the adaptive node size based on screen width
@@ -129,13 +134,23 @@ class CourseSectionWidget extends StatelessWidget {
   /// - Centered title text
   /// - Right divider line
   Widget _buildSectionHeader() {
-    return Row(
+    final headerRow = Row(
       children: [
         _buildDividerLine(),
         _buildTitleText(),
         _buildDividerLine(),
       ],
     );
+
+    // If headerKey is provided, wrap with Container to track position
+    if (headerKey != null) {
+      return Container(
+        key: headerKey,
+        child: headerRow,
+      );
+    }
+    
+    return headerRow;
   }
 
   /// Creates a horizontal divider line for the section header.
@@ -344,7 +359,7 @@ class CourseSectionWidget extends StatelessWidget {
   /// The dolphin faces the appropriate direction based on [isAlignedRight].
   /// Uses horizontal flip transformation when needed.
   Widget _buildDolphinImage() {
-    final double dolphinSize = k28Double.wp;
+    final double dolphinSize = AppContainerSize.mediumCard.sp;
 
     return SizedBox(
       width: dolphinSize,

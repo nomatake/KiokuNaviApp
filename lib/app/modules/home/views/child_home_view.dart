@@ -10,18 +10,23 @@ import 'package:kioku_navi/widgets/child/child_bottom_nav_bar.dart';
 import 'package:kioku_navi/widgets/child/child_app_bar.dart';
 import 'package:kioku_navi/widgets/course_section_widget.dart';
 import 'package:kioku_navi/generated/assets.gen.dart';
-import 'package:kioku_navi/generated/locales.g.dart';
 import 'package:kioku_navi/widgets/subject_selection_dialog.dart';
+import 'package:kioku_navi/utils/responsive_wrapper.dart';
+import 'package:kioku_navi/utils/app_constants.dart';
 
 class ChildHomeView extends GetView<ChildHomeController> {
   ChildHomeView({super.key});
 
   final GlobalKey _subjectButtonKey = GlobalKey();
+  final GlobalKey _sizedBoxKey = GlobalKey(); // Key to track SizedBox position
 
   @override
   Widget build(BuildContext context) {
     // Debug logging (can be removed in production)
     // AdaptiveSizes.logDeviceInfo(context);
+
+    // Set the SizedBox key for intersection detection
+    controller.setSizedBoxKey(_sizedBoxKey);
 
     // Get adaptive sizes
     final double buttonWidth = AdaptiveSizes.getGreenButtonWidth(context);
@@ -88,7 +93,7 @@ class ChildHomeView extends GetView<ChildHomeController> {
                     // Right part (label) with lesson information
                     Expanded(
                       child: CustomButton.primary(
-                        text: LocaleKeys.pages_home_lesson.tr,
+                        text: '',
                         buttonColor: const Color(0xFF57CC02),
                         shadowColor: const Color(0xFF47A302),
                         textColor: Colors.white,
@@ -100,13 +105,21 @@ class ChildHomeView extends GetView<ChildHomeController> {
                           left: Radius.circular(0),
                           right: Radius.circular(12),
                         ),
+                        icon: Padding(
+                          padding: const EdgeInsets.symmetric(horizontal: 12.0),
+                          child: Obx(() => _buildLessonText(context)),
+                        ),
                       ),
                     ),
                   ]),
                   // Scrollable course sections
-                  SizedBox(height: k2Double.hp),
+                  SizedBox(
+                    key: _sizedBoxKey,
+                    height: k2Double.hp,
+                  ),
                   Expanded(
                     child: Obx(() => SingleChildScrollView(
+                          controller: controller.scrollController,
                           child: Column(
                             children: _buildCourseSections(),
                           ),
@@ -123,16 +136,56 @@ class ChildHomeView extends GetView<ChildHomeController> {
     );
   }
 
+  Widget _buildLessonText(BuildContext context) {
+    final screenInfo = context.screenInfo;
+    final fontSize = ResponsivePatterns.bodyFontSize.getValue(screenInfo).sp;
+    
+    // Extract common text style to avoid duplication
+    final textStyle = TextStyle(
+      fontFamily: 'Hiragino Sans',
+      fontWeight: FontWeight.w800,
+      fontSize: fontSize,
+      color: Colors.white,
+      letterSpacing: AppSpacing.xxxs.sp,
+    );
+    
+    return Column(
+      mainAxisAlignment: MainAxisAlignment.center,
+      crossAxisAlignment: CrossAxisAlignment.center,
+      children: [
+        // Top line with grade and lesson number
+        Text(
+          '5年下・第18回',
+          style: textStyle,
+          textAlign: TextAlign.center,
+        ),
+        // Bottom line with dynamic chapter title
+        Text(
+          controller.currentVisibleChapter.value,
+          style: textStyle,
+          textAlign: TextAlign.center,
+          maxLines: 1,
+          overflow: TextOverflow.ellipsis,
+        ),
+      ],
+    );
+  }
+
   List<Widget> _buildCourseSections() {
-    final sections = controller.courseSections.map<Widget>((section) {
-      return CourseSectionWidget(
-        title: section.title,
-        isAlignedRight: section.isAlignedRight,
-        nodes: section.nodes,
-        showDolphin: section.showDolphin,
-        onTap: () => controller.onSectionTapped(section),
+    final sections = <Widget>[];
+    for (int i = 0; i < controller.courseSections.length; i++) {
+      final section = controller.courseSections[i];
+      sections.add(
+        CourseSectionWidget(
+          title: section.title,
+          isAlignedRight: section.isAlignedRight,
+          nodes: section.nodes,
+          showDolphin: section.showDolphin,
+          onTap: () => controller.onSectionTapped(section),
+          headerKey: controller.getSectionKey(i), // Pass key to header specifically
+        ),
       );
-    }).toList();
+    }
 
     // Add spacing between sections
     final spacedSections = <Widget>[];

@@ -1,3 +1,4 @@
+import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:kioku_navi/app/routes/app_pages.dart';
@@ -13,10 +14,38 @@ class ChildHomeController extends BaseController {
   // Currently selected subject
   final Rx<Subject> selectedSubject = Subject.comprehensive.obs;
 
+  // Scroll controller for tracking scroll position
+  final ScrollController scrollController = ScrollController();
+
+  // Current visible chapter title
+  final RxString currentVisibleChapter = ''.obs;
+
+  // Global keys for measuring section positions
+  final List<GlobalKey> sectionKeys = [];
+
+  // Key for the SizedBox that acts as intersection point
+  GlobalKey? _sizedBoxKey;
+
+  // Throttling for scroll events to improve performance
+  bool _isUpdating = false;
+
   @override
   void onInit() {
     super.onInit();
     _initializeCourseSections();
+    _initializeScrollTracking();
+  }
+
+  @override
+  void onReady() {
+    super.onReady();
+    _setupScrollListener();
+  }
+
+  @override
+  void onClose() {
+    scrollController.dispose();
+    super.onClose();
   }
 
   void _initializeCourseSections() {
@@ -200,6 +229,102 @@ class ChildHomeController extends BaseController {
         ],
       ),
     ]);
+
+    // Initialize section keys based on actual course sections count
+    sectionKeys.clear();
+    for (int i = 0; i < courseSections.length; i++) {
+      sectionKeys.add(GlobalKey());
+    }
+
+    // Set initial chapter title
+    if (courseSections.isNotEmpty) {
+      currentVisibleChapter.value = courseSections.first.title;
+    }
+  }
+
+  void _initializeScrollTracking() {
+    // Set initial chapter title
+    if (courseSections.isNotEmpty) {
+      currentVisibleChapter.value = courseSections.first.title;
+    }
+  }
+
+  void _setupScrollListener() {
+    scrollController.addListener(_onScroll);
+  }
+
+  void _onScroll() {
+    // Throttle scroll updates to improve performance
+    if (_isUpdating) return;
+    _isUpdating = true;
+    
+    // Use post frame callback to avoid blocking the UI thread
+    WidgetsBinding.instance.addPostFrameCallback((_) {
+      _updateVisibleChapter();
+      _isUpdating = false;
+    });
+  }
+
+  void _updateVisibleChapter() {
+    if (sectionKeys.isEmpty || courseSections.isEmpty || _sizedBoxKey == null) return;
+
+    try {
+      // Get the intersection point (SizedBox)
+      final sizedBoxContext = _sizedBoxKey!.currentContext;
+      if (sizedBoxContext == null) return;
+      
+      final sizedBoxRenderBox = sizedBoxContext.findRenderObject() as RenderBox?;
+      if (sizedBoxRenderBox == null) return;
+      
+      final sizedBoxPosition = sizedBoxRenderBox.localToGlobal(Offset.zero);
+      final sizedBoxCenter = sizedBoxPosition.dy + (sizedBoxRenderBox.size.height / 2);
+
+      String newChapter = courseSections.first.title; // Default to first chapter
+
+      // Find the last section header that has crossed the SizedBox center
+      // This ensures we keep the chapter active until the next one crosses
+      for (int i = 0; i < sectionKeys.length && i < courseSections.length; i++) {
+        final key = sectionKeys[i];
+        final context = key.currentContext;
+        if (context != null) {
+          final renderBox = context.findRenderObject() as RenderBox?;
+          if (renderBox != null) {
+            final headerPosition = renderBox.localToGlobal(Offset.zero);
+            final headerCenter = headerPosition.dy + (renderBox.size.height / 2);
+            
+            // Check if the section header center has passed the SizedBox center
+            // This means the header has crossed the intersection point
+            if (headerCenter <= sizedBoxCenter) {
+              newChapter = courseSections[i].title;
+              // Don't break - keep looking for the last header that crossed
+            }
+          }
+        }
+      }
+
+      if (currentVisibleChapter.value != newChapter) {
+        currentVisibleChapter.value = newChapter;
+      }
+    } catch (e, stackTrace) {
+      // Log errors during scroll tracking for debugging
+      if (kDebugMode) {
+        print('Error in _updateVisibleChapter: $e');
+        print('Stack trace: $stackTrace');
+      }
+    }
+  }
+
+  // Getter for section keys to be used in the view
+  GlobalKey getSectionKey(int index) {
+    if (index >= 0 && index < sectionKeys.length) {
+      return sectionKeys[index];
+    }
+    return GlobalKey(); // Return a new key as fallback
+  }
+
+  // Set the SizedBox key for intersection detection
+  void setSizedBoxKey(GlobalKey key) {
+    _sizedBoxKey = key;
   }
 
   void onSectionTapped(CourseSection section) {
