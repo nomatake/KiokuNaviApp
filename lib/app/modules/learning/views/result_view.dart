@@ -16,90 +16,104 @@ class ResultView extends GetView<LearningController> {
 
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-      body: SafeArea(
-        child: PaddedWrapper(
-          bottom: true,
-          child: IntrinsicHeightScrollView(
-            child: Center(
-              child: Column(
-                children: [
-                  Expanded(
-                    child: SizedBox(
-                      height: k10Double.hp,
+    return PopScope(
+      canPop: false,
+      onPopInvokedWithResult: (didPop, result) {
+        if (!didPop) {
+          // Delete the learning controller to ensure fresh session next time
+          Get.delete<LearningController>();
+          // Navigate to child home when back is pressed
+          Get.toNamed(Routes.CHILD_HOME);
+        }
+      },
+      child: Scaffold(
+        body: SafeArea(
+          child: PaddedWrapper(
+            bottom: true,
+            child: IntrinsicHeightScrollView(
+              child: Center(
+                child: Column(
+                  children: [
+                    Expanded(
+                      child: SizedBox(
+                        height: k10Double.hp,
+                      ),
                     ),
-                  ),
 
-                  // Dolphin logo
-                  Assets.images.logo.image(
-                    height: k100Double.sp,
-                    width: k100Double.sp,
-                    fit: BoxFit.contain,
-                  ),
-
-                  SizedBox(height: k2_5Double.hp),
-
-                  // Challenge complete text
-                  Text(
-                    LocaleKeys.pages_learning_result_title.tr,
-                    textAlign: TextAlign.center,
-                    style: TextStyle(
-                      fontFamily: 'Hiragino Sans',
-                      fontWeight: FontWeight.w800,
-                      fontSize: k24Double.sp,
-                      color: const Color(0xFF1976D2),
+                    // Dolphin logo
+                    Assets.images.logo.image(
+                      height: k100Double.sp,
+                      width: k100Double.sp,
+                      fit: BoxFit.contain,
                     ),
-                  ),
 
-                  SizedBox(height: k5Double.hp),
+                    SizedBox(height: k2_5Double.hp),
 
-                  // Stats cards row
-                  Padding(
-                    padding: EdgeInsets.symmetric(horizontal: k5Double.wp),
-                    child: Row(
-                      mainAxisAlignment: MainAxisAlignment.center,
-                      children: [
-                        Flexible(
-                          child: ResultStatCard.orange(
-                            value:
-                                '${controller.progressTracker.correctAnswers}/${controller.totalQuestions}',
-                            label: LocaleKeys.pages_learning_result_totalXP.tr,
+                    // Challenge complete text
+                    Text(
+                      LocaleKeys.pages_learning_result_title.tr,
+                      textAlign: TextAlign.center,
+                      style: TextStyle(
+                        fontFamily: 'Hiragino Sans',
+                        fontWeight: FontWeight.w800,
+                        fontSize: k24Double.sp,
+                        color: const Color(0xFF1976D2),
+                      ),
+                    ),
+
+                    SizedBox(height: k5Double.hp),
+
+                    // Stats cards row
+                    Padding(
+                      padding: EdgeInsets.symmetric(horizontal: k5Double.wp),
+                      child: Row(
+                        mainAxisAlignment: MainAxisAlignment.center,
+                        children: [
+                          Flexible(
+                            child: ResultStatCard.orange(
+                              value:
+                                  '${controller.progressTracker.correctAnswers}/${controller.totalQuestions}',
+                              label:
+                                  LocaleKeys.pages_learning_result_totalXP.tr,
+                            ),
                           ),
-                        ),
-                        SizedBox(width: k3Double.wp),
-                        Flexible(
-                          child: ResultStatCard.blue(
-                            value: controller.formattedTotalTime,
-                            label: LocaleKeys.pages_learning_result_time.tr,
+                          SizedBox(width: k3Double.wp),
+                          Flexible(
+                            child: ResultStatCard.blue(
+                              value: controller.formattedTotalTime,
+                              label: LocaleKeys.pages_learning_result_time.tr,
+                            ),
                           ),
-                        ),
-                        SizedBox(width: k3Double.wp),
-                        Flexible(
-                          child: ResultStatCard.green(
-                            value:
-                                '${controller.progressTracker.scorePercentage.toStringAsFixed(0)}%',
-                            label: LocaleKeys
-                                .pages_learning_result_accuracyRate.tr,
+                          SizedBox(width: k3Double.wp),
+                          Flexible(
+                            child: ResultStatCard.green(
+                              value:
+                                  '${controller.progressTracker.scorePercentage.toStringAsFixed(0)}%',
+                              label: LocaleKeys
+                                  .pages_learning_result_accuracyRate.tr,
+                            ),
                           ),
-                        ),
-                      ],
+                        ],
+                      ),
                     ),
-                  ),
 
-                  Expanded(
-                    child: SizedBox(
-                      height: k10Double.hp,
+                    Expanded(
+                      child: SizedBox(
+                        height: k10Double.hp,
+                      ),
                     ),
-                  ),
 
-                  // Get XP button
-                  CustomButton.orange(
-                    text: LocaleKeys.common_buttons_receiveXP.tr,
-                    onPressed: () {
-                      Get.toNamed(Routes.CONTINUOUS_PLAY_RECORD);
-                    },
-                  ),
-                ],
+                    // Get XP button
+                    CustomButton.orange(
+                      text: LocaleKeys.common_buttons_receiveXP.tr,
+                      onPressed: () {
+                        // Delete the learning controller to ensure fresh session next time
+                        Get.delete<LearningController>();
+                        Get.toNamed(Routes.CONTINUOUS_PLAY_RECORD);
+                      },
+                    ),
+                  ],
+                ),
               ),
             ),
           ),
