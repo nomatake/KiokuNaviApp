@@ -23,7 +23,7 @@ class Course {
 
   factory Course.fromJson(Map<String, dynamic> json) {
     return Course(
-      id: json['id'],
+      id: json['id'] as int,
       title: json['title'],
       description: json['description'],
       iconUrl: json['icon_url'],

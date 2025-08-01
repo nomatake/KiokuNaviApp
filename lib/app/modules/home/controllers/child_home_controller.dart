@@ -1,13 +1,21 @@
+import 'package:dynamic_icons/dynamic_icons.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:kioku_navi/app/routes/app_pages.dart';
 import 'package:kioku_navi/controllers/base_controller.dart';
-import 'package:kioku_navi/generated/locales.g.dart';
 import 'package:kioku_navi/widgets/course_section_widget.dart';
 import 'package:kioku_navi/widgets/subject_selection_dialog.dart';
 
+import '../models/models.dart';
+import '../services/child_api.dart';
+
 class ChildHomeController extends BaseController {
+  // API data
+  final RxList<Course> courses = <Course>[].obs;
+  final RxBool isLoadingData = true.obs;
+  final RxString loadingError = ''.obs;
+
   // Observable list of course sections
   final RxList<CourseSection> courseSections = <CourseSection>[].obs;
 
@@ -29,10 +37,14 @@ class ChildHomeController extends BaseController {
   // Throttling for scroll events to improve performance
   bool _isUpdating = false;
 
+  // Child API service
+  late final ChildApi _childApi;
+
   @override
   void onInit() {
     super.onInit();
-    _initializeCourseSections();
+    _childApi = Get.find<ChildApi>();
+    _loadChildHomeData();
     _initializeScrollTracking();
   }
 
@@ -48,188 +60,69 @@ class ChildHomeController extends BaseController {
     super.onClose();
   }
 
-  void _initializeCourseSections() {
-    courseSections.assignAll([
-      CourseSection(
-        title: LocaleKeys.pages_course_sections_start.tr,
-        isAlignedRight: true,
-        showDolphin: true,
-        nodes: [
-          CourseNode(
-            completionPercentage: 100.0,
-            customIcon: Icons.science,
-            id: 'start_1',
-          ),
-          CourseNode(
-            completionPercentage: 75.0,
-            customIcon: Icons.lightbulb,
-            id: 'start_2',
-          ),
-          CourseNode(
-            completionPercentage: 50.0,
-            customIcon: Icons.book,
-            id: 'start_3',
-          ),
-          CourseNode(
-            completionPercentage: 25.0,
-            customIcon: Icons.star,
-            id: 'start_4',
-          ),
-          CourseNode(
-            completionPercentage: 0.0,
-            customIcon: Icons.flag,
-            id: 'start_5',
-          ),
-          CourseNode(
-            completionPercentage: 0.0,
-            customIcon: Icons.celebration,
-            id: 'start_6',
-          ),
-        ],
-      ),
-      CourseSection(
-        title: LocaleKeys.pages_course_sections_basicLearning.tr,
-        isAlignedRight: false,
-        showDolphin: true,
-        nodes: [
-          CourseNode(
-            completionPercentage: 100.0,
-            customText: '1',
-            id: 'basic_1',
-          ),
-          CourseNode(
-            completionPercentage: 100.0,
-            customText: '2',
-            id: 'basic_2',
-          ),
-          CourseNode(
-            completionPercentage: 100.0,
-            customText: '3',
-            id: 'basic_3',
-          ),
-          CourseNode(
-            completionPercentage: 80.0,
-            customText: '4',
-            id: 'basic_4',
-          ),
-          CourseNode(
-            completionPercentage: 60.0,
-            customText: '5',
-            id: 'basic_5',
-          ),
-          CourseNode(
-            completionPercentage: 0.0,
-            customText: '6',
-            id: 'basic_6',
-          ),
-          CourseNode(
-            completionPercentage: 0.0,
-            customText: '7',
-            id: 'basic_7',
-          ),
-          CourseNode(
-            completionPercentage: 0.0,
-            customText: '8',
-            id: 'basic_8',
-          ),
-          CourseNode(
-            completionPercentage: 0.0,
-            customText: '9',
-            id: 'basic_9',
-          ),
-        ],
-      ),
-      CourseSection(
-        title: LocaleKeys.pages_course_sections_appliedProblems.tr,
-        isAlignedRight: true,
-        showDolphin: true,
-        nodes: [
-          CourseNode(
-            completionPercentage: 100.0,
-            customIcon: Icons.add,
-            id: 'advanced_1',
-          ),
-          CourseNode(
-            completionPercentage: 100.0,
-            customIcon: Icons.remove,
-            id: 'advanced_2',
-          ),
-          CourseNode(
-            completionPercentage: 90.0,
-            customIcon: Icons.close, // multiply
-            id: 'advanced_3',
-          ),
-          CourseNode(
-            completionPercentage: 70.0,
-            customText: '÷',
-            id: 'advanced_4',
-          ),
-          CourseNode(
-            completionPercentage: 30.0,
-            customIcon: Icons.functions,
-            id: 'advanced_5',
-          ),
-          CourseNode(
-            completionPercentage: 0.0,
-            customIcon: Icons.calculate,
-            id: 'advanced_6',
-          ),
-          CourseNode(
-            completionPercentage: 0.0,
-            customIcon: Icons.rule,
-            id: 'advanced_7',
-          ),
-        ],
-      ),
-      CourseSection(
-        title: LocaleKeys.pages_course_sections_practiceTest.tr,
-        isAlignedRight: false,
-        showDolphin: false,
-        nodes: [
-          CourseNode(
-            completionPercentage: 100.0,
-            customIcon: Icons.quiz,
-            id: 'test_1',
-          ),
-          CourseNode(
-            completionPercentage: 85.0,
-            customIcon: Icons.assignment,
-            id: 'test_2',
-          ),
-          CourseNode(
-            completionPercentage: 65.0,
-            customIcon: Icons.grading,
-            id: 'test_3',
-          ),
-          CourseNode(
-            completionPercentage: 40.0,
-            customIcon: Icons.school,
-            id: 'test_4',
-          ),
-          CourseNode(
-            completionPercentage: 0.0,
-            customIcon: Icons.emoji_events,
-            id: 'test_5',
-          ),
-          CourseNode(
-            completionPercentage: 0.0,
-            customIcon: Icons.military_tech,
-            id: 'test_6',
-          ),
-          CourseNode(
-            completionPercentage: 0.0,
-            customIcon: Icons.workspace_premium,
-            id: 'test_7',
-          ),
-          CourseNode(
-            completionPercentage: 0.0,
-            customIcon: Icons.diamond,
-            id: 'test_8',
-          ),
-        ],
-      ),
-    ]);
+  /// Load child home data from API
+  Future<void> _loadChildHomeData() async {
+    try {
+      isLoadingData.value = true;
+      loadingError.value = '';
+      
+      // Make API call to get child home data
+      final response = await _childApi.getChildHome();
+      
+      // Parse the response to get Course models
+      final courseData = response['data'] as List;
+      courses.assignAll(
+        courseData.map((courseJson) => Course.fromJson(courseJson)).toList(),
+      );
+      
+      // Convert API data to course sections for UI
+      _convertCoursesToSections();
+      
+      isLoadingData.value = false;
+    } catch (e) {
+      loadingError.value = 'Failed to load courses: $e';
+      isLoadingData.value = false;
+      
+      // Keep empty course sections on error - user can retry
+      courseSections.clear();
+    }
+  }
 
+  /// Convert API courses to CourseSection widgets
+  void _convertCoursesToSections() {
+    final sections = <CourseSection>[];
+    
+    for (int courseIndex = 0; courseIndex < courses.length; courseIndex++) {
+      final course = courses[courseIndex];
+      
+      if (course.chapters != null) {
+        for (int chapterIndex = 0; chapterIndex < course.chapters!.length; chapterIndex++) {
+          final chapter = course.chapters![chapterIndex];
+          
+          if (chapter.topics != null) {
+            final nodes = <CourseNode>[];
+            
+            for (final topic in chapter.topics!) {
+              nodes.add(CourseNode(
+                completionPercentage: _getTopicCompletionPercentage(topic.id),
+                customIcon: _getIconDataFromName(topic.iconText),
+                id: topic.id,
+              ));
+            }
+            
+            sections.add(CourseSection(
+              title: chapter.title,
+              isAlignedRight: chapterIndex % 2 == 1,
+              showDolphin: true,
+              nodes: nodes,
+            ));
+          }
+        }
+      }
+    }
+    
+    courseSections.assignAll(sections);
+    
     // Initialize section keys based on actual course sections count
     sectionKeys.clear();
     for (int i = 0; i < courseSections.length; i++) {
@@ -241,6 +134,41 @@ class ChildHomeController extends BaseController {
       currentVisibleChapter.value = courseSections.first.title;
     }
   }
+  
+  /// Get completion percentage for a topic (placeholder logic)
+  double _getTopicCompletionPercentage(int topicId) {
+    // TODO: Implement actual progress tracking logic
+    // For now, return random values for demonstration
+    final values = [0.0, 25.0, 50.0, 75.0, 100.0];
+    return values[topicId % values.length];
+  }
+
+  /// Convert icon name string to Material IconData
+  IconData? _getIconDataFromName(String? iconName) {
+    if (iconName == null || iconName.isEmpty) {
+      return Icons.help_outline; // Default icon
+    }
+
+    try {
+      // Get the Icon widget from dynamic_icons
+      final iconWidget = DynamicIcons.getIconFromName(iconName);
+      
+      // If the widget is returned, extract the IconData from it
+      if (iconWidget is Icon) {
+        return iconWidget.icon;
+      }
+      
+      // Fallback to default icon
+      return Icons.help_outline;
+    } catch (e) {
+      // If icon not found, return default icon
+      if (kDebugMode) {
+        print('Failed to find icon: $iconName, error: $e');
+      }
+      return Icons.help_outline;
+    }
+  }
+
 
   void _initializeScrollTracking() {
     // Set initial chapter title
@@ -327,17 +255,21 @@ class ChildHomeController extends BaseController {
     _sizedBoxKey = key;
   }
 
-  void onSectionTapped(CourseSection section) {
+  void onNodeTapped(CourseNode node) {
     Get.toNamed(Routes.QUESTION, arguments: {
-      'topicId': 1,
+      'topicId': node.id,
     });
   }
 
   void onSubjectSelected(Subject subject) {
     selectedSubject.value = subject;
-    // TODO: Update the course sections based on selected subject
-    // For now, just refresh the current sections
-    _initializeCourseSections();
+    // Filter courses based on selected subject and rebuild sections
+    _convertCoursesToSections();
+  }
+
+  /// Public method to reload child home data
+  Future<void> reloadData() async {
+    await _loadChildHomeData();
   }
 
   /// Updates the progress of a specific node in a course section

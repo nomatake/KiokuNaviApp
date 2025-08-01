@@ -47,11 +47,11 @@ class CustomLoader {
             type: Platform.isAndroid ? GFLoaderType.android : GFLoaderType.ios,
             size: GFSize.LARGE,
           ),
-          SizedBox(height: k3Double.hp),
+          SizedBox(height: k2_5Double.hp),
           Text(
             message,
-            style: const TextStyle(
-              fontSize: k16Double,
+            style: TextStyle(
+              fontSize: k10Double.sp,
               fontWeight: FontWeight.w500,
               color: Colors.black,
             ),

@@ -4,6 +4,7 @@ class Topic {
   final int id;
   final int chapterId;
   final String title;
+  final String? iconText;
   final String? description;
   final int order;
   final int? unlockLevel;
@@ -15,6 +16,7 @@ class Topic {
     required this.id,
     required this.chapterId,
     required this.title,
+    this.iconText,
     this.description,
     required this.order,
     this.unlockLevel,
@@ -25,12 +27,13 @@ class Topic {
 
   factory Topic.fromJson(Map<String, dynamic> json) {
     return Topic(
-      id: json['id'],
-      chapterId: json['chapter_id'],
+      id: json['id'] as int,
+      chapterId: json['chapter_id'] as int,
       title: json['title'],
+      iconText: json['icon_text'],
       description: json['description'],
-      order: json['order'],
-      unlockLevel: json['unlock_level'],
+      order: json['order'] as int,
+      unlockLevel: json['unlock_level'] as int?,
       createdAt: DateTime.parse(json['created_at']),
       updatedAt: DateTime.parse(json['updated_at']),
       contentBlocks: json['content_blocks'] != null
@@ -46,6 +49,7 @@ class Topic {
       'id': id,
       'chapter_id': chapterId,
       'title': title,
+      'icon_text': iconText,
       'description': description,
       'order': order,
       'unlock_level': unlockLevel,
@@ -63,6 +67,7 @@ class Topic {
         other.id == id &&
         other.chapterId == chapterId &&
         other.title == title &&
+        other.iconText == iconText &&
         other.description == description &&
         other.order == order &&
         other.unlockLevel == unlockLevel &&
@@ -75,6 +80,7 @@ class Topic {
     return id.hashCode ^
         chapterId.hashCode ^
         title.hashCode ^
+        iconText.hashCode ^
         description.hashCode ^
         order.hashCode ^
         unlockLevel.hashCode ^
@@ -84,13 +90,14 @@ class Topic {
 
   @override
   String toString() {
-    return 'Topic{id: $id, chapterId: $chapterId, title: $title, description: $description, order: $order, unlockLevel: $unlockLevel, createdAt: $createdAt, updatedAt: $updatedAt, contentBlocks: $contentBlocks}';
+    return 'Topic{id: $id, chapterId: $chapterId, title: $title, iconText: $iconText, description: $description, order: $order, unlockLevel: $unlockLevel, createdAt: $createdAt, updatedAt: $updatedAt, contentBlocks: $contentBlocks}';
   }
 
   Topic copyWith({
     int? id,
     int? chapterId,
     String? title,
+    String? iconText,
     String? description,
     int? order,
     int? unlockLevel,
@@ -102,6 +109,7 @@ class Topic {
       id: id ?? this.id,
       chapterId: chapterId ?? this.chapterId,
       title: title ?? this.title,
+      iconText: iconText ?? this.iconText,
       description: description ?? this.description,
       order: order ?? this.order,
       unlockLevel: unlockLevel ?? this.unlockLevel,

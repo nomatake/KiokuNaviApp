@@ -52,7 +52,6 @@ import 'package:kioku_navi/widgets/progress_node_widget.dart';
 class CourseSectionWidget extends StatelessWidget {
   // Constants for layout and styling
   static const int _defaultDolphinCount = 1;
-  static const int _minimumNodes = 6;
   static const int _nodesPerZigzag = 3;
 
   // Color constants
@@ -76,8 +75,8 @@ class CourseSectionWidget extends StatelessWidget {
   /// Number of dolphins to display (positioned at every 3rd node)
   final int dolphinCount;
 
-  /// Callback function executed when the widget is tapped
-  final VoidCallback? onTap;
+  /// Callback function executed when a specific node is tapped
+  final Function(CourseNode)? onNodeTap;
 
   /// Optional key for the section header to track scroll position
   final GlobalKey? headerKey;
@@ -94,7 +93,7 @@ class CourseSectionWidget extends StatelessWidget {
     required this.nodes,
     this.showDolphin = false,
     this.dolphinCount = _defaultDolphinCount,
-    this.onTap,
+    this.onNodeTap,
     this.headerKey,
   });
 
@@ -122,10 +121,9 @@ class CourseSectionWidget extends StatelessWidget {
     );
   }
 
-  /// Calculates the actual number of nodes to display.
-  /// Ensures a minimum number of nodes for proper visual appearance.
+  /// Returns the exact number of nodes from API data.
   int _calculateNodeCount() {
-    return nodes.length < _minimumNodes ? _minimumNodes : nodes.length;
+    return nodes.length;
   }
 
   /// Builds the section header with title and divider lines.
@@ -237,9 +235,8 @@ class CourseSectionWidget extends StatelessWidget {
     for (int i = 0; i < nodeCount; i++) {
       final NodePosition position = calculator.calculatePosition(i, context);
 
-      // Use the actual node data if available, otherwise create a default node
-      final CourseNode node =
-          i < nodes.length ? nodes[i] : CourseNode(completionPercentage: 0.0);
+      // Use the actual node data from API
+      final CourseNode node = nodes[i];
 
       icons.add(
         Positioned(
@@ -285,7 +282,7 @@ class CourseSectionWidget extends StatelessWidget {
       size: nodeSize,
       customIcon: node.customIcon,
       customText: node.customText,
-      onPressed: onTap,
+      onPressed: onNodeTap != null ? () => onNodeTap!(node) : null,
     );
   }
 
@@ -499,8 +496,8 @@ class CourseNode {
   /// Optional custom text to display on this node
   final String? customText;
 
-  /// Optional identifier for this node
-  final String? id;
+  /// Topic ID for this node
+  final int id;
 
   /// Creates a course node data model.
   ///
@@ -510,7 +507,7 @@ class CourseNode {
     this.completionPercentage = 0.0,
     this.customIcon,
     this.customText,
-    this.id,
+    required this.id,
   });
 }
 

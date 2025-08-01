@@ -150,7 +150,7 @@ class ProgressNodeWidget extends StatelessWidget {
     if (customText != null)
       return null; // Don't use icon if custom text is provided
 
-    final double iconSize = size * (10.0 / 18.0); // Bigger icons
+    final double iconSize = size * (6.0 / 18.0); // Smaller icons
 
     if (customIcon != null) {
       return Icon(

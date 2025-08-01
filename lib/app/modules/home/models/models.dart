@@ -1,0 +1,1 @@
+export 'package:kioku_navi/app/modules/learning/models/models.dart';
