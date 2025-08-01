@@ -27,6 +27,9 @@ class ChildHomeController extends BaseController {
 
   // Current visible chapter title
   final RxString currentVisibleChapter = ''.obs;
+  
+  // Current visible course title
+  final RxString currentVisibleCourse = ''.obs;
 
   // Global keys for measuring section positions
   final List<GlobalKey> sectionKeys = [];
@@ -132,6 +135,8 @@ class ChildHomeController extends BaseController {
     // Set initial chapter title
     if (courseSections.isNotEmpty) {
       currentVisibleChapter.value = courseSections.first.title;
+      // Set initial course title (find the course that contains the first chapter)
+      _updateVisibleCourse(courseSections.first.title);
     }
   }
   
@@ -232,12 +237,37 @@ class ChildHomeController extends BaseController {
 
       if (currentVisibleChapter.value != newChapter) {
         currentVisibleChapter.value = newChapter;
+        // Update current visible course based on the chapter
+        _updateVisibleCourse(newChapter);
       }
     } catch (e, stackTrace) {
       // Log errors during scroll tracking for debugging
       if (kDebugMode) {
         print('Error in _updateVisibleChapter: $e');
         print('Stack trace: $stackTrace');
+      }
+    }
+  }
+
+  /// Update the visible course based on the current chapter
+  void _updateVisibleCourse(String chapterTitle) {
+    try {
+      // Find which course contains the chapter with the given title
+      for (final course in courses) {
+        if (course.chapters != null) {
+          for (final chapter in course.chapters!) {
+            if (chapter.title == chapterTitle) {
+              if (currentVisibleCourse.value != course.title) {
+                currentVisibleCourse.value = course.title;
+              }
+              return;
+            }
+          }
+        }
+      }
+    } catch (e) {
+      if (kDebugMode) {
+        print('Error in _updateVisibleCourse: $e');
       }
     }
   }

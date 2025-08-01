@@ -153,12 +153,12 @@ class ChildHomeView extends GetView<ChildHomeController> {
       mainAxisAlignment: MainAxisAlignment.center,
       crossAxisAlignment: CrossAxisAlignment.center,
       children: [
-        // Top line with grade and lesson number
-        Text(
-          '5年下・第18回',
+        // Top line with dynamic course title
+        Obx(() => Text(
+          controller.currentVisibleCourse.value,
           style: textStyle,
           textAlign: TextAlign.center,
-        ),
+        )),
         // Bottom line with dynamic chapter title
         Text(
           controller.currentVisibleChapter.value,
