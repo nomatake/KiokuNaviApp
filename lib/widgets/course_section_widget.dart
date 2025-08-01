@@ -1,12 +1,13 @@
-import 'package:flutter/material.dart';
-import 'package:kioku_navi/utils/app_constants.dart';
-import 'package:kioku_navi/utils/sizes.dart';
-import 'package:kioku_navi/utils/extensions.dart';
-import 'package:kioku_navi/utils/adaptive_sizes.dart';
-import 'package:kioku_navi/generated/assets.gen.dart';
-import 'package:kioku_navi/widgets/progress_node_widget.dart';
-import 'package:kioku_navi/widgets/adaptive_dotted_background.dart';
 import 'dart:math';
+
+import 'package:flutter/material.dart';
+import 'package:kioku_navi/generated/assets.gen.dart';
+import 'package:kioku_navi/utils/adaptive_sizes.dart';
+import 'package:kioku_navi/utils/app_constants.dart';
+import 'package:kioku_navi/utils/extensions.dart';
+import 'package:kioku_navi/utils/sizes.dart';
+import 'package:kioku_navi/widgets/adaptive_dotted_background.dart';
+import 'package:kioku_navi/widgets/progress_node_widget.dart';
 
 /// A widget that displays a course section with a zigzag progress pattern.
 ///
@@ -113,8 +114,8 @@ class CourseSectionWidget extends StatelessWidget {
         children: [
           _buildSectionHeader(),
           SizedBox(
-              height: k2Double
-                  .hp), // Add space between header and progress section
+              height:
+                  k2Double.hp), // Add space between header and progress section
           _buildProgressSection(nodeCount, context),
         ],
       ),
@@ -149,7 +150,7 @@ class CourseSectionWidget extends StatelessWidget {
         child: headerRow,
       );
     }
-    
+
     return headerRow;
   }
 
@@ -213,7 +214,8 @@ class CourseSectionWidget extends StatelessWidget {
   }
 
   /// Builds the container for progress icons with calculated height.
-  Widget _buildProgressIcons(int nodeCount, double height, BuildContext context) {
+  Widget _buildProgressIcons(
+      int nodeCount, double height, BuildContext context) {
     return SizedBox(
       height: height,
       child: Stack(
@@ -226,9 +228,11 @@ class CourseSectionWidget extends StatelessWidget {
   ///
   /// Generates a list of positioned widgets forming a zigzag pattern.
   /// The pattern alternates direction every [_nodesPerZigzag] nodes.
-  List<Widget> _buildZigzagProgressPattern(int nodeCount, BuildContext context) {
+  List<Widget> _buildZigzagProgressPattern(
+      int nodeCount, BuildContext context) {
     final List<Widget> icons = [];
-    final ZigzagCalculator calculator = ZigzagCalculator(isAlignedRight, context);
+    final ZigzagCalculator calculator =
+        ZigzagCalculator(isAlignedRight, context);
 
     for (int i = 0; i < nodeCount; i++) {
       final NodePosition position = calculator.calculatePosition(i, context);
@@ -291,7 +295,8 @@ class CourseSectionWidget extends StatelessWidget {
   /// The number of dolphins is limited by [dolphinCount].
   List<Widget> _buildDolphins(int nodeCount, BuildContext context) {
     final List<Widget> dolphins = [];
-    final ZigzagCalculator calculator = ZigzagCalculator(isAlignedRight, context);
+    final ZigzagCalculator calculator =
+        ZigzagCalculator(isAlignedRight, context);
     final int maxDolphins = _calculateMaxDolphins(nodeCount);
     final int dolphinsToPlace =
         dolphinCount < maxDolphins ? dolphinCount : maxDolphins;
@@ -300,7 +305,8 @@ class CourseSectionWidget extends StatelessWidget {
 
     for (int i = 0; i < nodeCount && dolphinsPlaced < dolphinsToPlace; i++) {
       if (_shouldPlaceDolphinAtIndex(i)) {
-        final NodePosition nodePosition = calculator.calculatePosition(i, context);
+        final NodePosition nodePosition =
+            calculator.calculatePosition(i, context);
         final DolphinPosition dolphinPosition =
             _calculateDolphinPosition(nodePosition, context);
 
@@ -331,7 +337,8 @@ class CourseSectionWidget extends StatelessWidget {
   }
 
   /// Calculates the position for a dolphin based on the corresponding node position.
-  DolphinPosition _calculateDolphinPosition(NodePosition nodePosition, BuildContext context) {
+  DolphinPosition _calculateDolphinPosition(
+      NodePosition nodePosition, BuildContext context) {
     final double screenWidth = MediaQuery.of(context).size.width;
     final double padding = screenWidth * 0.06; // 6% of screen width
     final double availableWidth =
@@ -339,7 +346,7 @@ class CourseSectionWidget extends StatelessWidget {
     final double nodeSize = getAdaptiveNodeSize(context);
     final double centerX = availableWidth / 2 - nodeSize / 2;
     final double dolphinSize = k28Double.wp;
-    final double rightMargin = 0; // Remove margin to place at edge
+    final double rightMargin = 20; // Remove margin to place at edge
     final double leftMargin = 0; // Remove margin to place at edge
 
     // Adjust vertical position to center dolphin with node
@@ -425,7 +432,8 @@ class ZigzagCalculator {
 
   static double _calculateCenterX(BuildContext context) {
     final double availableWidth = _calculateAvailableWidth(context);
-    return availableWidth / 2 - CourseSectionWidget.getAdaptiveNodeSize(context) / 2;
+    return availableWidth / 2 -
+        CourseSectionWidget.getAdaptiveNodeSize(context) / 2;
   }
 
   /// Calculates the position of a node at the given index in the zigzag pattern.
