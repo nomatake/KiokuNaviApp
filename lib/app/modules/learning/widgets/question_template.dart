@@ -27,30 +27,21 @@ class QuestionTemplate extends GetView<LearningController> {
       // Select template based on question type
       switch (question.data.questionType.toLowerCase()) {
         case 'multiple_choice':
-        case 'multiple-choice':
           return MultipleChoiceTemplate(question: question);
           
         case 'multiple_select':
-        case 'multiple-select':
           return MultipleSelectTemplate(question: question);
           
         case 'true_false':
-        case 'true-false':
-        case 'true/false':
           return TrueFalseTemplate(question: question);
           
         case 'fill_blank':
-        case 'fill-blank':
-        case 'fill_in_the_blank':
           return FillBlankTemplate(question: question);
           
         case 'question_matching':
-        case 'question-matching':
-        case 'matching':
           return QuestionMatchingTemplate(question: question);
           
         case 'question_answer':
-        case 'question-answer':
           return QuestionAnswerTemplate(
             key: ValueKey(question.id),
             question: question,
@@ -59,10 +50,6 @@ class QuestionTemplate extends GetView<LearningController> {
         case 'ordering':
           return OrderingTemplate(question: question);
 
-        // Add more question types as needed
-        // case 'drag_drop':
-        //   return DragDropTemplate(question: question);
-          
         default:
           // Fallback to multiple choice for unknown types
           return Column(
