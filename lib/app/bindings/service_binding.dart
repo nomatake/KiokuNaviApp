@@ -2,6 +2,8 @@ import 'package:dio/dio.dart';
 import 'package:flutter/foundation.dart';
 import 'package:get/get.dart';
 import 'package:get_storage/get_storage.dart';
+import 'package:kioku_navi/app/modules/home/services/child_api.dart';
+import 'package:kioku_navi/app/modules/home/services/child_api_impl.dart';
 import 'package:kioku_navi/app/modules/learning/services/course_api.dart';
 import 'package:kioku_navi/app/modules/learning/services/course_api_impl.dart';
 import 'package:kioku_navi/config/config_store.dart';
@@ -77,6 +79,14 @@ class ServiceBinding extends Bindings {
     // Step 7: Course API Service (learning module)
     Get.lazyPut<CourseApi>(
       () => CourseApiImpl(
+        apiClient: Get.find<BaseApiClient>(),
+      ),
+      fenix: true,
+    );
+
+    // Step 8: Child API Service (home module)
+    Get.lazyPut<ChildApi>(
+      () => ChildApiImpl(
         apiClient: Get.find<BaseApiClient>(),
       ),
       fenix: true,

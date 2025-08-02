@@ -80,7 +80,7 @@ class _CustomTextFormFieldState extends State<CustomTextFormField> {
             floatingLabelBehavior: FloatingLabelBehavior.auto,
             labelText: widget.labelText,
             labelStyle: TextStyle(
-              color: widget.isLabelLight ? Colors.white : Colors.black,
+              color: widget.isLabelLight ? Colors.white : Colors.grey.shade500,
               fontSize: AppFontSize.caption.sp,
             ),
             contentPadding: EdgeInsets.symmetric(
@@ -91,7 +91,11 @@ class _CustomTextFormFieldState extends State<CustomTextFormField> {
             filled: true,
             fillColor: Colors.grey.shade50,
             hintText: null,
-            errorStyle: TextStyle(fontSize: AppFontSize.caption.sp),
+            errorStyle: TextStyle(
+              fontSize: AppFontSize.caption.sp,
+              height: 1.2,
+            ),
+            errorMaxLines: null, // Allow unlimited error lines
             suffixText: widget.suffixText,
             suffixIcon: widget.isPassword
                 ? ValueListenableBuilder<bool>(

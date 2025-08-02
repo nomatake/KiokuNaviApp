@@ -1,18 +1,24 @@
 import 'package:animated_custom_dropdown/custom_dropdown.dart';
 import 'package:flutter/material.dart';
+import 'package:kioku_navi/utils/app_constants.dart';
 import 'package:kioku_navi/utils/extensions.dart';
 import 'package:kioku_navi/utils/sizes.dart';
 
-class DropdownConfig {
-  static CustomDropdownDecoration get dropdownDecoration {
+/// Configuration class for CustomDropdown styling throughout the app
+class AppConfig {
+  /// Returns the standardized decoration for CustomDropdown widgets
+  static CustomDropdownDecoration get customDropdownDecoration {
     return CustomDropdownDecoration(
-      closedBorderRadius: BorderRadius.circular(k25Double),
-      closedErrorBorderRadius: BorderRadius.circular(k25Double),
+      closedBorderRadius: BorderRadius.circular(AppBorderRadius.md),
+      closedErrorBorderRadius: BorderRadius.circular(AppBorderRadius.md),
       closedBorder: Border.all(color: Colors.grey.shade300),
       closedErrorBorder:
-          Border.all(color: Colors.red.shade900, width: k1_05Double),
+          Border.all(color: Colors.red.shade900, width: 2.0),
       closedFillColor: Colors.grey.shade50,
-      errorStyle: TextStyle(fontSize: k9Double.sp),
+      errorStyle: TextStyle(
+        fontSize: AppFontSize.caption.sp,
+        color: Colors.red.shade900,
+      ),
       hintStyle: TextStyle(
         fontSize: k11Double.sp,
         color: Colors.grey.shade400,

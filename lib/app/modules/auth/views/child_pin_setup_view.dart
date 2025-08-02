@@ -1,17 +1,18 @@
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 import 'package:form_builder_validators/form_builder_validators.dart';
 import 'package:get/get.dart';
 import 'package:kioku_navi/app/modules/auth/controllers/family_auth_controller.dart';
 import 'package:kioku_navi/generated/locales.g.dart';
 import 'package:kioku_navi/utils/extensions.dart';
-import 'package:kioku_navi/utils/sizes.dart';
 import 'package:kioku_navi/utils/pin_validator.dart';
+import 'package:kioku_navi/utils/sizes.dart';
+import 'package:kioku_navi/widgets/custom_appbar.dart';
 import 'package:kioku_navi/widgets/custom_button.dart';
 import 'package:kioku_navi/widgets/custom_text_form_field.dart';
 import 'package:kioku_navi/widgets/custom_title_text.dart';
 import 'package:kioku_navi/widgets/intrinsic_height_scroll_view.dart';
 import 'package:kioku_navi/widgets/padded_wrapper.dart';
-import 'package:kioku_navi/widgets/custom_appbar.dart';
 
 class ChildPinSetupView extends GetView<FamilyAuthController> {
   const ChildPinSetupView({super.key});
@@ -77,7 +78,15 @@ class ChildPinSetupView extends GetView<FamilyAuthController> {
                         .pages_familyAuth_childPinSetup_pinPlaceholder.tr,
                     isPassword: true,
                     keyboardType: TextInputType.number,
-                    validator: PinValidator.validatePin,
+                    inputFormatters: [
+                      FilteringTextInputFormatter.digitsOnly,
+                      LengthLimitingTextInputFormatter(6),
+                    ],
+                    customValidators: [
+                      FormBuilderValidators.required(
+                          errorText: 'Please enter a PIN'),
+                      PinValidator.validatePin,
+                    ],
                   ),
                   SizedBox(height: k2Double.hp),
 
@@ -100,19 +109,22 @@ class ChildPinSetupView extends GetView<FamilyAuthController> {
                         .tr,
                     isPassword: true,
                     keyboardType: TextInputType.number,
-                    validator: (value) {
-                      // First validate as PIN
-                      final pinValidation = PinValidator.validatePin(value);
-                      if (pinValidation != null) return pinValidation;
-
-                      // Then check if matches
-                      if (value != controller.childPin.text) {
-                        return LocaleKeys
-                            .pages_familyAuth_profileCompletion_passwordMismatch
-                            .tr;
-                      }
-                      return null;
-                    },
+                    inputFormatters: [
+                      FilteringTextInputFormatter.digitsOnly,
+                      LengthLimitingTextInputFormatter(6),
+                    ],
+                    customValidators: [
+                      FormBuilderValidators.required(
+                          errorText: 'Please confirm your PIN'),
+                      (value) {
+                        if (value != controller.childPin.text) {
+                          return LocaleKeys
+                              .pages_familyAuth_profileCompletion_passwordMismatch
+                              .tr;
+                        }
+                        return null;
+                      },
+                    ],
                   ),
                   SizedBox(height: k4Double.hp),
 
@@ -169,6 +181,7 @@ class ChildPinSetupView extends GetView<FamilyAuthController> {
                         .pages_familyAuth_childPinSetup_createButton.tr,
                     onPressed: () => controller.setChildPin(context),
                   ),
+                  SizedBox(height: k3Double.hp),
                 ],
               ),
             ),

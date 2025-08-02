@@ -3,6 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:form_builder_validators/form_builder_validators.dart';
 import 'package:get/get.dart';
 import 'package:kioku_navi/generated/locales.g.dart';
+import 'package:kioku_navi/utils/app_constants.dart';
 import 'package:kioku_navi/utils/extensions.dart';
 import 'package:kioku_navi/utils/sizes.dart';
 
@@ -19,6 +20,7 @@ class CustomDatePickerFormField extends StatefulWidget {
     this.customValidators = const [],
     this.checkFormValidity,
     this.textInputAction = TextInputAction.next,
+    this.primaryColor = const Color(0xFF1976D2),
     super.key,
   });
 
@@ -33,6 +35,7 @@ class CustomDatePickerFormField extends StatefulWidget {
   final List<String? Function(String?)> customValidators;
   final VoidCallback? checkFormValidity;
   final TextInputAction textInputAction;
+  final Color primaryColor;
 
   @override
   State<CustomDatePickerFormField> createState() =>
@@ -41,7 +44,6 @@ class CustomDatePickerFormField extends StatefulWidget {
 
 class _CustomDatePickerFormFieldState extends State<CustomDatePickerFormField> {
   // Constants
-  static const Color _primaryColor = Color(0xFF1976D2);
   static const Color _dialogBackgroundColor = Color(0xFFF7F9FC);
   static const List<String> _japaneseWeekdayLabels = [
     LocaleKeys.common_weekdays_sun,
@@ -84,7 +86,7 @@ class _CustomDatePickerFormFieldState extends State<CustomDatePickerFormField> {
   }
 
   // Responsive text styles
-  static TextStyle _getPrimaryBoldTextStyle(BuildContext context) {
+  TextStyle _getPrimaryBoldTextStyle(BuildContext context) {
     final width = MediaQuery.of(context).size.width;
     final fontSize = width <= 428
         ? 16.0
@@ -93,7 +95,7 @@ class _CustomDatePickerFormFieldState extends State<CustomDatePickerFormField> {
             : 20.0;
 
     return TextStyle(
-      color: _primaryColor,
+      color: widget.primaryColor,
       fontWeight: FontWeight.bold,
       fontSize: fontSize,
     );
@@ -143,7 +145,7 @@ class _CustomDatePickerFormFieldState extends State<CustomDatePickerFormField> {
     );
   }
 
-  static TextStyle _getWeekdayTextStyle(BuildContext context) {
+  TextStyle _getWeekdayTextStyle(BuildContext context) {
     final width = MediaQuery.of(context).size.width;
     final fontSize = width <= 428
         ? 14.0
@@ -152,7 +154,7 @@ class _CustomDatePickerFormFieldState extends State<CustomDatePickerFormField> {
             : 18.0;
 
     return TextStyle(
-      color: _primaryColor,
+      color: widget.primaryColor,
       fontWeight: FontWeight.bold,
       fontSize: fontSize,
     );
@@ -220,7 +222,7 @@ class _CustomDatePickerFormFieldState extends State<CustomDatePickerFormField> {
         padding: arrowPadding,
         child: Icon(
           Icons.chevron_left,
-          color: _primaryColor,
+          color: widget.primaryColor,
           size: arrowIconSize,
         ),
       ),
@@ -228,15 +230,15 @@ class _CustomDatePickerFormFieldState extends State<CustomDatePickerFormField> {
         padding: arrowPadding,
         child: Icon(
           Icons.chevron_right,
-          color: _primaryColor,
+          color: widget.primaryColor,
           size: arrowIconSize,
         ),
       ),
 
       // Colors
-      selectedDayHighlightColor: _primaryColor,
-      daySplashColor: _primaryColor.withValues(alpha: 0.3),
-      selectedRangeHighlightColor: _primaryColor.withValues(alpha: 0.2),
+      selectedDayHighlightColor: widget.primaryColor,
+      daySplashColor: widget.primaryColor.withValues(alpha: 0.3),
+      selectedRangeHighlightColor: widget.primaryColor.withValues(alpha: 0.2),
 
       // Weekday configuration
       weekdayLabels: _japaneseWeekdayLabels.map((key) => key.tr).toList(),
@@ -294,14 +296,14 @@ class _CustomDatePickerFormFieldState extends State<CustomDatePickerFormField> {
     return TextFormField(
       controller: widget.textController,
       readOnly: true,
-      style: TextStyle(fontSize: k10Double.sp),
+      style: TextStyle(fontSize: AppFontSize.caption.sp),
       textInputAction: widget.textInputAction,
       decoration: InputDecoration(
         floatingLabelBehavior: FloatingLabelBehavior.auto,
         labelText: widget.labelText,
         labelStyle: TextStyle(
-          color: widget.isLabelLight ? Colors.white : Colors.black,
-          fontSize: k10Double.sp,
+          color: widget.isLabelLight ? Colors.white : Colors.grey.shade500,
+          fontSize: AppFontSize.caption.sp,
         ),
         contentPadding: EdgeInsets.symmetric(
             horizontal: k16Double.sp, vertical: verticalPadding),
@@ -310,8 +312,8 @@ class _CustomDatePickerFormFieldState extends State<CustomDatePickerFormField> {
         enabledBorder: _borderStyle(Colors.grey.shade300),
         filled: true,
         fillColor: Colors.grey.shade50,
-        hintText: widget.hintText,
-        errorStyle: TextStyle(fontSize: k9Double.sp),
+        hintText: null,
+        errorStyle: TextStyle(fontSize: AppFontSize.caption.sp),
         suffixIcon: Icon(
           Icons.calendar_today,
           color: Colors.grey.shade600,

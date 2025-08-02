@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 import 'package:form_builder_validators/form_builder_validators.dart';
 import 'package:get/get.dart';
 import 'package:kioku_navi/app/modules/auth/controllers/family_auth_controller.dart';
@@ -96,11 +97,17 @@ class OtpVerificationView extends GetView<FamilyAuthController> {
 
                   CustomTextFormField(
                     textController: controller.otp,
+                    labelText: LocaleKeys
+                        .pages_familyAuth_otpVerification_codeLabel.tr,
                     hintText: LocaleKeys
                         .pages_familyAuth_otpVerification_codePlaceholder.tr,
                     keyboardType: TextInputType.number,
                     textInputAction: TextInputAction.done,
-                    validator: FormBuilderValidators.compose([
+                    inputFormatters: [
+                      FilteringTextInputFormatter.digitsOnly,
+                      LengthLimitingTextInputFormatter(6),
+                    ],
+                    customValidators: [
                       FormBuilderValidators.required(
                           errorText: LocaleKeys
                               .pages_familyAuth_otpVerification_codeRequired
@@ -114,7 +121,7 @@ class OtpVerificationView extends GetView<FamilyAuthController> {
                       FormBuilderValidators.maxLength(6,
                           errorText: LocaleKeys
                               .pages_familyAuth_otpVerification_codeLength.tr),
-                    ]),
+                    ],
                   ),
 
                   const Spacer(),

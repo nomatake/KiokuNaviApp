@@ -75,11 +75,13 @@ class ParentPreRegistrationView extends GetView<FamilyAuthController> {
                   SizedBox(height: k1Double.hp),
                   CustomTextFormField(
                     textController: controller.email,
+                    labelText: LocaleKeys
+                        .pages_familyAuth_parentPreRegistration_emailLabel.tr,
                     hintText: LocaleKeys
                         .pages_familyAuth_parentPreRegistration_emailPlaceholder
                         .tr,
                     keyboardType: TextInputType.emailAddress,
-                    validator: FormBuilderValidators.compose([
+                    customValidators: [
                       FormBuilderValidators.required(
                           errorText: LocaleKeys
                               .pages_familyAuth_parentPreRegistration_emailRequired
@@ -88,7 +90,7 @@ class ParentPreRegistrationView extends GetView<FamilyAuthController> {
                           errorText: LocaleKeys
                               .pages_familyAuth_parentPreRegistration_invalidEmail
                               .tr),
-                    ]),
+                    ],
                   ),
                   SizedBox(height: k1_5Double.hp),
 

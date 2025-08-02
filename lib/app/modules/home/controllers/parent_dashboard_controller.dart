@@ -1,6 +1,11 @@
 import 'package:flutter/material.dart';
+import 'package:form_builder_validators/form_builder_validators.dart';
 import 'package:get/get.dart';
 import 'package:get_storage/get_storage.dart';
+import 'package:kioku_navi/utils/sizes.dart';
+import 'package:kioku_navi/utils/extensions.dart';
+import 'package:kioku_navi/widgets/custom_text_form_field.dart';
+import 'package:kioku_navi/widgets/custom_date_picker_form_field.dart';
 
 import 'package:kioku_navi/controllers/base_controller.dart';
 import 'package:kioku_navi/models/child_model.dart';
@@ -27,6 +32,7 @@ class ParentDashboardController extends BaseController {
   final user = Rx<UserModel?>(null);
   final isLoading = false.obs;
   final joinCodes = <int, JoinCode>{}.obs; // childId -> JoinCode
+  final selectedDates = <DateTime?>[].obs;
 
   // Prevent duplicate API calls
   bool _isLoadingFamilyData = false;
@@ -140,15 +146,13 @@ class ParentDashboardController extends BaseController {
       context: context,
       loaderMessage: 'Adding child...',
       onSuccess: () {
-        // Clear form only on success
-        childNickname.clear();
-        childBirthDate.clear();
-
         CustomSnackbar.showSuccess(
           title: 'Child Added!',
           message: 'Child has been added to your family.',
         );
         Get.back(); // Close dialog
+        // Reset form after successful API call and dialog close
+        _resetAddChildForm();
       },
       onError: (error) {
         // Extract specific validation message from API response
@@ -250,87 +254,171 @@ class ParentDashboardController extends BaseController {
   /// Show add child dialog
   void showAddChildDialog() {
     Get.dialog(
-      AlertDialog(
-        title: const Text('Add Child'),
-        content: Form(
-          key: addChildFormKey,
+      Dialog(
+        backgroundColor: Colors.white,
+        shape: RoundedRectangleBorder(
+          borderRadius: BorderRadius.circular(20),
+        ),
+        child: Container(
+          padding: EdgeInsets.all(k4Double.wp),
+          decoration: BoxDecoration(
+            color: Colors.white,
+            borderRadius: BorderRadius.circular(20),
+            boxShadow: [
+              BoxShadow(
+                color: Colors.black.withValues(alpha: 0.1),
+                blurRadius: 20,
+                offset: const Offset(0, 10),
+              ),
+            ],
+          ),
           child: Column(
             mainAxisSize: MainAxisSize.min,
+            crossAxisAlignment: CrossAxisAlignment.start,
             children: [
-              TextFormField(
-                controller: childNickname,
-                decoration: const InputDecoration(
-                  labelText: 'Nickname',
-                  hintText: 'Enter child\'s nickname',
+              // Title
+              Text(
+                'Add Child',
+                style: TextStyle(
+                  fontSize: k14Double.sp,
+                  fontWeight: FontWeight.w600,
+                  color: const Color(0xFF2E7D32),
                 ),
-                validator: (value) {
-                  if (value == null || value.trim().isEmpty) {
-                    return 'Please enter a nickname';
-                  }
-                  return null;
-                },
               ),
-              const SizedBox(height: 16),
-              TextFormField(
-                controller: childBirthDate,
-                decoration: const InputDecoration(
-                  labelText: 'Birth Date',
-                  hintText: 'Tap to select date',
-                  suffixIcon: Icon(Icons.calendar_today),
+              SizedBox(height: k2Double.hp),
+              
+              // Form
+              Form(
+                key: addChildFormKey,
+                child: Column(
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: [
+                    // Nickname Field
+                    CustomTextFormField(
+                      textController: childNickname,
+                      labelText: 'Nickname',
+                      hintText: 'Enter child\'s nickname',
+                      textInputAction: TextInputAction.next,
+                      customValidators: [
+                        FormBuilderValidators.required(
+                            errorText: 'Please enter a nickname'),
+                      ],
+                    ),
+                    SizedBox(height: k1_5Double.hp),
+                    
+                    // Birth Date Field
+                    CustomDatePickerFormField(
+                      textController: childBirthDate,
+                      selectedDates: selectedDates,
+                      onDateSelected: onDateSelected,
+                      labelText: 'Birth Date',
+                      hintText: 'Tap to select date',
+                      primaryColor: const Color(0xFF2E7D32),
+                      customValidators: [
+                        FormBuilderValidators.required(
+                            errorText: 'Please select birth date'),
+                        (value) {
+                          if (value == null || value.trim().isEmpty) {
+                            return 'Please select birth date';
+                          }
+                          try {
+                            final birthDate = DateTime.parse(value);
+                            final age = calculateAge(birthDate);
+                            if (age >= 18) {
+                              return 'Child must be under 18 years old';
+                            }
+                            return null;
+                          } catch (e) {
+                            return 'Please select a valid date';
+                          }
+                        },
+                      ],
+                    ),
+                  ],
                 ),
-                readOnly: true,
-                onTap: _selectBirthDate,
-                validator: (value) {
-                  if (value == null || value.trim().isEmpty) {
-                    return 'Please select birth date';
-                  }
-                  try {
-                    final birthDate = DateTime.parse(value);
-                    final age = calculateAge(birthDate);
-                    if (age >= 18) {
-                      return 'Child must be under 18 years old';
-                    }
-                    return null;
-                  } catch (e) {
-                    return 'Please select a valid date';
-                  }
-                },
+              ),
+              
+              SizedBox(height: k3Double.hp),
+              
+              // Action Buttons
+              Row(
+                children: [
+                  Expanded(
+                    child: ElevatedButton(
+                      onPressed: () => Get.back(),
+                      style: ElevatedButton.styleFrom(
+                        backgroundColor: Colors.grey[300],
+                        padding: EdgeInsets.symmetric(
+                          vertical: k1Double.hp,
+                          horizontal: k2Double.wp,
+                        ),
+                        shape: RoundedRectangleBorder(
+                          borderRadius: BorderRadius.circular(8),
+                        ),
+                        elevation: 0,
+                      ),
+                      child: Text(
+                        'Cancel',
+                        style: TextStyle(
+                          fontSize: k10Double.sp,
+                          fontWeight: FontWeight.w500,
+                          color: Colors.grey[700],
+                        ),
+                      ),
+                    ),
+                  ),
+                  SizedBox(width: k4Double.wp),
+                  Expanded(
+                    child: ElevatedButton(
+                      onPressed: addChild,
+                      style: ElevatedButton.styleFrom(
+                        backgroundColor: const Color(0xFF2E7D32),
+                        padding: EdgeInsets.symmetric(
+                          vertical: k1Double.hp,
+                          horizontal: k2Double.wp,
+                        ),
+                        shape: RoundedRectangleBorder(
+                          borderRadius: BorderRadius.circular(8),
+                        ),
+                        elevation: 0,
+                      ),
+                      child: Text(
+                        'Add Child',
+                        style: TextStyle(
+                          fontSize: k10Double.sp,
+                          fontWeight: FontWeight.w600,
+                          color: Colors.white,
+                        ),
+                      ),
+                    ),
+                  ),
+                ],
               ),
             ],
           ),
         ),
-        actions: [
-          TextButton(
-            onPressed: () => Get.back(),
-            child: const Text('Cancel'),
-          ),
-          ElevatedButton(
-            onPressed: addChild,
-            child: const Text('Add Child'),
-          ),
-        ],
       ),
-    );
+      barrierDismissible: true,
+    ).then((_) {
+      // Reset form when dialog is dismissed by tapping outside or back button
+      _resetAddChildForm();
+    });
   }
 
-  /// Select birth date using date picker
-  Future<void> _selectBirthDate() async {
-    final now = DateTime.now();
-    final eighteenYearsAgo = DateTime(now.year - 18, now.month, now.day);
-
-    final selectedDate = await Get.dialog<DateTime>(
-      DatePickerDialog(
-        initialDate: DateTime(
-            now.year - 8, now.month, now.day), // Default to 8 years old
-        firstDate: DateTime(now.year - 17, now.month, now.day), // Just under 18
-        lastDate: now, // Cannot be in the future
-      ),
-    );
-
-    if (selectedDate != null) {
-      childBirthDate.text =
-          selectedDate.toIso8601String().split('T')[0]; // YYYY-MM-DD format
+  /// Handle date selection for child birth date
+  void onDateSelected(List<DateTime?> dates) {
+    if (dates.isNotEmpty && dates.first != null) {
+      selectedDates.value = dates;
+      childBirthDate.text = dates.first!.toIso8601String().split('T')[0];
     }
+  }
+
+  /// Reset add child form fields
+  void _resetAddChildForm() {
+    // Set controller values to empty strings instead of clearing
+    childNickname.text = '';
+    childBirthDate.text = '';  
+    selectedDates.value = [];
   }
 
   /// Calculate age from birth date

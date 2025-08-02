@@ -1,18 +1,21 @@
+import 'package:animated_custom_dropdown/custom_dropdown.dart';
 import 'package:flutter/material.dart';
 import 'package:form_builder_validators/form_builder_validators.dart';
 import 'package:get/get.dart';
 import 'package:kioku_navi/app/modules/auth/controllers/family_auth_controller.dart';
+import 'package:kioku_navi/config/dropdown_config.dart';
 import 'package:kioku_navi/generated/locales.g.dart';
+import 'package:kioku_navi/utils/app_constants.dart';
 import 'package:kioku_navi/utils/extensions.dart';
 import 'package:kioku_navi/utils/sizes.dart';
+import 'package:kioku_navi/widgets/custom_appbar.dart';
 import 'package:kioku_navi/widgets/custom_button.dart';
 import 'package:kioku_navi/widgets/custom_text_form_field.dart';
 import 'package:kioku_navi/widgets/custom_title_text.dart';
-
 import 'package:kioku_navi/widgets/padded_wrapper.dart';
-import 'package:kioku_navi/widgets/custom_appbar.dart';
-import '../../../../models/user_model.dart';
+
 import '../../../../models/family_model.dart';
+import '../../../../models/user_model.dart';
 
 class ParentProfileCompletionView extends GetView<FamilyAuthController> {
   const ParentProfileCompletionView({super.key});
@@ -81,11 +84,13 @@ class ParentProfileCompletionView extends GetView<FamilyAuthController> {
                         SizedBox(height: k1Double.hp),
                         CustomTextFormField(
                           textController: controller.parentName,
+                          labelText: LocaleKeys
+                              .pages_familyAuth_profileCompletion_nameLabel.tr,
                           hintText: LocaleKeys
                               .pages_familyAuth_profileCompletion_namePlaceholder
                               .tr,
                           keyboardType: TextInputType.name,
-                          validator: FormBuilderValidators.compose([
+                          customValidators: [
                             FormBuilderValidators.required(
                                 errorText: LocaleKeys
                                     .pages_familyAuth_profileCompletion_nameRequired
@@ -94,7 +99,7 @@ class ParentProfileCompletionView extends GetView<FamilyAuthController> {
                                 errorText: LocaleKeys
                                     .pages_familyAuth_profileCompletion_nameMinLength
                                     .tr),
-                          ]),
+                          ],
                         ),
                         SizedBox(height: k2Double.hp),
 
@@ -110,63 +115,54 @@ class ParentProfileCompletionView extends GetView<FamilyAuthController> {
                           ),
                         ),
                         SizedBox(height: k1Double.hp),
-                        Obx(() => DropdownButtonFormField<RelationshipType>(
-                              value: controller.selectedRelationship.value,
-                              decoration: InputDecoration(
-                                hintText: LocaleKeys
-                                    .pages_familyAuth_profileCompletion_relationshipPlaceholder
-                                    .tr,
-                                border: OutlineInputBorder(
-                                  borderRadius:
-                                      BorderRadius.circular(k1Double.hp),
-                                  borderSide:
-                                      BorderSide(color: Color(0xFFE0E0E0)),
+                        Obx(() {
+                          final selectedRelationship =
+                              controller.selectedRelationship.value;
+                          return CustomDropdown<RelationshipType>(
+                            hintText: LocaleKeys
+                                .pages_familyAuth_profileCompletion_relationshipPlaceholder
+                                .tr,
+                            items: RelationshipType.values,
+                            initialItem: selectedRelationship,
+                            onChanged: (RelationshipType? value) {
+                              controller.selectedRelationship.value = value;
+                            },
+                            validator: (value) {
+                              if (value == null) {
+                                return LocaleKeys
+                                    .pages_familyAuth_profileCompletion_relationshipRequired
+                                    .tr;
+                              }
+                              return null;
+                            },
+                            closedHeaderPadding: EdgeInsets.symmetric(
+                              horizontal: AppSpacing.lg,
+                              vertical: AppSpacing.sm,
+                            ),
+                            decoration: AppConfig.customDropdownDecoration,
+                            listItemBuilder:
+                                (context, item, isSelected, onItemSelect) {
+                              return Text(
+                                item.value[0].toUpperCase() +
+                                    item.value.substring(1),
+                                style: TextStyle(
+                                  fontSize: k12Double.sp,
+                                  color: Color(0xFF212121),
                                 ),
-                                enabledBorder: OutlineInputBorder(
-                                  borderRadius:
-                                      BorderRadius.circular(k1Double.hp),
-                                  borderSide:
-                                      BorderSide(color: Color(0xFFE0E0E0)),
+                              );
+                            },
+                            headerBuilder: (context, selectedItem, enabled) {
+                              return Text(
+                                selectedItem.value[0].toUpperCase() +
+                                    selectedItem.value.substring(1),
+                                style: TextStyle(
+                                  fontSize: k10Double.sp,
+                                  color: Color(0xFF212121),
                                 ),
-                                focusedBorder: OutlineInputBorder(
-                                  borderRadius:
-                                      BorderRadius.circular(k1Double.hp),
-                                  borderSide: BorderSide(
-                                      color: Color(0xFF1976D2), width: 2),
-                                ),
-                                filled: true,
-                                fillColor: Colors.white,
-                                contentPadding: EdgeInsets.symmetric(
-                                  horizontal: k2Double.hp,
-                                  vertical: k1_5Double.hp,
-                                ),
-                              ),
-                              items: RelationshipType.values
-                                  .map((RelationshipType relationship) {
-                                return DropdownMenuItem<RelationshipType>(
-                                  value: relationship,
-                                  child: Text(
-                                    relationship.value[0].toUpperCase() +
-                                        relationship.value.substring(1),
-                                    style: TextStyle(
-                                      fontSize: k14Double.sp,
-                                      color: Color(0xFF212121),
-                                    ),
-                                  ),
-                                );
-                              }).toList(),
-                              onChanged: (RelationshipType? value) {
-                                controller.selectedRelationship.value = value;
-                              },
-                              validator: (value) {
-                                if (value == null) {
-                                  return LocaleKeys
-                                      .pages_familyAuth_profileCompletion_relationshipRequired
-                                      .tr;
-                                }
-                                return null;
-                              },
-                            )),
+                              );
+                            },
+                          );
+                        }),
                         SizedBox(height: k2Double.hp),
 
                         // Device Mode Selection
@@ -236,11 +232,14 @@ class ParentProfileCompletionView extends GetView<FamilyAuthController> {
                         SizedBox(height: k1Double.hp),
                         CustomTextFormField(
                           textController: controller.password,
+                          labelText: LocaleKeys
+                              .pages_familyAuth_profileCompletion_passwordLabel
+                              .tr,
                           hintText: LocaleKeys
                               .pages_familyAuth_profileCompletion_passwordPlaceholder
                               .tr,
                           isPassword: true,
-                          validator: FormBuilderValidators.compose([
+                          customValidators: [
                             FormBuilderValidators.required(
                                 errorText: LocaleKeys
                                     .pages_familyAuth_profileCompletion_passwordRequired
@@ -249,7 +248,7 @@ class ParentProfileCompletionView extends GetView<FamilyAuthController> {
                                 errorText: LocaleKeys
                                     .pages_familyAuth_profileCompletion_passwordMinLength
                                     .tr),
-                          ]),
+                          ],
                         ),
                         SizedBox(height: k2Double.hp),
 
@@ -267,11 +266,14 @@ class ParentProfileCompletionView extends GetView<FamilyAuthController> {
                         SizedBox(height: k1Double.hp),
                         CustomTextFormField(
                           textController: controller.passwordConfirmation,
+                          labelText: LocaleKeys
+                              .pages_familyAuth_profileCompletion_confirmPasswordLabel
+                              .tr,
                           hintText: LocaleKeys
                               .pages_familyAuth_profileCompletion_confirmPasswordPlaceholder
                               .tr,
                           isPassword: true,
-                          validator: FormBuilderValidators.compose([
+                          customValidators: [
                             FormBuilderValidators.required(
                                 errorText: LocaleKeys
                                     .pages_familyAuth_profileCompletion_confirmPasswordRequired
@@ -284,7 +286,7 @@ class ParentProfileCompletionView extends GetView<FamilyAuthController> {
                               }
                               return null;
                             },
-                          ]),
+                          ],
                         ),
                         SizedBox(height: k2Double.hp),
                       ],
