@@ -323,8 +323,8 @@ class AdaptiveSizes {
             : -20.0; // More overlap to remove the gap
       case DeviceType.phone:
         return landscape
-            ? -30.0 // More overlap in landscape
-            : -50.0; // Extreme overlap to bring dialog much higher on phones in portrait
+            ? -20.0 // Reduced overlap in landscape
+            : -30.0; // Reduced overlap to bring dialog closer but not too close
     }
   }
 

@@ -31,8 +31,8 @@ class ChildHomeController extends BaseController {
   // Current visible course title
   final RxString currentVisibleCourse = ''.obs;
 
-  // Global keys for measuring section positions
-  final List<GlobalKey> sectionKeys = [];
+  // Global keys for measuring last node positions
+  final List<GlobalKey> lastNodeKeys = [];
 
   // Key for the SizedBox that acts as intersection point
   GlobalKey? _sizedBoxKey;
@@ -126,10 +126,10 @@ class ChildHomeController extends BaseController {
     
     courseSections.assignAll(sections);
     
-    // Initialize section keys based on actual course sections count
-    sectionKeys.clear();
+    // Initialize last node keys based on actual course sections count
+    lastNodeKeys.clear();
     for (int i = 0; i < courseSections.length; i++) {
-      sectionKeys.add(GlobalKey());
+      lastNodeKeys.add(GlobalKey());
     }
 
     // Set initial chapter title
@@ -197,7 +197,7 @@ class ChildHomeController extends BaseController {
   }
 
   void _updateVisibleChapter() {
-    if (sectionKeys.isEmpty || courseSections.isEmpty || _sizedBoxKey == null) return;
+    if (lastNodeKeys.isEmpty || courseSections.isEmpty || _sizedBoxKey == null) return;
 
     try {
       // Get the intersection point (SizedBox)
@@ -212,26 +212,39 @@ class ChildHomeController extends BaseController {
 
       String newChapter = courseSections.first.title; // Default to first chapter
 
-      // Find the last section header that has crossed the SizedBox center
-      // This ensures we keep the chapter active until the next one crosses
-      for (int i = 0; i < sectionKeys.length && i < courseSections.length; i++) {
-        final key = sectionKeys[i];
+      // Find the last chapter whose last node has crossed the intersection point
+      int lastCrossedChapterIndex = -1;
+      
+      for (int i = 0; i < lastNodeKeys.length && i < courseSections.length; i++) {
+        final key = lastNodeKeys[i];
         final context = key.currentContext;
         if (context != null) {
           final renderBox = context.findRenderObject() as RenderBox?;
           if (renderBox != null) {
-            final headerPosition = renderBox.localToGlobal(Offset.zero);
-            final headerCenter = headerPosition.dy + (renderBox.size.height / 2);
+            final nodePosition = renderBox.localToGlobal(Offset.zero);
+            final nodeBottom = nodePosition.dy + renderBox.size.height;
             
-            // Check if the section header center has passed the SizedBox center
-            // This means the header has crossed the intersection point
-            if (headerCenter <= sizedBoxCenter) {
-              newChapter = courseSections[i].title;
-              // Don't break - keep looking for the last header that crossed
+            // Check if the last node has completely passed the SizedBox center
+            if (nodeBottom <= sizedBoxCenter) {
+              lastCrossedChapterIndex = i;
+              // Don't break - keep looking for the last chapter that crossed
             }
           }
         }
       }
+
+      // Show the next chapter's title after the last crossed chapter
+      if (lastCrossedChapterIndex >= 0) {
+        int nextChapterIndex = lastCrossedChapterIndex + 1;
+        if (nextChapterIndex < courseSections.length) {
+          // Show the next chapter's title
+          newChapter = courseSections[nextChapterIndex].title;
+        } else {
+          // If we've crossed the last chapter's last node, keep showing the last chapter
+          newChapter = courseSections[lastCrossedChapterIndex].title;
+        }
+      }
+      // If no chapter's last node has crossed, keep showing the first chapter (default)
 
       if (currentVisibleChapter.value != newChapter) {
         currentVisibleChapter.value = newChapter;
@@ -270,10 +283,10 @@ class ChildHomeController extends BaseController {
     }
   }
 
-  // Getter for section keys to be used in the view
-  GlobalKey getSectionKey(int index) {
-    if (index >= 0 && index < sectionKeys.length) {
-      return sectionKeys[index];
+  // Getter for last node keys to be used in the view
+  GlobalKey getLastNodeKey(int index) {
+    if (index >= 0 && index < lastNodeKeys.length) {
+      return lastNodeKeys[index];
     }
     return GlobalKey(); // Return a new key as fallback
   }

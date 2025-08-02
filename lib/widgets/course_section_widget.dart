@@ -81,6 +81,9 @@ class CourseSectionWidget extends StatelessWidget {
   /// Optional key for the section header to track scroll position
   final GlobalKey? headerKey;
 
+  /// Optional key for the last node to track chapter completion
+  final GlobalKey? lastNodeKey;
+
   /// Creates a course section widget with progress indicators.
   ///
   /// The [title], [isAlignedRight], and [nodes] parameters are required.
@@ -95,6 +98,7 @@ class CourseSectionWidget extends StatelessWidget {
     this.dolphinCount = _defaultDolphinCount,
     this.onNodeTap,
     this.headerKey,
+    this.lastNodeKey,
   });
 
   /// Gets the adaptive node size based on screen width
@@ -259,17 +263,22 @@ class CourseSectionWidget extends StatelessWidget {
   /// Builds a single progress node with the specified node data.
   ///
   /// Creates a circular progress indicator using the ProgressNodeWidget.
+  /// If this is the last node and lastNodeKey is provided, assigns the key for tracking.
   Widget _buildProgressNode(CourseNode node, int index, BuildContext context) {
     final NodeState state = _determineNodeState(node, index);
     final double nodeSize = getAdaptiveNodeSize(context);
+    final bool isLastNode = index == nodes.length - 1;
 
-    return ProgressNodeWidget(
-      state: state,
-      completionPercentage: node.completionPercentage,
-      size: nodeSize,
-      customIcon: node.customIcon,
-      customText: node.customText,
-      onPressed: onNodeTap != null ? () => onNodeTap!(node) : null,
+    return Container(
+      key: isLastNode ? lastNodeKey : null, // Assign key to last node for tracking
+      child: ProgressNodeWidget(
+        state: state,
+        completionPercentage: node.completionPercentage,
+        size: nodeSize,
+        customIcon: node.customIcon,
+        customText: node.customText,
+        onPressed: onNodeTap != null ? () => onNodeTap!(node) : null,
+      ),
     );
   }
 
