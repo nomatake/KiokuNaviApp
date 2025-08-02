@@ -92,10 +92,10 @@ class AdaptiveSizes {
       case DeviceType.largeTablet:
       case DeviceType.tablet:
         return landscape
-            ? k22Double.hp
-            : k12Double.hp; // More spacing in landscape
+            ? k18Double.hp // 15% reduction from k22Double.hp
+            : k10Double.hp; // 15% reduction from k12Double.hp
       case DeviceType.phone:
-        return k12Double.hp; // Original spacing
+        return k10Double.hp; // 15% reduction from k12Double.hp
     }
   }
 

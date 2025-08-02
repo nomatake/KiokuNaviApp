@@ -76,23 +76,23 @@ class ProgressNodeWidget extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    // If there's active progress, show progress indicator around the button
-    if (state == NodeState.active && completionPercentage < 100.0) {
-      final double adaptivePadding = getAdaptivePadding(context, size);
+    // Progress indicator disabled - just show the button
+    // if (state == NodeState.active && completionPercentage < 100.0) {
+    //   final double adaptivePadding = getAdaptivePadding(context, size);
 
-      return Stack(
-        alignment: Alignment.center,
-        children: [
-          _buildActiveNodeProgress(context),
-          Padding(
-            padding: EdgeInsets.all(adaptivePadding), // Adaptive padding
-            child: _buildRoundedButton(),
-          ),
-        ],
-      );
-    }
+    //   return Stack(
+    //     alignment: Alignment.center,
+    //     children: [
+    //       _buildActiveNodeProgress(context),
+    //       Padding(
+    //         padding: EdgeInsets.all(adaptivePadding), // Adaptive padding
+    //         child: _buildRoundedButton(),
+    //       ),
+    //     ],
+    //   );
+    // }
 
-    // Otherwise, just return the button
+    // For all nodes, just show the button without progress ring
     return _buildRoundedButton();
   }
 

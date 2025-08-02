@@ -140,12 +140,10 @@ class ChildHomeController extends BaseController {
     }
   }
   
-  /// Get completion percentage for a topic (placeholder logic)
+  /// Get completion percentage for a topic (disabled for now)
   double _getTopicCompletionPercentage(int topicId) {
-    // TODO: Implement actual progress tracking logic
-    // For now, return random values for demonstration
-    final values = [0.0, 25.0, 50.0, 75.0, 100.0];
-    return values[topicId % values.length];
+    // Progress display disabled - all nodes show as active
+    return 0.0;
   }
 
   /// Convert icon name string to Material IconData

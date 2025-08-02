@@ -250,23 +250,10 @@ class CourseSectionWidget extends StatelessWidget {
     return icons;
   }
 
-  /// Determines the state of a progress node based on its completion percentage and position.
+  /// Determines the state of a progress node (progress display disabled).
   NodeState _determineNodeState(CourseNode node, int index) {
-    if (node.completionPercentage >= 100.0) {
-      return NodeState.completed;
-    } else if (node.completionPercentage > 0.0) {
-      return NodeState.active;
-    } else {
-      // Find the first incomplete node and make it active
-      int firstIncompleteIndex =
-          nodes.indexWhere((n) => n.completionPercentage < 100.0);
-      if (firstIncompleteIndex == -1) firstIncompleteIndex = 0; // fallback
-
-      // The first incomplete node should be active, others should be locked
-      return index == firstIncompleteIndex
-          ? NodeState.active
-          : NodeState.locked;
-    }
+    // Progress display disabled - all nodes show as active
+    return NodeState.active;
   }
 
   /// Builds a single progress node with the specified node data.
