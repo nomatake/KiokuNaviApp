@@ -273,10 +273,10 @@ class CourseSectionWidget extends StatelessWidget {
     );
   }
 
-  /// Builds dolphins positioned at specific intervals in the zigzag pattern.
+  /// Builds dolphins positioned at zigzag transition points.
   ///
-  /// Places dolphins next to every 3rd node (index 2 in each group of 3).
-  /// The number of dolphins is limited by [dolphinCount].
+  /// Places dolphins at transition points between direction changes in the zigzag pattern.
+  /// Better visual placement than placing directly on nodes.
   List<Widget> _buildDolphins(int nodeCount, BuildContext context) {
     final List<Widget> dolphins = [];
     final ZigzagCalculator calculator =
@@ -288,11 +288,10 @@ class CourseSectionWidget extends StatelessWidget {
     int dolphinsPlaced = 0;
 
     for (int i = 0; i < nodeCount && dolphinsPlaced < dolphinsToPlace; i++) {
-      if (_shouldPlaceDolphinAtIndex(i)) {
-        final NodePosition nodePosition =
-            calculator.calculatePosition(i, context);
+      if (_shouldPlaceDolphinAtIndex(i) && i + 1 < nodeCount) {
+        // Calculate transition position between current and next node
         final DolphinPosition dolphinPosition =
-            _calculateDolphinPosition(nodePosition, context);
+            _calculateTransitionPosition(i, calculator, context);
 
         dolphins.add(
           Positioned(
@@ -320,30 +319,43 @@ class CourseSectionWidget extends StatelessWidget {
     return index % _nodesPerZigzag == 2;
   }
 
-  /// Calculates the position for a dolphin based on the corresponding node position.
-  DolphinPosition _calculateDolphinPosition(
-      NodePosition nodePosition, BuildContext context) {
+  /// Calculates the transition position for a dolphin between two nodes.
+  ///
+  /// Places the dolphin at the midpoint between the current transition node
+  /// and the next node, creating better visual flow at zigzag turning points.
+  DolphinPosition _calculateTransitionPosition(
+      int currentIndex, ZigzagCalculator calculator, BuildContext context) {
+    // Get positions of current node and next node
+    final NodePosition currentNodePosition =
+        calculator.calculatePosition(currentIndex, context);
+    final NodePosition nextNodePosition =
+        calculator.calculatePosition(currentIndex + 1, context);
+
+    // Calculate midpoint Y position between the two nodes
+    final double midpointY =
+        (currentNodePosition.y + nextNodePosition.y) / 2;
+
+    // Calculate appropriate X position for visual balance
     final double screenWidth = MediaQuery.of(context).size.width;
     final double padding = screenWidth * 0.06; // 6% of screen width
-    final double availableWidth =
-        screenWidth - (padding * 2); // Account for PaddedWrapper padding
+    final double availableWidth = screenWidth - (padding * 2);
     final double nodeSize = getAdaptiveNodeSize(context);
     final double centerX = availableWidth / 2 - nodeSize / 2;
     final double dolphinSize = k28Double.wp;
-    final double rightMargin = 20; // Remove margin to place at edge
-    final double leftMargin = 0; // Remove margin to place at edge
 
-    // Adjust vertical position to center dolphin with node
-    final double adjustedY = nodePosition.y + (nodeSize - dolphinSize) / 2;
+    // Determine which side of the screen to place dolphin
+    // Use the average X position of the two transition nodes
+    final double averageX = (currentNodePosition.x + nextNodePosition.x) / 2;
+    final double dolphinX = averageX < centerX
+        ? availableWidth - dolphinSize - 20 // Right side
+        : 0; // Left side
 
-    // Place dolphin on opposite side of node relative to center
-    // Ensure dolphins stay within the available width (accounting for padding)
-    final double dolphinX = nodePosition.x < centerX
-        ? availableWidth - dolphinSize - rightMargin
-        : leftMargin;
+    // Adjust Y position to center dolphin with transition point
+    final double adjustedY = midpointY - (dolphinSize / 2);
 
     return DolphinPosition(x: dolphinX, y: adjustedY);
   }
+
 
   /// Creates a dolphin image widget with proper orientation.
   ///
